@@ -248,7 +248,9 @@ def git_push(target_date):
     if "nothing to commit" in result.stdout + result.stderr:
         print("  Nothing new to commit.")
         return
-    run(["git", "push"])
+    # Use token in push URL so it never gets stored in .git/config
+    remote_url = f"https://{GITHUB_TOKEN}@github.com/danhedrick1/ai-news.git"
+    run(["git", "push", remote_url, "main"])
     print("  Done.")
 
 
