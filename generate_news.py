@@ -3,10 +3,8 @@
 Daily AI News Generator — Enhanced Edition
 Multi-tier source coverage with impact-based ranking.
 
-Sources are grouped by trust/signal tier. Stories are scored by:
-  - Source tier weight (primary lab blogs > curated analysis > industry trade press)
-  - Hacker News engagement (points + comments from last 24h)
-  - Cross-source signal (same story appearing in multiple outlets = higher impact)
+Stories are filtered to 24h freshness (tier-adjusted), scored by source tier +
+HN engagement + cross-source signal, and deduplicated against previous issues.
 
 Usage:
   python generate_news.py              # today
@@ -23,8 +21,8 @@ import json
 import re
 import subprocess
 import urllib.request
-import urllib.error
 from datetime import date, datetime, timezone, timedelta
+from email.utils import parsedate_to_datetime
 from xml.etree import ElementTree as ET
 
 # ── Config ─────────────────────────────────────────────────────────────────────
@@ -33,58 +31,65 @@ ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
 GITHUB_TOKEN      = os.environ.get("GITHUB_TOKEN", "")
 REPO_PATH         = os.environ.get("REPO_PATH", os.path.dirname(os.path.abspath(__file__)))
 NEWS_DIR          = os.path.join(REPO_PATH, "news")
+COVERED_PATH      = os.path.join(NEWS_DIR, "covered.json")
 
 # ── Sources by tier ────────────────────────────────────────────────────────────
 #
-# Tier weights determine base impact score for ranking.
-# primary   = direct from labs, highest trust
-# analysis  = curated expert voices, low hype
-# research  = raw arXiv papers
-# industry  = trade press, higher volume, used selectively
+# max_age_hours: how old an article can be before it's dropped.
+#   Daily news (primary/industry): 28h (small buffer for time zones + publish delays)
+#   Weekly newsletters (analysis): 7 days — these are digests, not breaking news
+#   arXiv (research): 48h — submission-to-publish pipeline lag
 #
 SOURCES = {
-    "primary": [
-        # Anthropic has no public RSS — covered via HN + industry sources
-        ("OpenAI Blog",         "https://openai.com/blog/rss.xml"),
-        ("Google DeepMind",     "https://deepmind.google/blog/rss.xml"),
-        ("Google AI Blog",      "https://blog.google/technology/ai/rss/"),
-        ("Meta AI Research",    "https://research.facebook.com/feed/"),
-        ("Microsoft AI Blog",   "https://blogs.microsoft.com/ai/feed/"),
-        ("Hugging Face Blog",   "https://huggingface.co/blog/feed.xml"),
-    ],
-    "analysis": [
-        ("Import AI (Jack Clark)",        "https://importai.substack.com/feed"),
-        ("The Batch (DeepLearning.AI)",   "https://www.deeplearning.ai/the-batch/feed/"),
-        ("MIT Technology Review",         "https://www.technologyreview.com/feed/"),
-        ("One Useful Thing (Mollick)",    "https://www.oneusefulthing.org/feed"),
-        ("Zvi Mowshowitz",                "https://thezvi.substack.com/feed"),
-        ("Nathan Benaich / Air Street",   "https://nathanbenaich.substack.com/feed"),
-        ("The Neuron",                    "https://www.theneurondaily.com/rss"),
-        ("The Neuron (Substack)",         "https://theneurondaily.substack.com/feed"),
-        ("Interconnects (Hadsell)",       "https://www.interconnects.ai/feed"),
-    ],
-    "research": [
-        ("arXiv cs.AI",  "http://rss.arxiv.org/rss/cs.AI"),
-        ("arXiv cs.LG",  "http://rss.arxiv.org/rss/cs.LG"),
-        ("arXiv cs.CL",  "http://rss.arxiv.org/rss/cs.CL"),   # NLP / LLMs
-    ],
-    "industry": [
-        ("Ars Technica",    "https://feeds.arstechnica.com/arstechnica/technology-lab"),
-        ("VentureBeat AI",  "https://venturebeat.com/ai/feed/"),
-        ("AI News",         "https://www.artificialintelligence-news.com/feed/"),
-        ("The Verge AI",    "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml"),
-        ("Wired AI",        "https://www.wired.com/feed/category/artificial-intelligence/latest/rss"),
-    ],
+    "primary": {
+        "weight": 10,
+        "max_age_hours": 28,
+        "feeds": [
+            ("OpenAI Blog",        "https://openai.com/blog/rss.xml"),
+            ("Google DeepMind",    "https://deepmind.google/blog/rss.xml"),
+            ("Google AI Blog",     "https://blog.google/technology/ai/rss/"),
+            ("Meta AI Research",   "https://research.facebook.com/feed/"),
+            ("Microsoft AI Blog",  "https://blogs.microsoft.com/ai/feed/"),
+            ("Hugging Face Blog",  "https://huggingface.co/blog/feed.xml"),
+        ],
+    },
+    "analysis": {
+        "weight": 8,
+        "max_age_hours": 168,   # 7 days — weekly newsletters
+        "feeds": [
+            ("Import AI (Jack Clark)",       "https://importai.substack.com/feed"),
+            ("The Batch (DeepLearning.AI)",  "https://www.deeplearning.ai/the-batch/feed/"),
+            ("MIT Technology Review",        "https://www.technologyreview.com/feed/"),
+            ("One Useful Thing (Mollick)",   "https://www.oneusefulthing.org/feed"),
+            ("Zvi Mowshowitz",               "https://thezvi.substack.com/feed"),
+            ("Nathan Benaich / Air Street",  "https://nathanbenaich.substack.com/feed"),
+            ("The Neuron",                   "https://www.theneurondaily.com/rss"),
+            ("The Neuron (Substack)",        "https://theneurondaily.substack.com/feed"),
+            ("Interconnects",                "https://www.interconnects.ai/feed"),
+        ],
+    },
+    "research": {
+        "weight": 5,
+        "max_age_hours": 48,
+        "feeds": [
+            ("arXiv cs.AI", "http://rss.arxiv.org/rss/cs.AI"),
+            ("arXiv cs.LG", "http://rss.arxiv.org/rss/cs.LG"),
+            ("arXiv cs.CL", "http://rss.arxiv.org/rss/cs.CL"),
+        ],
+    },
+    "industry": {
+        "weight": 3,
+        "max_age_hours": 28,
+        "feeds": [
+            ("Ars Technica",   "https://feeds.arstechnica.com/arstechnica/technology-lab"),
+            ("VentureBeat AI", "https://venturebeat.com/ai/feed/"),
+            ("AI News",        "https://www.artificialintelligence-news.com/feed/"),
+            ("The Verge AI",   "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml"),
+            ("Wired AI",       "https://www.wired.com/feed/category/artificial-intelligence/latest/rss"),
+        ],
+    },
 }
 
-TIER_WEIGHT = {
-    "primary":  10,
-    "analysis":  8,
-    "research":  5,
-    "industry":  3,
-}
-
-# HN: top AI stories from last 48h (wider window, lower threshold for reliability)
 HN_SEARCH = (
     "https://hn.algolia.com/api/v1/search"
     "?query=AI+LLM+GPT+language+model+machine+learning"
@@ -92,6 +97,41 @@ HN_SEARCH = (
     "&numericFilters=points>10"
     "&hitsPerPage=30"
 )
+
+
+# ── Date parsing ───────────────────────────────────────────────────────────────
+
+def parse_pub_date(s):
+    """Parse RSS/Atom date strings into an aware UTC datetime, or None."""
+    if not s:
+        return None
+    s = s.strip()
+    # RFC 2822 (standard RSS)
+    try:
+        dt = parsedate_to_datetime(s)
+        return dt.astimezone(timezone.utc)
+    except Exception:
+        pass
+    # ISO 8601 variants
+    for fmt in ("%Y-%m-%dT%H:%M:%SZ", "%Y-%m-%dT%H:%M:%S+00:00",
+                "%Y-%m-%dT%H:%M:%S%z", "%Y-%m-%d"):
+        try:
+            raw = s[:len(fmt)]
+            dt  = datetime.strptime(raw, fmt)
+            if dt.tzinfo is None:
+                dt = dt.replace(tzinfo=timezone.utc)
+            return dt.astimezone(timezone.utc)
+        except ValueError:
+            pass
+    return None
+
+
+def is_fresh(pub_date, max_age_hours):
+    """True if pub_date is within max_age_hours of now (or unknown)."""
+    if pub_date is None:
+        return True   # no date = don't reject, let Claude judge
+    cutoff = datetime.now(timezone.utc) - timedelta(hours=max_age_hours)
+    return pub_date >= cutoff
 
 
 # ── Fetching ───────────────────────────────────────────────────────────────────
@@ -107,134 +147,197 @@ def strip_html(text):
 
 
 def parse_rss(data):
-    """Parse an RSS/Atom feed, return list of (title, link, description) tuples."""
+    """Return list of (title, link, desc, pub_date_str) from RSS or Atom."""
     items = []
     try:
         root = ET.fromstring(data)
+        ns_dc = "http://purl.org/dc/elements/1.1/"
         # RSS 2.0
         for item in root.findall(".//item"):
             title = strip_html(item.findtext("title") or "")
             link  = (item.findtext("link") or "").strip()
             desc  = strip_html(item.findtext("description") or "")[:500]
+            pub   = (item.findtext("pubDate")
+                     or item.findtext(f"{{{ns_dc}}}date"))
             if title and link:
-                items.append((title, link, desc))
+                items.append((title, link, desc, pub))
         # Atom
         if not items:
             ns = {"a": "http://www.w3.org/2005/Atom"}
             for entry in root.findall(".//a:entry", ns):
-                title = strip_html(entry.findtext("a:title", namespaces=ns) or "")
+                title   = strip_html(entry.findtext("a:title", namespaces=ns) or "")
                 link_el = entry.find("a:link", ns)
-                link  = (link_el.get("href", "") if link_el is not None else "").strip()
-                desc  = strip_html(entry.findtext("a:summary", namespaces=ns) or "")[:500]
+                link    = (link_el.get("href", "") if link_el is not None else "").strip()
+                desc    = strip_html(entry.findtext("a:summary", namespaces=ns) or "")[:500]
+                pub     = (entry.findtext("a:published", namespaces=ns)
+                           or entry.findtext("a:updated",   namespaces=ns))
                 if title and link:
-                    items.append((title, link, desc))
+                    items.append((title, link, desc, pub))
     except ET.ParseError:
         pass
     return items
 
 
 def fetch_rss_sources():
-    """Fetch all RSS sources and return a list of article dicts with metadata."""
-    articles = []
+    """Fetch all sources, apply freshness filter, return scored article dicts."""
+    articles  = []
     seen_links = set()
+    now        = datetime.now(timezone.utc)
+    totals     = {"fetched": 0, "stale": 0, "added": 0}
 
-    for tier, feeds in SOURCES.items():
-        weight = TIER_WEIGHT[tier]
-        # arXiv is very high volume — cap at 10 most recent papers per feed
-        limit = 10 if tier == "research" else 8
+    for tier, cfg in SOURCES.items():
+        weight       = cfg["weight"]
+        max_age      = cfg["max_age_hours"]
+        limit        = 10 if tier == "research" else 8
 
-        for source_name, url in feeds:
+        for source_name, url in cfg["feeds"]:
             try:
-                data = fetch_url(url)
+                data  = fetch_url(url)
                 items = parse_rss(data)[:limit]
-                added = 0
-                for title, link, desc in items:
+                added = stale = 0
+
+                for title, link, desc, pub_str in items:
+                    totals["fetched"] += 1
                     if link in seen_links:
                         continue
+                    pub_dt = parse_pub_date(pub_str)
+                    if not is_fresh(pub_dt, max_age):
+                        stale += 1
+                        totals["stale"] += 1
+                        continue
                     seen_links.add(link)
+                    age_str = ""
+                    if pub_dt:
+                        age_h = (now - pub_dt).total_seconds() / 3600
+                        age_str = f"{age_h:.0f}h ago"
                     articles.append({
-                        "source":  source_name,
-                        "tier":    tier,
-                        "weight":  weight,
-                        "title":   title,
-                        "link":    link,
-                        "desc":    desc,
-                        "hn_points":   0,
-                        "hn_comments": 0,
-                        "cross_sources": 1,  # starts at 1 (this source)
-                        "score":   weight,
+                        "source":        source_name,
+                        "tier":          tier,
+                        "weight":        weight,
+                        "title":         title,
+                        "link":          link,
+                        "desc":          desc,
+                        "pub_dt":        pub_dt.isoformat() if pub_dt else None,
+                        "age_str":       age_str,
+                        "hn_points":     0,
+                        "hn_comments":   0,
+                        "cross_sources": 1,
+                        "prev_covered":  False,
+                        "score":         weight,
                     })
                     added += 1
-                print(f"  [{tier:8}] {source_name}: {added} articles")
-            except Exception as e:
-                print(f"  [{tier:8}] {source_name}: SKIP ({type(e).__name__})")
+                    totals["added"] += 1
 
+                label = f"{added} added" + (f", {stale} stale" if stale else "")
+                print(f"  [{tier:8}] {source_name}: {label}")
+            except Exception as e:
+                print(f"  [{tier:8}] {source_name}: SKIP ({type(e).__name__}: {e})")
+
+    print(f"  -> {totals['added']} fresh / {totals['stale']} stale filtered / {totals['fetched']} total")
     return articles
 
 
 def fetch_hacker_news():
-    """Fetch AI stories from HN with engagement metrics (last 24h)."""
-    url = HN_SEARCH
+    """Fetch trending AI stories from HN."""
     try:
-        data = fetch_url(url)
-        hits = json.loads(data).get("hits", [])
+        data    = fetch_url(HN_SEARCH)
+        hits    = json.loads(data).get("hits", [])
         stories = []
         for h in hits:
             title    = (h.get("title") or "").strip()
             link     = h.get("url") or f"https://news.ycombinator.com/item?id={h.get('objectID')}"
             points   = int(h.get("points") or 0)
             comments = int(h.get("num_comments") or 0)
+            created  = h.get("created_at", "")
+            pub_dt   = parse_pub_date(created)
+            # Only HN stories from last 36h
+            if pub_dt and not is_fresh(pub_dt, 36):
+                continue
             if title:
-                stories.append({
-                    "title":    title,
-                    "link":     link,
-                    "points":   points,
-                    "comments": comments,
-                })
-        print(f"  [hacker_news] Hacker News: {len(stories)} stories")
+                stories.append({"title": title, "link": link,
+                                 "points": points, "comments": comments})
+        print(f"  [community ] Hacker News: {len(stories)} stories")
         return stories
     except Exception as e:
-        print(f"  [hacker_news] Hacker News: SKIP ({e})")
+        print(f"  [community ] Hacker News: SKIP ({e})")
         return []
 
 
-# ── Scoring ────────────────────────────────────────────────────────────────────
-
-def normalize(s):
-    """Lowercase, strip punctuation — for fuzzy title matching."""
-    return re.sub(r"[^a-z0-9 ]", "", s.lower())
-
+# ── Previously-covered deduplication ──────────────────────────────────────────
 
 def key_words(title):
-    """Extract significant words (4+ chars) from a title."""
+    """Significant words (4+ chars) for fuzzy fingerprinting."""
     stop = {"that", "with", "from", "this", "have", "will", "been", "more",
             "than", "what", "when", "your", "about", "into", "over", "also",
-            "after", "their", "they", "says", "says", "gets", "just"}
-    return {w for w in normalize(title).split() if len(w) >= 4 and w not in stop}
+            "after", "their", "they", "says", "gets", "just", "here", "using",
+            "could", "would", "make", "made", "show", "shows", "found", "find"}
+    return {w for w in re.sub(r"[^a-z0-9 ]", "", title.lower()).split()
+            if len(w) >= 4 and w not in stop}
 
 
-def titles_overlap(a, b, threshold=0.35):
-    """True if two titles share enough significant keywords."""
+def titles_overlap(a, b, threshold=0.40):
     ka, kb = key_words(a), key_words(b)
     if not ka or not kb:
         return False
     return len(ka & kb) / min(len(ka), len(kb)) >= threshold
 
 
-def score_articles(articles, hn_stories):
-    """
-    Boost article scores based on:
-      1. HN engagement (points + comments)
-      2. Cross-source coverage (same story in multiple outlets)
-    """
-    # --- HN cross-reference ---
-    for article in articles:
-        for hn in hn_stories:
-            if titles_overlap(article["title"], hn["title"]):
-                article["hn_points"]   = max(article["hn_points"],   hn["points"])
-                article["hn_comments"] = max(article["hn_comments"], hn["comments"])
+def load_covered():
+    """Load story fingerprints from the last 7 days."""
+    if not os.path.exists(COVERED_PATH):
+        return []
+    with open(COVERED_PATH, encoding="utf-8") as f:
+        data = json.load(f)
+    cutoff = (date.today() - timedelta(days=7)).isoformat()
+    return [s for s in data.get("stories", []) if s.get("date", "") >= cutoff]
 
-    # --- Cross-source deduplication & boosting ---
+
+def save_covered(articles, target_date):
+    """Append today's article fingerprints to covered.json (rolling 7-day window)."""
+    existing     = load_covered()
+    existing_fps = {s["fingerprint"] for s in existing}
+    for a in articles:
+        fp = " ".join(sorted(key_words(a["title"])))
+        if fp and fp not in existing_fps:
+            existing.append({
+                "date":        target_date,
+                "fingerprint": fp,
+                "title":       a["title"][:120],
+            })
+            existing_fps.add(fp)
+    os.makedirs(NEWS_DIR, exist_ok=True)
+    with open(COVERED_PATH, "w", encoding="utf-8") as f:
+        json.dump({"stories": existing}, f, indent=2)
+
+
+def mark_previously_covered(articles):
+    """Flag articles whose topic was already in a recent issue."""
+    covered   = load_covered()
+    cov_words = [set(s["fingerprint"].split()) for s in covered]
+    marked    = 0
+    for a in articles:
+        aw = key_words(a["title"])
+        for cw in cov_words:
+            if aw and cw and len(aw & cw) / min(len(aw), len(cw)) >= 0.50:
+                a["prev_covered"] = True
+                marked += 1
+                break
+    if marked:
+        print(f"  -> {marked} articles flagged as previously covered (will need new angle)")
+    return articles
+
+
+# ── Scoring ────────────────────────────────────────────────────────────────────
+
+def score_articles(articles, hn_stories):
+    # HN cross-reference
+    for a in articles:
+        for hn in hn_stories:
+            if titles_overlap(a["title"], hn["title"]):
+                a["hn_points"]   = max(a["hn_points"],   hn["points"])
+                a["hn_comments"] = max(a["hn_comments"], hn["comments"])
+
+    # Cross-source boost
     for i, a in enumerate(articles):
         for j, b in enumerate(articles):
             if i >= j:
@@ -243,16 +346,17 @@ def score_articles(articles, hn_stories):
                 a["cross_sources"] += 1
                 b["cross_sources"] += 1
 
-    # --- Final score ---
+    # Final score (previously-covered stories get a -6 penalty — still included
+    # if there's strong new signal, but deprioritised by default)
     for a in articles:
-        hn_boost     = min(10, a["hn_points"] // 50 + a["hn_comments"] // 20)
-        cross_boost  = (a["cross_sources"] - 1) * 5
-        a["score"]   = a["weight"] + hn_boost + cross_boost
+        hn_boost    = min(10, a["hn_points"] // 50 + a["hn_comments"] // 20)
+        cross_boost = (a["cross_sources"] - 1) * 5
+        prev_penalty = -6 if a["prev_covered"] else 0
+        a["score"]  = a["weight"] + hn_boost + cross_boost + prev_penalty
 
-    # Sort descending by score
     articles.sort(key=lambda x: x["score"], reverse=True)
 
-    # Add HN stories not already in articles (community-sourced signal)
+    # Append HN-only stories not already in any feed
     covered_links = {a["link"] for a in articles}
     extra_hn = []
     for hn in sorted(hn_stories, key=lambda x: x["points"] + x["comments"], reverse=True):
@@ -264,13 +368,15 @@ def score_articles(articles, hn_stories):
                 "title":         hn["title"],
                 "link":          hn["link"],
                 "desc":          f"{hn['points']} pts · {hn['comments']} comments on HN",
+                "pub_dt":        None,
+                "age_str":       "",
                 "hn_points":     hn["points"],
                 "hn_comments":   hn["comments"],
                 "cross_sources": 1,
+                "prev_covered":  False,
                 "score":         4 + min(10, hn["points"] // 50),
             })
     articles.extend(sorted(extra_hn, key=lambda x: x["score"], reverse=True)[:10])
-
     return articles
 
 
@@ -282,88 +388,98 @@ def generate_summary(articles, target_date):
     except ImportError:
         print("ERROR: run: pip install anthropic")
         sys.exit(1)
-
     if not ANTHROPIC_API_KEY:
         print("ERROR: ANTHROPIC_API_KEY not set")
         sys.exit(1)
 
     client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
 
-    y, m, d = target_date.split("-")
-    months   = ["January","February","March","April","May","June",
-                "July","August","September","October","November","December"]
+    y, m, d   = target_date.split("-")
+    months    = ["January","February","March","April","May","June",
+                 "July","August","September","October","November","December"]
     nice_date = f"{months[int(m)-1]} {int(d)}, {y}"
 
-    # Format articles with their scoring signals for Claude
     def fmt(a):
         signals = []
         if a["hn_points"] > 0:
-            signals.append(f"HN: {a['hn_points']}pts/{a['hn_comments']}cmts")
+            signals.append(f"[HN] HN {a['hn_points']}pts/{a['hn_comments']}cmts")
         if a["cross_sources"] > 1:
-            signals.append(f"covered by {a['cross_sources']} sources")
-        sig_str = f"  [{', '.join(signals)}]" if signals else ""
+            signals.append(f"x{a['cross_sources']} sources")
+        if a["age_str"]:
+            signals.append(a["age_str"])
+        if a["prev_covered"]:
+            signals.append("[!] PREVIOUSLY COVERED")
+        sig = f"  [{', '.join(signals)}]" if signals else ""
         return (
-            f"[SCORE:{a['score']} | {a['tier'].upper()} | {a['source']}]{sig_str}\n"
+            f"[SCORE:{a['score']} | {a['tier'].upper()} | {a['source']}]{sig}\n"
             f"Title: {a['title']}\n"
             f"URL: {a['link']}\n"
             f"Summary: {a['desc']}"
         )
 
-    articles_text = "\n\n".join(fmt(a) for a in articles[:60])
+    articles_text = "\n\n".join(fmt(a) for a in articles[:65])
+    n_sources     = len(set(a["source"] for a in articles))
+    n_prev        = sum(1 for a in articles if a["prev_covered"])
 
-    prompt = f"""You are the editor of "AI News Daily" — a high signal-to-noise AI digest trusted by researchers and engineers.
+    prompt = f"""You are the editor of "AI News Daily" — a high signal-to-noise AI digest for researchers and engineers.
 
-Today is {nice_date}. Below is a scored list of articles collected from {len(articles)} sources across multiple tiers (PRIMARY lab blogs, ANALYSIS from trusted experts, RESEARCH from arXiv, INDUSTRY trade press, COMMUNITY from Hacker News).
+Today is {nice_date}. You have {len(articles)} scored articles from {n_sources} sources. {n_prev} are flagged [!] PREVIOUSLY COVERED.
 
-Each article has a SCORE computed from:
-- Source tier weight (PRIMARY=10, ANALYSIS=8, RESEARCH=5, INDUSTRY=3, COMMUNITY=4)
-- Hacker News engagement bonus (points + comments)
-- Cross-source bonus (+5 for each additional outlet covering the same story)
+SCORING SIGNALS ON EACH ARTICLE:
+- SCORE = tier weight + HN engagement bonus + cross-source bonus − previously-covered penalty
+- Tier weights: PRIMARY=10, ANALYSIS=8, RESEARCH=5, INDUSTRY=3, COMMUNITY=4
+- [HN] HN Xpts = trending on Hacker News right now
+- x2/x3 sources = same story confirmed by multiple outlets
+- [!] PREVIOUSLY COVERED = this topic appeared in a recent issue
 
-Your job: produce a comprehensive, ranked markdown digest. Rules:
-1. **Order strictly by impact** — highest-scored / most-discussed stories first
-2. **Merge duplicate stories** — if multiple sources cover the same event, write one unified entry and cite all sources
-3. **Label the splash** — for top stories, note if it's trending on HN (with point counts) or covered by multiple outlets
-4. **Separate research from news** — arXiv papers get their own section
-5. **Be honest about hype** — flag stories that are low-signal PR vs genuine news
-6. **Skip obvious noise** — no listicles, job posts, or pure opinion unless it's from a high-signal voice (Mollick, Zvi, Clark)
-7. Use the actual source URLs in all links
+RULES:
+1. **Freshness first** — only include [!] PREVIOUSLY COVERED stories if there is a genuinely new development, new data, or a meaningful shift in the story. If including one, start the entry with "**Update:**" and clearly state what's new.
+2. **Order strictly by impact** — score is your primary signal; use your editorial judgment as a tiebreaker.
+3. **Merge duplicates** — same event from multiple sources = one unified entry, cite all sources.
+4. **Splash labeling** — note "[HN] Trending on HN: Xpts" or "Covered by X outlets" on top stories.
+5. **No noise** — skip listicles, job posts, or pure puff pieces. Flag borderline items as "(Low signal)" if you include them.
+6. **Research gets its own section** — arXiv papers go in Research Radar only.
+7. Use the actual source URLs in every link.
 
-Format exactly:
+FORMAT:
 
 ---
 
 # AI News Daily — {nice_date}
 
-*Ranked by impact · {len(articles)} sources monitored*
+*Ranked by impact · {n_sources} sources · stories from the last 24h*
 
 ---
 
 ## 🔥 Top Stories
-[5-7 most significant stories. Each has a ### heading, 2-3 sentence summary, source attribution, and a [Read more →](URL) link. For widely-covered stories, note "Covered by X sources" or "🔴 Trending on HN: Xpts".]
+
+[5-7 entries. Each: ### Descriptive Headline, 2-3 sentence summary explaining what happened and why it matters, source line, [Read more ->](URL). Add splash labels where relevant.]
 
 ---
 
 ## ⚡ Quick Hits
-[10-15 bullet points of notable but shorter items. Format: **Bold topic** — one sentence. [Source](URL)]
+
+[10-15 bullets. Format: **Topic** — one sentence. [Source](URL)]
 
 ---
 
 ## 🔬 Research Radar
-[3-6 notable arXiv papers or research announcements. Each: **Paper title** — one sentence on why it matters. [arXiv](URL)]
+
+[3-6 arXiv papers. Format: **Short paper title** — one sentence on significance. [arXiv](URL)]
 
 ---
 
 ## 📊 Trend Watch
-[2-3 paragraphs. Synthesize the week's signal — what themes are emerging, what's worth watching, what's hype. Be direct and opinionated.]
+
+[2-3 paragraphs of synthesis. What's the signal vs noise this week? What should readers actually pay attention to? Be direct and opinionated.]
 
 ---
 
-*AI News Daily · {nice_date} · Sources: {len(set(a["source"] for a in articles))} outlets*
+*AI News Daily · {nice_date} · {n_sources} outlets monitored*
 
 ---
 
-SCORED ARTICLES (ordered by score, use this ordering as your primary signal):
+ARTICLES (ranked by score — use this order as primary signal):
 
 {articles_text}"""
 
@@ -380,7 +496,6 @@ SCORED ARTICLES (ordered by score, use this ordering as your primary signal):
 
 def save_news(content, target_date):
     os.makedirs(NEWS_DIR, exist_ok=True)
-
     filepath = os.path.join(NEWS_DIR, f"{target_date}.md")
     with open(filepath, "w", encoding="utf-8") as f:
         f.write(content)
@@ -391,15 +506,12 @@ def save_news(content, target_date):
     if os.path.exists(index_path):
         with open(index_path, encoding="utf-8") as f:
             index = json.load(f)
-
     if target_date not in index["dates"]:
         index["dates"].insert(0, target_date)
         index["dates"] = index["dates"][:90]
-
     with open(index_path, "w", encoding="utf-8") as f:
         json.dump(index, f, indent=2)
-    print(f"Updated index: {index_path}")
-
+    print(f"Updated index")
     return filepath
 
 
@@ -413,9 +525,7 @@ def git_push(target_date):
     print("Pushing to GitHub…")
     run(["git", "config", "user.email", "ai-news-bot@users.noreply.github.com"])
     run(["git", "config", "user.name",  "AI News Bot"])
-    run(["git", "add",
-         os.path.join("news", f"{target_date}.md"),
-         os.path.join("news", "index.json")])
+    run(["git", "add", "news/"])
     r = run(["git", "commit", "-m", f"news: AI digest for {target_date}"])
     if "nothing to commit" in r.stdout + r.stderr:
         print("  Nothing new to commit.")
@@ -445,12 +555,18 @@ def main():
     print("\nFetching Hacker News…")
     hn_stories = fetch_hacker_news()
 
+    print("\nChecking previously covered stories…")
+    articles = mark_previously_covered(articles)
+
     print("\nScoring and ranking…")
     articles = score_articles(articles, hn_stories)
     print(f"Total scored: {len(articles)} articles")
 
     content = generate_summary(articles, target_date)
     save_news(content, target_date)
+
+    print("\nUpdating covered-stories fingerprints…")
+    save_covered(articles, target_date)
 
     if GITHUB_TOKEN:
         git_push(target_date)
