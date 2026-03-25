@@ -443,9 +443,9 @@
 
 <script>
   let currentDate = null;
-  let lastRefreshTime = Date.now();
+  let lastRefreshTime = null; // Time when last scheduled refresh check ran
   let currentlyOpenStory = null;
-  const AUTO_REFRESH_INTERVAL = 6 * 60 * 60 * 1000; // 6 hours
+  const REFRESH_HOURS = [6, 12, 18, 0]; // 6 AM, 12 PM, 6 PM, 12 AM
 
   marked.setOptions({
     breaks: true,
@@ -502,15 +502,56 @@
     });
   }
 
-  function updateLastRefreshTime() {
-    const now = new Date();
+  function updateLastRefreshTime(timestamp = lastRefreshTime) {
+    if (!timestamp) {
+      document.getElementById('last-update').textContent = 'Last updated: --:--';
+      return;
+    }
     const et = { timeZone: 'America/New_York' };
-    const time = now.toLocaleTimeString('en-US', {
+    const time = new Date(timestamp).toLocaleTimeString('en-US', {
       ...et,
       hour: '2-digit',
       minute: '2-digit'
     });
     document.getElementById('last-update').textContent = `Last updated: ${time}`;
+  }
+
+  function getNextRefreshTime() {
+    const now = new Date();
+    const et = { timeZone: 'America/New_York' };
+    const etTime = new Date(now.toLocaleString('en-US', { timeZone: 'America/New_York' }));
+    const currentHour = etTime.getHours();
+
+    // Find next refresh hour
+    let nextHour = REFRESH_HOURS.find(h => h > currentHour);
+    if (!nextHour && nextHour !== 0) {
+      // No more refreshes today, next is 6 AM tomorrow
+      nextHour = 6;
+      const tomorrow = new Date(etTime);
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      tomorrow.setHours(6, 0, 0, 0);
+      return tomorrow;
+    }
+
+    const next = new Date(etTime);
+    next.setHours(nextHour, 0, 0, 0);
+    return next;
+  }
+
+  function scheduleNextRefresh() {
+    const nextRefresh = getNextRefreshTime();
+    const now = new Date();
+    const msUntilRefresh = nextRefresh.getTime() - now.getTime();
+
+    setTimeout(() => {
+      const today = getCurrentDateET();
+      if (currentDate === today) {
+        lastRefreshTime = Date.now();
+        updateLastRefreshTime();
+        checkForNewStories();
+      }
+      scheduleNextRefresh(); // Schedule the next one
+    }, Math.max(msUntilRefresh, 1000)); // At least 1 second to avoid issues
   }
 
   async function loadIndex() {
@@ -619,13 +660,8 @@
   // ── Post-processing: collapsible stories + paywall badges ──────────────────
 
   function startAutoRefresh() {
-    // Only auto-refresh when viewing today's news
-    const refreshCheck = setInterval(() => {
-      const today = getCurrentDateET();
-      if (currentDate === today) {
-        checkForNewStories();
-      }
-    }, AUTO_REFRESH_INTERVAL);
+    // Schedule refreshes at 6 AM, 12 PM, 6 PM, 12 AM
+    scheduleNextRefresh();
   }
 
   async function checkForNewStories() {
@@ -661,9 +697,6 @@
           }
           currentContent.appendChild(story.cloneNode(true));
         });
-
-        lastRefreshTime = Date.now();
-        updateLastRefreshTime();
       }
     } catch (e) {
       console.log('Auto-refresh check failed:', e);
