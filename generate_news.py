@@ -90,6 +90,17 @@ SOURCES = {
     },
 }
 
+PAYWALLED_DOMAINS = {
+    "theinformation.com",
+    "technologyreview.com",
+    "wsj.com",
+    "ft.com",
+    "bloomberg.com",
+    "economist.com",
+    "nytimes.com",
+    "theathletic.com",
+}
+
 HN_SEARCH = (
     "https://hn.algolia.com/api/v1/search"
     "?query=AI+LLM+GPT+language+model+machine+learning"
@@ -210,6 +221,12 @@ def fetch_rss_sources():
                     if pub_dt:
                         age_h = (now - pub_dt).total_seconds() / 3600
                         age_str = f"{age_h:.0f}h ago"
+                    try:
+                        from urllib.parse import urlparse
+                        domain = urlparse(link).netloc.lower().lstrip("www.")
+                        is_paywalled = any(d in domain for d in PAYWALLED_DOMAINS)
+                    except Exception:
+                        is_paywalled = False
                     articles.append({
                         "source":        source_name,
                         "tier":          tier,
@@ -223,6 +240,7 @@ def fetch_rss_sources():
                         "hn_comments":   0,
                         "cross_sources": 1,
                         "prev_covered":  False,
+                        "paywalled":     is_paywalled,
                         "score":         weight,
                     })
                     added += 1
@@ -409,6 +427,8 @@ def generate_summary(articles, target_date):
             signals.append(a["age_str"])
         if a["prev_covered"]:
             signals.append("[!] PREVIOUSLY COVERED")
+        if a.get("paywalled"):
+            signals.append("[PAYWALL]")
         sig = f"  [{', '.join(signals)}]" if signals else ""
         return (
             f"[SCORE:{a['score']} | {a['tier'].upper()} | {a['source']}]{sig}\n"
@@ -440,6 +460,10 @@ RULES:
 5. **No noise** — skip listicles, job posts, or pure puff pieces. Flag borderline items as "(Low signal)" if you include them.
 6. **Research gets its own section** — arXiv papers go in Research Radar only.
 7. Use the actual source URLs in every link.
+8. **Paywalled sources** — if an article is flagged [PAYWALL]:
+   - Append ` [PAYWALL]` to the ### headline (e.g. `### Story Title [PAYWALL]`)
+   - Write a longer, more complete summary (4-5 sentences + key bullet points) since readers cannot access the full article
+   - Still link to the source so readers can verify / subscribe
 
 FORMAT:
 
@@ -453,7 +477,12 @@ FORMAT:
 
 ## 🔥 Top Stories
 
-[5-7 entries. Each: ### Descriptive Headline, 2-3 sentence summary explaining what happened and why it matters, source line, [Read more ->](URL). Add splash labels where relevant.]
+[5-7 entries. Each story uses this exact structure — keep the summary concise (2-3 sentences) since the UI collapses stories by default and users expand to read more:
+
+### Descriptive Headline
+2-3 sentence summary of what happened and why it matters. For [PAYWALL] stories write 4-5 sentences plus **Key details:** bullets.
+**Source:** [Publication](URL) · Score signal if notable
+[Read more →](URL)]
 
 ---
 

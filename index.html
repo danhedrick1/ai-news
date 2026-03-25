@@ -317,6 +317,58 @@
       font-weight: 500;
     }
 
+    /* ── COLLAPSIBLE STORIES ── */
+    #content h3.story-toggle {
+      cursor: pointer;
+      user-select: none;
+      transition: color 0.15s;
+      display: flex;
+      align-items: baseline;
+      gap: 0;
+      flex-wrap: wrap;
+    }
+    #content h3.story-toggle:hover { color: var(--accent); }
+    #content h3.story-toggle:hover .story-chevron { color: var(--accent); }
+
+    .story-chevron {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      margin-right: 8px;
+      flex-shrink: 0;
+      transition: color 0.15s;
+    }
+
+    .story-body {
+      display: none;
+      padding: 6px 0 16px 22px;
+      border-left: 2px solid var(--border);
+      margin: 2px 0 8px 5px;
+    }
+    .story-body.open {
+      display: block;
+      animation: storyFadeIn 0.15s ease;
+    }
+    @keyframes storyFadeIn {
+      from { opacity: 0; transform: translateY(-4px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── PAYWALL BADGE ── */
+    .paywall-badge {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: #d29922;
+      background: rgba(210,153,34,0.1);
+      border: 1px solid rgba(210,153,34,0.35);
+      padding: 1px 7px;
+      border-radius: 20px;
+      margin-left: 8px;
+      vertical-align: middle;
+      letter-spacing: 0.3px;
+      white-space: nowrap;
+    }
+
     /* ── EMPTY STATE ── */
     .empty-state {
       text-align: center;
@@ -448,6 +500,7 @@
 
       const contentEl = document.getElementById('content');
       contentEl.innerHTML = html;
+      postProcessContent(contentEl);
       contentEl.style.display = 'block';
       document.getElementById('loading').style.display = 'none';
 
@@ -476,6 +529,73 @@
     document.getElementById('content').style.display = 'none';
     document.getElementById('error-text').textContent = msg;
     document.getElementById('error-msg').style.display = 'flex';
+  }
+
+  // ── Post-processing: collapsible stories + paywall badges ──────────────────
+
+  function postProcessContent(container) {
+    makeStoriesCollapsible(container);
+  }
+
+  function makeStoriesCollapsible(container) {
+    const nodes = Array.from(container.children);
+    const groups = [];
+    let cur = null;
+
+    for (const node of nodes) {
+      const tag = node.tagName;
+      if (tag === 'H3') {
+        cur = { heading: node, body: [] };
+        groups.push(cur);
+      } else if (tag === 'H2' || tag === 'H1') {
+        cur = null;
+      } else if (cur) {
+        cur.body.push(node);
+      }
+    }
+
+    for (const { heading, body } of groups) {
+      if (!body.length) continue;
+
+      // Detect [PAYWALL] in heading text, remove it, add badge
+      const rawText = heading.textContent;
+      const hasPaywall = rawText.includes('[PAYWALL]');
+      if (hasPaywall) {
+        heading.childNodes.forEach(n => {
+          if (n.nodeType === 3) n.textContent = n.textContent.replace(/\s*\[PAYWALL\]/g, '');
+        });
+        const badge = document.createElement('span');
+        badge.className = 'paywall-badge';
+        badge.textContent = '⚠ Paywall';
+        const link = heading.querySelector('a');
+        if (link) link.after(badge);
+        else heading.appendChild(badge);
+      }
+
+      // Wrap body in collapsible div
+      const wrapper = document.createElement('div');
+      wrapper.className = 'story-body';
+      body[0].parentNode.insertBefore(wrapper, body[0]);
+      body.forEach(n => wrapper.appendChild(n));
+
+      // Replace any remaining [PAYWALL] markers inside the body
+      wrapper.innerHTML = wrapper.innerHTML.replace(
+        /\[PAYWALL\]/g,
+        '<span class="paywall-badge">⚠ Paywall</span>'
+      );
+
+      // Wire up the toggle
+      heading.classList.add('story-toggle');
+      const chevron = document.createElement('span');
+      chevron.className = 'story-chevron';
+      chevron.textContent = '▸';
+      heading.insertBefore(chevron, heading.firstChild);
+
+      heading.addEventListener('click', () => {
+        const open = wrapper.classList.toggle('open');
+        chevron.textContent = open ? '▾' : '▸';
+      });
+    }
   }
 
   loadIndex();
