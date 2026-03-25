@@ -434,8 +434,9 @@
   }
 
   function relativeDay(iso) {
-    const today = new Date().toISOString().split('T')[0];
-    const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+    const et = { timeZone: 'America/New_York' };
+    const today = new Date().toLocaleDateString('en-CA', et);
+    const yesterday = new Date(Date.now() - 86400000).toLocaleDateString('en-CA', et);
     if (iso === today) return 'Today';
     if (iso === yesterday) return 'Yesterday';
     return '';

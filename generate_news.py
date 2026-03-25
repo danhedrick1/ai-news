@@ -99,6 +99,7 @@ PAYWALLED_DOMAINS = {
     "economist.com",
     "nytimes.com",
     "theathletic.com",
+    "theverge.com",
 }
 
 HN_SEARCH = (
