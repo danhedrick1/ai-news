@@ -65,7 +65,7 @@
       gap: 12px;
     }
 
-    #refresh-btn {
+    #archive-btn {
       background: none;
       border: 1px solid var(--border);
       color: var(--text-muted);
@@ -78,7 +78,13 @@
       align-items: center;
       gap: 6px;
     }
-    #refresh-btn:hover { border-color: var(--accent); color: var(--accent); }
+    #archive-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+    aside.hidden { display: none; }
+
+    @media (min-width: 769px) {
+      #archive-btn { display: none; }
+    }
 
     .live-badge {
       background: rgba(46,160,67,0.15);
@@ -391,7 +397,7 @@
   </div>
   <div class="header-right">
     <div class="live-badge">DAILY</div>
-    <button id="refresh-btn" onclick="loadIndex()">⟳ Refresh</button>
+    <button id="archive-btn" onclick="toggleArchive()">📅 Archive</button>
   </div>
 </header>
 
@@ -416,6 +422,9 @@
 
 <script>
   let currentDate = null;
+  let lastRefreshTime = Date.now();
+  let currentlyOpenStory = null;
+  const AUTO_REFRESH_INTERVAL = 6 * 60 * 60 * 1000; // 6 hours
 
   marked.setOptions({
     breaks: true,
@@ -435,6 +444,16 @@
     if (iso === today) return 'Today';
     if (iso === yesterday) return 'Yesterday';
     return '';
+  }
+
+  function getCurrentDateET() {
+    const et = { timeZone: 'America/New_York' };
+    return new Date().toLocaleDateString('en-CA', et);
+  }
+
+  function toggleArchive() {
+    const aside = document.querySelector('aside');
+    aside.classList.toggle('hidden');
   }
 
   async function loadIndex() {
@@ -499,6 +518,13 @@
       postProcessContent(contentEl);
       contentEl.style.display = 'block';
       document.getElementById('loading').style.display = 'none';
+      currentlyOpenStory = null;
+
+      // Start auto-refresh if viewing today
+      const today = getCurrentDateET();
+      if (dateStr === today) {
+        startAutoRefresh();
+      }
 
       // Scroll to top
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -528,6 +554,57 @@
   }
 
   // ── Post-processing: collapsible stories + paywall badges ──────────────────
+
+  function startAutoRefresh() {
+    // Only auto-refresh when viewing today's news
+    const refreshCheck = setInterval(() => {
+      const today = getCurrentDateET();
+      if (currentDate === today) {
+        checkForNewStories();
+      }
+    }, AUTO_REFRESH_INTERVAL);
+  }
+
+  async function checkForNewStories() {
+    try {
+      const today = getCurrentDateET();
+      const res = await fetch(`news/${today}.md?t=${Date.now()}`);
+      if (!res.ok) return;
+
+      const md = await res.text();
+      const html = marked.parse(md);
+      const tempContainer = document.createElement('div');
+      tempContainer.innerHTML = html;
+      postProcessContent(tempContainer);
+
+      const currentContent = document.getElementById('content');
+      const newStoryCount = tempContainer.children.length - currentContent.children.length;
+
+      if (newStoryCount > 0) {
+        // Add new stories with timestamps
+        const newStories = Array.from(tempContainer.children).slice(currentContent.children.length);
+        const timestamp = new Date().toLocaleTimeString('en-US', {
+          timeZone: 'America/New_York',
+          hour: '2-digit',
+          minute: '2-digit'
+        });
+
+        newStories.forEach(story => {
+          if (story.tagName === 'H3') {
+            const timeLabel = document.createElement('span');
+            timeLabel.style.cssText = 'font-size:0.7rem;color:var(--text-muted);margin-left:8px;';
+            timeLabel.textContent = `(${timestamp})`;
+            story.appendChild(timeLabel);
+          }
+          currentContent.appendChild(story.cloneNode(true));
+        });
+
+        lastRefreshTime = Date.now();
+      }
+    } catch (e) {
+      console.log('Auto-refresh check failed:', e);
+    }
+  }
 
   function postProcessContent(container) {
     makeStoriesCollapsible(container);
@@ -588,8 +665,20 @@
       heading.insertBefore(chevron, heading.firstChild);
 
       heading.addEventListener('click', () => {
+        // Auto-collapse previous story
+        if (currentlyOpenStory && currentlyOpenStory !== heading) {
+          const prevWrapper = currentlyOpenStory.nextElementSibling;
+          if (prevWrapper && prevWrapper.classList.contains('story-body')) {
+            prevWrapper.classList.remove('open');
+            const prevChevron = currentlyOpenStory.querySelector('.story-chevron');
+            if (prevChevron) prevChevron.textContent = '▸';
+          }
+        }
+
+        // Toggle current story
         const open = wrapper.classList.toggle('open');
         chevron.textContent = open ? '▾' : '▸';
+        currentlyOpenStory = open ? heading : null;
       });
     }
   }
