@@ -36,24 +36,32 @@ COVERED_PATH      = os.path.join(NEWS_DIR, "covered.json")
 # ── Sources by tier ────────────────────────────────────────────────────────────
 #
 # max_age_hours: how old an article can be before it's dropped.
-#   Daily news (primary/industry): 28h (small buffer for time zones + publish delays)
-#   Weekly newsletters (analysis): 7 days — these are digests, not breaking news
+#   Daily news (primary/industry/community): 28h
+#   Weekly newsletters (analysis): 7 days — digests, not breaking news
 #   arXiv (research): 48h — submission-to-publish pipeline lag
+#
+# NOTE: X/Twitter is not supported without a paid API. HN is used as a proxy
+# for real-time X signal — viral tweets and researcher posts reliably surface
+# there within hours. Reddit subreddits provide developer/community discourse.
 #
 SOURCES = {
     "primary": {
+        # Direct from the labs — highest trust, always include
         "weight": 10,
         "max_age_hours": 28,
         "feeds": [
+            ("Anthropic Blog",     "https://www.anthropic.com/rss.xml"),
             ("OpenAI Blog",        "https://openai.com/blog/rss.xml"),
             ("Google DeepMind",    "https://deepmind.google/blog/rss.xml"),
             ("Google AI Blog",     "https://blog.google/technology/ai/rss/"),
             ("Meta AI Research",   "https://research.facebook.com/feed/"),
             ("Microsoft AI Blog",  "https://blogs.microsoft.com/ai/feed/"),
             ("Hugging Face Blog",  "https://huggingface.co/blog/feed.xml"),
+            ("Mistral AI News",    "https://mistral.ai/news/rss/"),
         ],
     },
     "analysis": {
+        # Curated newsletters and research-backed takes — low hype, high signal
         "weight": 8,
         "max_age_hours": 168,   # 7 days — weekly newsletters
         "feeds": [
@@ -66,9 +74,11 @@ SOURCES = {
             ("The Neuron",                   "https://www.theneurondaily.com/rss"),
             ("The Neuron (Substack)",        "https://theneurondaily.substack.com/feed"),
             ("Interconnects",                "https://www.interconnects.ai/feed"),
+            ("HBR AI",                       "https://hbr.org/rss/topic/ai"),
         ],
     },
     "research": {
+        # arXiv — raw research before media filters it
         "weight": 5,
         "max_age_hours": 48,
         "feeds": [
@@ -78,14 +88,38 @@ SOURCES = {
         ],
     },
     "industry": {
+        # Broad news coverage — higher volume, use score to filter
         "weight": 3,
         "max_age_hours": 28,
         "feeds": [
-            ("Ars Technica",   "https://feeds.arstechnica.com/arstechnica/technology-lab"),
-            ("VentureBeat AI", "https://venturebeat.com/ai/feed/"),
-            ("AI News",        "https://www.artificialintelligence-news.com/feed/"),
-            ("The Verge AI",   "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml"),
-            ("Wired AI",       "https://www.wired.com/feed/category/artificial-intelligence/latest/rss"),
+            ("Reuters Technology",  "https://feeds.reuters.com/reuters/technologyNews"),
+            ("TechCrunch",          "https://techcrunch.com/feed/"),
+            ("Axios Tech",          "https://www.axios.com/feeds/feed.rss"),
+            ("Ars Technica",        "https://feeds.arstechnica.com/arstechnica/technology-lab"),
+            ("VentureBeat AI",      "https://venturebeat.com/ai/feed/"),
+            ("The Verge AI",        "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml"),
+            ("Wired AI",            "https://www.wired.com/feed/category/artificial-intelligence/latest/rss"),
+            ("Bloomberg Tech",      "https://feeds.bloomberg.com/technology/news.rss"),
+            ("The Guardian AI",     "https://www.theguardian.com/technology/artificialintelligenceai/rss"),
+            ("GeekWire",            "https://www.geekwire.com/feed/"),
+            ("Gizmodo AI",          "https://gizmodo.com/tag/artificial-intelligence/rss"),
+            ("MacRumors",           "https://feeds.macrumors.com/MacRumors-All"),
+            ("9to5Mac",             "https://9to5mac.com/feed/"),
+            ("Stat News",           "https://www.statnews.com/feed/"),
+            ("Japan Times Tech",    "https://www.japantimes.co.jp/rss/tech"),
+            ("Business Insider",    "https://www.businessinsider.com/rss"),
+            ("AI News",             "https://www.artificialintelligence-news.com/feed/"),
+        ],
+    },
+    "community": {
+        # Reddit developer/researcher discourse — surface viral moments + dev reactions
+        "weight": 4,
+        "max_age_hours": 28,
+        "feeds": [
+            ("Reddit r/MachineLearning", "https://www.reddit.com/r/MachineLearning/.rss"),
+            ("Reddit r/LocalLLaMA",      "https://www.reddit.com/r/LocalLLaMA/.rss"),
+            ("Reddit r/artificial",      "https://www.reddit.com/r/artificial/.rss"),
+            ("Reddit r/singularity",     "https://www.reddit.com/r/singularity/.rss"),
         ],
     },
 }
@@ -100,6 +134,9 @@ PAYWALLED_DOMAINS = {
     "nytimes.com",
     "theathletic.com",
     "theverge.com",
+    "businessinsider.com",
+    "japantimes.co.jp",
+    "hbr.org",
 }
 
 HN_SEARCH = (
@@ -149,7 +186,12 @@ def is_fresh(pub_date, max_age_hours):
 # ── Fetching ───────────────────────────────────────────────────────────────────
 
 def fetch_url(url, timeout=12):
-    req = urllib.request.Request(url, headers={"User-Agent": "AI-News-Bot/2.0"})
+    # Reddit blocks bots; use a browser UA for .rss endpoints
+    ua = ("Mozilla/5.0 (compatible; AI-News-Bot/2.0; +https://github.com/danhedrick1/ai-news)"
+          if "reddit.com" not in url else
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+          "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
+    req = urllib.request.Request(url, headers={"User-Agent": ua})
     with urllib.request.urlopen(req, timeout=timeout) as resp:
         return resp.read()
 
@@ -444,7 +486,7 @@ def generate_summary(articles, target_date):
 
     prompt = f"""You are the editor of "AI News Daily" — a high signal-to-noise AI digest for researchers and engineers.
 
-Today is {nice_date}. You have {len(articles)} scored articles from {n_sources} sources. {n_prev} are flagged [!] PREVIOUSLY COVERED.
+Today is {nice_date}. You have {len(articles)} scored articles from {n_sources} sources across labs (Anthropic, OpenAI, Google, Meta, Mistral), journalism (Reuters, TechCrunch, Bloomberg, Axios, Guardian), analysis (Import AI, The Batch, Mollick, Zvi), research (arXiv), Apple/consumer (MacRumors, 9to5Mac), healthcare AI (Stat News), and community (Reddit r/MachineLearning, r/LocalLLaMA). {n_prev} are flagged [!] PREVIOUSLY COVERED.
 
 SCORING SIGNALS ON EACH ARTICLE:
 - SCORE = tier weight + HN engagement bonus + cross-source bonus − previously-covered penalty
