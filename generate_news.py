@@ -46,18 +46,20 @@ COVERED_PATH      = os.path.join(NEWS_DIR, "covered.json")
 #
 SOURCES = {
     "primary": {
-        # Direct from the labs — highest trust, always include
+        # Direct from the labs + high-trust lab-specific TC tag feeds
+        # (Anthropic/Mistral have no RSS; TechCrunch tag feeds are the best proxy)
         "weight": 10,
         "max_age_hours": 28,
         "feeds": [
-            ("Anthropic Blog",     "https://www.anthropic.com/rss.xml"),
-            ("OpenAI Blog",        "https://openai.com/blog/rss.xml"),
-            ("Google DeepMind",    "https://deepmind.google/blog/rss.xml"),
-            ("Google AI Blog",     "https://blog.google/technology/ai/rss/"),
-            ("Meta AI Research",   "https://research.facebook.com/feed/"),
-            ("Microsoft AI Blog",  "https://blogs.microsoft.com/ai/feed/"),
-            ("Hugging Face Blog",  "https://huggingface.co/blog/feed.xml"),
-            ("Mistral AI News",    "https://mistral.ai/news/rss/"),
+            ("OpenAI Blog",              "https://openai.com/blog/rss.xml"),
+            ("Google DeepMind",          "https://deepmind.google/blog/rss.xml"),
+            ("Google AI Blog",           "https://blog.google/technology/ai/rss/"),
+            ("Meta AI Research",         "https://research.facebook.com/feed/"),
+            ("Microsoft AI Blog",        "https://blogs.microsoft.com/ai/feed/"),
+            ("Hugging Face Blog",        "https://huggingface.co/blog/feed.xml"),
+            ("TechCrunch — Anthropic",   "https://techcrunch.com/tag/anthropic/feed/"),
+            ("TechCrunch — OpenAI",      "https://techcrunch.com/tag/openai/feed/"),
+            ("TechCrunch — Google AI",   "https://techcrunch.com/tag/google-ai/feed/"),
         ],
     },
     "analysis": {
@@ -65,16 +67,13 @@ SOURCES = {
         "weight": 8,
         "max_age_hours": 168,   # 7 days — weekly newsletters
         "feeds": [
-            ("Import AI (Jack Clark)",       "https://importai.substack.com/feed"),
-            ("The Batch (DeepLearning.AI)",  "https://www.deeplearning.ai/the-batch/feed/"),
-            ("MIT Technology Review",        "https://www.technologyreview.com/feed/"),
-            ("One Useful Thing (Mollick)",   "https://www.oneusefulthing.org/feed"),
-            ("Zvi Mowshowitz",               "https://thezvi.substack.com/feed"),
-            ("Nathan Benaich / Air Street",  "https://nathanbenaich.substack.com/feed"),
-            ("The Neuron",                   "https://www.theneurondaily.com/rss"),
-            ("The Neuron (Substack)",        "https://theneurondaily.substack.com/feed"),
-            ("Interconnects",                "https://www.interconnects.ai/feed"),
-            ("HBR AI",                       "https://hbr.org/rss/topic/ai"),
+            ("Import AI (Jack Clark)",      "https://importai.substack.com/feed"),
+            ("MIT Technology Review",       "https://www.technologyreview.com/feed/"),
+            ("One Useful Thing (Mollick)",  "https://www.oneusefulthing.org/feed"),
+            ("Zvi Mowshowitz",              "https://thezvi.substack.com/feed"),
+            ("Nathan Benaich / Air Street", "https://nathanbenaich.substack.com/feed"),
+            ("The Neuron",                  "https://theneuron.ai/feed"),
+            ("Interconnects",               "https://www.interconnects.ai/feed"),
         ],
     },
     "research": {
@@ -88,24 +87,23 @@ SOURCES = {
         ],
     },
     "industry": {
-        # Broad news coverage — higher volume, use score to filter
+        # Broad news coverage — higher volume, Claude filters by relevance + score
         "weight": 3,
         "max_age_hours": 28,
         "feeds": [
-            ("Reuters Technology",  "https://feeds.reuters.com/reuters/technologyNews"),
-            ("TechCrunch",          "https://techcrunch.com/feed/"),
-            ("Axios Tech",          "https://www.axios.com/feeds/feed.rss"),
+            ("TechCrunch AI",       "https://techcrunch.com/tag/artificial-intelligence/feed/"),
+            ("Axios Tech",          "https://api.axios.com/feed/"),
             ("Ars Technica",        "https://feeds.arstechnica.com/arstechnica/technology-lab"),
-            ("VentureBeat AI",      "https://venturebeat.com/ai/feed/"),
+            ("VentureBeat AI",      "https://venturebeat.com/category/ai/feed"),
             ("The Verge AI",        "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml"),
-            ("Wired AI",            "https://www.wired.com/feed/category/artificial-intelligence/latest/rss"),
+            ("Wired",               "https://www.wired.com/feed/rss"),
             ("Bloomberg Tech",      "https://feeds.bloomberg.com/technology/news.rss"),
             ("The Guardian AI",     "https://www.theguardian.com/technology/artificialintelligenceai/rss"),
             ("GeekWire",            "https://www.geekwire.com/feed/"),
             ("Gizmodo AI",          "https://gizmodo.com/tag/artificial-intelligence/rss"),
             ("MacRumors",           "https://feeds.macrumors.com/MacRumors-All"),
             ("9to5Mac",             "https://9to5mac.com/feed/"),
-            ("Stat News",           "https://www.statnews.com/feed/"),
+            ("Stat News AI",        "https://www.statnews.com/topic/artificial-intelligence/feed/"),
             ("Japan Times Tech",    "https://www.japantimes.co.jp/rss/tech"),
             ("Business Insider",    "https://www.businessinsider.com/rss"),
             ("AI News",             "https://www.artificialintelligence-news.com/feed/"),
