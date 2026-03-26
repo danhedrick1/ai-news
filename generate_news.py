@@ -572,13 +572,14 @@ def save_news(content, target_date):
     print(f"Saved: {filepath}")
 
     index_path = os.path.join(NEWS_DIR, "index.json")
-    index = {"dates": []}
+    index = {"dates": [], "lastUpdated": None}
     if os.path.exists(index_path):
         with open(index_path, encoding="utf-8") as f:
             index = json.load(f)
     if target_date not in index["dates"]:
         index["dates"].insert(0, target_date)
         index["dates"] = index["dates"][:90]
+    index["lastUpdated"] = datetime.now(timezone.utc).isoformat()
     with open(index_path, "w", encoding="utf-8") as f:
         json.dump(index, f, indent=2)
     print(f"Updated index")

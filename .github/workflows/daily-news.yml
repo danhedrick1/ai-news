@@ -2,8 +2,17 @@ name: Daily AI News
 
 on:
   schedule:
-    # 6:00 AM UTC daily (adjust timezone offset as needed)
-    - cron: '0 6 * * *'
+    # Every 6 hours ET: 6 AM, 12 PM, 6 PM, 12 AM
+    # During EDT (March-October, UTC-4):
+    - cron: '0 10 * * *'  # 6 AM EDT = 10 AM UTC
+    - cron: '0 16 * * *'  # 12 PM EDT = 4 PM UTC
+    - cron: '0 22 * * *'  # 6 PM EDT = 10 PM UTC
+    - cron: '0 4 * * *'   # 12 AM EDT = 4 AM UTC
+    # Note: During EST (November-February, UTC-5), adjust times to:
+    # - cron: '0 11 * * *'  # 6 AM EST = 11 AM UTC
+    # - cron: '0 17 * * *'  # 12 PM EST = 5 PM UTC
+    # - cron: '0 23 * * *'  # 6 PM EST = 11 PM UTC
+    # - cron: '0 5 * * *'   # 12 AM EST = 5 AM UTC
   workflow_dispatch:  # allows manual trigger from GitHub UI
 
 jobs:
