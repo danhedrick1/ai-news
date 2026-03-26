@@ -1,25 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The Bash — AI News for Builders</title>
+  <title>The Bash — AI & Dev News for Builders</title>
+  <meta name="description" content="The Bash — high-signal AI and dev news, ranked by impact. Updated every 6 hours." />
+  <meta property="og:title" content="The Bash — AI & Dev News" />
+  <meta property="og:description" content="High-signal AI and dev news for developers and researchers. Updated every 6 hours." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://thebash.dev" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="The Bash — AI & Dev News" />
+  <meta name="twitter:description" content="High-signal AI and dev news for developers and researchers." />
+  <link rel="canonical" href="https://thebash.dev" />
+  <link rel="alternate" type="application/rss+xml" title="The Bash RSS" href="/feed.xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    :root {
-      --bg: #0f1117;
-      --sidebar-bg: #161b22;
-      --card-bg: #1c2128;
-      --border: #30363d;
+    :root, [data-theme="dark"] {
+      --bg: #0a0e14;
+      --sidebar-bg: #0f1419;
+      --card-bg: #151b23;
+      --border: #1e2a35;
       --text: #e6edf3;
-      --text-muted: #8b949e;
-      --accent: #58a6ff;
-      --accent-hover: #79b8ff;
-      --tag-bg: #1f3a5f;
-      --tag-text: #79b8ff;
+      --text-muted: #7a8a9e;
+      --accent: #39d353;
+      --accent-hover: #56e06e;
+      --accent-glow: rgba(57,211,83,0.15);
+      --link: #58a6ff;
+      --link-hover: #79b8ff;
+      --tag-bg: #0d2818;
+      --tag-text: #56e06e;
       --header-height: 56px;
+      --font-mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+      --paywall: #d29922;
+      --paywall-bg: rgba(210,153,34,0.1);
+      --code-color: #f0883e;
+    }
+
+    [data-theme="light"] {
+      --bg: #f6f8fa;
+      --sidebar-bg: #ffffff;
+      --card-bg: #ffffff;
+      --border: #d0d7de;
+      --text: #1f2328;
+      --text-muted: #656d76;
+      --accent: #1a7f37;
+      --accent-hover: #2da44e;
+      --accent-glow: rgba(26,127,55,0.1);
+      --link: #0969da;
+      --link-hover: #0550ae;
+      --tag-bg: #dafbe1;
+      --tag-text: #1a7f37;
+      --paywall: #9a6700;
+      --paywall-bg: rgba(154,103,0,0.1);
+      --code-color: #cf222e;
     }
 
     body {
@@ -36,7 +75,7 @@
       position: fixed;
       top: 0; left: 0; right: 0;
       height: var(--header-height);
-      background: rgba(15,17,23,0.85);
+      background: var(--sidebar-bg);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
       display: flex;
@@ -47,50 +86,74 @@
     }
 
     .logo {
-      font-size: 1.2rem;
+      font-family: var(--font-mono);
+      font-size: 1.15rem;
       font-weight: 700;
       color: var(--text);
       letter-spacing: -0.5px;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 0;
+      text-shadow: 0 0 20px var(--accent-glow);
     }
-    .logo .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
-    .logo span { color: var(--accent); }
+    .logo .prompt {
+      color: var(--accent);
+      margin-right: 6px;
+      font-weight: 400;
+      text-shadow: 0 0 12px var(--accent-glow);
+    }
+    .logo .name { color: var(--accent); }
+    .logo .tagline {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      font-weight: 400;
+      margin-left: 12px;
+      letter-spacing: 0.5px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
 
     .header-right {
       margin-left: auto;
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
 
-    #archive-btn {
+    .header-btn {
       background: none;
       border: 1px solid var(--border);
       color: var(--text-muted);
       padding: 6px 12px;
       border-radius: 6px;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       cursor: pointer;
       transition: all 0.15s;
       display: flex;
       align-items: center;
       gap: 6px;
+      font-family: var(--font-mono);
     }
-    #archive-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .header-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+    #subscribe-btn {
+      background: var(--accent);
+      border: 1px solid var(--accent);
+      color: var(--bg);
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s;
+      font-family: var(--font-mono);
+    }
+    #subscribe-btn:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
 
     .last-update-badge {
-      background: none;
       color: var(--text-muted);
-      border: 1px solid var(--border);
-      padding: 6px 12px;
-      border-radius: 6px;
-      font-size: 0.75rem;
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: 6px;
+      font-size: 0.72rem;
+      font-family: var(--font-mono);
+      white-space: nowrap;
     }
 
     .archive-dropdown {
@@ -104,19 +167,12 @@
       max-height: 400px;
       overflow-y: auto;
       z-index: 1000;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
     }
-
-    .archive-dropdown .date-item {
-      padding: 10px 16px;
-      border-left: none;
-      border-radius: 0;
-    }
-    .archive-dropdown .date-item:hover {
-      background: rgba(88,166,255,0.05);
-    }
+    .archive-dropdown .date-item { padding: 10px 16px; border-left: none; border-radius: 0; }
+    .archive-dropdown .date-item:hover { background: var(--accent-glow); }
     .archive-dropdown .date-item.active {
-      background: rgba(88,166,255,0.1);
+      background: var(--accent-glow);
       border-left: 3px solid var(--accent);
       padding-left: 13px;
     }
@@ -148,10 +204,11 @@
     }
 
     aside h2 {
-      font-size: 0.7rem;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
       font-weight: 600;
       color: var(--text-muted);
-      letter-spacing: 1px;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
       padding: 0 16px 12px;
       border-bottom: 1px solid var(--border);
@@ -168,20 +225,13 @@
       transition: background 0.1s;
       border-left: 3px solid transparent;
     }
-    .date-item:hover { background: rgba(88,166,255,0.05); }
+    .date-item:hover { background: var(--accent-glow); }
     .date-item.active {
-      background: rgba(88,166,255,0.1);
+      background: var(--accent-glow);
       border-left-color: var(--accent);
     }
-    .date-item .date-label {
-      font-size: 0.85rem;
-      color: var(--text);
-    }
-    .date-item .date-sub {
-      font-size: 0.7rem;
-      color: var(--text-muted);
-      margin-left: auto;
-    }
+    .date-item .date-label { font-size: 0.85rem; color: var(--text); }
+    .date-item .date-sub { font-size: 0.7rem; color: var(--text-muted); margin-left: auto; }
     .date-item.active .date-label { color: var(--accent); }
 
     /* ── MAIN CONTENT ── */
@@ -212,9 +262,10 @@
 
     /* ── MARKDOWN STYLES ── */
     #content h1 {
-      font-size: 2rem;
+      font-family: var(--font-mono);
+      font-size: 1.8rem;
       font-weight: 700;
-      color: var(--text);
+      color: var(--accent);
       line-height: 1.25;
       margin-bottom: 8px;
       letter-spacing: -0.5px;
@@ -226,7 +277,8 @@
     }
 
     #content h2 {
-      font-size: 1.15rem;
+      font-family: var(--font-mono);
+      font-size: 1.05rem;
       font-weight: 600;
       color: var(--text);
       margin: 36px 0 16px;
@@ -253,7 +305,8 @@
     }
 
     #content p {
-      color: #cdd9e5;
+      color: var(--text);
+      opacity: 0.9;
       line-height: 1.75;
       margin-bottom: 14px;
       font-size: 0.95rem;
@@ -264,7 +317,8 @@
       margin-bottom: 16px;
     }
     #content li {
-      color: #cdd9e5;
+      color: var(--text);
+      opacity: 0.9;
       line-height: 1.7;
       margin-bottom: 6px;
       font-size: 0.95rem;
@@ -272,12 +326,12 @@
     #content li::marker { color: var(--accent); }
 
     #content a {
-      color: var(--accent);
+      color: var(--link);
       text-decoration: none;
-      border-bottom: 1px solid rgba(88,166,255,0.3);
+      border-bottom: 1px solid transparent;
       transition: border-color 0.15s;
     }
-    #content a:hover { border-color: var(--accent); }
+    #content a:hover { border-color: var(--link); }
 
     #content strong { color: var(--text); font-weight: 600; }
     #content em { color: var(--text-muted); }
@@ -285,7 +339,7 @@
     #content blockquote {
       border-left: 3px solid var(--accent);
       padding: 10px 16px;
-      background: rgba(88,166,255,0.05);
+      background: var(--accent-glow);
       border-radius: 0 6px 6px 0;
       margin: 16px 0;
     }
@@ -296,9 +350,9 @@
       border: 1px solid var(--border);
       padding: 2px 6px;
       border-radius: 4px;
-      font-family: "SF Mono", "Fira Code", monospace;
+      font-family: var(--font-mono);
       font-size: 0.85em;
-      color: #f0883e;
+      color: var(--code-color);
     }
 
     #content pre {
@@ -309,17 +363,25 @@
       overflow-x: auto;
       margin: 16px 0;
     }
-    #content pre code {
-      background: none;
-      border: none;
-      padding: 0;
-      color: #e6edf3;
-    }
+    #content pre code { background: none; border: none; padding: 0; color: var(--text); }
 
     #content hr {
       border: none;
       border-top: 1px solid var(--border);
       margin: 28px 0;
+    }
+
+    /* ── READING TIME ── */
+    .reading-time {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 3px 10px;
+      border-radius: 20px;
+      display: inline-block;
+      margin-bottom: 16px;
     }
 
     /* ── DATE HEADER ── */
@@ -337,6 +399,7 @@
       border-radius: 20px;
       font-size: 0.75rem;
       font-weight: 500;
+      font-family: var(--font-mono);
     }
 
     /* ── COLLAPSIBLE STORIES ── */
@@ -370,14 +433,35 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
+    /* ── SHARE BUTTONS ── */
+    .share-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+    }
+    .share-btn {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      background: none;
+      border: 1px solid var(--border);
+      padding: 3px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .share-btn:hover { border-color: var(--accent); color: var(--accent); }
+
     /* ── PAYWALL BADGE ── */
     .paywall-badge {
       display: inline-block;
       font-size: 0.65rem;
       font-weight: 600;
-      color: #d29922;
-      background: rgba(210,153,34,0.1);
-      border: 1px solid rgba(210,153,34,0.35);
+      color: var(--paywall);
+      background: var(--paywall-bg);
+      border: 1px solid color-mix(in srgb, var(--paywall) 35%, transparent);
       padding: 1px 7px;
       border-radius: 20px;
       margin-left: 8px;
@@ -457,14 +541,16 @@
       color: var(--text-muted);
     }
     .empty-state .icon { font-size: 3rem; margin-bottom: 16px; }
-    .empty-state h3 { font-size: 1.1rem; color: var(--text); margin-bottom: 8px; }
+    .empty-state h3 { font-size: 1.1rem; color: var(--text); margin-bottom: 8px; font-family: var(--font-mono); }
     .empty-state p { font-size: 0.9rem; }
 
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
       aside { display: none; }
       main { padding: 24px 20px; }
-      #content h1 { font-size: 1.5rem; }
+      #content h1 { font-size: 1.4rem; }
+      .logo .tagline { display: none; }
+      .header-right { gap: 6px; }
     }
   </style>
 </head>
@@ -472,13 +558,16 @@
 
 <header>
   <div class="logo">
-    <div class="dot"></div>
-    The<span>Bash</span>
+    <span class="prompt">&gt;_</span>
+    <span class="name">The Bash</span>
+    <span class="tagline">your daily terminal into AI & tech</span>
   </div>
   <div class="header-right">
-    <div id="last-update" class="last-update-badge">Last updated: --:--</div>
+    <span id="last-update" class="last-update-badge">last updated: --:--</span>
+    <button id="theme-toggle" class="header-btn" onclick="toggleTheme()" title="Toggle theme">&#9790;</button>
+    <button id="subscribe-btn" onclick="alert('Newsletter coming soon! Stay tuned.')">subscribe</button>
     <div style="position:relative">
-      <button id="archive-btn" onclick="toggleArchive()">📅 Archive</button>
+      <button id="archive-btn" class="header-btn" onclick="toggleArchive()">archive</button>
       <div id="archive-dropdown" class="archive-dropdown" style="display:none">
         <div id="dropdown-dates"></div>
       </div>
@@ -488,18 +577,18 @@
 
 <div class="layout">
   <aside>
-    <h2>Archive</h2>
+    <h2>// archive</h2>
     <div id="date-list"></div>
   </aside>
 
   <main>
     <div id="loading">
       <div class="spinner"></div>
-      <span>Loading latest news…</span>
+      <span>Loading latest digest...</span>
     </div>
     <div id="error-msg" style="display:none">
-      <span style="font-size:2rem">⚠️</span>
-      <span id="error-text">Failed to load news.</span>
+      <span style="font-size:2rem">!</span>
+      <span id="error-text">Failed to load digest.</span>
     </div>
     <div id="format-tabs" class="format-tabs" style="display:none">
       <button class="format-tab active" data-format="website" onclick="switchFormat('website')">Website</button>
@@ -514,14 +603,33 @@
 
 <script>
   let currentDate = null;
-  let lastRefreshTime = null; // Time when last scheduled refresh check ran
+  let lastRefreshTime = null;
   let currentlyOpenStory = null;
-  const REFRESH_HOURS = [6, 12, 18, 0]; // 6 AM, 12 PM, 6 PM, 12 AM
+  const REFRESH_HOURS = [6, 12, 18, 0];
 
-  marked.setOptions({
-    breaks: true,
-    gfm: true,
-  });
+  marked.setOptions({ breaks: true, gfm: true });
+
+  // ── Theme ──────────────────────────────────────────────────────────────────
+
+  function getTheme() {
+    return localStorage.getItem('theme') || 'dark';
+  }
+
+  function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    const btn = document.getElementById('theme-toggle');
+    btn.innerHTML = theme === 'dark' ? '&#9788;' : '&#9790;';
+  }
+
+  function toggleTheme() {
+    const next = getTheme() === 'dark' ? 'light' : 'dark';
+    localStorage.setItem('theme', next);
+    applyTheme(next);
+  }
+
+  applyTheme(getTheme());
+
+  // ── Helpers ─────────────────────────────────────────────────────────────────
 
   function formatDate(iso) {
     const [y, m, d] = iso.split('-');
@@ -539,9 +647,14 @@
   }
 
   function getCurrentDateET() {
-    const et = { timeZone: 'America/New_York' };
-    return new Date().toLocaleDateString('en-CA', et);
+    return new Date().toLocaleDateString('en-CA', { timeZone: 'America/New_York' });
   }
+
+  function slugify(text) {
+    return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 60);
+  }
+
+  // ── Archive Dropdown ────────────────────────────────────────────────────────
 
   function toggleArchive() {
     const dropdown = document.getElementById('archive-dropdown');
@@ -555,7 +668,6 @@
   function populateDropdown(dates) {
     const dropdown = document.getElementById('dropdown-dates');
     dropdown.innerHTML = '';
-
     dates.forEach(d => {
       const item = document.createElement('div');
       item.className = 'date-item' + (d === currentDate ? ' active' : '');
@@ -565,55 +677,46 @@
         <div class="date-label">${formatDate(d)}</div>
         ${rel ? `<div class="date-sub">${rel}</div>` : ''}
       `;
-      item.addEventListener('click', () => {
-        loadNews(d);
-        closeArchiveDropdown();
-      });
+      item.addEventListener('click', () => { loadNews(d); closeArchiveDropdown(); });
       dropdown.appendChild(item);
     });
   }
 
+  // ── Last Updated ────────────────────────────────────────────────────────────
+
   function updateLastRefreshTime(timestamp = lastRefreshTime) {
     if (!timestamp) {
-      document.getElementById('last-update').textContent = 'Last updated: --:--';
+      document.getElementById('last-update').textContent = 'last updated: --:--';
       return;
     }
-    const et = { timeZone: 'America/New_York' };
     const time = new Date(timestamp).toLocaleTimeString('en-US', {
-      ...et,
+      timeZone: 'America/New_York',
       hour: '2-digit',
       minute: '2-digit'
     });
-    document.getElementById('last-update').textContent = `Last updated: ${time}`;
+    document.getElementById('last-update').textContent = `last updated: ${time}`;
   }
 
-  function getNextRefreshTime() {
-    const now = new Date();
-    const et = { timeZone: 'America/New_York' };
-    const etTime = new Date(now.toLocaleString('en-US', { timeZone: 'America/New_York' }));
-    const currentHour = etTime.getHours();
+  // ── Auto-Refresh ────────────────────────────────────────────────────────────
 
-    // Find next refresh hour
+  function getNextRefreshTime() {
+    const etTime = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }));
+    const currentHour = etTime.getHours();
     let nextHour = REFRESH_HOURS.find(h => h > currentHour);
     if (!nextHour && nextHour !== 0) {
-      // No more refreshes today, next is 6 AM tomorrow
       nextHour = 6;
       const tomorrow = new Date(etTime);
       tomorrow.setDate(tomorrow.getDate() + 1);
       tomorrow.setHours(6, 0, 0, 0);
       return tomorrow;
     }
-
     const next = new Date(etTime);
     next.setHours(nextHour, 0, 0, 0);
     return next;
   }
 
   function scheduleNextRefresh() {
-    const nextRefresh = getNextRefreshTime();
-    const now = new Date();
-    const msUntilRefresh = nextRefresh.getTime() - now.getTime();
-
+    const msUntilRefresh = getNextRefreshTime().getTime() - new Date().getTime();
     setTimeout(() => {
       const today = getCurrentDateET();
       if (currentDate === today) {
@@ -621,9 +724,23 @@
         updateLastRefreshTime();
         checkForNewStories();
       }
-      scheduleNextRefresh(); // Schedule the next one
-    }, Math.max(msUntilRefresh, 1000)); // At least 1 second to avoid issues
+      scheduleNextRefresh();
+    }, Math.max(msUntilRefresh, 1000));
   }
+
+  // ── URL Routing ─────────────────────────────────────────────────────────────
+
+  function getDateFromURL() {
+    const match = window.location.pathname.match(/(\d{4}-\d{2}-\d{2})/);
+    return match ? match[1] : null;
+  }
+
+  window.addEventListener('popstate', () => {
+    const d = getDateFromURL();
+    if (d && d !== currentDate) loadNews(d, false);
+  });
+
+  // ── Index & News Loading ────────────────────────────────────────────────────
 
   async function loadIndex() {
     try {
@@ -632,7 +749,6 @@
       const data = await res.json();
       const dates = data.dates || [];
 
-      // Load the lastUpdated timestamp from index.json
       if (data.lastUpdated) {
         lastRefreshTime = new Date(data.lastUpdated).getTime();
       }
@@ -641,7 +757,7 @@
       list.innerHTML = '';
 
       if (dates.length === 0) {
-        list.innerHTML = '<div style="padding:12px 16px;color:var(--text-muted);font-size:0.82rem">No issues yet.</div>';
+        list.innerHTML = '<div style="padding:12px 16px;color:var(--text-muted);font-size:0.82rem">No digests yet.</div>';
         showEmpty();
         return;
       }
@@ -661,20 +777,33 @@
         list.appendChild(item);
       });
 
-      // Also populate the dropdown
       populateDropdown(dates);
       updateLastRefreshTime();
 
-      if (!currentDate && dates.length > 0) {
-        loadNews(dates[0]);
+      // Route: check URL first, then load latest
+      const urlDate = getDateFromURL();
+      if (!currentDate) {
+        if (urlDate && dates.includes(urlDate)) {
+          loadNews(urlDate, false);
+        } else {
+          loadNews(dates[0]);
+        }
       }
     } catch (e) {
-      showError('Could not load news index. Has the first issue been generated yet?');
+      showError('Could not load news index. Has the first digest been generated yet?');
     }
   }
 
-  async function loadNews(dateStr) {
+  async function loadNews(dateStr, pushState = true) {
     currentDate = dateStr;
+
+    // Update URL
+    if (pushState) {
+      history.pushState({}, '', '/' + dateStr);
+    }
+
+    // Update page title
+    document.title = `The Bash — ${formatDate(dateStr)}`;
 
     // Update sidebar active state
     document.querySelectorAll('.date-item').forEach(el => {
@@ -705,6 +834,18 @@
 
       const contentEl = document.getElementById('content');
       contentEl.innerHTML = html;
+
+      // Add reading time
+      const wordCount = md.split(/\s+/).length;
+      const readMin = Math.max(1, Math.round(wordCount / 225));
+      const readingEl = document.createElement('div');
+      readingEl.className = 'reading-time';
+      readingEl.textContent = `~${readMin} min read`;
+      const firstH1 = contentEl.querySelector('h1');
+      if (firstH1 && firstH1.nextElementSibling) {
+        firstH1.nextElementSibling.after(readingEl);
+      }
+
       postProcessContent(contentEl);
       contentEl.style.display = 'block';
       document.getElementById('loading').style.display = 'none';
@@ -714,15 +855,13 @@
       currentlyOpenStory = null;
 
       // Start auto-refresh if viewing today
-      const today = getCurrentDateET();
-      if (dateStr === today) {
-        startAutoRefresh();
+      if (dateStr === getCurrentDateET()) {
+        scheduleNextRefresh();
       }
 
-      // Scroll to top
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch (e) {
-      showError(`Could not load news for ${formatDate(dateStr)}.`);
+      showError(`Could not load digest for ${formatDate(dateStr)}.`);
     }
   }
 
@@ -731,9 +870,9 @@
     document.getElementById('error-msg').style.display = 'none';
     document.getElementById('content').innerHTML = `
       <div class="empty-state">
-        <div class="icon">📰</div>
-        <h3>No issues yet</h3>
-        <p>Run <code>python generate_news.py</code> to create the first issue of The Bash.</p>
+        <div class="icon">&gt;_</div>
+        <h3>No digests yet</h3>
+        <p>Run <code>python generate_news.py</code> to create the first digest.</p>
       </div>
     `;
     document.getElementById('content').style.display = 'block';
@@ -746,12 +885,7 @@
     document.getElementById('error-msg').style.display = 'flex';
   }
 
-  // ── Post-processing: collapsible stories + paywall badges ──────────────────
-
-  function startAutoRefresh() {
-    // Schedule refreshes at 6 AM, 12 PM, 6 PM, 12 AM
-    scheduleNextRefresh();
-  }
+  // ── Auto-Refresh Check ──────────────────────────────────────────────────────
 
   async function checkForNewStories() {
     try {
@@ -769,14 +903,12 @@
       const newStoryCount = tempContainer.children.length - currentContent.children.length;
 
       if (newStoryCount > 0) {
-        // Add new stories with timestamps
         const newStories = Array.from(tempContainer.children).slice(currentContent.children.length);
         const timestamp = new Date().toLocaleTimeString('en-US', {
           timeZone: 'America/New_York',
           hour: '2-digit',
           minute: '2-digit'
         });
-
         newStories.forEach(story => {
           if (story.tagName === 'H3') {
             const timeLabel = document.createElement('span');
@@ -791,6 +923,8 @@
       console.log('Auto-refresh check failed:', e);
     }
   }
+
+  // ── Post-processing ─────────────────────────────────────────────────────────
 
   function postProcessContent(container) {
     makeStoriesCollapsible(container);
@@ -842,7 +976,7 @@
     for (const { heading, body } of groups) {
       if (!body.length) continue;
 
-      // Detect [PAYWALL] in heading text, remove it, add badge
+      // Detect [PAYWALL]
       const rawText = heading.textContent;
       const hasPaywall = rawText.includes('[PAYWALL]');
       if (hasPaywall) {
@@ -851,7 +985,7 @@
         });
         const badge = document.createElement('span');
         badge.className = 'paywall-badge';
-        badge.textContent = '⚠ Paywall';
+        badge.textContent = 'PAYWALL';
         const link = heading.querySelector('a');
         if (link) link.after(badge);
         else heading.appendChild(badge);
@@ -863,33 +997,41 @@
       body[0].parentNode.insertBefore(wrapper, body[0]);
       body.forEach(n => wrapper.appendChild(n));
 
-      // Replace any remaining [PAYWALL] markers inside the body
       wrapper.innerHTML = wrapper.innerHTML.replace(
         /\[PAYWALL\]/g,
-        '<span class="paywall-badge">⚠ Paywall</span>'
+        '<span class="paywall-badge">PAYWALL</span>'
       );
 
-      // Wire up the toggle
+      // Add share buttons
+      const storySlug = slugify(heading.textContent);
+      const storyUrl = `${window.location.origin}/${currentDate}#${storySlug}`;
+      const shareRow = document.createElement('div');
+      shareRow.className = 'share-row';
+      shareRow.innerHTML = `
+        <button class="share-btn" onclick="window.open('https://twitter.com/intent/tweet?text=${encodeURIComponent(heading.textContent)}&url=${encodeURIComponent(storyUrl)}','_blank','width=550,height=420')">share on X</button>
+        <button class="share-btn" onclick="navigator.clipboard.writeText('${storyUrl}');this.textContent='copied!'">copy link</button>
+      `;
+      wrapper.appendChild(shareRow);
+
+      // Wire up toggle
       heading.classList.add('story-toggle');
+      heading.id = storySlug;
       const chevron = document.createElement('span');
       chevron.className = 'story-chevron';
-      chevron.textContent = '▸';
+      chevron.textContent = '\u25B8';
       heading.insertBefore(chevron, heading.firstChild);
 
       heading.addEventListener('click', () => {
-        // Auto-collapse previous story
         if (currentlyOpenStory && currentlyOpenStory !== heading) {
           const prevWrapper = currentlyOpenStory.nextElementSibling;
           if (prevWrapper && prevWrapper.classList.contains('story-body')) {
             prevWrapper.classList.remove('open');
             const prevChevron = currentlyOpenStory.querySelector('.story-chevron');
-            if (prevChevron) prevChevron.textContent = '▸';
+            if (prevChevron) prevChevron.textContent = '\u25B8';
           }
         }
-
-        // Toggle current story
         const open = wrapper.classList.toggle('open');
-        chevron.textContent = open ? '▾' : '▸';
+        chevron.textContent = open ? '\u25BE' : '\u25B8';
         currentlyOpenStory = open ? heading : null;
       });
     }
@@ -934,7 +1076,8 @@
     }
   }
 
-  // Close dropdown when clicking outside
+  // ── Global Events ───────────────────────────────────────────────────────────
+
   document.addEventListener('click', (e) => {
     const archiveBtn = document.getElementById('archive-btn');
     const dropdown = document.getElementById('archive-dropdown');
