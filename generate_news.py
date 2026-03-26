@@ -868,6 +868,7 @@ def fallback_daily_digest(articles, target_date, reason=None):
         4,
         lambda a: a["source"] == "GitHub Trending" or "github.com" in a["link"].lower(),
     )
+    policy_entries = pick(articles, 4, lambda a: a["tier"] == "policy")
     quick_hits = pick(articles, 12)
 
     tier_counts = {}
@@ -932,7 +933,7 @@ def fallback_daily_digest(articles, target_date, reason=None):
         "",
         "---",
         "",
-        "## man bash-research // research radar",
+        "## man pages // deep cuts",
         "",
     ])
     if research_entries:
@@ -950,7 +951,7 @@ def fallback_daily_digest(articles, target_date, reason=None):
     lines.extend([
         "---",
         "",
-        "## pkg ls // tools & repos",
+        "## pkg ls // repos & open source",
         "",
     ])
     if tool_entries:
@@ -963,6 +964,19 @@ def fallback_daily_digest(articles, target_date, reason=None):
             "No repo or tooling stories stood out enough to list separately in this run.",
             "",
         ])
+
+    if policy_entries:
+        lines.extend([
+            "",
+            "---",
+            "",
+            "## /etc/rules.d // compliance watch",
+            "",
+        ])
+        for article in policy_entries:
+            lines.append(
+                f"**{article['title']}** — [{article['source']}]({article['link']})"
+            )
 
     lines.extend([
         "",
