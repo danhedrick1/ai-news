@@ -1307,26 +1307,26 @@
     if (plain.includes('top stories') || plain.includes('stdout')) {
       return { kicker: 'stdout', label: 'top stories' };
     }
-    if (plain.includes('tools to try') || plain.includes('$_')) {
-      return { kicker: '$_', label: 'tools to try' };
+    if (plain.includes('launch pad') || plain.includes('$_')) {
+      return { kicker: '$_', label: 'launch pad' };
     }
-    if (plain.includes('big tech') || plain.includes('cat /var/log')) {
-      return { kicker: 'cat /var/log', label: 'big tech & industry' };
+    if (plain.includes('the feed') || plain.includes('cat /var/log')) {
+      return { kicker: 'cat /var/log', label: 'the feed' };
     }
     if (plain.includes('quick hits') || plain.includes('stderr')) {
       return { kicker: 'stderr', label: 'quick hits' };
     }
-    if (plain.includes('research') || plain.includes('man bash')) {
-      return { kicker: 'man bash-research', label: 'research & papers' };
+    if (plain.includes('deep cuts') || plain.includes('man pages')) {
+      return { kicker: 'man pages', label: 'deep cuts' };
     }
     if (plain.includes('repos') || plain.includes('open source') || plain.includes('pkg ls')) {
       return { kicker: 'pkg ls', label: 'repos & open source' };
     }
-    if (plain.includes('policy') || plain.includes('regulation') || plain.includes('governance')) {
-      return { kicker: '/etc/policy.d', label: 'regulation & governance' };
+    if (plain.includes('compliance') || plain.includes('/etc/rules')) {
+      return { kicker: '/etc/rules.d', label: 'compliance watch' };
     }
-    if (plain.includes('fundraising') || plain.includes('deals') || plain.includes('rounds')) {
-      return { kicker: 'tail -f', label: 'deals & rounds' };
+    if (plain.includes('cap table') || plain.includes('tail -f')) {
+      return { kicker: 'tail -f', label: 'cap table' };
     }
     if (plain.includes('trend watch') || plain.includes('crontab')) {
       return { kicker: 'crontab -l', label: 'trend watch' };

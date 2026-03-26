@@ -1088,14 +1088,14 @@ FORMAT:
 
 ---
 
-## $_ // tools to try
+## $_ // launch pad
 
 [5-8 new tools, products, or launches that builders can actually use TODAY. Each entry = one dense sentence + availability/pricing info. Format:
 **Tool name** — what it does in one sentence. [Source](URL) · free / free tier / $X/mo / open source]
 
 ---
 
-## cat /var/log // big tech & industry
+## cat /var/log // the feed
 
 [8-15 one-sentence items about major company moves, product launches, partnerships, executive changes. One sentence each, dense with facts. Format:
 **Company** did X. [Source](URL)]
@@ -1109,7 +1109,7 @@ FORMAT:
 
 ---
 
-## man bash-research // research & papers
+## man pages // deep cuts
 
 [5-10 notable research items. Prefer variety: arXiv, HuggingFace, Google Research, Microsoft Research, university labs, conference papers, industry research blogs. Do NOT fill exclusively with arXiv. Format:
 **Paper/project title** — one sentence on what's novel and why it matters. [Source](URL)]
@@ -1123,14 +1123,14 @@ FORMAT:
 
 ---
 
-## /etc/policy.d // regulation & governance
+## /etc/rules.d // compliance watch
 
 [3-6 policy, safety, governance, or legal items. One sentence each. Format:
 **Topic** — what changed. [Source](URL)]
 
 ---
 
-## tail -f /dev/fundraising // deals & rounds
+## tail -f // cap table
 
 [List all funding rounds, acquisitions, and valuations mentioned today. Format:
 **Company** — $amount for what (investors if notable). [Source](URL)]
