@@ -891,7 +891,7 @@ def fallback_daily_digest(articles, target_date, reason=None):
         "",
         "---",
         "",
-        "## stdout // top stories",
+        "## stdout // the big story",
         "",
     ]
 
