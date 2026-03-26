@@ -561,6 +561,11 @@
       const data = await res.json();
       const dates = data.dates || [];
 
+      // Load the lastUpdated timestamp from index.json
+      if (data.lastUpdated) {
+        lastRefreshTime = new Date(data.lastUpdated).getTime();
+      }
+
       const list = document.getElementById('date-list');
       list.innerHTML = '';
 
