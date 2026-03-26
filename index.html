@@ -1300,20 +1300,35 @@
   }
 
   function sectionChrome(text) {
-    const plain = text.replace(/[^A-Za-z0-9&\s-]/g, '').replace(/\s+/g, ' ').trim().toLowerCase();
+    const plain = text.replace(/[^A-Za-z0-9&\s$_/-]/g, '').replace(/\s+/g, ' ').trim().toLowerCase();
+    if (plain.includes('big story')) {
+      return { kicker: 'stdout', label: 'the big story' };
+    }
     if (plain.includes('top stories') || plain.includes('stdout')) {
       return { kicker: 'stdout', label: 'top stories' };
+    }
+    if (plain.includes('tools to try') || plain.includes('$_')) {
+      return { kicker: '$_', label: 'tools to try' };
+    }
+    if (plain.includes('big tech') || plain.includes('cat /var/log')) {
+      return { kicker: 'cat /var/log', label: 'big tech & industry' };
     }
     if (plain.includes('quick hits') || plain.includes('stderr')) {
       return { kicker: 'stderr', label: 'quick hits' };
     }
-    if (plain.includes('research radar') || plain.includes('man bash-research') || plain.includes('man bash research')) {
-      return { kicker: 'man bash-research', label: 'research radar' };
+    if (plain.includes('research') || plain.includes('man bash')) {
+      return { kicker: 'man bash-research', label: 'research & papers' };
     }
-    if (plain.includes('tools & repos') || plain.includes('tools repos') || plain.includes('pkg ls')) {
-      return { kicker: 'pkg ls', label: 'tools & repos' };
+    if (plain.includes('repos') || plain.includes('open source') || plain.includes('pkg ls')) {
+      return { kicker: 'pkg ls', label: 'repos & open source' };
     }
-    if (plain.includes('trend watch') || plain.includes('crontab -l') || plain.includes('crontab')) {
+    if (plain.includes('policy') || plain.includes('regulation') || plain.includes('governance')) {
+      return { kicker: '/etc/policy.d', label: 'regulation & governance' };
+    }
+    if (plain.includes('fundraising') || plain.includes('deals') || plain.includes('rounds')) {
+      return { kicker: 'tail -f', label: 'deals & rounds' };
+    }
+    if (plain.includes('trend watch') || plain.includes('crontab')) {
       return { kicker: 'crontab -l', label: 'trend watch' };
     }
     return null;

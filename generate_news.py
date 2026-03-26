@@ -739,36 +739,26 @@ def score_articles(articles, hn_stories, gh_repos=None, hf_papers=None):
 def digest_quality_stats(content):
     """Estimate whether the generated digest is materially complete."""
     top_stories = len(re.findall(r"^### ", content, flags=re.MULTILINE))
-    quick_hit_bullets = 0
-    in_quick_hits = False
-    in_tools = False
-    in_research = False
-    research_entries = 0
-    tool_entries = 0
+    # Count bold-started entries across all categorized sections
+    categorized_items = 0
+    in_section = False
 
     for raw in content.splitlines():
         line = raw.strip()
         if line.startswith("## "):
             lower = line.lower()
-            in_quick_hits = "quick hits" in lower or "stderr" in lower
-            in_research = "research radar" in lower or "bash-research" in lower
-            in_tools = "tools & repos" in lower or "pkg ls" in lower
+            # Any section that isn't the big story or trend watch contains list items
+            in_section = not any(x in lower for x in ["big story", "top stories", "trend watch", "crontab"])
             continue
         if line.startswith("---"):
-            in_quick_hits = in_research = in_tools = False
+            in_section = False
             continue
-        if in_quick_hits and line.startswith("- "):
-            quick_hit_bullets += 1
-        if in_research and line.startswith("**"):
-            research_entries += 1
-        if in_tools and line.startswith("**"):
-            tool_entries += 1
+        if in_section and (line.startswith("**") or line.startswith("- **")):
+            categorized_items += 1
 
     return {
         "top_stories": top_stories,
-        "quick_hits": quick_hit_bullets,
-        "research_entries": research_entries,
-        "tool_entries": tool_entries,
+        "categorized_items": categorized_items,
     }
 
 
@@ -1042,9 +1032,9 @@ def generate_summary(articles, target_date):
         f"{tier.upper()}={count}" for tier, count in sorted(tier_counts.items())
     )
 
-    prompt = f"""You are the editor of theba.sh — a high signal-to-noise AI & tech digest for hackers, developers, and engineers. Your voice is direct, technically sharp, and developer-friendly. No hype, no fluff — just what matters for builders.
+    prompt = f"""You are the editor of theba.sh — a comprehensive AI & tech digest for hackers, developers, and engineers. Your goal is THOROUGHNESS: cover everything notable that happened today. Your voice is direct, technically sharp, and developer-friendly. No hype, no fluff — but don't cut corners on breadth.
 
-Today is {nice_date}. You have {len(articles)} scored articles from {n_sources} sources across labs (Anthropic, OpenAI, Google, Meta, Mistral, NVIDIA, Cohere, Stability), journalism (Reuters, TechCrunch, Bloomberg, Axios, Guardian), analysis (Import AI, Latent Space, Semianalysis, Mollick, Zvi, Ben's Bites), research (arXiv, HuggingFace Papers), developer community (GitHub Trending, Reddit r/MachineLearning, r/LocalLLaMA, Lobste.rs, HN), and policy (Stanford HAI, Brookings). {n_prev} are flagged [!] PREVIOUSLY COVERED.
+Today is {nice_date}. You have {len(articles)} scored articles from {n_sources} sources across labs (Anthropic, OpenAI, Google, Meta, Mistral, NVIDIA, Cohere, Stability), journalism (Reuters, TechCrunch, Bloomberg, Axios, Guardian), analysis (Import AI, Latent Space, Semianalysis, Mollick, Zvi, Ben's Bites), research (arXiv, HuggingFace Papers, Google Research, Microsoft Research, Allen AI, BAIR), developer community (GitHub Trending, Reddit r/MachineLearning, r/LocalLLaMA, Lobste.rs, HN), and policy (Stanford HAI, Brookings). {n_prev} are flagged [!] PREVIOUSLY COVERED.
 Tier mix available right now: {tier_summary}.
 
 SCORING SIGNALS ON EACH ARTICLE:
@@ -1054,23 +1044,14 @@ SCORING SIGNALS ON EACH ARTICLE:
 - x2/x3 sources = same story confirmed by multiple outlets
 - [!] PREVIOUSLY COVERED = this topic appeared in a recent issue
 
-CLASSIFICATION — mentally classify each story you include as one of:
-breakthrough | tool | funding | controversy | dev_insight | research | policy
-
-VIRAL FILTER — before including any story, ask: "Is this surprising, useful, or new to a technical reader?" Reject if:
-- obvious/expected news everyone already knows
-- no actionable insight for builders
-- pure PR / puff piece with no substance
-
 RULES:
 1. **Freshness first** — only include [!] PREVIOUSLY COVERED stories if there is a genuinely new development. If including one, start with "**Update:**".
 2. **Order strictly by impact** — score is your primary signal; editorial judgment as tiebreaker.
 3. **No duplicates** — articles have already been deduplicated. If you still see near-identical stories, pick the best one and skip the other. Cite all sources on the winner using "Also covered by:" info.
-4. **Splash labeling** — note "[HN] Trending on HN: Xpts" or "Covered by X outlets" on top stories.
-5. **No noise** — skip listicles, job posts, puff pieces. Be ruthless.
-6. **Research gets its own section** — research items go in Research Radar. Pull from ALL research sources (arXiv, HuggingFace, Google Research, Microsoft Research, Allen AI, BAIR, etc.), not just arXiv.
-7. Use the actual source URLs in every link.
-8. **Paywalled sources** — if flagged [PAYWALL]: append ` [PAYWALL]` to ### headline, write longer summary (4-5 sentences + bullets).
+4. **Be thorough** — aim for 50-80+ total items across all sections. Better to include a story as a one-liner in the right category than to skip it entirely.
+5. **No noise** — skip listicles, job posts, puff pieces. But don't confuse brevity with noise — a one-sentence item about a real event is signal.
+6. Use the actual source URLs in every link.
+7. **Paywalled sources** — if flagged [PAYWALL]: append ` [PAYWALL]` to headline, write longer summary.
 
 TONE:
 - Sharp, slightly contrarian, builder-focused
@@ -1088,43 +1069,71 @@ FORMAT:
 
 ---
 
+## stdout // the big story
+
+[The #1 story of the day gets DEEP treatment — 2-4 paragraphs. Include: what happened, why it matters, specific numbers/benchmarks/quotes, controversy or counterarguments if any, what builders should do about it. Cite all sources. This should feel like a mini-essay, not a blurb.]
+
+**Source:** [Publication](URL) · Also: [Source2](URL), [Source3](URL)
+
+---
+
 ## stdout // top stories
 
-[5-7 entries. Each story MUST include a DEV TAKE — a one-sentence opinionated takeaway a smart engineer would say. Use this exact structure:]
+[4-6 more entries, each with this structure:]
 
-### Headline That Creates Urgency or Curiosity
-*[classification]* — 2-3 sentence summary of what actually happened and why it matters for builders. Concrete specifics: numbers, capabilities, constraints. For [PAYWALL] stories write 4-5 sentences plus **Key details:** bullets.
-
-- Bullet 1: key fact
-- Bullet 2: key fact
-- Bullet 3: what a dev/operator can DO differently now
-
-**🔧 Dev Take:** "One sentence, slightly opinionated takeaway that a smart engineer would say."
-
-**Source:** [Publication](URL) · Score signal if notable
+### Headline
+2-3 sentence summary with concrete specifics. What happened and why it matters.
+**Source:** [Publication](URL)
 [Read more →](URL)
+
+---
+
+## $_ // tools to try
+
+[5-8 new tools, products, or launches that builders can actually use TODAY. Each entry = one dense sentence + availability/pricing info. Format:
+**Tool name** — what it does in one sentence. [Source](URL) · free / free tier / $X/mo / open source]
+
+---
+
+## cat /var/log // big tech & industry
+
+[8-15 one-sentence items about major company moves, product launches, partnerships, executive changes. One sentence each, dense with facts. Format:
+**Company** did X. [Source](URL)]
 
 ---
 
 ## stderr // quick hits
 
-[10-15 bullets. Keep each bullet SHORT — no previews, no full descriptions. Format:
-**Topic** *[classification]* — [Source](URL)
-If a story has a genuinely notable one-line hook, add it after the classification. Otherwise just title + tag + link.]
+[10-20 additional notable items that don't fit other categories. One sentence each. Format:
+**Topic** — one-sentence hook. [Source](URL)]
 
 ---
 
-## man bash-research // research radar
+## man bash-research // research & papers
 
-[3-6 notable research items. Prefer variety in sources — arXiv, HuggingFace, Semantic Scholar, university labs, industry research blogs, conference proceedings (NeurIPS, ICML, ACL, etc). Do NOT fill this section exclusively with arXiv. Format:
-**Paper/project title** — one sentence on what's novel. [Source](URL)]
+[5-10 notable research items. Prefer variety: arXiv, HuggingFace, Google Research, Microsoft Research, university labs, conference papers, industry research blogs. Do NOT fill exclusively with arXiv. Format:
+**Paper/project title** — one sentence on what's novel and why it matters. [Source](URL)]
 
 ---
 
-## pkg ls // tools & repos
+## pkg ls // repos & open source
 
-[3-5 new tools, libraries, or trending repos. Keep entries short. Prefer variety — don't just list GitHub Trending; include tools from Product Hunt, HN Show, blog announcements, etc. Format:
-**Tool/Repo name** — what it does in one sentence. [Source](URL)]
+[3-6 trending repos, new libraries, or open-source releases. One sentence each. Format:
+**Repo name** — what it does. [Source](URL) · stars if available]
+
+---
+
+## /etc/policy.d // regulation & governance
+
+[3-6 policy, safety, governance, or legal items. One sentence each. Format:
+**Topic** — what changed. [Source](URL)]
+
+---
+
+## tail -f /dev/fundraising // deals & rounds
+
+[List all funding rounds, acquisitions, and valuations mentioned today. Format:
+**Company** — $amount for what (investors if notable). [Source](URL)]
 
 ---
 
@@ -1146,7 +1155,7 @@ ARTICLES (ranked by score — use this order as primary signal):
     try:
         msg = client.messages.create(
             model="claude-sonnet-4-6",
-            max_tokens=8000,
+            max_tokens=16000,
             messages=[{"role": "user", "content": prompt}],
         )
         content = msg.content[0].text
@@ -1155,12 +1164,7 @@ ARTICLES (ranked by score — use this order as primary signal):
         return fallback_daily_digest(articles, target_date, "model request failed")
 
     stats = digest_quality_stats(content)
-    if (
-        stats["top_stories"] < 4
-        or stats["quick_hits"] < 8
-        or stats["research_entries"] < 2
-        or stats["tool_entries"] < 2
-    ):
+    if stats["top_stories"] < 3 or stats["categorized_items"] < 10:
         print(f"  [warn] Claude digest was too thin ({stats}) - using fallback daily digest")
         return fallback_daily_digest(articles, target_date, "model output below quality threshold")
 
