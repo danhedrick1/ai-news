@@ -869,6 +869,7 @@ def fallback_daily_digest(articles, target_date, reason=None):
         lambda a: a["source"] == "GitHub Trending" or "github.com" in a["link"].lower(),
     )
     policy_entries = pick(articles, 4, lambda a: a["tier"] == "policy")
+    funding_entries = pick(articles, 4, lambda a: article_classification(a) == "funding")
     quick_hits = pick(articles, 12)
 
     tier_counts = {}
@@ -974,6 +975,19 @@ def fallback_daily_digest(articles, target_date, reason=None):
             "",
         ])
         for article in policy_entries:
+            lines.append(
+                f"**{article['title']}** — [{article['source']}]({article['link']})"
+            )
+
+    if funding_entries:
+        lines.extend([
+            "",
+            "---",
+            "",
+            "## tail -f // cap table",
+            "",
+        ])
+        for article in funding_entries:
             lines.append(
                 f"**{article['title']}** — [{article['source']}]({article['link']})"
             )
