@@ -40,6 +40,17 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python generate_news.py
 
+      - name: Generate weekly recap on Sundays in New York
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ "$(TZ=America/New_York date +%u)" = "7" ]; then
+            python generate_news.py --weekly
+          else
+            echo "Skipping weekly recap outside Sunday ET."
+          fi
+
       - name: Commit and push news
         run: |
           git config user.name "AI News Bot"

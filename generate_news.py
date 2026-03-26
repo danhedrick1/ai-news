@@ -9,6 +9,7 @@ HN engagement + cross-source signal, and deduplicated against previous issues.
 Usage:
   python generate_news.py              # today
   python generate_news.py 2026-03-24   # specific date
+  python generate_news.py --weekly     # weekly recap for current ET date
 
 Required env vars (in .env):
   ANTHROPIC_API_KEY
@@ -32,6 +33,7 @@ GITHUB_TOKEN      = os.environ.get("GITHUB_TOKEN", "")
 REPO_PATH         = os.environ.get("REPO_PATH", os.path.dirname(os.path.abspath(__file__)))
 NEWS_DIR          = os.path.join(REPO_PATH, "news")
 COVERED_PATH      = os.path.join(NEWS_DIR, "covered.json")
+WEEKLY_INDEX_PATH = os.path.join(NEWS_DIR, "weekly-index.json")
 
 # ── Sources by tier ────────────────────────────────────────────────────────────
 #
@@ -496,6 +498,105 @@ def mark_previously_covered(articles):
     return articles
 
 
+def week_window(target):
+    """Return Monday-Sunday date window for the week containing target."""
+    start = target - timedelta(days=target.weekday())
+    end = start + timedelta(days=6)
+    return start, end
+
+
+def week_id(target):
+    """ISO week id like 2026-W13."""
+    iso_year, iso_week, _ = target.isocalendar()
+    return f"{iso_year}-W{iso_week:02d}"
+
+
+def read_digest_markdown(day):
+    """Return markdown for a saved daily digest, or None if missing."""
+    path = os.path.join(NEWS_DIR, f"{day.isoformat()}.md")
+    if not os.path.exists(path):
+        return None
+    with open(path, encoding="utf-8") as f:
+        return f.read()
+
+
+def extract_weekly_digest_context(markdown):
+    """Pull headlines and synthesis paragraphs from a daily digest."""
+    headlines = []
+    trend_lines = []
+    quick_hits = []
+    current_section = ""
+
+    for raw in markdown.splitlines():
+        line = raw.strip()
+        if not line:
+            continue
+        if line.startswith("## "):
+            current_section = line[3:].lower()
+            continue
+        if line.startswith("### "):
+            headlines.append(line[4:].strip())
+            continue
+        if line.startswith("- **"):
+            quick_hits.append(line)
+            continue
+        if "trend watch" in current_section or "crontab -l" in current_section:
+            if not line.startswith("---"):
+                trend_lines.append(line)
+
+    return {
+        "headlines": headlines[:6],
+        "quick_hits": quick_hits[:6],
+        "trend_watch": trend_lines[:3],
+    }
+
+
+def fallback_weekly_recap(digests, week_label):
+    """Simple weekly recap when Anthropic is unavailable."""
+    lines = [
+        "---",
+        "",
+        f"# The Bash Weekly - {week_label}",
+        "",
+        f"*{len(digests)} daily digests stitched into one weekly recap*",
+        "",
+        "---",
+        "",
+        "## Week in One Screen",
+        "",
+        "This recap was assembled from the daily issues already published during the week. Use it as a fast catch-up, then jump into the linked daily digests for the full signal.",
+        "",
+        "## Daily Signal Log",
+        "",
+    ]
+
+    for digest in digests:
+        lines.append(
+            f"### {digest['nice_date']} - [open digest](https://thebash.dev/{digest['date']})"
+        )
+        for headline in digest["context"]["headlines"][:4]:
+            lines.append(f"- {headline}")
+        if digest["context"]["trend_watch"]:
+            lines.append(f"- Trend watch: {digest['context']['trend_watch'][0]}")
+        lines.append("")
+
+    lines.extend([
+        "## What to Watch Next",
+        "",
+        "- The labs are still shipping faster than the media cycle can digest them.",
+        "- Tooling and distribution continue to matter more than benchmark theater.",
+        "- The next weekly recap should call out what moved from demo to production.",
+        "",
+        "---",
+        "",
+        "*The Bash Weekly - built for builders*",
+        "",
+        "---",
+    ])
+
+    return "\n".join(lines)
+
+
 # ── Scoring ────────────────────────────────────────────────────────────────────
 
 def keyword_boost(title, desc=""):
@@ -691,7 +792,7 @@ FORMAT:
 
 ---
 
-## 🔥 Top Stories
+## stdout // top stories
 
 [5-7 entries. Each story MUST include a DEV TAKE — a one-sentence opinionated takeaway a smart engineer would say. Use this exact structure:]
 
@@ -709,13 +810,13 @@ FORMAT:
 
 ---
 
-## ⚡ Quick Hits
+## stderr // quick hits
 
 [10-15 bullets. Format: **Topic** *[classification]* — one sentence of what changed + why it matters. [Source](URL)]
 
 ---
 
-## 🔬 Research Radar
+## man bash-research // research radar
 
 [3-6 papers from arXiv or HuggingFace. Format:
 **Paper title** — one sentence on what's novel and why builders should care. [arXiv/HF](URL)
@@ -723,14 +824,14 @@ FORMAT:
 
 ---
 
-## 🛠️ Tools & Repos
+## pkg ls // tools & repos
 
 [3-5 new tools, libraries, or trending repos. Format:
 **Tool/Repo name** — what it does in one sentence. [GitHub/Link](URL) · ⭐ stars if available]
 
 ---
 
-## 📊 Trend Watch
+## crontab -l // trend watch
 
 [2-3 paragraphs of synthesis. What's the signal vs noise? What patterns are emerging? What should builders actually pay attention to? Be direct, opinionated, slightly contrarian. End with a bold prediction or hot take.]
 
@@ -825,6 +926,148 @@ TONE: sharp, direct, no hype. Builder-focused."""
         messages=[{"role": "user", "content": prompt}],
     )
     return msg.content[0].text
+
+
+def generate_weekly_recap(digests, week_start, week_end, client=None):
+    """Generate a weekly recap from saved daily digest markdown."""
+    week_label = f"{week_start.strftime('%b %d')} - {week_end.strftime('%b %d, %Y')}"
+    if not client:
+        return fallback_weekly_recap(digests, week_label)
+
+    digest_text = []
+    for digest in digests:
+        context = digest["context"]
+        digest_text.append(
+            "\n".join([
+                f"DATE: {digest['nice_date']}",
+                f"DIGEST URL: https://thebash.dev/{digest['date']}",
+                "HEADLINES:",
+                *(f"- {h}" for h in context["headlines"]),
+                "QUICK HITS:",
+                *(context["quick_hits"] or ["- none captured"]),
+                "TREND WATCH:",
+                *(context["trend_watch"] or ["- none captured"]),
+            ])
+        )
+
+    prompt = f"""You are writing The Bash Weekly, the end-of-week version of The Bash for builders.
+
+Date range: {week_label}
+Daily digest count: {len(digests)}
+
+Write a weekly recap in markdown. Be direct, technical, and useful for builders.
+
+FORMAT:
+
+---
+
+# The Bash Weekly - {week_label}
+
+*{len(digests)} daily digests - one weekly signal pass*
+
+---
+
+## Week in One Screen
+
+[2 short paragraphs on what actually changed this week]
+
+## Biggest Shifts
+
+[3-5 items. Each item should be:]
+### Headline
+2-3 sentences on why it mattered this week.
+- One concrete takeaway
+- One thing builders should watch next
+**Source trail:** [Mon digest](https://thebash.dev/2026-03-23) and similar links to the relevant daily digests
+
+## Builder Board
+
+[5-7 bullets covering tools, repos, releases, or tactics worth attention next week]
+
+## What to Watch Next Week
+
+[1 paragraph with a clear prediction or operator take]
+
+---
+
+*The Bash Weekly - built for builders*
+
+---
+
+DAILY DIGEST INPUTS:
+
+{chr(10).join(digest_text)}
+"""
+
+    msg = client.messages.create(
+        model="claude-sonnet-4-6",
+        max_tokens=3500,
+        messages=[{"role": "user", "content": prompt}],
+    )
+    return msg.content[0].text
+
+
+def save_weekly_recap(content, target, source_dates):
+    """Write weekly recap markdown and update weekly-index.json."""
+    os.makedirs(NEWS_DIR, exist_ok=True)
+    start, end = week_window(target)
+    ident = week_id(target)
+    path = os.path.join(NEWS_DIR, f"{ident}-weekly.md")
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(content)
+    print(f"Saved: {path}")
+
+    index = {"weeks": [], "lastUpdated": None}
+    if os.path.exists(WEEKLY_INDEX_PATH):
+        with open(WEEKLY_INDEX_PATH, encoding="utf-8") as f:
+            index = json.load(f)
+
+    entry = {
+        "id": ident,
+        "label": f"{start.strftime('%b %d')} - {end.strftime('%b %d, %Y')}",
+        "startDate": start.isoformat(),
+        "endDate": end.isoformat(),
+        "sourceDates": source_dates,
+        "path": f"news/{ident}-weekly.md",
+    }
+
+    weeks = [w for w in index.get("weeks", []) if w.get("id") != ident]
+    weeks.insert(0, entry)
+    weeks.sort(key=lambda item: item.get("endDate", ""), reverse=True)
+    index["weeks"] = weeks[:26]
+    index["lastUpdated"] = datetime.now(timezone.utc).isoformat()
+
+    with open(WEEKLY_INDEX_PATH, "w", encoding="utf-8") as f:
+        json.dump(index, f, indent=2)
+    print("Updated weekly index")
+    return path
+
+
+def build_weekly_recap_for_date(target_date, client=None):
+    """Build a weekly recap from the current ISO week's saved daily digests."""
+    start, end = week_window(target_date)
+    digests = []
+
+    current = start
+    while current <= end:
+        markdown = read_digest_markdown(current)
+        if markdown:
+            digests.append({
+                "date": current.isoformat(),
+                "nice_date": current.strftime("%A, %b %d"),
+                "markdown": markdown,
+                "context": extract_weekly_digest_context(markdown),
+            })
+        current += timedelta(days=1)
+
+    if len(digests) < 2:
+        print("Not enough daily digests available yet for a weekly recap.")
+        return None
+
+    print(f"Generating weekly recap from {len(digests)} daily digests...")
+    content = generate_weekly_recap(digests, start, end, client)
+    save_weekly_recap(content, target_date, [d["date"] for d in digests])
+    return week_id(target_date)
 
 
 # ── Save & Push ────────────────────────────────────────────────────────────────
@@ -955,6 +1198,14 @@ def generate_sitemap():
     for d in dates:
         urls.append(f'  <url>\n    <loc>https://thebash.dev/{d}</loc>\n  </url>')
 
+    if os.path.exists(WEEKLY_INDEX_PATH):
+        with open(WEEKLY_INDEX_PATH, encoding="utf-8") as f:
+            weekly_index = json.load(f)
+        for week in weekly_index.get("weeks", []):
+            ident = week.get("id")
+            if ident:
+                urls.append(f'  <url>\n    <loc>https://thebash.dev/week/{ident}</loc>\n  </url>')
+
     sitemap = (
         '<?xml version="1.0" encoding="UTF-8"?>\n'
         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
@@ -979,13 +1230,62 @@ def generate_robots_txt():
 
 # ── Main ───────────────────────────────────────────────────────────────────────
 
+def parse_args(argv):
+    """Parse simple CLI args without external dependencies."""
+    target_date = None
+    weekly_mode = False
+
+    for arg in argv[1:]:
+        if arg == "--weekly":
+            weekly_mode = True
+        elif arg.startswith("--"):
+            print(f"ERROR: unknown option '{arg}'")
+            sys.exit(1)
+        elif target_date is None:
+            target_date = arg
+        else:
+            print("ERROR: only one date argument is supported")
+            sys.exit(1)
+
+    return target_date or date.today().isoformat(), weekly_mode
+
+
 def main():
-    target_date = sys.argv[1] if len(sys.argv) > 1 else date.today().isoformat()
+    target_date, weekly_mode = parse_args(sys.argv)
     try:
-        date.fromisoformat(target_date)
+        parsed_target = date.fromisoformat(target_date)
     except ValueError:
         print(f"ERROR: bad date '{target_date}', use YYYY-MM-DD")
         sys.exit(1)
+
+    client = None
+    if ANTHROPIC_API_KEY:
+        try:
+            import anthropic
+            client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+        except Exception as e:
+            print(f"  [warn] Anthropic client unavailable: {e}")
+
+    if weekly_mode:
+        print(f"\n{'='*55}")
+        print(f"  The Bash Weekly - {target_date}")
+        print(f"{'='*55}\n")
+
+        ident = build_weekly_recap_for_date(parsed_target, client)
+        if not ident:
+            return
+
+        print("\nRefreshing sitemap and robots.txt...")
+        generate_sitemap()
+        generate_robots_txt()
+
+        if GITHUB_TOKEN:
+            git_push(ident)
+        else:
+            print("\nNote: GITHUB_TOKEN not set — skipping push.")
+
+        print(f"\nDone. Weekly recap available at: https://thebash.dev/week/{ident}\n")
+        return
 
     print(f"\n{'='*55}")
     print(f"  The Bash — {target_date}")
@@ -1012,16 +1312,16 @@ def main():
 
     content = generate_summary(articles, target_date)
 
-    # Generate additional output formats
     twitter_thread = None
     newsletter = None
     try:
-        import anthropic
-        client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
-        print("\nGenerating Twitter thread…")
-        twitter_thread = generate_twitter_thread(articles, target_date, client)
-        print("Generating newsletter block…")
-        newsletter = generate_newsletter_block(articles, target_date, client)
+        if client:
+            print("\nGenerating Twitter thread…")
+            twitter_thread = generate_twitter_thread(articles, target_date, client)
+            print("Generating newsletter block…")
+            newsletter = generate_newsletter_block(articles, target_date, client)
+        else:
+            print("  [warn] Extra formats skipped: ANTHROPIC_API_KEY not available")
     except Exception as e:
         print(f"  [warn] Extra formats failed: {e}")
 

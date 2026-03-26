@@ -3,6 +3,7 @@
   "buildCommand": null,
   "outputDirectory": ".",
   "rewrites": [
+    { "source": "/week/(\\d{4}-W\\d{2})", "destination": "/index.html" },
     { "source": "/(\\d{4}-\\d{2}-\\d{2})/(.*)", "destination": "/index.html" },
     { "source": "/(\\d{4}-\\d{2}-\\d{2})", "destination": "/index.html" }
   ],

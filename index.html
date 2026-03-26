@@ -18,6 +18,18 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <meta name="robots" content="index,follow" />
+  <meta name="theme-color" content="#0a0e14" />
+  <meta property="og:site_name" content="The Bash" />
+  <script id="structured-data" type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "The Bash",
+      "url": "https://thebash.dev",
+      "description": "High-signal AI and developer news for builders."
+    }
+  </script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -40,6 +52,9 @@
       --paywall: #d29922;
       --paywall-bg: rgba(210,153,34,0.1);
       --code-color: #f0883e;
+      --terminal-grid: rgba(57,211,83,0.07);
+      --terminal-line: rgba(57,211,83,0.05);
+      --terminal-shadow: rgba(0, 0, 0, 0.45);
     }
 
     [data-theme="light"] {
@@ -59,15 +74,45 @@
       --paywall: #9a6700;
       --paywall-bg: rgba(154,103,0,0.1);
       --code-color: #cf222e;
+      --terminal-grid: rgba(26,127,55,0.06);
+      --terminal-line: rgba(26,127,55,0.04);
+      --terminal-shadow: rgba(15, 23, 42, 0.12);
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: var(--bg);
+      font-family: var(--font-mono);
+      background:
+        radial-gradient(circle at top, rgba(57,211,83,0.12), transparent 32%),
+        linear-gradient(180deg, rgba(7, 11, 16, 0.96), rgba(10, 14, 20, 1));
       color: var(--text);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    body::before {
+      background-image:
+        linear-gradient(var(--terminal-line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--terminal-grid) 1px, transparent 1px);
+      background-size: 100% 28px, 28px 100%;
+      opacity: 0.45;
+    }
+
+    body::after {
+      background:
+        radial-gradient(circle at 15% 20%, rgba(88,166,255,0.10), transparent 20%),
+        radial-gradient(circle at 85% 0%, rgba(57,211,83,0.08), transparent 24%);
     }
 
     /* ── HEADER ── */
@@ -98,9 +143,15 @@
     }
     .logo .prompt {
       color: var(--accent);
-      margin-right: 6px;
+      margin-right: 10px;
       font-weight: 400;
       text-shadow: 0 0 12px var(--accent-glow);
+      position: relative;
+      min-width: 10px;
+    }
+    .logo .prompt::after {
+      content: '_';
+      animation: blinkCursor 1.1s step-end infinite;
     }
     .logo .name { color: var(--accent); }
     .logo .tagline {
@@ -154,6 +205,11 @@
       font-size: 0.72rem;
       font-family: var(--font-mono);
       white-space: nowrap;
+    }
+
+    @keyframes blinkCursor {
+      0%, 49% { opacity: 1; }
+      50%, 100% { opacity: 0; }
     }
 
     .archive-dropdown {
@@ -238,7 +294,304 @@
     main {
       flex: 1;
       padding: 36px 48px;
-      max-width: 860px;
+      max-width: 980px;
+      width: 100%;
+    }
+
+    .terminal-shell {
+      position: relative;
+      background: rgba(10, 14, 20, 0.84);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      box-shadow: 0 30px 80px var(--terminal-shadow);
+      overflow: hidden;
+      backdrop-filter: blur(14px);
+    }
+
+    .terminal-shell::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(57,211,83,0.04), transparent 32%);
+      pointer-events: none;
+    }
+
+    .terminal-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 18px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(15, 20, 25, 0.92);
+      position: relative;
+      z-index: 1;
+    }
+
+    .terminal-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--border);
+    }
+    .terminal-dot.red { background: #ff5f56; }
+    .terminal-dot.yellow { background: #ffbd2e; }
+    .terminal-dot.green { background: #27c93f; }
+
+    .terminal-tab {
+      margin-left: 10px;
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .terminal-status {
+      margin-left: auto;
+      font-size: 0.68rem;
+      color: var(--accent);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .terminal-intro {
+      position: relative;
+      z-index: 1;
+      padding: 20px 24px 18px;
+      border-bottom: 1px solid var(--border);
+      background:
+        linear-gradient(180deg, rgba(57,211,83,0.08), rgba(57,211,83,0.02)),
+        rgba(10, 14, 20, 0.65);
+    }
+
+    .terminal-command {
+      color: var(--text);
+      font-size: 0.86rem;
+      line-height: 1.5;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .command-prompt {
+      color: var(--accent);
+      position: relative;
+      padding-right: 10px;
+    }
+
+    .command-prompt::after {
+      content: "_";
+      position: absolute;
+      right: 0;
+      animation: blinkCursor 1.1s step-end infinite;
+    }
+
+    .terminal-summary {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .terminal-chip {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      background: rgba(15, 20, 25, 0.8);
+      padding: 6px 10px;
+      border-radius: 999px;
+      letter-spacing: 0.02em;
+    }
+
+    .support-band {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 1.45fr) minmax(280px, 1fr);
+      gap: 0;
+      border-bottom: 1px solid var(--border);
+      background: rgba(11, 16, 22, 0.72);
+    }
+
+    .support-band > section {
+      padding: 22px 24px;
+    }
+
+    .support-band > section + section {
+      border-left: 1px solid var(--border);
+    }
+
+    .support-label {
+      color: var(--accent);
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 10px;
+    }
+
+    .support-heading {
+      font-size: 1.05rem;
+      color: var(--text);
+      margin-bottom: 8px;
+      line-height: 1.5;
+    }
+
+    .support-copy {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      line-height: 1.7;
+      margin-bottom: 16px;
+      max-width: 58ch;
+    }
+
+    .newsletter-form {
+      display: flex;
+      gap: 10px;
+      align-items: stretch;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+
+    .newsletter-input {
+      flex: 1 1 240px;
+      min-width: 0;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: rgba(15, 20, 25, 0.92);
+      color: var(--text);
+      font: inherit;
+    }
+
+    .newsletter-input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+
+    .newsletter-submit {
+      border: 1px solid var(--accent);
+      background: var(--accent);
+      color: var(--bg);
+      border-radius: 10px;
+      padding: 12px 16px;
+      font: inherit;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .newsletter-submit:hover {
+      background: var(--accent-hover);
+      border-color: var(--accent-hover);
+    }
+
+    .newsletter-submit:disabled {
+      opacity: 0.7;
+      cursor: wait;
+    }
+
+    .newsletter-status {
+      min-height: 1.2rem;
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .newsletter-status.success { color: var(--accent); }
+    .newsletter-status.error { color: #f85149; }
+
+    .support-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      font-size: 0.74rem;
+      color: var(--text-muted);
+    }
+
+    .support-link,
+    .inline-link-btn {
+      color: var(--link);
+      background: none;
+      border: none;
+      padding: 0;
+      font: inherit;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .market-stack {
+      display: grid;
+      gap: 0;
+    }
+
+    .market-row {
+      padding: 0 0 16px;
+      margin-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .market-row:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .market-kicker {
+      color: var(--accent);
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .market-title {
+      color: var(--text);
+      font-size: 0.85rem;
+      line-height: 1.55;
+      margin-bottom: 6px;
+    }
+
+    .market-meta,
+    .market-copy {
+      color: var(--text-muted);
+      font-size: 0.74rem;
+      line-height: 1.65;
+    }
+
+    .market-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 10px;
+      color: var(--link);
+      font-size: 0.74rem;
+      text-decoration: none;
+    }
+
+    .jobs-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .job-item {
+      display: grid;
+      gap: 2px;
+    }
+
+    .job-title {
+      color: var(--text);
+      font-size: 0.78rem;
+    }
+
+    .job-meta {
+      color: var(--text-muted);
+      font-size: 0.72rem;
     }
 
     #loading, #error-msg {
@@ -249,6 +602,7 @@
       gap: 16px;
       height: 300px;
       color: var(--text-muted);
+      padding: 32px;
     }
 
     .spinner {
@@ -263,12 +617,12 @@
     /* ── MARKDOWN STYLES ── */
     #content h1 {
       font-family: var(--font-mono);
-      font-size: 1.8rem;
+      font-size: 1.95rem;
       font-weight: 700;
       color: var(--accent);
       line-height: 1.25;
       margin-bottom: 8px;
-      letter-spacing: -0.5px;
+      letter-spacing: -0.03em;
     }
     #content h1 + p em {
       color: var(--text-muted);
@@ -276,40 +630,71 @@
       font-style: normal;
     }
 
+    .digest-command {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid var(--border);
+      background: rgba(15, 20, 25, 0.82);
+      color: var(--text-muted);
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      margin-bottom: 16px;
+    }
+
+    .digest-command strong {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
     #content h2 {
       font-family: var(--font-mono);
-      font-size: 1.05rem;
+      font-size: 0.95rem;
       font-weight: 600;
       color: var(--text);
-      margin: 36px 0 16px;
-      padding-bottom: 8px;
+      margin: 40px 0 18px;
+      padding-bottom: 10px;
       border-bottom: 1px solid var(--border);
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 12px;
+      flex-wrap: wrap;
     }
     #content h2::before {
-      content: '';
-      display: inline-block;
-      width: 4px;
-      height: 16px;
-      background: var(--accent);
-      border-radius: 2px;
+      content: '//';
+      color: var(--accent);
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+    }
+
+    .section-kicker {
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 0.68rem;
+    }
+
+    .section-name {
+      color: var(--text);
+      font-size: 0.9rem;
+      letter-spacing: 0;
     }
 
     #content h3 {
-      font-size: 1.05rem;
+      font-size: 1rem;
       font-weight: 600;
       color: var(--text);
       margin: 24px 0 10px;
+      line-height: 1.5;
     }
 
     #content p {
       color: var(--text);
-      opacity: 0.9;
-      line-height: 1.75;
+      opacity: 0.92;
+      line-height: 1.8;
       margin-bottom: 14px;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
     }
 
     #content ul, #content ol {
@@ -420,7 +805,7 @@
 
     .story-body {
       display: none;
-      padding: 6px 0 16px 22px;
+      padding: 10px 0 18px 20px;
       border-left: 2px solid var(--border);
       margin: 2px 0 8px 5px;
     }
@@ -511,9 +896,9 @@
     .format-tabs {
       display: flex;
       gap: 8px;
-      margin-bottom: 20px;
+      margin: 0;
       border-bottom: 1px solid var(--border);
-      padding-bottom: 12px;
+      padding: 16px 24px 12px;
     }
     .format-tab {
       background: none;
@@ -544,10 +929,25 @@
     .empty-state h3 { font-size: 1.1rem; color: var(--text); margin-bottom: 8px; font-family: var(--font-mono); }
     .empty-state p { font-size: 0.9rem; }
 
+    #content,
+    #twitter-content,
+    #newsletter-content {
+      padding: 24px 28px 34px;
+      position: relative;
+      z-index: 1;
+    }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
       aside { display: none; }
-      main { padding: 24px 20px; }
+      main { padding: 20px 16px 32px; }
+      .terminal-shell { border-radius: 14px; }
+      .terminal-intro { padding: 16px 16px 14px; }
+      .support-band { grid-template-columns: 1fr; }
+      .support-band > section { padding: 18px 16px; }
+      .support-band > section + section { border-left: none; border-top: 1px solid var(--border); }
+      .format-tabs { padding: 14px 16px 10px; overflow-x: auto; }
+      #content, #twitter-content, #newsletter-content { padding: 18px 16px 26px; }
       #content h1 { font-size: 1.4rem; }
       .logo .tagline { display: none; }
       .header-right { gap: 6px; }
@@ -558,14 +958,14 @@
 
 <header>
   <div class="logo">
-    <span class="prompt">&gt;_</span>
+    <span class="prompt">$</span>
     <span class="name">The Bash</span>
     <span class="tagline">your daily terminal into AI & tech</span>
   </div>
   <div class="header-right">
     <span id="last-update" class="last-update-badge">last updated: --:--</span>
     <button id="theme-toggle" class="header-btn" onclick="toggleTheme()" title="Toggle theme">&#9790;</button>
-    <button id="subscribe-btn" onclick="alert('Newsletter coming soon! Stay tuned.')">subscribe</button>
+    <button id="subscribe-btn" onclick="scrollToNewsletterSignup()">subscribe</button>
     <div style="position:relative">
       <button id="archive-btn" class="header-btn" onclick="toggleArchive()">archive</button>
       <div id="archive-dropdown" class="archive-dropdown" style="display:none">
@@ -582,30 +982,95 @@
   </aside>
 
   <main>
-    <div id="loading">
-      <div class="spinner"></div>
-      <span>Loading latest digest...</span>
+    <div class="terminal-shell">
+      <div class="terminal-bar">
+        <span class="terminal-dot red"></span>
+        <span class="terminal-dot yellow"></span>
+        <span class="terminal-dot green"></span>
+        <span class="terminal-tab">/var/www/thebash/digest</span>
+        <span class="terminal-status">signal live</span>
+      </div>
+      <div id="terminal-intro" class="terminal-intro">
+        <div class="terminal-command">
+          <span class="command-prompt">$</span>
+          <span id="terminal-command-text">the-bash --date latest --view digest</span>
+        </div>
+        <div id="terminal-summary" class="terminal-summary">
+          <span class="terminal-chip">awaiting digest index</span>
+          <span class="terminal-chip">routing /news by date</span>
+          <span class="terminal-chip">builder signal over noise</span>
+        </div>
+      </div>
+      <div class="support-band">
+        <section>
+          <div class="support-label">newsletter</div>
+          <h2 class="support-heading">Pipe the daily digest and Sunday recap into your inbox.</h2>
+          <p class="support-copy">Builder-focused AI signal, not a giant blast list. Use the API-backed signup here or fall back to RSS if you prefer your own reader.</p>
+          <form id="newsletter-form" class="newsletter-form">
+            <input id="newsletter-email" class="newsletter-input" type="email" name="email" placeholder="you@company.com" autocomplete="email" required />
+            <button id="newsletter-submit" class="newsletter-submit" type="submit">join newsletter</button>
+          </form>
+          <p id="newsletter-status" class="newsletter-status" aria-live="polite"></p>
+          <div class="support-links">
+            <a class="support-link" href="/feed.xml">open RSS feed</a>
+            <button class="inline-link-btn" type="button" onclick="openLatestWeekly()">open latest weekly</button>
+          </div>
+        </section>
+        <section>
+          <div class="market-stack">
+            <div id="sponsor-slot" class="market-row"></div>
+            <div id="job-board-slot" class="market-row"></div>
+            <div id="weekly-slot" class="market-row"></div>
+          </div>
+        </section>
+      </div>
+      <div id="loading">
+        <div class="spinner"></div>
+        <span>Booting latest digest...</span>
+      </div>
+      <div id="error-msg" style="display:none">
+        <span style="font-size:2rem">!</span>
+        <span id="error-text">Failed to load digest.</span>
+      </div>
+      <div id="format-tabs" class="format-tabs" style="display:none">
+        <button class="format-tab active" data-format="website" onclick="switchFormat('website')">Website</button>
+        <button class="format-tab" data-format="twitter" onclick="switchFormat('twitter')">Twitter/X Thread</button>
+        <button class="format-tab" data-format="newsletter" onclick="switchFormat('newsletter')">Newsletter</button>
+      </div>
+      <div id="content" class="format-content active" style="display:none"></div>
+      <div id="twitter-content" class="format-content" style="display:none"></div>
+      <div id="newsletter-content" class="format-content" style="display:none"></div>
     </div>
-    <div id="error-msg" style="display:none">
-      <span style="font-size:2rem">!</span>
-      <span id="error-text">Failed to load digest.</span>
-    </div>
-    <div id="format-tabs" class="format-tabs" style="display:none">
-      <button class="format-tab active" data-format="website" onclick="switchFormat('website')">Website</button>
-      <button class="format-tab" data-format="twitter" onclick="switchFormat('twitter')">Twitter/X Thread</button>
-      <button class="format-tab" data-format="newsletter" onclick="switchFormat('newsletter')">Newsletter</button>
-    </div>
-    <div id="content" class="format-content active" style="display:none"></div>
-    <div id="twitter-content" class="format-content" style="display:none"></div>
-    <div id="newsletter-content" class="format-content" style="display:none"></div>
   </main>
 </div>
 
 <script>
   let currentDate = null;
+  let currentWeek = null;
   let lastRefreshTime = null;
   let currentlyOpenStory = null;
+  let weeklyIndex = [];
   const REFRESH_HOURS = [6, 12, 18, 0];
+  const MARKET_CONFIG = {
+    sponsor: {
+      kicker: 'sponsored slot',
+      title: 'Own the prompt line for one issue.',
+      body: 'One sponsor per digest. Best fit: developer tools, infra, AI platforms, recruiting, and technical events.',
+      ctaLabel: 'Sponsor The Bash',
+      href: 'mailto:hello@thebash.dev?subject=Sponsor%20The%20Bash'
+    },
+    jobs: {
+      kicker: 'jobs board',
+      title: 'A small hiring rail for teams building with AI.',
+      body: 'Keep this intentionally narrow: strong builder roles, clear compensation, and no generic keyword spam.',
+      ctaLabel: 'Post a role',
+      href: 'mailto:hello@thebash.dev?subject=Post%20a%20job%20on%20The%20Bash',
+      items: [
+        { title: 'Founding AI Engineer', meta: 'Your team here · remote or hybrid' },
+        { title: 'Developer Relations Lead', meta: 'Launch week slot available' }
+      ]
+    }
+  };
 
   marked.setOptions({ breaks: true, gfm: true });
 
@@ -618,7 +1083,11 @@
   function applyTheme(theme) {
     document.documentElement.setAttribute('data-theme', theme);
     const btn = document.getElementById('theme-toggle');
+    const themeMeta = document.querySelector('meta[name="theme-color"]');
     btn.innerHTML = theme === 'dark' ? '&#9788;' : '&#9790;';
+    if (themeMeta) {
+      themeMeta.setAttribute('content', theme === 'dark' ? '#0a0e14' : '#f6f8fa');
+    }
   }
 
   function toggleTheme() {
@@ -650,8 +1119,310 @@
     return new Date().toLocaleDateString('en-CA', { timeZone: 'America/New_York' });
   }
 
+  function getWeekFromURL() {
+    const match = window.location.pathname.match(/week\/(\d{4}-W\d{2})/);
+    return match ? match[1] : null;
+  }
+
   function slugify(text) {
     return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 60);
+  }
+
+  function truncate(text, max = 160) {
+    if (!text || text.length <= max) return text;
+    return text.slice(0, max - 1).trimEnd() + '\u2026';
+  }
+
+  function cleanHeadingText(text) {
+    return text.replace(/^[\u25b8\u25be]\s*/, '').replace(/\s*PAYWALL\s*$/g, '').trim();
+  }
+
+  function setMeta(selector, value, attr = 'content') {
+    const el = document.querySelector(selector);
+    if (el && value) {
+      el.setAttribute(attr, value);
+    }
+  }
+
+  function setStructuredData(data) {
+    const el = document.getElementById('structured-data');
+    if (el) {
+      el.textContent = JSON.stringify(data, null, 2);
+    }
+  }
+
+  function updateTerminalIntro(dateStr, md, container, mode = 'date') {
+    const commandEl = document.getElementById('terminal-command-text');
+    const summaryEl = document.getElementById('terminal-summary');
+    const storyCount = container.querySelectorAll('h3').length;
+    const sectionCount = container.querySelectorAll('h2').length;
+    const wordCount = md.split(/\s+/).filter(Boolean).length;
+
+    commandEl.textContent = mode === 'week'
+      ? `the-bash --week ${dateStr} --view recap`
+      : `the-bash --date ${dateStr} --view digest`;
+    summaryEl.innerHTML = `
+      <span class="terminal-chip">${storyCount} ${storyCount === 1 ? 'story' : 'stories'} queued</span>
+      <span class="terminal-chip">${sectionCount} sections rendered</span>
+      <span class="terminal-chip">${wordCount} words in buffer</span>
+    `;
+  }
+
+  function updateDigestMetadata(dateStr, container) {
+    const origin = window.location.origin || 'https://thebash.dev';
+    const pageUrl = `${origin}/${dateStr}`;
+    const firstStory = cleanHeadingText(container.querySelector('h3')?.textContent || '');
+    const title = `${formatDate(dateStr)} | The Bash`;
+    const description = truncate(
+      firstStory
+        ? `The Bash for ${formatDate(dateStr)}: ${firstStory}. High-signal AI and developer news for builders.`
+        : `The Bash for ${formatDate(dateStr)}: high-signal AI and developer news for builders.`
+    );
+    const structuredData = {
+      '@context': 'https://schema.org',
+      '@type': 'CollectionPage',
+      name: `The Bash - ${formatDate(dateStr)}`,
+      headline: `The Bash - ${formatDate(dateStr)}`,
+      description,
+      url: pageUrl,
+      isPartOf: {
+        '@type': 'WebSite',
+        name: 'The Bash',
+        url: origin
+      },
+      about: ['Artificial intelligence', 'Software development', 'Machine learning'],
+      dateModified: lastRefreshTime ? new Date(lastRefreshTime).toISOString() : new Date().toISOString()
+    };
+
+    document.title = title;
+    setMeta('meta[name="description"]', description);
+    setMeta('meta[property="og:title"]', title);
+    setMeta('meta[property="og:description"]', description);
+    setMeta('meta[property="og:url"]', pageUrl);
+    setMeta('meta[name="twitter:title"]', title);
+    setMeta('meta[name="twitter:description"]', description);
+    setMeta('link[rel="canonical"]', pageUrl, 'href');
+    setStructuredData(structuredData);
+  }
+
+  function updateWeeklyMetadata(weekEntry, container) {
+    const origin = window.location.origin || 'https://thebash.dev';
+    const pageUrl = `${origin}/week/${weekEntry.id}`;
+    const firstStory = cleanHeadingText(container.querySelector('h3')?.textContent || '');
+    const title = `${weekEntry.label} | The Bash Weekly`;
+    const description = truncate(
+      firstStory
+        ? `The Bash Weekly for ${weekEntry.label}: ${firstStory}.`
+        : `The Bash Weekly for ${weekEntry.label}: the condensed builder signal from the week's digests.`
+    );
+    const structuredData = {
+      '@context': 'https://schema.org',
+      '@type': 'CollectionPage',
+      name: `The Bash Weekly - ${weekEntry.label}`,
+      headline: `The Bash Weekly - ${weekEntry.label}`,
+      description,
+      url: pageUrl,
+      isPartOf: {
+        '@type': 'WebSite',
+        name: 'The Bash',
+        url: origin
+      },
+      dateModified: lastRefreshTime ? new Date(lastRefreshTime).toISOString() : new Date().toISOString()
+    };
+
+    document.title = title;
+    setMeta('meta[name="description"]', description);
+    setMeta('meta[property="og:title"]', title);
+    setMeta('meta[property="og:description"]', description);
+    setMeta('meta[property="og:url"]', pageUrl);
+    setMeta('meta[name="twitter:title"]', title);
+    setMeta('meta[name="twitter:description"]', description);
+    setMeta('link[rel="canonical"]', pageUrl, 'href');
+    setStructuredData(structuredData);
+  }
+
+  function sectionChrome(text) {
+    const plain = text.replace(/[^A-Za-z0-9&\s-]/g, '').replace(/\s+/g, ' ').trim().toLowerCase();
+    if (plain.includes('top stories') || plain.includes('stdout')) {
+      return { kicker: 'stdout', label: 'top stories' };
+    }
+    if (plain.includes('quick hits') || plain.includes('stderr')) {
+      return { kicker: 'stderr', label: 'quick hits' };
+    }
+    if (plain.includes('research radar') || plain.includes('man bash-research') || plain.includes('man bash research')) {
+      return { kicker: 'man bash-research', label: 'research radar' };
+    }
+    if (plain.includes('tools & repos') || plain.includes('tools repos') || plain.includes('pkg ls')) {
+      return { kicker: 'pkg ls', label: 'tools & repos' };
+    }
+    if (plain.includes('trend watch') || plain.includes('crontab -l') || plain.includes('crontab')) {
+      return { kicker: 'crontab -l', label: 'trend watch' };
+    }
+    return null;
+  }
+
+  function applySectionChrome(container) {
+    const h1 = container.querySelector('h1');
+    if (h1 && !container.querySelector('.digest-command')) {
+      const badge = document.createElement('div');
+      badge.className = 'digest-command';
+      badge.innerHTML = '<span>$</span><strong>the-bash --today</strong><span>ranked output</span>';
+      h1.before(badge);
+    }
+
+    container.querySelectorAll('h2').forEach(h2 => {
+      const chrome = sectionChrome(h2.textContent);
+      if (!chrome) return;
+      h2.innerHTML = `
+        <span class="section-kicker">${chrome.kicker}</span>
+        <span class="section-name">${chrome.label}</span>
+      `;
+    });
+  }
+
+  function openStoryFromHash() {
+    const slug = decodeURIComponent(window.location.hash.replace(/^#/, ''));
+    if (!slug) return;
+    const heading = document.getElementById(slug);
+    if (!heading || !heading.classList.contains('story-toggle')) return;
+    const wrapper = heading.nextElementSibling;
+    if (!wrapper || !wrapper.classList.contains('story-body')) return;
+    if (!wrapper.classList.contains('open')) {
+      heading.click();
+    }
+    setTimeout(() => {
+      heading.scrollIntoView({ block: 'start', behavior: 'smooth' });
+    }, 50);
+  }
+
+  function scrollToNewsletterSignup() {
+    const input = document.getElementById('newsletter-email');
+    if (!input) return;
+    input.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    setTimeout(() => input.focus(), 150);
+  }
+
+  function renderSponsorSurface() {
+    const slot = document.getElementById('sponsor-slot');
+    const sponsor = MARKET_CONFIG.sponsor;
+    slot.innerHTML = `
+      <div class="market-kicker">${sponsor.kicker}</div>
+      <div class="market-title">${sponsor.title}</div>
+      <div class="market-copy">${sponsor.body}</div>
+      <a class="market-cta" href="${sponsor.href}">${sponsor.ctaLabel}</a>
+    `;
+  }
+
+  function renderJobsSurface() {
+    const slot = document.getElementById('job-board-slot');
+    const jobs = MARKET_CONFIG.jobs;
+    slot.innerHTML = `
+      <div class="market-kicker">${jobs.kicker}</div>
+      <div class="market-title">${jobs.title}</div>
+      <div class="market-copy">${jobs.body}</div>
+      <div class="jobs-list">
+        ${jobs.items.map(job => `
+          <div class="job-item">
+            <div class="job-title">${job.title}</div>
+            <div class="job-meta">${job.meta}</div>
+          </div>
+        `).join('')}
+      </div>
+      <a class="market-cta" href="${jobs.href}">${jobs.ctaLabel}</a>
+    `;
+  }
+
+  function renderWeeklySurface() {
+    const slot = document.getElementById('weekly-slot');
+    if (!slot) return;
+
+    if (!weeklyIndex.length) {
+      slot.innerHTML = `
+        <div class="market-kicker">weekly recap</div>
+        <div class="market-title">The Sunday recap will appear here automatically.</div>
+        <div class="market-meta">Once at least two daily issues exist for the current week, the automation publishes a weekly pass and this rail links to it.</div>
+      `;
+      return;
+    }
+
+    const latest = weeklyIndex[0];
+    slot.innerHTML = `
+      <div class="market-kicker">weekly recap</div>
+      <div class="market-title">${latest.label}</div>
+      <div class="market-meta">${latest.sourceDates.length} daily issues rolled up into one weekly signal pass.</div>
+      <button class="market-cta inline-link-btn" type="button" onclick="openLatestWeekly()">
+        open week ${latest.id}
+      </button>
+    `;
+  }
+
+  function renderSupportSurfaces() {
+    renderSponsorSurface();
+    renderJobsSurface();
+    renderWeeklySurface();
+  }
+
+  async function loadWeeklyIndex() {
+    try {
+      const res = await fetch(`news/weekly-index.json?t=${Date.now()}`);
+      if (!res.ok) throw new Error('weekly index not found');
+      const data = await res.json();
+      weeklyIndex = data.weeks || [];
+    } catch {
+      weeklyIndex = [];
+    }
+    renderWeeklySurface();
+    return weeklyIndex;
+  }
+
+  async function submitNewsletterSignup(event) {
+    event.preventDefault();
+    const form = document.getElementById('newsletter-form');
+    const input = document.getElementById('newsletter-email');
+    const button = document.getElementById('newsletter-submit');
+    const status = document.getElementById('newsletter-status');
+    const email = input.value.trim();
+
+    status.className = 'newsletter-status';
+    status.textContent = '';
+    button.disabled = true;
+    button.textContent = 'joining...';
+
+    try {
+      const res = await fetch('/api/newsletter-subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email,
+          source: currentWeek ? `weekly:${currentWeek}` : (currentDate ? `daily:${currentDate}` : 'site')
+        })
+      });
+      const data = await res.json();
+      if (!res.ok || !data.ok) {
+        throw new Error(data.error || 'Signup failed.');
+      }
+      form.reset();
+      status.className = 'newsletter-status success';
+      status.textContent = data.message || 'You are on the list.';
+    } catch (error) {
+      status.className = 'newsletter-status error';
+      status.textContent = error.message || 'Could not submit the form right now.';
+    } finally {
+      button.disabled = false;
+      button.textContent = 'join newsletter';
+    }
+  }
+
+  function openLatestWeekly() {
+    if (!weeklyIndex.length) {
+      const status = document.getElementById('newsletter-status');
+      if (status) {
+        status.className = 'newsletter-status';
+        status.textContent = 'Weekly recaps will show up here after the first scheduled Sunday run.';
+      }
+      return;
+    }
+    loadWeeklyRecap(weeklyIndex[0].id);
   }
 
   // ── Archive Dropdown ────────────────────────────────────────────────────────
@@ -736,7 +1507,12 @@
   }
 
   window.addEventListener('popstate', () => {
+    const week = getWeekFromURL();
     const d = getDateFromURL();
+    if (week && week !== currentWeek) {
+      loadWeeklyRecap(week, false);
+      return;
+    }
     if (d && d !== currentDate) loadNews(d, false);
   });
 
@@ -744,7 +1520,11 @@
 
   async function loadIndex() {
     try {
-      const res = await fetch(`news/index.json?t=${Date.now()}`);
+      renderSupportSurfaces();
+      const [res] = await Promise.all([
+        fetch(`news/index.json?t=${Date.now()}`),
+        loadWeeklyIndex()
+      ]);
       if (!res.ok) throw new Error('index not found');
       const data = await res.json();
       const dates = data.dates || [];
@@ -780,10 +1560,13 @@
       populateDropdown(dates);
       updateLastRefreshTime();
 
-      // Route: check URL first, then load latest
+      // Route: weekly first, then dated digest, then latest daily.
+      const urlWeek = getWeekFromURL();
       const urlDate = getDateFromURL();
-      if (!currentDate) {
-        if (urlDate && dates.includes(urlDate)) {
+      if (!currentDate && !currentWeek) {
+        if (urlWeek) {
+          loadWeeklyRecap(urlWeek, false);
+        } else if (urlDate && dates.includes(urlDate)) {
           loadNews(urlDate, false);
         } else {
           loadNews(dates[0]);
@@ -796,14 +1579,12 @@
 
   async function loadNews(dateStr, pushState = true) {
     currentDate = dateStr;
+    currentWeek = null;
 
     // Update URL
     if (pushState) {
       history.pushState({}, '', '/' + dateStr);
     }
-
-    // Update page title
-    document.title = `The Bash — ${formatDate(dateStr)}`;
 
     // Update sidebar active state
     document.querySelectorAll('.date-item').forEach(el => {
@@ -847,12 +1628,15 @@
       }
 
       postProcessContent(contentEl);
+      updateTerminalIntro(dateStr, md, contentEl);
+      updateDigestMetadata(dateStr, contentEl);
       contentEl.style.display = 'block';
       document.getElementById('loading').style.display = 'none';
       document.getElementById('format-tabs').style.display = 'flex';
       // Reset to website tab
       switchFormat('website');
       currentlyOpenStory = null;
+      openStoryFromHash();
 
       // Start auto-refresh if viewing today
       if (dateStr === getCurrentDateET()) {
@@ -862,6 +1646,61 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch (e) {
       showError(`Could not load digest for ${formatDate(dateStr)}.`);
+    }
+  }
+
+  async function loadWeeklyRecap(weekId, pushState = true) {
+    currentWeek = weekId;
+    currentDate = null;
+
+    if (pushState) {
+      history.pushState({}, '', `/week/${weekId}`);
+    }
+
+    document.querySelectorAll('.date-item').forEach(el => {
+      el.classList.remove('active');
+    });
+
+    document.getElementById('loading').style.display = 'flex';
+    document.getElementById('content').style.display = 'none';
+    document.getElementById('error-msg').style.display = 'none';
+    document.getElementById('format-tabs').style.display = 'none';
+    document.getElementById('twitter-content').style.display = 'none';
+    document.getElementById('newsletter-content').style.display = 'none';
+
+    try {
+      const weekEntry = weeklyIndex.find(entry => entry.id === weekId);
+      const res = await fetch(`news/${weekId}-weekly.md?t=${Date.now()}`);
+      if (!res.ok) throw new Error('not found');
+
+      const md = await res.text();
+      const html = marked.parse(md);
+      const contentEl = document.getElementById('content');
+      contentEl.innerHTML = html;
+
+      const wordCount = md.split(/\s+/).filter(Boolean).length;
+      const readMin = Math.max(1, Math.round(wordCount / 225));
+      const readingEl = document.createElement('div');
+      readingEl.className = 'reading-time';
+      readingEl.textContent = `~${readMin} min weekly read`;
+      const firstH1 = contentEl.querySelector('h1');
+      if (firstH1 && firstH1.nextElementSibling) {
+        firstH1.nextElementSibling.after(readingEl);
+      }
+
+      postProcessContent(contentEl);
+      updateTerminalIntro(weekId, md, contentEl, 'week');
+      updateWeeklyMetadata(
+        weekEntry || { id: weekId, label: weekId },
+        contentEl
+      );
+      contentEl.style.display = 'block';
+      document.getElementById('loading').style.display = 'none';
+      currentlyOpenStory = null;
+      openStoryFromHash();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (e) {
+      showError(`Could not load weekly recap ${weekId}.`);
     }
   }
 
@@ -927,6 +1766,7 @@
   // ── Post-processing ─────────────────────────────────────────────────────────
 
   function postProcessContent(container) {
+    applySectionChrome(container);
     makeStoriesCollapsible(container);
     styleClassificationBadges(container);
     styleDevTakes(container);
@@ -1004,7 +1844,8 @@
 
       // Add share buttons
       const storySlug = slugify(heading.textContent);
-      const storyUrl = `${window.location.origin}/${currentDate}#${storySlug}`;
+      const storyPath = currentWeek ? `/week/${currentWeek}` : `/${currentDate}`;
+      const storyUrl = `${window.location.origin}${storyPath}#${storySlug}`;
       const shareRow = document.createElement('div');
       shareRow.className = 'share-row';
       shareRow.innerHTML = `
@@ -1033,6 +1874,11 @@
         const open = wrapper.classList.toggle('open');
         chevron.textContent = open ? '\u25BE' : '\u25B8';
         currentlyOpenStory = open ? heading : null;
+        const basePath = currentWeek ? `/week/${currentWeek}` : (currentDate ? `/${currentDate}` : '');
+        if (basePath) {
+          const nextUrl = open ? `${basePath}#${storySlug}` : basePath;
+          history.replaceState({}, '', nextUrl);
+        }
       });
     }
   }
@@ -1085,6 +1931,9 @@
       closeArchiveDropdown();
     }
   });
+
+  document.getElementById('newsletter-form').addEventListener('submit', submitNewsletterSignup);
+  window.addEventListener('hashchange', openStoryFromHash);
 
   loadIndex();
 </script>
