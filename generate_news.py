@@ -556,7 +556,7 @@ ARTICLES (ranked by score — use this order as primary signal):
     print("Generating digest with Claude…")
     msg = client.messages.create(
         model="claude-opus-4-6",
-        max_tokens=3500,
+        max_tokens=4500,
         messages=[{"role": "user", "content": prompt}],
     )
     return msg.content[0].text
