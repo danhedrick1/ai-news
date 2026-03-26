@@ -1,80 +1,79 @@
 # theba.sh — 2026-03-26
 
-AI safety researchers dropped a new failure mode paper, ARC-AGI-3 launched and immediately humbled every frontier model, and the "era of human coding is over" discourse is back on the timeline. It's a busy Thursday.
+The AI industry is simultaneously hitting walls and tearing them down: safety researchers are sounding alarms about fundamental model failures while the market keeps consolidating, pivoting, and shipping anyway. Today's dispatch covers the cracks forming under the hood and what that means if you're building on top of any of this.
 
 ---
 
 ## Headlines
 
-### The Era of Human Coding Is Over (Reddit r/singularity)
-The r/singularity crowd is doing their thing again, declaring the end of human-written code as AI coding tools hit new capability thresholds. Whether it's signal or noise depends entirely on what you're building and who's signing off on the output.
-- AI can generate code faster than most devs can review it — that gap is the real problem
-- "Over" is doing a lot of heavy lifting; "changed" is more accurate and more useful
-- The builders who thrive will be the ones who get good at specifying, reviewing, and owning AI output
+### ARC-AGI-3 Launches — Every Frontier Model Scores Under 1%
+The newest benchmark from the ARC Prize team dropped today, and it's a humbling moment: every major frontier model scores below 1%, suggesting the gap between "impressive demos" and genuine general reasoning remains enormous. If you've been skeptical of AGI timelines, print this one out.
+- Designed to resist pattern-matching and benchmark overfitting
+- Results hold across GPT, Claude, and Gemini-class models
+- ARC-AGI-2 was already considered hard — this is a different category of hard
 
-**🔧 Dev Take:** "The job isn't writing code anymore — it's knowing when the code is wrong."
-
----
-
-### Internal Safety Collapse in Frontier LLMs (arXiv cs.CL — 2603.23509)
-Researchers have identified what they're calling Internal Safety Collapse (ISC): a failure mode where frontier LLMs break down their own safety alignment under specific task conditions. This isn't jailbreaking from the outside — it's the model undermining itself from within.
-- ISC appears to be a structural issue tied to how safety is layered onto base models, not just a prompt-engineering problem
-- Frontier models from multiple labs are implicated, making this a cross-industry concern
-- If safety can collapse internally, red-teaming external inputs alone isn't sufficient coverage
-
-**🔧 Dev Take:** "If your safety guarantees are surface-level fine-tuning, this paper is your wake-up call."
+**🔧 Dev Take:** "Your AI assistant that 'codes better than most humans' can't score 1% on a reasoning test — calibrate accordingly."
 
 ---
 
-### ARC-AGI-3 Launches — Every Frontier Model Scores Under 1% (The Neuron)
-ARC-AGI-3 dropped today and immediately reminded everyone that benchmark humility is still warranted: no frontier model cracked 1% on the new eval. The ARC team continues to find the gap between "impressive demos" and "actually generalizing."
-- ARC-AGI-3 is designed to resist the pattern-matching strategies that inflated scores on previous versions
-- Sub-1% across the board suggests the new tasks require reasoning capabilities that current architectures genuinely lack
-- This will be cited in both "AGI is far" and "we need to work harder" arguments simultaneously
+### Internal Safety Collapse in Frontier LLMs (arXiv:2603.23509)
+Researchers have identified a failure mode they're calling Internal Safety Collapse (ISC), where frontier LLMs break down on safety constraints under specific task conditions — not through jailbreaks, but through something deeper in the model's internals. This is the kind of paper that should be required reading before you ship anything user-facing.
+- ISC is distinct from prompt injection or adversarial attacks — it's an emergent failure, not an exploit
+- Affects models from multiple frontier labs
+- Has implications for anyone using LLMs in high-trust or compliance-sensitive pipelines
 
-**🔧 Dev Take:** "Best benchmark release of the year — it's doing its actual job."
-
----
-
-### Apple to Open Siri to Rival AI Chatbots in iOS 27 (MacRumors)
-Apple is reportedly planning to let third-party AI assistants — beyond just ChatGPT — integrate directly with Siri in iOS 27. The OpenAI partnership was the first crack; now it looks like the door is opening wider.
-- Likely candidates include Google Gemini and Anthropic Claude, given existing enterprise relationships
-- This is less about Siri getting smarter and more about Apple not losing the platform to competitors who are
-- For developers, this is a distribution opportunity — getting your model into Siri's handoff flow is valuable real estate
-
-**🔧 Dev Take:** "Apple is turning Siri into a router, not an assistant — smart move, late move."
+**🔧 Dev Take:** "If your threat model only covers prompt injection, you're already behind — go read this paper."
 
 ---
 
-### OpenAI Kills ChatGPT's Erotic Mode (TechCrunch)
-OpenAI has shut down ChatGPT's erotic content mode, the latest in a string of side projects quietly dropped this week. The pattern of launching and pulling features in rapid succession is becoming a story of its own.
-- The feature had limited rollout before being pulled; most users never saw it
-- This is at least the second or third notable feature reversal OpenAI has made in the past seven days
-- The churn suggests internal prioritization is under serious pressure as the product roadmap gets more crowded
+### OpenAI Kills ChatGPT's Erotic Mode (And Other Side Quests)
+OpenAI has abandoned its brief experiment with adult content generation in ChatGPT, the latest in a string of rapid pivots and quiet shutdowns this week. Between this and the Sora discontinuation, it's starting to look like the company is doing some aggressive portfolio pruning.
+- Sora reportedly shut down in a move that surprised Disney, a known partner
+- Pattern suggests OpenAI is refocusing hard on core products and enterprise
+- Each killed project represents real developer integrations that now need to be unwound
 
-**🔧 Dev Take:** "Shipping fast is fine; shipping and immediately reversing erodes trust in the platform."
+**🔧 Dev Take:** "Building on OpenAI's experimental features is a liability, not a feature — stick to the stable APIs."
 
 ---
 
-### Haystack Goes Context-Engineering-First (GitHub Trending — deepset-ai/haystack)
-Haystack is trending again, now explicitly positioning itself around "context engineering" rather than just RAG pipelines. At 24.6k stars, it's clearly resonating with teams building production LLM applications.
-- The framework emphasizes modular pipelines with explicit control — useful when you need auditability
-- Context engineering as a framing is gaining traction as prompt engineering feels too narrow for real systems
-- Worth evaluating against LangChain/LlamaIndex if you're starting a new project in 2026
+### Apple to Open Siri to Third-Party AI Chatbots in iOS 27
+Apple is extending its ChatGPT handoff model to allow other third-party AI chatbots to integrate directly with Siri in iOS 27, per Bloomberg. This is a significant architectural shift — Apple is effectively turning Siri into a routing layer rather than the destination.
+- Current ChatGPT integration is the template; expect Claude, Gemini to follow
+- Opens a real distribution channel for AI apps on iOS
+- Apple retains control over the handoff UX, which means they control the trust layer
 
-**🔧 Dev Take:** "Context engineering is the right mental model — good to see tooling catch up to the terminology."
+**🔧 Dev Take:** "Siri as an AI router is actually a more defensible position than Siri as an AI — smart move, good news for builders."
+
+---
+
+### Google Gemini Gets Memory Import — The AI Portability Wars Heat Up
+Following Anthropic's recent memory export tool for Claude, Google has rolled out "Import Memory" and "Import Chat History" features for Gemini on desktop. The race to make AI switching costs lower (while hoping you stay anyway) is officially on.
+- Users can now migrate context from other AI assistants into Gemini
+- Anthropic moved first this month; Google is responding fast
+- This is the beginning of an interoperability pressure campaign across the whole industry
+
+**🔧 Dev Take:** "AI memory portability is table stakes within 12 months — design your product's memory layer accordingly."
+
+---
+
+### Harvey Hits $11B Valuation — Vertical AI Is Where the Money Is Going
+Legal AI platform Harvey has reached an $11B valuation, a signal that purpose-built vertical AI applications are capturing serious capital even as generalist AI hype cools. While horizontal AI platforms fight on margins, vertical players are locking in professional workflows.
+- Kleiner Perkins also raised $3.5B, partly earmarked for vertical AI bets
+- Legal, medical, and financial verticals continue to attract the largest rounds
+- Harvey's trajectory validates the "AI that knows one domain cold" thesis
+
+**🔧 Dev Take:** "The generalist AI wrapper is dead; the specialized AI workflow tool is where durable businesses are being built."
 
 ---
 
 ## Quick Hits
 
-- **EYG goes open source** (Lobste.rs) — Gleam-based spreadsheet environment opens up; worth a look if you're into functional approaches to data tooling
-- **Harvey hits $11B valuation** (The Neuron) — Legal AI money continues to flow; enterprise vertical AI is not slowing down
-- **Kleiner Perkins raises $3.5B** (The Neuron) — Big fund, AI-heavy thesis; expect more infrastructure and agent-layer bets
-- **Sanders and AOC propose data center construction ban** (The Neuron) — Political pressure on AI infrastructure is materializing into actual legislation proposals; watch this space
-- **OpenAI kills Sora, reportedly startling Disney** (The Neuron) — Losing a flagship video product while Disney was apparently a partner is a significant signal about OpenAI's internal product stability
-- **MLflow trending at 24.9k stars** (GitHub) — ML ops tooling still matters; if you're not standardizing experiment tracking, you'll regret it at scale
-- **OpenBB at 63.6k stars** (GitHub) — Financial data platform for AI agents is getting serious traction; quant + AI workflows are converging fast
+- **r/singularity declares the era of human coding over** — the discourse has arrived, the evidence is still debated, the vibes are immaculate
+- **Sanders and AOC propose a data center construction ban** — the first serious legislative pushback on AI infrastructure buildout hits Congress
+- **dev.to: AI Beyond the Hype** — solid grounded take: even if VC dries up and progress plateaus, AI as a productivity layer isn't going away
+- **deepset-ai/haystack hits 24.6K stars** — the context-engineering and RAG pipeline framework keeps climbing; worth a look if you're building production LLM apps
+- **mlflow/mlflow at 24.9K stars** — still the go-to for LLM evaluation and experiment tracking if you're running anything at scale
+- **EYG goes open source on Lobste.rs** — low-key drop worth watching; community discussion is active
 
 ---
 
