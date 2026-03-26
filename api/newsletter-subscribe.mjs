@@ -51,7 +51,7 @@ export async function POST(request) {
         },
         body: JSON.stringify({
           email_address: email,
-          tags: ['the-bash'],
+          tags: ['theba-sh'],
           metadata: {
             source,
             submitted_at: submittedAt,
@@ -83,7 +83,7 @@ export async function POST(request) {
           email,
           source,
           submittedAt,
-          product: 'The Bash',
+          product: 'theba.sh',
         }),
       });
 

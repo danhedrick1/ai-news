@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The Bash — AI & Dev News for Builders</title>
-  <meta name="description" content="The Bash — high-signal AI and dev news, ranked by impact. Updated every 6 hours." />
-  <meta property="og:title" content="The Bash — AI & Dev News" />
+  <title>theba.sh — AI & Dev News for Builders</title>
+  <meta name="description" content="theba.sh — high-signal AI and dev news, ranked by impact. Updated every 6 hours." />
+  <meta property="og:title" content="theba.sh — AI & Dev News" />
   <meta property="og:description" content="High-signal AI and dev news for developers and researchers. Updated every 6 hours." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://thebash.dev" />
@@ -13,24 +13,24 @@
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="The Bash — AI & Dev News" />
+  <meta name="twitter:title" content="theba.sh — AI & Dev News" />
   <meta name="twitter:description" content="High-signal AI and dev news for developers and researchers." />
   <meta name="twitter:image" content="https://thebash.dev/og-image.svg" />
   <link rel="canonical" href="https://thebash.dev" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="alternate" type="application/rss+xml" title="The Bash RSS" href="/feed.xml" />
+  <link rel="alternate" type="application/rss+xml" title="theba.sh RSS" href="/feed.xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <meta name="robots" content="index,follow" />
   <meta name="theme-color" content="#0a0e14" />
-  <meta property="og:site_name" content="The Bash" />
+  <meta property="og:site_name" content="theba.sh" />
   <script id="structured-data" type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
-      "name": "The Bash",
+      "name": "theba.sh",
       "url": "https://thebash.dev",
       "description": "High-signal AI and developer news for builders."
     }
@@ -204,13 +204,6 @@
       font-family: var(--font-mono);
     }
     #subscribe-btn:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
-
-    .last-update-badge {
-      color: var(--text-muted);
-      font-size: 0.72rem;
-      font-family: var(--font-mono);
-      white-space: nowrap;
-    }
 
     @keyframes blinkCursor {
       0%, 49% { opacity: 1; }
@@ -1003,11 +996,10 @@
 <header>
   <div class="logo">
     <span class="prompt">$</span>
-    <span class="name">The Bash</span>
+    <span class="name">theba.sh</span>
     <span class="tagline">your daily terminal into AI & tech</span>
   </div>
   <div class="header-right">
-    <span id="last-update" class="last-update-badge">last updated: --:--</span>
     <button id="theme-toggle" class="header-btn" onclick="toggleTheme()" title="Toggle theme">&#9790;</button>
     <button id="subscribe-btn" onclick="scrollToNewsletterSignup()">subscribe</button>
     <div style="position:relative">
@@ -1037,7 +1029,7 @@
       <div id="terminal-intro" class="terminal-intro">
         <div class="terminal-command">
           <span class="command-prompt">$</span>
-          <span id="terminal-command-text">the-bash --date latest --view digest</span>
+          <span id="terminal-command-text">theba.sh --date latest --view digest</span>
         </div>
         <div id="terminal-summary" class="terminal-summary">
           <span class="terminal-chip">awaiting digest index</span>
@@ -1091,7 +1083,6 @@
 <script>
   let currentDate = null;
   let currentWeek = null;
-  let lastRefreshTime = null;
   let currentlyOpenStory = null;
   let weeklyIndex = [];
   const REFRESH_HOURS = [6, 12, 18, 0];
@@ -1100,15 +1091,15 @@
       kicker: 'sponsored slot',
       title: 'Own the prompt line for one issue.',
       body: 'One sponsor per digest. Best fit: developer tools, infra, AI platforms, recruiting, and technical events.',
-      ctaLabel: 'Sponsor The Bash',
-      href: 'mailto:hello@thebash.dev?subject=Sponsor%20The%20Bash'
+      ctaLabel: 'Sponsor theba.sh',
+      href: 'mailto:hello@thebash.dev?subject=Sponsor%20theba.sh'
     },
     jobs: {
       kicker: 'jobs board',
       title: 'A small hiring rail for teams building with AI.',
       body: 'Keep this intentionally narrow: strong builder roles, clear compensation, and no generic keyword spam.',
       ctaLabel: 'Post a role',
-      href: 'mailto:hello@thebash.dev?subject=Post%20a%20job%20on%20The%20Bash',
+      href: 'mailto:hello@thebash.dev?subject=Post%20a%20job%20on%20theba.sh',
       items: [
         { title: 'Founding AI Engineer', meta: 'Your team here · remote or hybrid' },
         { title: 'Developer Relations Lead', meta: 'Launch week slot available' }
@@ -1203,8 +1194,8 @@
     const wordCount = md.split(/\s+/).filter(Boolean).length;
 
     commandEl.textContent = mode === 'week'
-      ? `the-bash --week ${dateStr} --view recap`
-      : `the-bash --date ${dateStr} --view digest`;
+      ? `theba.sh --week ${dateStr} --view recap`
+      : `theba.sh --date ${dateStr} --view digest`;
     summaryEl.innerHTML = `
       <span class="terminal-chip">${storyCount} ${storyCount === 1 ? 'story' : 'stories'} queued</span>
       <span class="terminal-chip">${sectionCount} sections rendered</span>
@@ -1216,26 +1207,26 @@
     const origin = window.location.origin || 'https://thebash.dev';
     const pageUrl = `${origin}/${dateStr}`;
     const firstStory = cleanHeadingText(container.querySelector('h3')?.textContent || '');
-    const title = `${formatDate(dateStr)} | The Bash`;
+    const title = `${formatDate(dateStr)} | theba.sh`;
     const description = truncate(
       firstStory
-        ? `The Bash for ${formatDate(dateStr)}: ${firstStory}. High-signal AI and developer news for builders.`
-        : `The Bash for ${formatDate(dateStr)}: high-signal AI and developer news for builders.`
+        ? `theba.sh for ${formatDate(dateStr)}: ${firstStory}. High-signal AI and developer news for builders.`
+        : `theba.sh for ${formatDate(dateStr)}: high-signal AI and developer news for builders.`
     );
     const structuredData = {
       '@context': 'https://schema.org',
       '@type': 'CollectionPage',
-      name: `The Bash - ${formatDate(dateStr)}`,
-      headline: `The Bash - ${formatDate(dateStr)}`,
+      name: `theba.sh - ${formatDate(dateStr)}`,
+      headline: `theba.sh - ${formatDate(dateStr)}`,
       description,
       url: pageUrl,
       isPartOf: {
         '@type': 'WebSite',
-        name: 'The Bash',
+        name: 'theba.sh',
         url: origin
       },
       about: ['Artificial intelligence', 'Software development', 'Machine learning'],
-      dateModified: lastRefreshTime ? new Date(lastRefreshTime).toISOString() : new Date().toISOString()
+      dateModified: new Date().toISOString()
     };
 
     document.title = title;
@@ -1253,25 +1244,25 @@
     const origin = window.location.origin || 'https://thebash.dev';
     const pageUrl = `${origin}/week/${weekEntry.id}`;
     const firstStory = cleanHeadingText(container.querySelector('h3')?.textContent || '');
-    const title = `${weekEntry.label} | The Bash Weekly`;
+    const title = `${weekEntry.label} | theba.sh weekly`;
     const description = truncate(
       firstStory
-        ? `The Bash Weekly for ${weekEntry.label}: ${firstStory}.`
-        : `The Bash Weekly for ${weekEntry.label}: the condensed builder signal from the week's digests.`
+        ? `theba.sh weekly for ${weekEntry.label}: ${firstStory}.`
+        : `theba.sh weekly for ${weekEntry.label}: the condensed builder signal from the week's digests.`
     );
     const structuredData = {
       '@context': 'https://schema.org',
       '@type': 'CollectionPage',
-      name: `The Bash Weekly - ${weekEntry.label}`,
-      headline: `The Bash Weekly - ${weekEntry.label}`,
+      name: `theba.sh weekly - ${weekEntry.label}`,
+      headline: `theba.sh weekly - ${weekEntry.label}`,
       description,
       url: pageUrl,
       isPartOf: {
         '@type': 'WebSite',
-        name: 'The Bash',
+        name: 'theba.sh',
         url: origin
       },
-      dateModified: lastRefreshTime ? new Date(lastRefreshTime).toISOString() : new Date().toISOString()
+      dateModified: new Date().toISOString()
     };
 
     document.title = title;
@@ -1310,7 +1301,7 @@
     if (h1 && !container.querySelector('.digest-command')) {
       const badge = document.createElement('div');
       badge.className = 'digest-command';
-      badge.innerHTML = '<span>$</span><strong>the-bash --today</strong><span>ranked output</span>';
+      badge.innerHTML = '<span>$</span><strong>theba.sh --today</strong><span>ranked output</span>';
       h1.before(badge);
     }
 
@@ -1509,21 +1500,6 @@
     });
   }
 
-  // ── Last Updated ────────────────────────────────────────────────────────────
-
-  function updateLastRefreshTime(timestamp = lastRefreshTime) {
-    if (!timestamp) {
-      document.getElementById('last-update').textContent = 'last updated: --:--';
-      return;
-    }
-    const time = new Date(timestamp).toLocaleTimeString('en-US', {
-      timeZone: 'America/New_York',
-      hour: '2-digit',
-      minute: '2-digit'
-    });
-    document.getElementById('last-update').textContent = `last updated: ${time}`;
-  }
-
   // ── Auto-Refresh ────────────────────────────────────────────────────────────
 
   function getNextRefreshTime() {
@@ -1547,8 +1523,6 @@
     setTimeout(() => {
       const today = getCurrentDateET();
       if (currentDate === today) {
-        lastRefreshTime = Date.now();
-        updateLastRefreshTime();
         checkForNewStories();
       }
       scheduleNextRefresh();
@@ -1585,10 +1559,6 @@
       const data = await res.json();
       const dates = data.dates || [];
 
-      if (data.lastUpdated) {
-        lastRefreshTime = new Date(data.lastUpdated).getTime();
-      }
-
       const list = document.getElementById('date-list');
       list.innerHTML = '';
 
@@ -1614,7 +1584,6 @@
       });
 
       populateDropdown(dates);
-      updateLastRefreshTime();
 
       // Route: weekly first, then dated digest, then latest daily.
       const urlWeek = getWeekFromURL();
@@ -1646,8 +1615,6 @@
     document.querySelectorAll('.date-item').forEach(el => {
       el.classList.toggle('active', el.dataset.date === dateStr);
     });
-
-    updateLastRefreshTime();
 
     document.getElementById('loading').style.display = 'flex';
     document.getElementById('content').style.display = 'none';
