@@ -9,10 +9,15 @@
   <meta property="og:description" content="High-signal AI and dev news for developers and researchers. Updated every 6 hours." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://thebash.dev" />
+  <meta property="og:image" content="https://thebash.dev/og-image.svg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="The Bash — AI & Dev News" />
   <meta name="twitter:description" content="High-signal AI and dev news for developers and researchers." />
+  <meta name="twitter:image" content="https://thebash.dev/og-image.svg" />
   <link rel="canonical" href="https://thebash.dev" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="alternate" type="application/rss+xml" title="The Bash RSS" href="/feed.xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -530,15 +535,30 @@
     }
 
     .market-row {
-      padding: 0 0 16px;
+      position: relative;
+      padding: 14px 14px 16px;
       margin-bottom: 16px;
       border-bottom: 1px solid var(--border);
+      border: 1px solid color-mix(in srgb, var(--accent) 12%, var(--border));
+      border-radius: 14px;
+      background:
+        linear-gradient(180deg, rgba(57,211,83,0.06), rgba(57,211,83,0.01) 38%),
+        rgba(10, 14, 20, 0.52);
+      overflow: hidden;
+    }
+
+    .market-row::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 2px;
+      background: linear-gradient(180deg, var(--accent), rgba(88,166,255,0.2));
+      opacity: 0.9;
     }
 
     .market-row:last-child {
       margin-bottom: 0;
       padding-bottom: 0;
-      border-bottom: none;
     }
 
     .market-kicker {
@@ -551,9 +571,9 @@
 
     .market-title {
       color: var(--text);
-      font-size: 0.85rem;
-      line-height: 1.55;
-      margin-bottom: 6px;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      margin-bottom: 8px;
     }
 
     .market-meta,
@@ -571,12 +591,36 @@
       color: var(--link);
       font-size: 0.74rem;
       text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.15s ease, color 0.15s ease;
+    }
+
+    .market-cta:hover {
+      border-color: currentColor;
     }
 
     .jobs-list {
       display: grid;
       gap: 10px;
       margin-top: 12px;
+    }
+
+    .market-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .market-pill {
+      border: 1px solid var(--border);
+      background: rgba(15, 20, 25, 0.72);
+      color: var(--text-muted);
+      border-radius: 999px;
+      padding: 5px 9px;
+      font-size: 0.66rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
     }
 
     .job-item {
@@ -1309,6 +1353,10 @@
       <div class="market-kicker">${sponsor.kicker}</div>
       <div class="market-title">${sponsor.title}</div>
       <div class="market-copy">${sponsor.body}</div>
+      <div class="market-strip">
+        <span class="market-pill">one slot / issue</span>
+        <span class="market-pill">developer audience</span>
+      </div>
       <a class="market-cta" href="${sponsor.href}">${sponsor.ctaLabel}</a>
     `;
   }
@@ -1320,6 +1368,10 @@
       <div class="market-kicker">${jobs.kicker}</div>
       <div class="market-title">${jobs.title}</div>
       <div class="market-copy">${jobs.body}</div>
+      <div class="market-strip">
+        <span class="market-pill">curated roles</span>
+        <span class="market-pill">builders only</span>
+      </div>
       <div class="jobs-list">
         ${jobs.items.map(job => `
           <div class="job-item">
@@ -1350,6 +1402,10 @@
       <div class="market-kicker">weekly recap</div>
       <div class="market-title">${latest.label}</div>
       <div class="market-meta">${latest.sourceDates.length} daily issues rolled up into one weekly signal pass.</div>
+      <div class="market-strip">
+        <span class="market-pill">sunday drop</span>
+        <span class="market-pill">${latest.id}</span>
+      </div>
       <button class="market-cta inline-link-btn" type="button" onclick="openLatestWeekly()">
         open week ${latest.id}
       </button>

@@ -292,7 +292,12 @@ def fetch_rss_sources():
     for tier, cfg in SOURCES.items():
         weight       = cfg["weight"]
         max_age      = cfg["max_age_hours"]
-        limit        = 10 if tier == "research" else 8
+        if tier == "research":
+            limit = 14
+        elif tier in ("analysis", "industry", "community"):
+            limit = 10
+        else:
+            limit = 8
 
         for source_name, url in cfg["feeds"]:
             try:
@@ -657,10 +662,10 @@ def score_articles(articles, hn_stories, gh_repos=None, hf_papers=None):
                 "paywalled":     False,
                 "score":         4 + min(10, hn["points"] // 50) + keyword_boost(hn["title"]),
             })
-    articles.extend(sorted(extra_hn, key=lambda x: x["score"], reverse=True)[:10])
+    articles.extend(sorted(extra_hn, key=lambda x: x["score"], reverse=True)[:14])
 
     # Append GitHub trending repos as articles
-    for repo in gh_repos[:8]:
+    for repo in gh_repos[:12]:
         if repo["url"] not in covered_links:
             articles.append({
                 "source":        "GitHub Trending",
@@ -680,7 +685,7 @@ def score_articles(articles, hn_stories, gh_repos=None, hf_papers=None):
             })
 
     # Append HuggingFace papers
-    for paper in hf_papers[:6]:
+    for paper in hf_papers[:8]:
         if paper["url"] and paper["url"] not in covered_links:
             articles.append({
                 "source":        "HuggingFace Papers",
@@ -705,6 +710,41 @@ def score_articles(articles, hn_stories, gh_repos=None, hf_papers=None):
 
 
 # ── Generate with Claude ───────────────────────────────────────────────────────
+
+def digest_quality_stats(content):
+    """Estimate whether the generated digest is materially complete."""
+    top_stories = len(re.findall(r"^### ", content, flags=re.MULTILINE))
+    quick_hit_bullets = 0
+    in_quick_hits = False
+    in_tools = False
+    in_research = False
+    research_entries = 0
+    tool_entries = 0
+
+    for raw in content.splitlines():
+        line = raw.strip()
+        if line.startswith("## "):
+            lower = line.lower()
+            in_quick_hits = "quick hits" in lower or "stderr" in lower
+            in_research = "research radar" in lower or "bash-research" in lower
+            in_tools = "tools & repos" in lower or "pkg ls" in lower
+            continue
+        if line.startswith("---"):
+            in_quick_hits = in_research = in_tools = False
+            continue
+        if in_quick_hits and line.startswith("- "):
+            quick_hit_bullets += 1
+        if in_research and line.startswith("**"):
+            research_entries += 1
+        if in_tools and line.startswith("**"):
+            tool_entries += 1
+
+    return {
+        "top_stories": top_stories,
+        "quick_hits": quick_hit_bullets,
+        "research_entries": research_entries,
+        "tool_entries": tool_entries,
+    }
 
 def generate_summary(articles, target_date):
     try:
@@ -743,13 +783,20 @@ def generate_summary(articles, target_date):
             f"Summary: {a['desc']}"
         )
 
-    articles_text = "\n\n".join(fmt(a) for a in articles[:65])
+    articles_text = "\n\n".join(fmt(a) for a in articles[:95])
     n_sources     = len(set(a["source"] for a in articles))
     n_prev        = sum(1 for a in articles if a["prev_covered"])
+    tier_counts   = {}
+    for a in articles:
+        tier_counts[a["tier"]] = tier_counts.get(a["tier"], 0) + 1
+    tier_summary = ", ".join(
+        f"{tier.upper()}={count}" for tier, count in sorted(tier_counts.items())
+    )
 
     prompt = f"""You are the editor of The Bash — a high signal-to-noise AI & tech digest for hackers, developers, and engineers. Your voice is direct, technically sharp, and developer-friendly. No hype, no fluff — just what matters for builders.
 
 Today is {nice_date}. You have {len(articles)} scored articles from {n_sources} sources across labs (Anthropic, OpenAI, Google, Meta, Mistral, NVIDIA, Cohere, Stability), journalism (Reuters, TechCrunch, Bloomberg, Axios, Guardian), analysis (Import AI, Latent Space, Semianalysis, Mollick, Zvi, Ben's Bites), research (arXiv, HuggingFace Papers), developer community (GitHub Trending, Reddit r/MachineLearning, r/LocalLLaMA, Lobste.rs, HN), and policy (Stanford HAI, Brookings). {n_prev} are flagged [!] PREVIOUSLY COVERED.
+Tier mix available right now: {tier_summary}.
 
 SCORING SIGNALS ON EACH ARTICLE:
 - SCORE = tier weight + HN engagement + cross-source + keyword boost − previously-covered penalty
