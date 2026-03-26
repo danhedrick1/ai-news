@@ -402,64 +402,44 @@
       letter-spacing: 0.02em;
     }
 
-    .support-band {
-      position: relative;
-      z-index: 1;
-      display: grid;
-      grid-template-columns: minmax(0, 1.45fr) minmax(280px, 1fr);
-      gap: 0;
+    /* ── Inline newsletter bar (above content) ─────────────────────────────── */
+
+    .newsletter-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 20px;
       border-bottom: 1px solid var(--border);
       background: rgba(11, 16, 22, 0.72);
+      flex-wrap: wrap;
     }
 
-    .support-band > section {
-      padding: 22px 24px;
-    }
-
-    .support-band > section + section {
-      border-left: 1px solid var(--border);
-    }
-
-    .support-label {
+    .newsletter-bar .bar-label {
       color: var(--accent);
-      font-size: 0.68rem;
+      font-size: 0.7rem;
       text-transform: uppercase;
-      letter-spacing: 0.12em;
-      margin-bottom: 10px;
-    }
-
-    .support-heading {
-      font-size: 1.05rem;
-      color: var(--text);
-      margin-bottom: 8px;
-      line-height: 1.5;
-    }
-
-    .support-copy {
-      color: var(--text-muted);
-      font-size: 0.8rem;
-      line-height: 1.7;
-      margin-bottom: 16px;
-      max-width: 58ch;
+      letter-spacing: 0.1em;
+      white-space: nowrap;
     }
 
     .newsletter-form {
       display: flex;
-      gap: 10px;
+      gap: 8px;
       align-items: stretch;
-      flex-wrap: wrap;
-      margin-bottom: 10px;
+      flex: 1 1 auto;
+      min-width: 0;
     }
 
     .newsletter-input {
-      flex: 1 1 240px;
+      flex: 1 1 200px;
       min-width: 0;
-      padding: 12px 14px;
-      border-radius: 10px;
+      padding: 8px 12px;
+      border-radius: 8px;
       border: 1px solid var(--border);
       background: rgba(15, 20, 25, 0.92);
       color: var(--text);
       font: inherit;
+      font-size: 0.78rem;
     }
 
     .newsletter-input:focus {
@@ -472,11 +452,12 @@
       border: 1px solid var(--accent);
       background: var(--accent);
       color: var(--bg);
-      border-radius: 10px;
-      padding: 12px 16px;
+      border-radius: 8px;
+      padding: 8px 14px;
       font: inherit;
-      font-size: 0.78rem;
+      font-size: 0.74rem;
       font-weight: 700;
+      white-space: nowrap;
       cursor: pointer;
       transition: all 0.15s ease;
       white-space: nowrap;
@@ -492,23 +473,58 @@
       cursor: wait;
     }
 
-    .newsletter-status {
-      min-height: 1.2rem;
-      font-size: 0.74rem;
+    .newsletter-bar .newsletter-status {
+      font-size: 0.72rem;
       color: var(--text-muted);
-      margin-bottom: 10px;
+      margin: 0;
+      min-height: 0;
     }
-
     .newsletter-status.success { color: var(--accent); }
     .newsletter-status.error { color: #f85149; }
 
-    .support-links {
+    /* ── Footer support zone (below content) ─────────────────────────────── */
+
+    .support-footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 24px;
+      background: rgba(11, 16, 22, 0.72);
+    }
+
+    .support-footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .support-footer .footer-section-label {
+      color: var(--accent);
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 8px;
+    }
+
+    .support-footer .footer-section-title {
+      font-size: 0.92rem;
+      color: var(--text);
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+
+    .support-footer .footer-section-copy {
+      color: var(--text-muted);
+      font-size: 0.76rem;
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+
+    .footer-links {
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
       align-items: center;
       font-size: 0.74rem;
-      color: var(--text-muted);
+      margin-top: 10px;
     }
 
     .support-link,
@@ -522,16 +538,19 @@
       text-decoration: none;
     }
 
-    .market-stack {
-      display: grid;
-      gap: 0;
+    .footer-newsletter-form {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .footer-newsletter-form .newsletter-input {
+      flex: 1 1 180px;
     }
 
     .market-row {
       position: relative;
       padding: 14px 14px 16px;
-      margin-bottom: 16px;
-      border-bottom: 1px solid var(--border);
       border: 1px solid color-mix(in srgb, var(--accent) 12%, var(--border));
       border-radius: 14px;
       background:
@@ -551,7 +570,6 @@
 
     .market-row:last-child {
       margin-bottom: 0;
-      padding-bottom: 0;
     }
 
     .market-kicker {
@@ -980,9 +998,9 @@
       main { padding: 20px 16px 32px; }
       .terminal-shell { border-radius: 14px; }
       .terminal-intro { padding: 16px 16px 14px; }
-      .support-band { grid-template-columns: 1fr; }
-      .support-band > section { padding: 18px 16px; }
-      .support-band > section + section { border-left: none; border-top: 1px solid var(--border); }
+      .newsletter-bar { padding: 8px 16px; }
+      .support-footer { padding: 20px 16px; }
+      .support-footer-grid { grid-template-columns: 1fr; }
       .format-tabs { padding: 14px 16px 10px; overflow-x: auto; }
       #content, #twitter-content, #newsletter-content { padding: 18px 16px 26px; }
       #content h1 { font-size: 1.4rem; }
@@ -1037,28 +1055,13 @@
           <span class="terminal-chip">builder signal over noise</span>
         </div>
       </div>
-      <div class="support-band">
-        <section>
-          <div class="support-label">newsletter</div>
-          <h2 class="support-heading">Pipe the daily digest and Sunday recap into your inbox.</h2>
-          <p class="support-copy">Builder-focused AI signal, not a giant blast list. Use the API-backed signup here or fall back to RSS if you prefer your own reader.</p>
-          <form id="newsletter-form" class="newsletter-form">
-            <input id="newsletter-email" class="newsletter-input" type="email" name="email" placeholder="you@company.com" autocomplete="email" required />
-            <button id="newsletter-submit" class="newsletter-submit" type="submit">join newsletter</button>
-          </form>
-          <p id="newsletter-status" class="newsletter-status" aria-live="polite"></p>
-          <div class="support-links">
-            <a class="support-link" href="/feed.xml">open RSS feed</a>
-            <button class="inline-link-btn" type="button" onclick="openLatestWeekly()">open latest weekly</button>
-          </div>
-        </section>
-        <section>
-          <div class="market-stack">
-            <div id="sponsor-slot" class="market-row"></div>
-            <div id="job-board-slot" class="market-row"></div>
-            <div id="weekly-slot" class="market-row"></div>
-          </div>
-        </section>
+      <div class="newsletter-bar">
+        <span class="bar-label">newsletter</span>
+        <form id="newsletter-form" class="newsletter-form">
+          <input id="newsletter-email" class="newsletter-input" type="email" name="email" placeholder="you@company.com" autocomplete="email" required />
+          <button id="newsletter-submit" class="newsletter-submit" type="submit">subscribe</button>
+        </form>
+        <p id="newsletter-status" class="newsletter-status" aria-live="polite"></p>
       </div>
       <div id="loading">
         <div class="spinner"></div>
@@ -1076,6 +1079,26 @@
       <div id="content" class="format-content active" style="display:none"></div>
       <div id="twitter-content" class="format-content" style="display:none"></div>
       <div id="newsletter-content" class="format-content" style="display:none"></div>
+      <div id="support-footer" class="support-footer" style="display:none">
+        <div class="support-footer-grid">
+          <div>
+            <div class="footer-section-label">newsletter</div>
+            <div class="footer-section-title">Pipe the daily digest and Sunday recap into your inbox.</div>
+            <div class="footer-section-copy">Builder-focused AI signal, not a giant blast list.</div>
+            <form class="footer-newsletter-form" onsubmit="return handleFooterNewsletterSubmit(event)">
+              <input class="newsletter-input" type="email" placeholder="you@company.com" autocomplete="email" required />
+              <button class="newsletter-submit" type="submit">subscribe</button>
+            </form>
+            <div class="footer-links">
+              <a class="support-link" href="/feed.xml">RSS feed</a>
+              <button class="inline-link-btn" type="button" onclick="openLatestWeekly()">latest weekly</button>
+            </div>
+          </div>
+          <div id="sponsor-slot" class="market-row"></div>
+          <div id="job-board-slot" class="market-row"></div>
+          <div id="weekly-slot" class="market-row"></div>
+        </div>
+      </div>
     </div>
   </main>
 </div>
@@ -1422,17 +1445,15 @@
     return weeklyIndex;
   }
 
-  async function submitNewsletterSignup(event) {
-    event.preventDefault();
-    const form = document.getElementById('newsletter-form');
-    const input = document.getElementById('newsletter-email');
-    const button = document.getElementById('newsletter-submit');
-    const status = document.getElementById('newsletter-status');
+  async function doNewsletterSignup(form, statusEl) {
+    const input = form.querySelector('input[type="email"]');
+    const button = form.querySelector('button[type="submit"]');
     const email = input.value.trim();
 
-    status.className = 'newsletter-status';
-    status.textContent = '';
+    statusEl.className = 'newsletter-status';
+    statusEl.textContent = '';
     button.disabled = true;
+    const origText = button.textContent;
     button.textContent = 'joining...';
 
     try {
@@ -1449,15 +1470,37 @@
         throw new Error(data.error || 'Signup failed.');
       }
       form.reset();
-      status.className = 'newsletter-status success';
-      status.textContent = data.message || 'You are on the list.';
+      statusEl.className = 'newsletter-status success';
+      statusEl.textContent = data.message || 'You are on the list.';
     } catch (error) {
-      status.className = 'newsletter-status error';
-      status.textContent = error.message || 'Could not submit the form right now.';
+      statusEl.className = 'newsletter-status error';
+      statusEl.textContent = error.message || 'Could not submit the form right now.';
     } finally {
       button.disabled = false;
-      button.textContent = 'join newsletter';
+      button.textContent = origText;
     }
+  }
+
+  async function submitNewsletterSignup(event) {
+    event.preventDefault();
+    doNewsletterSignup(
+      document.getElementById('newsletter-form'),
+      document.getElementById('newsletter-status')
+    );
+  }
+
+  function handleFooterNewsletterSubmit(event) {
+    event.preventDefault();
+    const form = event.target;
+    let statusEl = form.nextElementSibling;
+    if (!statusEl || !statusEl.classList.contains('newsletter-status')) {
+      statusEl = document.createElement('p');
+      statusEl.className = 'newsletter-status';
+      statusEl.setAttribute('aria-live', 'polite');
+      form.after(statusEl);
+    }
+    doNewsletterSignup(form, statusEl);
+    return false;
   }
 
   function openLatestWeekly() {
@@ -1620,6 +1663,7 @@
     document.getElementById('content').style.display = 'none';
     document.getElementById('error-msg').style.display = 'none';
     document.getElementById('format-tabs').style.display = 'none';
+    document.getElementById('support-footer').style.display = 'none';
     // Reset alternate formats
     const twitterEl = document.getElementById('twitter-content');
     const newsletterEl = document.getElementById('newsletter-content');
@@ -1656,6 +1700,7 @@
       contentEl.style.display = 'block';
       document.getElementById('loading').style.display = 'none';
       document.getElementById('format-tabs').style.display = 'flex';
+      document.getElementById('support-footer').style.display = 'block';
       // Reset to website tab
       switchFormat('website');
       currentlyOpenStory = null;
@@ -1688,6 +1733,7 @@
     document.getElementById('content').style.display = 'none';
     document.getElementById('error-msg').style.display = 'none';
     document.getElementById('format-tabs').style.display = 'none';
+    document.getElementById('support-footer').style.display = 'none';
     document.getElementById('twitter-content').style.display = 'none';
     document.getElementById('newsletter-content').style.display = 'none';
 
@@ -1719,6 +1765,7 @@
       );
       contentEl.style.display = 'block';
       document.getElementById('loading').style.display = 'none';
+      document.getElementById('support-footer').style.display = 'block';
       currentlyOpenStory = null;
       openStoryFromHash();
       window.scrollTo({ top: 0, behavior: 'smooth' });
