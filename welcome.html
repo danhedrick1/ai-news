@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>You're in — theba.sh</title>
+  <meta name="description" content="You've subscribed to The Bash. Here's what to do next." />
+  <meta name="robots" content="noindex" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root, [data-theme="dark"] {
+      --bg: #0a0e14;
+      --card-bg: #151b23;
+      --border: #1e2a35;
+      --text: #e6edf3;
+      --text-muted: #7a8a9e;
+      --accent: #39d353;
+      --accent-hover: #56e06e;
+      --accent-glow: rgba(57,211,83,0.15);
+      --link: #58a6ff;
+      --font-mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
+    }
+
+    [data-theme="light"] {
+      --bg: #f6f8fa;
+      --card-bg: #ffffff;
+      --border: #d0d7de;
+      --text: #1f2328;
+      --text-muted: #656d76;
+      --accent: #1a7f37;
+      --accent-hover: #2da44e;
+      --accent-glow: rgba(26,127,55,0.1);
+      --link: #0969da;
+      --font-mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
+    }
+
+    body {
+      font-family: var(--font-mono);
+      background:
+        radial-gradient(circle at top, rgba(57,211,83,0.12), transparent 32%),
+        linear-gradient(180deg, rgba(7,11,16,0.96), rgba(10,14,20,1));
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+    }
+
+    .shell {
+      width: 100%;
+      max-width: 560px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+    }
+
+    .shell-bar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 16px;
+      background: rgba(255,255,255,0.03);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .dot { width: 10px; height: 10px; border-radius: 50%; }
+    .dot-red   { background: #ff5f57; }
+    .dot-yellow{ background: #febc2e; }
+    .dot-green { background: #28c840; }
+
+    .shell-title {
+      flex: 1;
+      text-align: center;
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+    }
+
+    .body {
+      padding: 32px 28px 36px;
+    }
+
+    .prompt-line {
+      font-size: 0.72rem;
+      color: var(--accent);
+      letter-spacing: 0.08em;
+      margin-bottom: 20px;
+    }
+
+    .prompt-line::before { content: '$ '; opacity: 0.5; }
+
+    h1 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.3;
+      margin-bottom: 8px;
+    }
+
+    .subhead {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 24px 0;
+    }
+
+    .steps-label {
+      font-size: 0.65rem;
+      color: var(--accent);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .step:last-child { margin-bottom: 0; }
+
+    .step-num {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      margin-top: 1px;
+    }
+
+    .step-body { flex: 1; }
+
+    .step-title {
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+
+    .step-desc {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .step-cta {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 6px 14px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--bg);
+      background: var(--accent);
+      border: 1px solid var(--accent);
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .step-cta:hover {
+      background: var(--accent-hover);
+      border-color: var(--accent-hover);
+    }
+
+    .step-cta.secondary {
+      background: transparent;
+      color: var(--accent);
+    }
+
+    .step-cta.secondary:hover {
+      background: var(--accent-glow);
+    }
+
+    hr.divider { margin: 28px 0; }
+
+    .footer-note {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .footer-note a {
+      color: var(--link);
+      text-decoration: none;
+    }
+
+    .footer-note a:hover { text-decoration: underline; }
+
+    @media (max-width: 480px) {
+      .body { padding: 24px 18px 28px; }
+      h1 { font-size: 1.1rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="shell-bar">
+      <span class="dot dot-red"></span>
+      <span class="dot dot-yellow"></span>
+      <span class="dot dot-green"></span>
+      <span class="shell-title">theba.sh — welcome</span>
+    </div>
+    <div class="body">
+      <div class="prompt-line">subscribe --confirm</div>
+      <h1>You're on the list.</h1>
+      <p class="subhead">Check your inbox for a confirmation email. Click the link inside to activate your subscription — then your first issue lands on the next send.</p>
+
+      <hr class="divider" />
+
+      <div class="steps-label">// next steps</div>
+
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Confirm your email</div>
+          <div class="step-desc">Find the confirmation email from The Bash and click the link inside. Without this, you won't receive issues.</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Follow on X for daily signal</div>
+          <div class="step-desc">Every issue ships as a thread too. Catch the highlights in your timeline between emails.</div>
+          <a class="step-cta" href="https://x.com/theba_sh" target="_blank" rel="noopener">@theba_sh on X</a>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Read today's issue</div>
+          <div class="step-desc">Don't wait for your inbox. The latest digest is live now.</div>
+          <a class="step-cta secondary" href="/">Read today's issue</a>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <div class="step-title">Share with one person</div>
+          <div class="step-desc">Know someone building with AI who'd find this useful? Forward the confirmation email or share the link below.</div>
+          <a class="step-cta secondary" href="https://theba.sh" target="_blank" rel="noopener">theba.sh</a>
+        </div>
+      </div>
+
+      <hr class="divider" />
+
+      <p class="footer-note">
+        Questions or feedback? Reply to any issue — it goes straight to the editor.<br />
+        <a href="/">Back to theba.sh</a>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    // Preserve theme preference from main site
+    try {
+      const saved = localStorage.getItem('theme');
+      if (saved === 'light') document.documentElement.setAttribute('data-theme', 'light');
+    } catch {}
+  </script>
+</body>
+</html>

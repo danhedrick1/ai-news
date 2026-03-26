@@ -1486,7 +1486,8 @@
       }
       form.reset();
       statusEl.className = 'newsletter-status success';
-      statusEl.textContent = data.message || 'You are on the list.';
+      statusEl.textContent = data.message || 'You are on the list. Redirecting...';
+      setTimeout(() => { window.location.href = '/welcome'; }, 1200);
     } catch (error) {
       statusEl.className = 'newsletter-status error';
       statusEl.textContent = error.message || 'Could not submit the form right now.';

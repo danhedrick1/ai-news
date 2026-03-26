@@ -16,8 +16,8 @@ async function safeErrorText(response) {
 }
 
 export async function GET() {
-  const provider = process.env.BUTTONDOWN_API_KEY
-    ? 'buttondown'
+  const provider = process.env.BEEHIIV_API_KEY && process.env.BEEHIIV_PUBLICATION_ID
+    ? 'beehiiv'
     : process.env.NEWSLETTER_WEBHOOK_URL
       ? 'webhook'
       : 'unconfigured';
@@ -41,50 +41,58 @@ export async function POST(request) {
     return json({ ok: false, error: 'Enter a valid email address.' }, { status: 400 });
   }
 
+  // Map source tag to UTM fields
+  let utmCampaign = 'site';
+  if (source.startsWith('daily:')) utmCampaign = 'daily_digest';
+  else if (source.startsWith('weekly:')) utmCampaign = 'weekly_recap';
+
   try {
-    if (process.env.BUTTONDOWN_API_KEY) {
-      const response = await fetch('https://api.buttondown.email/v1/subscribers', {
+    if (process.env.BEEHIIV_API_KEY && process.env.BEEHIIV_PUBLICATION_ID) {
+      const url = `https://api.beehiiv.com/v2/publications/${process.env.BEEHIIV_PUBLICATION_ID}/subscriptions`;
+
+      const response = await fetch(url, {
         method: 'POST',
         headers: {
-          Authorization: `Token ${process.env.BUTTONDOWN_API_KEY}`,
+          Authorization: `Bearer ${process.env.BEEHIIV_API_KEY}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          email_address: email,
-          tags: ['theba-sh'],
-          metadata: {
-            source,
-            submitted_at: submittedAt,
-          },
+          email,
+          reactivate_existing: true,
+          send_welcome_email: false, // handled by Beehiiv automation sequence
+          utm_source: 'theba.sh',
+          utm_medium: 'website',
+          utm_campaign: utmCampaign,
+          referring_site: 'theba.sh',
+          custom_fields: [
+            { name: 'source', value: source },
+            { name: 'submitted_at', value: submittedAt },
+          ],
         }),
       });
 
       if (!response.ok) {
         const errorText = await safeErrorText(response);
-        if (/already|exists|subscribed/i.test(errorText)) {
-          return json({ ok: true, message: 'You are already subscribed.' });
+        // Beehiiv returns 400 with a message for already-subscribed when reactivate_existing is false.
+        // With reactivate_existing: true it should always succeed for valid emails.
+        if (response.status === 409 || /already|exists|subscribed/i.test(errorText)) {
+          return json({ ok: true, message: 'You are already on the list.' });
         }
+        console.error('Beehiiv API error', response.status, errorText);
         return json(
-          { ok: false, error: 'Could not add this address to Buttondown right now.' },
+          { ok: false, error: 'Could not add this address right now. Try again in a moment.' },
           { status: 502 }
         );
       }
 
-      return json({ ok: true, message: 'You are on the list. Daily signal is on the way.' });
+      return json({ ok: true, message: 'You are on the list. Check your inbox to confirm.' });
     }
 
     if (process.env.NEWSLETTER_WEBHOOK_URL) {
       const response = await fetch(process.env.NEWSLETTER_WEBHOOK_URL, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email,
-          source,
-          submittedAt,
-          product: 'theba.sh',
-        }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, source, submittedAt, product: 'theba.sh' }),
       });
 
       if (!response.ok) {
