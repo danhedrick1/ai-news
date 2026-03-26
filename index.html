@@ -1967,6 +1967,10 @@
           history.replaceState({}, '', nextUrl);
         }
       });
+
+      // Expand all stories by default
+      wrapper.classList.add('open');
+      chevron.textContent = '\u25BE';
     }
   }
 
