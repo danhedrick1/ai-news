@@ -1628,7 +1628,7 @@
 
       populateDropdown(dates);
 
-      // Route: weekly first, then dated digest, then latest daily.
+      // Route: weekly URL first, then dated URL, then today (if available), then latest.
       const urlWeek = getWeekFromURL();
       const urlDate = getDateFromURL();
       if (!currentDate && !currentWeek) {
@@ -1637,7 +1637,9 @@
         } else if (urlDate && dates.includes(urlDate)) {
           loadNews(urlDate, false);
         } else {
-          loadNews(dates[0]);
+          const today = getCurrentDateET();
+          const target = dates.includes(today) ? today : dates[0];
+          loadNews(target);
         }
       }
     } catch (e) {
