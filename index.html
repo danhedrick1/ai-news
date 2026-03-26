@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI News Daily</title>
+  <title>The Bash — AI News for Builders</title>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -386,6 +386,70 @@
       white-space: nowrap;
     }
 
+    /* ── CLASSIFICATION BADGES ── */
+    .classification-badge {
+      display: inline-block;
+      font-size: 0.6rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 2px 8px;
+      border-radius: 3px;
+      margin-right: 6px;
+      vertical-align: middle;
+    }
+    .badge-breakthrough { color: #f85149; background: rgba(248,81,73,0.1); border: 1px solid rgba(248,81,73,0.3); }
+    .badge-tool { color: #58a6ff; background: rgba(88,166,255,0.1); border: 1px solid rgba(88,166,255,0.3); }
+    .badge-funding { color: #3fb950; background: rgba(63,185,80,0.1); border: 1px solid rgba(63,185,80,0.3); }
+    .badge-controversy { color: #f0883e; background: rgba(240,136,62,0.1); border: 1px solid rgba(240,136,62,0.3); }
+    .badge-dev_insight { color: #a371f7; background: rgba(163,113,247,0.1); border: 1px solid rgba(163,113,247,0.3); }
+    .badge-research { color: #79c0ff; background: rgba(121,192,255,0.1); border: 1px solid rgba(121,192,255,0.3); }
+    .badge-policy { color: #d2a8ff; background: rgba(210,168,255,0.1); border: 1px solid rgba(210,168,255,0.3); }
+
+    /* ── DEV TAKE ── */
+    #content p strong:first-child {
+      /* handled by markdown */
+    }
+    .dev-take {
+      background: rgba(88,166,255,0.05);
+      border-left: 3px solid var(--accent);
+      padding: 8px 14px;
+      margin: 10px 0 14px;
+      border-radius: 0 6px 6px 0;
+      font-size: 0.9rem;
+      color: #cdd9e5;
+    }
+    .dev-take strong {
+      color: var(--accent) !important;
+    }
+
+    /* ── FORMAT TABS ── */
+    .format-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 12px;
+    }
+    .format-tab {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .format-tab:hover { border-color: var(--accent); color: var(--accent); }
+    .format-tab.active {
+      background: rgba(88,166,255,0.1);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .format-content { display: none; }
+    .format-content.active { display: block; }
+
     /* ── EMPTY STATE ── */
     .empty-state {
       text-align: center;
@@ -409,7 +473,7 @@
 <header>
   <div class="logo">
     <div class="dot"></div>
-    AI<span>News</span>
+    The<span>Bash</span>
   </div>
   <div class="header-right">
     <div id="last-update" class="last-update-badge">Last updated: --:--</div>
@@ -437,7 +501,14 @@
       <span style="font-size:2rem">⚠️</span>
       <span id="error-text">Failed to load news.</span>
     </div>
-    <div id="content" style="display:none"></div>
+    <div id="format-tabs" class="format-tabs" style="display:none">
+      <button class="format-tab active" data-format="website" onclick="switchFormat('website')">Website</button>
+      <button class="format-tab" data-format="twitter" onclick="switchFormat('twitter')">Twitter/X Thread</button>
+      <button class="format-tab" data-format="newsletter" onclick="switchFormat('newsletter')">Newsletter</button>
+    </div>
+    <div id="content" class="format-content active" style="display:none"></div>
+    <div id="twitter-content" class="format-content" style="display:none"></div>
+    <div id="newsletter-content" class="format-content" style="display:none"></div>
   </main>
 </div>
 
@@ -615,6 +686,16 @@
     document.getElementById('loading').style.display = 'flex';
     document.getElementById('content').style.display = 'none';
     document.getElementById('error-msg').style.display = 'none';
+    document.getElementById('format-tabs').style.display = 'none';
+    // Reset alternate formats
+    const twitterEl = document.getElementById('twitter-content');
+    const newsletterEl = document.getElementById('newsletter-content');
+    twitterEl.style.display = 'none';
+    twitterEl.innerHTML = '';
+    twitterEl.dataset.loaded = '';
+    newsletterEl.style.display = 'none';
+    newsletterEl.innerHTML = '';
+    newsletterEl.dataset.loaded = '';
 
     try {
       const res = await fetch(`news/${dateStr}.md?t=${Date.now()}`);
@@ -627,6 +708,9 @@
       postProcessContent(contentEl);
       contentEl.style.display = 'block';
       document.getElementById('loading').style.display = 'none';
+      document.getElementById('format-tabs').style.display = 'flex';
+      // Reset to website tab
+      switchFormat('website');
       currentlyOpenStory = null;
 
       // Start auto-refresh if viewing today
@@ -649,7 +733,7 @@
       <div class="empty-state">
         <div class="icon">📰</div>
         <h3>No issues yet</h3>
-        <p>Run <code>generate_news.py</code> to create the first issue.</p>
+        <p>Run <code>python generate_news.py</code> to create the first issue of The Bash.</p>
       </div>
     `;
     document.getElementById('content').style.display = 'block';
@@ -710,6 +794,32 @@
 
   function postProcessContent(container) {
     makeStoriesCollapsible(container);
+    styleClassificationBadges(container);
+    styleDevTakes(container);
+  }
+
+  function styleClassificationBadges(container) {
+    // Convert *[classification]* patterns in <em> tags to styled badges
+    const classifications = ['breakthrough','tool','funding','controversy','dev_insight','research','policy'];
+    container.querySelectorAll('em').forEach(em => {
+      const text = em.textContent.trim().replace(/^\[|\]$/g, '');
+      if (classifications.includes(text)) {
+        const badge = document.createElement('span');
+        badge.className = `classification-badge badge-${text}`;
+        badge.textContent = text;
+        em.replaceWith(badge);
+      }
+    });
+  }
+
+  function styleDevTakes(container) {
+    // Find paragraphs starting with Dev Take emoji and wrap them
+    container.querySelectorAll('p').forEach(p => {
+      const text = p.textContent;
+      if (text.includes('Dev Take:') || text.includes('🔧')) {
+        p.classList.add('dev-take');
+      }
+    });
   }
 
   function makeStoriesCollapsible(container) {
@@ -782,6 +892,45 @@
         chevron.textContent = open ? '▾' : '▸';
         currentlyOpenStory = open ? heading : null;
       });
+    }
+  }
+
+  function switchFormat(format) {
+    document.querySelectorAll('.format-tab').forEach(t => {
+      t.classList.toggle('active', t.dataset.format === format);
+    });
+    document.querySelectorAll('.format-content').forEach(c => {
+      c.classList.remove('active');
+      c.style.display = 'none';
+    });
+    const target = format === 'website' ? 'content'
+                 : format === 'twitter' ? 'twitter-content'
+                 : 'newsletter-content';
+    const el = document.getElementById(target);
+    el.classList.add('active');
+    el.style.display = 'block';
+
+    // Load alternate formats on demand
+    if (format === 'twitter' && !el.dataset.loaded && currentDate) {
+      loadAlternateFormat(currentDate, 'twitter');
+    }
+    if (format === 'newsletter' && !el.dataset.loaded && currentDate) {
+      loadAlternateFormat(currentDate, 'newsletter');
+    }
+  }
+
+  async function loadAlternateFormat(dateStr, format) {
+    const suffix = format === 'twitter' ? '-twitter' : '-newsletter';
+    const targetId = format === 'twitter' ? 'twitter-content' : 'newsletter-content';
+    const el = document.getElementById(targetId);
+    try {
+      const res = await fetch(`news/${dateStr}${suffix}.md?t=${Date.now()}`);
+      if (!res.ok) throw new Error('not found');
+      const md = await res.text();
+      el.innerHTML = marked.parse(md);
+      el.dataset.loaded = 'true';
+    } catch (e) {
+      el.innerHTML = '<div class="empty-state"><div class="icon">📝</div><h3>Not available</h3><p>This format has not been generated for this date.</p></div>';
     }
   }
 

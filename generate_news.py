@@ -46,8 +46,7 @@ COVERED_PATH      = os.path.join(NEWS_DIR, "covered.json")
 #
 SOURCES = {
     "primary": {
-        # Direct from the labs + high-trust lab-specific TC tag feeds
-        # (Anthropic/Mistral have no RSS; TechCrunch tag feeds are the best proxy)
+        # Direct from the labs — highest signal
         "weight": 10,
         "max_age_hours": 28,
         "feeds": [
@@ -57,6 +56,9 @@ SOURCES = {
             ("Meta AI Research",         "https://research.facebook.com/feed/"),
             ("Microsoft AI Blog",        "https://blogs.microsoft.com/ai/feed/"),
             ("Hugging Face Blog",        "https://huggingface.co/blog/feed.xml"),
+            ("NVIDIA AI Blog",           "https://blogs.nvidia.com/blog/category/deep-learning/feed/"),
+            ("Cohere Blog",              "https://txt.cohere.com/rss/"),
+            ("Stability AI",             "https://stability.ai/news/rss.xml"),
             ("TechCrunch — Anthropic",   "https://techcrunch.com/tag/anthropic/feed/"),
             ("TechCrunch — OpenAI",      "https://techcrunch.com/tag/openai/feed/"),
             ("TechCrunch — Google AI",   "https://techcrunch.com/tag/google-ai/feed/"),
@@ -74,6 +76,12 @@ SOURCES = {
             ("Nathan Benaich / Air Street", "https://nathanbenaich.substack.com/feed"),
             ("The Neuron",                  "https://theneuron.ai/feed"),
             ("Interconnects",               "https://www.interconnects.ai/feed"),
+            ("Latent Space",                "https://www.latent.space/feed"),
+            ("Ben's Bites",                 "https://www.bensbites.co/feed"),
+            ("The Batch (deeplearning.ai)", "https://www.deeplearning.ai/the-batch/feed/"),
+            ("Pragmatic Engineer",          "https://newsletter.pragmaticengineer.com/feed"),
+            ("Turing Post",                 "https://www.turingpost.com/feed"),
+            ("Semianalysis",                "https://www.semianalysis.com/feed"),
         ],
     },
     "research": {
@@ -98,7 +106,9 @@ SOURCES = {
             ("The Verge AI",        "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml"),
             ("Wired",               "https://www.wired.com/feed/rss"),
             ("Bloomberg Tech",      "https://feeds.bloomberg.com/technology/news.rss"),
+            ("Reuters AI",          "https://www.reuters.com/technology/rss"),
             ("The Guardian AI",     "https://www.theguardian.com/technology/artificialintelligenceai/rss"),
+            ("CNBC AI",             "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=48812682"),
             ("GeekWire",            "https://www.geekwire.com/feed/"),
             ("Gizmodo AI",          "https://gizmodo.com/tag/artificial-intelligence/rss"),
             ("MacRumors",           "https://feeds.macrumors.com/MacRumors-All"),
@@ -107,10 +117,11 @@ SOURCES = {
             ("Japan Times Tech",    "https://www.japantimes.co.jp/rss/tech"),
             ("Business Insider",    "https://www.businessinsider.com/rss"),
             ("AI News",             "https://www.artificialintelligence-news.com/feed/"),
+            ("FT Technology",       "https://www.ft.com/technology?format=rss"),
         ],
     },
     "community": {
-        # Reddit developer/researcher discourse — surface viral moments + dev reactions
+        # Developer/hacker community — surface viral moments + dev reactions
         "weight": 4,
         "max_age_hours": 28,
         "feeds": [
@@ -118,6 +129,19 @@ SOURCES = {
             ("Reddit r/LocalLLaMA",      "https://www.reddit.com/r/LocalLLaMA/.rss"),
             ("Reddit r/artificial",      "https://www.reddit.com/r/artificial/.rss"),
             ("Reddit r/singularity",     "https://www.reddit.com/r/singularity/.rss"),
+            ("Lobste.rs",                "https://lobste.rs/rss"),
+            ("dev.to AI",               "https://dev.to/feed/tag/ai"),
+            ("StackOverflow Blog",       "https://stackoverflow.blog/feed/"),
+        ],
+    },
+    "policy": {
+        # AI policy and governance — macro-level signal
+        "weight": 4,
+        "max_age_hours": 72,
+        "feeds": [
+            ("Stanford HAI",             "https://hai.stanford.edu/news/rss.xml"),
+            ("Brookings AI",             "https://www.brookings.edu/topic/artificial-intelligence/feed/"),
+            ("OECD AI",                  "https://www.oecd.org/topics/artificial-intelligence/rss/"),
         ],
     },
 }
@@ -144,6 +168,32 @@ HN_SEARCH = (
     "&numericFilters=points>10"
     "&hitsPerPage=30"
 )
+
+# High-signal keywords that boost scoring
+BOOST_KEYWORDS = {
+    "agi", "open-source", "open source", "opensource", "jailbreak",
+    "model release", "benchmark", "state-of-the-art", "sota",
+    "gpt-5", "gpt5", "claude", "gemini", "llama", "mistral",
+    "diffusion", "transformer", "fine-tune", "finetune",
+    "reasoning", "chain-of-thought", "agent", "agentic",
+    "multimodal", "vision", "text-to-video", "text-to-image",
+    "embedding", "rag", "retrieval", "context window",
+    "inference", "quantization", "distillation",
+    "regulation", "executive order", "lawsuit", "copyright",
+    "acquisition", "funding", "valuation", "billion",
+    "replace", "obsolete", "breakthrough", "dangerous",
+}
+
+# Classification categories for articles
+CLASSIFICATIONS = [
+    "breakthrough",   # major capability jump or new paradigm
+    "tool",           # new tool, library, or platform
+    "funding",        # fundraising, acquisition, valuation
+    "controversy",    # lawsuit, safety concern, ethical debate
+    "dev_insight",    # practical dev knowledge, benchmarks, how-tos
+    "research",       # academic paper, novel technique
+    "policy",         # regulation, governance, standards
+]
 
 
 # ── Date parsing ───────────────────────────────────────────────────────────────
@@ -322,6 +372,66 @@ def fetch_hacker_news():
         return []
 
 
+def fetch_github_trending():
+    """Fetch trending AI/ML repositories from GitHub."""
+    try:
+        # Use GitHub's search API to find recently-created/updated repos with many stars
+        url = (
+            "https://api.github.com/search/repositories"
+            "?q=topic:machine-learning+topic:ai+pushed:>="
+            + (datetime.now(timezone.utc) - timedelta(days=2)).strftime("%Y-%m-%d")
+            + "&sort=stars&order=desc&per_page=15"
+        )
+        headers = {"User-Agent": "AI-News-Bot/2.0"}
+        if GITHUB_TOKEN:
+            headers["Authorization"] = f"token {GITHUB_TOKEN}"
+        req = urllib.request.Request(url, headers=headers)
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            data = json.loads(resp.read())
+        repos = []
+        for r in data.get("items", [])[:15]:
+            repos.append({
+                "name":        r["full_name"],
+                "url":         r["html_url"],
+                "description": (r.get("description") or "")[:300],
+                "stars":       r.get("stargazers_count", 0),
+                "language":    r.get("language", ""),
+                "created":     r.get("created_at", ""),
+            })
+        print(f"  [community ] GitHub Trending: {len(repos)} repos")
+        return repos
+    except Exception as e:
+        print(f"  [community ] GitHub Trending: SKIP ({e})")
+        return []
+
+
+def fetch_huggingface_papers():
+    """Fetch recent papers from HuggingFace daily papers API."""
+    try:
+        url = "https://huggingface.co/api/daily_papers?limit=10"
+        data = fetch_url(url)
+        papers = json.loads(data)
+        results = []
+        for p in papers:
+            paper = p.get("paper", p)
+            title = paper.get("title", "")
+            paper_id = paper.get("id", "")
+            summary = paper.get("summary", "")[:500]
+            upvotes = p.get("numUpvotes", paper.get("upvotes", 0))
+            if title:
+                results.append({
+                    "title":   title,
+                    "url":     f"https://huggingface.co/papers/{paper_id}" if paper_id else "",
+                    "summary": summary,
+                    "upvotes": upvotes,
+                })
+        print(f"  [research  ] HuggingFace Papers: {len(results)} papers")
+        return results
+    except Exception as e:
+        print(f"  [research  ] HuggingFace Papers: SKIP ({e})")
+        return []
+
+
 # ── Previously-covered deduplication ──────────────────────────────────────────
 
 def key_words(title):
@@ -388,7 +498,17 @@ def mark_previously_covered(articles):
 
 # ── Scoring ────────────────────────────────────────────────────────────────────
 
-def score_articles(articles, hn_stories):
+def keyword_boost(title, desc=""):
+    """Return a score boost based on high-signal keyword matches."""
+    text = f"{title} {desc}".lower()
+    matches = sum(1 for kw in BOOST_KEYWORDS if kw in text)
+    return min(4, matches)  # cap at +4
+
+
+def score_articles(articles, hn_stories, gh_repos=None, hf_papers=None):
+    gh_repos = gh_repos or []
+    hf_papers = hf_papers or []
+
     # HN cross-reference
     for a in articles:
         for hn in hn_stories:
@@ -405,13 +525,13 @@ def score_articles(articles, hn_stories):
                 a["cross_sources"] += 1
                 b["cross_sources"] += 1
 
-    # Final score (previously-covered stories get a -6 penalty — still included
-    # if there's strong new signal, but deprioritised by default)
+    # Final score with keyword boost
     for a in articles:
-        hn_boost    = min(10, a["hn_points"] // 50 + a["hn_comments"] // 20)
-        cross_boost = (a["cross_sources"] - 1) * 5
+        hn_boost     = min(10, a["hn_points"] // 50 + a["hn_comments"] // 20)
+        cross_boost  = (a["cross_sources"] - 1) * 5
+        kw_boost     = keyword_boost(a["title"], a["desc"])
         prev_penalty = -6 if a["prev_covered"] else 0
-        a["score"]  = a["weight"] + hn_boost + cross_boost + prev_penalty
+        a["score"]   = a["weight"] + hn_boost + cross_boost + kw_boost + prev_penalty
 
     articles.sort(key=lambda x: x["score"], reverse=True)
 
@@ -433,9 +553,53 @@ def score_articles(articles, hn_stories):
                 "hn_comments":   hn["comments"],
                 "cross_sources": 1,
                 "prev_covered":  False,
-                "score":         4 + min(10, hn["points"] // 50),
+                "paywalled":     False,
+                "score":         4 + min(10, hn["points"] // 50) + keyword_boost(hn["title"]),
             })
     articles.extend(sorted(extra_hn, key=lambda x: x["score"], reverse=True)[:10])
+
+    # Append GitHub trending repos as articles
+    for repo in gh_repos[:8]:
+        if repo["url"] not in covered_links:
+            articles.append({
+                "source":        "GitHub Trending",
+                "tier":          "community",
+                "weight":        4,
+                "title":         f"{repo['name']}: {repo['description'][:100]}",
+                "link":          repo["url"],
+                "desc":          f"⭐ {repo['stars']} stars · {repo['language']} · {repo['description']}",
+                "pub_dt":        None,
+                "age_str":       "",
+                "hn_points":     0,
+                "hn_comments":   0,
+                "cross_sources": 1,
+                "prev_covered":  False,
+                "paywalled":     False,
+                "score":         4 + min(6, repo["stars"] // 500) + keyword_boost(repo["name"], repo["description"]),
+            })
+
+    # Append HuggingFace papers
+    for paper in hf_papers[:6]:
+        if paper["url"] and paper["url"] not in covered_links:
+            articles.append({
+                "source":        "HuggingFace Papers",
+                "tier":          "research",
+                "weight":        5,
+                "title":         paper["title"],
+                "link":          paper["url"],
+                "desc":          paper["summary"],
+                "pub_dt":        None,
+                "age_str":       "",
+                "hn_points":     0,
+                "hn_comments":   0,
+                "cross_sources": 1,
+                "prev_covered":  False,
+                "paywalled":     False,
+                "score":         5 + min(5, paper["upvotes"] // 10) + keyword_boost(paper["title"], paper["summary"]),
+            })
+
+    # Re-sort after adding extra sources
+    articles.sort(key=lambda x: x["score"], reverse=True)
     return articles
 
 
@@ -482,70 +646,97 @@ def generate_summary(articles, target_date):
     n_sources     = len(set(a["source"] for a in articles))
     n_prev        = sum(1 for a in articles if a["prev_covered"])
 
-    prompt = f"""You are the editor of "AI News Daily" — a high signal-to-noise AI digest for researchers and engineers.
+    prompt = f"""You are the editor of "The Bash" — a high signal-to-noise AI digest for hackers, developers, and engineers. Your readers are builders who want to know what actually changed and why it matters.
 
-Today is {nice_date}. You have {len(articles)} scored articles from {n_sources} sources across labs (Anthropic, OpenAI, Google, Meta, Mistral), journalism (Reuters, TechCrunch, Bloomberg, Axios, Guardian), analysis (Import AI, The Batch, Mollick, Zvi), research (arXiv), Apple/consumer (MacRumors, 9to5Mac), healthcare AI (Stat News), and community (Reddit r/MachineLearning, r/LocalLLaMA). {n_prev} are flagged [!] PREVIOUSLY COVERED.
+Today is {nice_date}. You have {len(articles)} scored articles from {n_sources} sources across labs (Anthropic, OpenAI, Google, Meta, Mistral, NVIDIA, Cohere, Stability), journalism (Reuters, TechCrunch, Bloomberg, Axios, Guardian), analysis (Import AI, Latent Space, Semianalysis, Mollick, Zvi, Ben's Bites), research (arXiv, HuggingFace Papers), developer community (GitHub Trending, Reddit r/MachineLearning, r/LocalLLaMA, Lobste.rs, HN), and policy (Stanford HAI, Brookings). {n_prev} are flagged [!] PREVIOUSLY COVERED.
 
 SCORING SIGNALS ON EACH ARTICLE:
-- SCORE = tier weight + HN engagement bonus + cross-source bonus − previously-covered penalty
-- Tier weights: PRIMARY=10, ANALYSIS=8, RESEARCH=5, INDUSTRY=3, COMMUNITY=4
+- SCORE = tier weight + HN engagement + cross-source + keyword boost − previously-covered penalty
+- Tier weights: PRIMARY=10, ANALYSIS=8, RESEARCH=5, COMMUNITY=4, POLICY=4, INDUSTRY=3
 - [HN] HN Xpts = trending on Hacker News right now
 - x2/x3 sources = same story confirmed by multiple outlets
 - [!] PREVIOUSLY COVERED = this topic appeared in a recent issue
 
+CLASSIFICATION — mentally classify each story you include as one of:
+breakthrough | tool | funding | controversy | dev_insight | research | policy
+
+VIRAL FILTER — before including any story, ask: "Is this surprising, useful, or new to a technical reader?" Reject if:
+- obvious/expected news everyone already knows
+- no actionable insight for builders
+- pure PR / puff piece with no substance
+
 RULES:
-1. **Freshness first** — only include [!] PREVIOUSLY COVERED stories if there is a genuinely new development, new data, or a meaningful shift in the story. If including one, start the entry with "**Update:**" and clearly state what's new.
-2. **Order strictly by impact** — score is your primary signal; use your editorial judgment as a tiebreaker.
-3. **Merge duplicates** — same event from multiple sources = one unified entry, cite all sources.
+1. **Freshness first** — only include [!] PREVIOUSLY COVERED stories if there is a genuinely new development. If including one, start with "**Update:**".
+2. **Order strictly by impact** — score is your primary signal; editorial judgment as tiebreaker.
+3. **Merge duplicates** — same event from multiple sources = one unified entry, cite all.
 4. **Splash labeling** — note "[HN] Trending on HN: Xpts" or "Covered by X outlets" on top stories.
-5. **No noise** — skip listicles, job posts, or pure puff pieces. Flag borderline items as "(Low signal)" if you include them.
-6. **Research gets its own section** — arXiv papers go in Research Radar only.
+5. **No noise** — skip listicles, job posts, puff pieces. Be ruthless.
+6. **Research gets its own section** — arXiv/HuggingFace papers go in Research Radar.
 7. Use the actual source URLs in every link.
-8. **Paywalled sources** — if an article is flagged [PAYWALL]:
-   - Append ` [PAYWALL]` to the ### headline (e.g. `### Story Title [PAYWALL]`)
-   - Write a longer, more complete summary (4-5 sentences + key bullet points) since readers cannot access the full article
-   - Still link to the source so readers can verify / subscribe
+8. **Paywalled sources** — if flagged [PAYWALL]: append ` [PAYWALL]` to ### headline, write longer summary (4-5 sentences + bullets).
+
+TONE:
+- Sharp, slightly contrarian, builder-focused
+- No corporate language, no hype
+- Write like a smart engineer talking to other engineers
+- Be direct and opinionated
 
 FORMAT:
 
 ---
 
-# AI News Daily — {nice_date}
+# The Bash — {nice_date}
 
-*Ranked by impact · {n_sources} sources · stories from the last 24h*
+*{n_sources} sources · ranked by impact · signal over noise*
 
 ---
 
 ## 🔥 Top Stories
 
-[5-7 entries. Each story uses this exact structure — keep the summary concise (2-3 sentences) since the UI collapses stories by default and users expand to read more:
+[5-7 entries. Each story MUST include a DEV TAKE — a one-sentence opinionated takeaway a smart engineer would say. Use this exact structure:]
 
-### Descriptive Headline
-2-3 sentence summary of what happened and why it matters. For [PAYWALL] stories write 4-5 sentences plus **Key details:** bullets.
+### Headline That Creates Urgency or Curiosity
+*[classification]* — 2-3 sentence summary of what actually happened and why it matters for builders. Concrete specifics: numbers, capabilities, constraints. For [PAYWALL] stories write 4-5 sentences plus **Key details:** bullets.
+
+- Bullet 1: key fact
+- Bullet 2: key fact
+- Bullet 3: what a dev/operator can DO differently now
+
+**🔧 Dev Take:** "One sentence, slightly opinionated takeaway that a smart engineer would say."
+
 **Source:** [Publication](URL) · Score signal if notable
-[Read more →](URL)]
+[Read more →](URL)
 
 ---
 
 ## ⚡ Quick Hits
 
-[10-15 bullets. Format: **Topic** — one sentence. [Source](URL)]
+[10-15 bullets. Format: **Topic** *[classification]* — one sentence of what changed + why it matters. [Source](URL)]
 
 ---
 
 ## 🔬 Research Radar
 
-[3-6 arXiv papers. Format: **Short paper title** — one sentence on significance. [arXiv](URL)]
+[3-6 papers from arXiv or HuggingFace. Format:
+**Paper title** — one sentence on what's novel and why builders should care. [arXiv/HF](URL)
+**🔧 Dev Take:** "What this means in practice."]
+
+---
+
+## 🛠️ Tools & Repos
+
+[3-5 new tools, libraries, or trending repos. Format:
+**Tool/Repo name** — what it does in one sentence. [GitHub/Link](URL) · ⭐ stars if available]
 
 ---
 
 ## 📊 Trend Watch
 
-[2-3 paragraphs of synthesis. What's the signal vs noise this week? What should readers actually pay attention to? Be direct and opinionated.]
+[2-3 paragraphs of synthesis. What's the signal vs noise? What patterns are emerging? What should builders actually pay attention to? Be direct, opinionated, slightly contrarian. End with a bold prediction or hot take.]
 
 ---
 
-*AI News Daily · {nice_date} · {n_sources} outlets monitored*
+*The Bash · {nice_date} · {n_sources} outlets monitored · built for builders*
 
 ---
 
@@ -555,8 +746,82 @@ ARTICLES (ranked by score — use this order as primary signal):
 
     print("Generating digest with Claude…")
     msg = client.messages.create(
-        model="claude-opus-4-6",
-        max_tokens=4500,
+        model="claude-sonnet-4-6",
+        max_tokens=6000,
+        messages=[{"role": "user", "content": prompt}],
+    )
+    return msg.content[0].text
+
+
+# ── Multi-format output ───────────────────────────────────────────────────────
+
+def generate_twitter_thread(articles, target_date, client):
+    """Generate a Twitter/X thread from top stories."""
+    top = articles[:7]
+    articles_text = "\n".join(
+        f"- [{a['source']}] {a['title']}: {a['desc'][:150]}" for a in top
+    )
+    prompt = f"""You are writing a Twitter/X thread for "The Bash" — an AI news account for developers.
+
+Date: {target_date}
+Top stories:
+{articles_text}
+
+Write a 5-tweet thread. Rules:
+- Tweet 1: Hook headline. Bold claim or question. Use "🧵" at end.
+- Tweet 2: "Here's what's actually happening:" + top story summary
+- Tweets 3-4: One story each, concrete and punchy
+- Tweet 5: Hot take / prediction / "what to watch"
+
+TONE: sharp, builder-focused, no corporate language. Max 280 chars per tweet.
+FORMAT: Number each tweet (1/, 2/, etc). Separate tweets with ---."""
+
+    msg = client.messages.create(
+        model="claude-sonnet-4-6",
+        max_tokens=1500,
+        messages=[{"role": "user", "content": prompt}],
+    )
+    return msg.content[0].text
+
+
+def generate_newsletter_block(articles, target_date, client):
+    """Generate a newsletter-format block from top stories."""
+    top = articles[:10]
+    articles_text = "\n".join(
+        f"- [{a['source']}] {a['title']}: {a['desc'][:200]}" for a in top
+    )
+    prompt = f"""You are writing the newsletter edition of "The Bash" for {target_date}.
+
+Stories:
+{articles_text}
+
+Write a newsletter block for email. Format:
+
+# The Bash — [date]
+
+[2-sentence intro: what's the big theme today?]
+
+## Headlines
+
+[For each of the top 5-7 stories:]
+### [Headline]
+[2-sentence summary]
+- [bullet 1]
+- [bullet 2]
+- [bullet 3]
+**🔧 Dev Take:** "[opinionated one-liner]"
+
+## Quick Hits
+[5-7 one-line bullets for smaller stories]
+
+---
+*The Bash — built for builders*
+
+TONE: sharp, direct, no hype. Builder-focused."""
+
+    msg = client.messages.create(
+        model="claude-sonnet-4-6",
+        max_tokens=3000,
         messages=[{"role": "user", "content": prompt}],
     )
     return msg.content[0].text
@@ -564,12 +829,26 @@ ARTICLES (ranked by score — use this order as primary signal):
 
 # ── Save & Push ────────────────────────────────────────────────────────────────
 
-def save_news(content, target_date):
+def save_news(content, target_date, twitter_thread=None, newsletter=None):
     os.makedirs(NEWS_DIR, exist_ok=True)
     filepath = os.path.join(NEWS_DIR, f"{target_date}.md")
     with open(filepath, "w", encoding="utf-8") as f:
         f.write(content)
     print(f"Saved: {filepath}")
+
+    # Save Twitter thread
+    if twitter_thread:
+        twitter_path = os.path.join(NEWS_DIR, f"{target_date}-twitter.md")
+        with open(twitter_path, "w", encoding="utf-8") as f:
+            f.write(twitter_thread)
+        print(f"Saved: {twitter_path}")
+
+    # Save Newsletter block
+    if newsletter:
+        newsletter_path = os.path.join(NEWS_DIR, f"{target_date}-newsletter.md")
+        with open(newsletter_path, "w", encoding="utf-8") as f:
+            f.write(newsletter)
+        print(f"Saved: {newsletter_path}")
 
     index_path = os.path.join(NEWS_DIR, "index.json")
     index = {"dates": [], "lastUpdated": None}
@@ -626,15 +905,35 @@ def main():
     print("\nFetching Hacker News…")
     hn_stories = fetch_hacker_news()
 
+    print("\nFetching GitHub Trending…")
+    gh_repos = fetch_github_trending()
+
+    print("\nFetching HuggingFace Papers…")
+    hf_papers = fetch_huggingface_papers()
+
     print("\nChecking previously covered stories…")
     articles = mark_previously_covered(articles)
 
     print("\nScoring and ranking…")
-    articles = score_articles(articles, hn_stories)
+    articles = score_articles(articles, hn_stories, gh_repos, hf_papers)
     print(f"Total scored: {len(articles)} articles")
 
     content = generate_summary(articles, target_date)
-    save_news(content, target_date)
+
+    # Generate additional output formats
+    twitter_thread = None
+    newsletter = None
+    try:
+        import anthropic
+        client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+        print("\nGenerating Twitter thread…")
+        twitter_thread = generate_twitter_thread(articles, target_date, client)
+        print("Generating newsletter block…")
+        newsletter = generate_newsletter_block(articles, target_date, client)
+    except Exception as e:
+        print(f"  [warn] Extra formats failed: {e}")
+
+    save_news(content, target_date, twitter_thread, newsletter)
 
     print("\nUpdating covered-stories fingerprints…")
     save_covered(articles, target_date)
