@@ -856,18 +856,25 @@ def fallback_daily_digest(articles, target_date, reason=None):
 
     top_stories = pick(
         articles,
-        6,
-        lambda a: a["source"] not in {"GitHub Trending", "HuggingFace Papers"} and a["tier"] != "research",
+        3,
+        lambda a: a["source"] not in {"GitHub Trending", "HuggingFace Papers"} and a["tier"] != "research" and article_classification(a) not in {"funding", "policy"},
     )
-    if len(top_stories) < 5:
-        top_stories.extend(pick(articles, 6 - len(top_stories)))
+    if len(top_stories) < 2:
+        top_stories.extend(pick(articles, 3 - len(top_stories)))
 
-    research_entries = pick(articles, 4, lambda a: a["tier"] == "research")
-    tool_entries = pick(
+    tools_and_launches = pick(
         articles,
-        4,
+        5,
         lambda a: a["source"] == "GitHub Trending" or "github.com" in a["link"].lower(),
     )
+
+    company_news = pick(
+        articles,
+        6,
+        lambda a: a["source"] not in {"GitHub Trending", "HuggingFace Papers"} and a["tier"] not in {"research", "policy"} and article_classification(a) not in {"funding", "policy"},
+    )
+
+    research_entries = pick(articles, 4, lambda a: a["tier"] == "research")
     policy_entries = pick(articles, 4, lambda a: a["tier"] == "policy")
     funding_entries = pick(articles, 4, lambda a: article_classification(a) == "funding")
     quick_hits = pick(articles, 12)
@@ -920,6 +927,45 @@ def fallback_daily_digest(articles, target_date, reason=None):
         ])
 
     lines.extend([
+        "---",
+        "",
+        "## $_ // launch pad",
+        "",
+    ])
+    if tools_and_launches:
+        for article in tools_and_launches:
+            lines.append(
+                f"**{article['title']}** — [{article['source']}]({article['link']})"
+            )
+    else:
+        lines.extend([
+            "No launches or tools stood out in this run.",
+            "",
+        ])
+
+    lines.extend([
+        "",
+        "---",
+        "",
+        "## cat /var/log // the feed",
+        "",
+    ])
+    if company_news:
+        for article in company_news:
+            classification = article_classification(article)
+            lines.append(
+                f"**{article['title']}** *[{classification}]* — [{article['source']}]({article['link']})"
+            )
+    else:
+        lines.extend([
+            "No major company moves today.",
+            "",
+        ])
+
+    lines.extend([
+        "",
+        "---",
+        "",
         "## stderr // quick hits",
         "",
     ])
@@ -946,23 +992,6 @@ def fallback_daily_digest(articles, target_date, reason=None):
     else:
         lines.extend([
             "No research items cleared the ranking threshold in this run.",
-            "",
-        ])
-
-    lines.extend([
-        "---",
-        "",
-        "## pkg ls // repos & open source",
-        "",
-    ])
-    if tool_entries:
-        for article in tool_entries:
-            lines.append(
-                f"**{article['title']}** — [{article['source']}]({article['link']})"
-            )
-    else:
-        lines.extend([
-            "No repo or tooling stories stood out enough to list separately in this run.",
             "",
         ])
 
