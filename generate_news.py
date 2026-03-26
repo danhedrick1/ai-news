@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Daily AI News Generator — Enhanced Edition
+The Bash — Daily Digest Generator
 Multi-tier source coverage with impact-based ranking.
 
 Stories are filtered to 24h freshness (tier-adjusted), scored by source tier +
@@ -185,7 +185,7 @@ def is_fresh(pub_date, max_age_hours):
 
 def fetch_url(url, timeout=12):
     # Reddit blocks bots; use a browser UA for .rss endpoints
-    ua = ("Mozilla/5.0 (compatible; AI-News-Bot/2.0; +https://github.com/danhedrick1/ai-news)"
+    ua = ("Mozilla/5.0 (compatible; TheBash-Bot/1.0; +https://thebash.dev)"
           if "reddit.com" not in url else
           "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
           "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
@@ -482,7 +482,7 @@ def generate_summary(articles, target_date):
     n_sources     = len(set(a["source"] for a in articles))
     n_prev        = sum(1 for a in articles if a["prev_covered"])
 
-    prompt = f"""You are the editor of "AI News Daily" — a high signal-to-noise AI digest for researchers and engineers.
+    prompt = f"""You are the editor of The Bash — a high signal-to-noise AI & tech digest for developers and researchers. Your voice is direct, technically sharp, and developer-friendly. No hype, no fluff — just what matters.
 
 Today is {nice_date}. You have {len(articles)} scored articles from {n_sources} sources across labs (Anthropic, OpenAI, Google, Meta, Mistral), journalism (Reuters, TechCrunch, Bloomberg, Axios, Guardian), analysis (Import AI, The Batch, Mollick, Zvi), research (arXiv), Apple/consumer (MacRumors, 9to5Mac), healthcare AI (Stat News), and community (Reddit r/MachineLearning, r/LocalLLaMA). {n_prev} are flagged [!] PREVIOUSLY COVERED.
 
@@ -510,7 +510,7 @@ FORMAT:
 
 ---
 
-# AI News Daily — {nice_date}
+# The Bash — {nice_date}
 
 *Ranked by impact · {n_sources} sources · stories from the last 24h*
 
@@ -545,7 +545,7 @@ FORMAT:
 
 ---
 
-*AI News Daily · {nice_date} · {n_sources} outlets monitored*
+*The Bash · {nice_date} · {n_sources} outlets monitored*
 
 ---
 
@@ -596,14 +596,106 @@ def git_push(target_date):
     print("Pushing to GitHub…")
     run(["git", "config", "user.email", "ai-news-bot@users.noreply.github.com"])
     run(["git", "config", "user.name",  "AI News Bot"])
-    run(["git", "add", "news/"])
-    r = run(["git", "commit", "-m", f"news: AI digest for {target_date}"])
+    run(["git", "add", "news/", "feed.xml", "sitemap.xml", "robots.txt"])
+    r = run(["git", "commit", "-m", f"bash: digest for {target_date}"])
     if "nothing to commit" in r.stdout + r.stderr:
         print("  Nothing new to commit.")
         return
     remote = f"https://{GITHUB_TOKEN}@github.com/danhedrick1/ai-news.git"
     run(["git", "push", remote, "main"])
     print("  Pushed.")
+
+
+# ── RSS / Sitemap / Robots ─────────────────────────────────────────────────────
+
+def generate_rss_feed():
+    """Generate an RSS 2.0 feed from the most recent 20 digests."""
+    index_path = os.path.join(NEWS_DIR, "index.json")
+    if not os.path.exists(index_path):
+        print("No index.json found — skipping RSS feed.")
+        return
+    with open(index_path, encoding="utf-8") as f:
+        index = json.load(f)
+
+    dates = index.get("dates", [])[:20]
+    months = ["January","February","March","April","May","June",
+              "July","August","September","October","November","December"]
+
+    items_xml = []
+    for d in dates:
+        md_path = os.path.join(NEWS_DIR, f"{d}.md")
+        if not os.path.exists(md_path):
+            continue
+        with open(md_path, encoding="utf-8") as f:
+            content = f.read()
+        y, m, day = d.split("-")
+        nice_date = f"{months[int(m)-1]} {int(day)}, {y}"
+        desc = content[:500].replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+        # RFC 822 date for RSS
+        dt = datetime(int(y), int(m), int(day), 12, 0, 0, tzinfo=timezone.utc)
+        pub_date = dt.strftime("%a, %d %b %Y %H:%M:%S +0000")
+        items_xml.append(
+            f"    <item>\n"
+            f"      <title>The Bash — {nice_date}</title>\n"
+            f"      <link>https://thebash.dev/{d}</link>\n"
+            f"      <description>{desc}</description>\n"
+            f"      <pubDate>{pub_date}</pubDate>\n"
+            f"      <guid>https://thebash.dev/{d}</guid>\n"
+            f"    </item>"
+        )
+
+    rss = (
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<rss version="2.0">\n'
+        '  <channel>\n'
+        '    <title>The Bash</title>\n'
+        '    <link>https://thebash.dev</link>\n'
+        '    <description>High-signal AI &amp; tech news for developers</description>\n'
+        + "\n".join(items_xml) + "\n"
+        '  </channel>\n'
+        '</rss>\n'
+    )
+
+    feed_path = os.path.join(REPO_PATH, "feed.xml")
+    with open(feed_path, "w", encoding="utf-8") as f:
+        f.write(rss)
+    print(f"Generated RSS feed: {feed_path} ({len(items_xml)} items)")
+
+
+def generate_sitemap():
+    """Generate a sitemap.xml from all available digest dates."""
+    index_path = os.path.join(NEWS_DIR, "index.json")
+    if not os.path.exists(index_path):
+        print("No index.json found — skipping sitemap.")
+        return
+    with open(index_path, encoding="utf-8") as f:
+        index = json.load(f)
+
+    dates = index.get("dates", [])
+    urls = ['  <url>\n    <loc>https://thebash.dev</loc>\n  </url>']
+    for d in dates:
+        urls.append(f'  <url>\n    <loc>https://thebash.dev/{d}</loc>\n  </url>')
+
+    sitemap = (
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+        + "\n".join(urls) + "\n"
+        '</urlset>\n'
+    )
+
+    sitemap_path = os.path.join(REPO_PATH, "sitemap.xml")
+    with open(sitemap_path, "w", encoding="utf-8") as f:
+        f.write(sitemap)
+    print(f"Generated sitemap: {sitemap_path} ({len(urls)} URLs)")
+
+
+def generate_robots_txt():
+    """Generate a robots.txt pointing to the sitemap."""
+    robots = "User-agent: *\nAllow: /\nSitemap: https://thebash.dev/sitemap.xml\n"
+    robots_path = os.path.join(REPO_PATH, "robots.txt")
+    with open(robots_path, "w", encoding="utf-8") as f:
+        f.write(robots)
+    print(f"Generated robots.txt: {robots_path}")
 
 
 # ── Main ───────────────────────────────────────────────────────────────────────
@@ -617,7 +709,7 @@ def main():
         sys.exit(1)
 
     print(f"\n{'='*55}")
-    print(f"  AI News Daily — {target_date}")
+    print(f"  The Bash — {target_date}")
     print(f"{'='*55}\n")
 
     print("Fetching RSS sources…")
@@ -636,6 +728,11 @@ def main():
     content = generate_summary(articles, target_date)
     save_news(content, target_date)
 
+    print("\nGenerating RSS feed, sitemap, and robots.txt…")
+    generate_rss_feed()
+    generate_sitemap()
+    generate_robots_txt()
+
     print("\nUpdating covered-stories fingerprints…")
     save_covered(articles, target_date)
 
@@ -644,7 +741,7 @@ def main():
     else:
         print("\nNote: GITHUB_TOKEN not set — skipping push.")
 
-    print(f"\nDone. View at: https://danhedrick1.github.io/ai-news\n")
+    print(f"\nDone. View at: https://thebash.dev\n")
 
 
 if __name__ == "__main__":

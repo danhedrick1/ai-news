@@ -1,5 +1,29 @@
 {
   "framework": null,
   "buildCommand": null,
-  "outputDirectory": "."
+  "outputDirectory": ".",
+  "rewrites": [
+    { "source": "/(\\d{4}-\\d{2}-\\d{2})/(.*)", "destination": "/index.html" },
+    { "source": "/(\\d{4}-\\d{2}-\\d{2})", "destination": "/index.html" }
+  ],
+  "headers": [
+    {
+      "source": "/feed.xml",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=3600" }
+      ]
+    },
+    {
+      "source": "/sitemap.xml",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=86400" }
+      ]
+    },
+    {
+      "source": "/news/(.*).json",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-cache" }
+      ]
+    }
+  ]
 }
