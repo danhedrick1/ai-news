@@ -87,13 +87,17 @@ SOURCES = {
         ],
     },
     "research": {
-        # arXiv — raw research before media filters it
+        # Research from multiple sources — not just arXiv
         "weight": 5,
-        "max_age_hours": 48,
+        "max_age_hours": 72,
         "feeds": [
-            ("arXiv cs.AI", "http://rss.arxiv.org/rss/cs.AI"),
-            ("arXiv cs.LG", "http://rss.arxiv.org/rss/cs.LG"),
-            ("arXiv cs.CL", "http://rss.arxiv.org/rss/cs.CL"),
+            ("arXiv cs.AI",             "http://rss.arxiv.org/rss/cs.AI"),
+            ("arXiv cs.LG",             "http://rss.arxiv.org/rss/cs.LG"),
+            ("arXiv cs.CL",             "http://rss.arxiv.org/rss/cs.CL"),
+            ("Google Research Blog",    "https://blog.research.google/feeds/posts/default?alt=rss"),
+            ("Microsoft Research Blog", "https://www.microsoft.com/en-us/research/feed/"),
+            ("Allen AI Blog",           "https://blog.allenai.org/feed"),
+            ("BAIR Blog",              "https://bair.berkeley.edu/blog/feed.xml"),
         ],
     },
     "industry": {
@@ -622,7 +626,8 @@ def score_articles(articles, hn_stories, gh_repos=None, hf_papers=None):
                 a["hn_points"]   = max(a["hn_points"],   hn["points"])
                 a["hn_comments"] = max(a["hn_comments"], hn["comments"])
 
-    # Cross-source boost
+    # Cross-source boost and same-run deduplication
+    # First, detect overlapping titles and boost both
     for i, a in enumerate(articles):
         for j, b in enumerate(articles):
             if i >= j:
@@ -640,6 +645,26 @@ def score_articles(articles, hn_stories, gh_repos=None, hf_papers=None):
         a["score"]   = a["weight"] + hn_boost + cross_boost + kw_boost + prev_penalty
 
     articles.sort(key=lambda x: x["score"], reverse=True)
+
+    # Merge duplicates: keep highest-scored article, absorb alt sources
+    merged = []
+    absorbed = set()
+    for i, a in enumerate(articles):
+        if i in absorbed:
+            continue
+        alt_sources = []
+        for j, b in enumerate(articles):
+            if j <= i or j in absorbed:
+                continue
+            if titles_overlap(a["title"], b["title"]):
+                alt_sources.append(f"[{b['source']}]({b['link']})")
+                absorbed.add(j)
+        if alt_sources:
+            a["alt_sources"] = alt_sources
+        merged.append(a)
+    if absorbed:
+        print(f"  Merged {len(absorbed)} duplicate article(s)")
+    articles = merged
 
     # Append HN-only stories not already in any feed
     covered_links = {a["link"] for a in articles}
@@ -909,7 +934,7 @@ def fallback_daily_digest(articles, target_date, reason=None):
     for article in quick_hits:
         classification = article_classification(article)
         lines.append(
-            f"- **{article['title']}** *[{classification}]* - {summarize_for_bullet(article)} "
+            f"- **{article['title']}** *[{classification}]* — "
             f"[{article['source']}]({article['link']})"
         )
 
@@ -923,8 +948,7 @@ def fallback_daily_digest(articles, target_date, reason=None):
     if research_entries:
         for article in research_entries:
             lines.extend([
-                f"**{article['title']}** - {summarize_for_bullet(article)} [{article['source']}]({article['link']})",
-                f"**Dev Take:** {fallback_dev_take(article)}",
+                f"**{article['title']}** — [{article['source']}]({article['link']})",
                 "",
             ])
     else:
@@ -942,8 +966,7 @@ def fallback_daily_digest(articles, target_date, reason=None):
     if tool_entries:
         for article in tool_entries:
             lines.append(
-                f"**{article['title']}** - {summarize_for_bullet(article)} "
-                f"[{article['source']}]({article['link']})"
+                f"**{article['title']}** — [{article['source']}]({article['link']})"
             )
     else:
         lines.extend([
@@ -999,11 +1022,14 @@ def generate_summary(articles, target_date):
         if a.get("paywalled"):
             signals.append("[PAYWALL]")
         sig = f"  [{', '.join(signals)}]" if signals else ""
+        alt = ""
+        if a.get("alt_sources"):
+            alt = "\nAlso covered by: " + " · ".join(a["alt_sources"])
         return (
             f"[SCORE:{a['score']} | {a['tier'].upper()} | {a['source']}]{sig}\n"
             f"Title: {a['title']}\n"
             f"URL: {a['link']}\n"
-            f"Summary: {a['desc']}"
+            f"Summary: {a['desc']}{alt}"
         )
 
     articles_text = "\n\n".join(fmt(a) for a in articles[:95])
@@ -1039,10 +1065,10 @@ VIRAL FILTER — before including any story, ask: "Is this surprising, useful, o
 RULES:
 1. **Freshness first** — only include [!] PREVIOUSLY COVERED stories if there is a genuinely new development. If including one, start with "**Update:**".
 2. **Order strictly by impact** — score is your primary signal; editorial judgment as tiebreaker.
-3. **Merge duplicates** — same event from multiple sources = one unified entry, cite all.
+3. **No duplicates** — articles have already been deduplicated. If you still see near-identical stories, pick the best one and skip the other. Cite all sources on the winner using "Also covered by:" info.
 4. **Splash labeling** — note "[HN] Trending on HN: Xpts" or "Covered by X outlets" on top stories.
 5. **No noise** — skip listicles, job posts, puff pieces. Be ruthless.
-6. **Research gets its own section** — arXiv/HuggingFace papers go in Research Radar.
+6. **Research gets its own section** — research items go in Research Radar. Pull from ALL research sources (arXiv, HuggingFace, Google Research, Microsoft Research, Allen AI, BAIR, etc.), not just arXiv.
 7. Use the actual source URLs in every link.
 8. **Paywalled sources** — if flagged [PAYWALL]: append ` [PAYWALL]` to ### headline, write longer summary (4-5 sentences + bullets).
 
@@ -1082,22 +1108,23 @@ FORMAT:
 
 ## stderr // quick hits
 
-[10-15 bullets. Format: **Topic** *[classification]* — one sentence of what changed + why it matters. [Source](URL)]
+[10-15 bullets. Keep each bullet SHORT — no previews, no full descriptions. Format:
+**Topic** *[classification]* — [Source](URL)
+If a story has a genuinely notable one-line hook, add it after the classification. Otherwise just title + tag + link.]
 
 ---
 
 ## man bash-research // research radar
 
-[3-6 papers from arXiv or HuggingFace. Format:
-**Paper title** — one sentence on what's novel and why builders should care. [arXiv/HF](URL)
-**🔧 Dev Take:** "What this means in practice."]
+[3-6 notable research items. Prefer variety in sources — arXiv, HuggingFace, Semantic Scholar, university labs, industry research blogs, conference proceedings (NeurIPS, ICML, ACL, etc). Do NOT fill this section exclusively with arXiv. Format:
+**Paper/project title** — one sentence on what's novel. [Source](URL)]
 
 ---
 
 ## pkg ls // tools & repos
 
-[3-5 new tools, libraries, or trending repos. Format:
-**Tool/Repo name** — what it does in one sentence. [GitHub/Link](URL) · ⭐ stars if available]
+[3-5 new tools, libraries, or trending repos. Keep entries short. Prefer variety — don't just list GitHub Trending; include tools from Product Hunt, HN Show, blog announcements, etc. Format:
+**Tool/Repo name** — what it does in one sentence. [Source](URL)]
 
 ---
 
