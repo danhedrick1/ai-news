@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-The Bash — Daily Digest Generator
+theba.sh — Daily Digest Generator
 Multi-tier source coverage with impact-based ranking.
 
 Stories are filtered to 24h freshness (tier-adjusted), scored by source tier +
@@ -237,7 +237,7 @@ def is_fresh(pub_date, max_age_hours):
 
 def fetch_url(url, timeout=12):
     # Reddit blocks bots; use a browser UA for .rss endpoints
-    ua = ("Mozilla/5.0 (compatible; TheBash-Bot/1.0; +https://thebash.dev)"
+    ua = ("Mozilla/5.0 (compatible; theba-sh-bot/1.0; +https://thebash.dev)"
           if "reddit.com" not in url else
           "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
           "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
@@ -561,7 +561,7 @@ def fallback_weekly_recap(digests, week_label):
     lines = [
         "---",
         "",
-        f"# The Bash Weekly - {week_label}",
+        f"# theba.sh weekly - {week_label}",
         "",
         f"*{len(digests)} daily digests stitched into one weekly recap*",
         "",
@@ -594,7 +594,7 @@ def fallback_weekly_recap(digests, week_label):
         "",
         "---",
         "",
-        "*The Bash Weekly - built for builders*",
+        "*theba.sh weekly - built for builders*",
         "",
         "---",
     ])
@@ -869,7 +869,7 @@ def fallback_daily_digest(articles, target_date, reason=None):
     lines = [
         "---",
         "",
-        f"# The Bash - {nice_date}",
+        f"# theba.sh - {nice_date}",
         "",
         f"*{unique_sources} sources · ranked by impact · {fallback_note}*",
         "",
@@ -965,7 +965,7 @@ def fallback_daily_digest(articles, target_date, reason=None):
         "",
         "---",
         "",
-        f"*The Bash · {nice_date} · {unique_sources} outlets monitored · built for builders*",
+        f"*theba.sh · {nice_date} · {unique_sources} outlets monitored · built for builders*",
         "",
         "---",
     ])
@@ -1016,7 +1016,7 @@ def generate_summary(articles, target_date):
         f"{tier.upper()}={count}" for tier, count in sorted(tier_counts.items())
     )
 
-    prompt = f"""You are the editor of The Bash — a high signal-to-noise AI & tech digest for hackers, developers, and engineers. Your voice is direct, technically sharp, and developer-friendly. No hype, no fluff — just what matters for builders.
+    prompt = f"""You are the editor of theba.sh — a high signal-to-noise AI & tech digest for hackers, developers, and engineers. Your voice is direct, technically sharp, and developer-friendly. No hype, no fluff — just what matters for builders.
 
 Today is {nice_date}. You have {len(articles)} scored articles from {n_sources} sources across labs (Anthropic, OpenAI, Google, Meta, Mistral, NVIDIA, Cohere, Stability), journalism (Reuters, TechCrunch, Bloomberg, Axios, Guardian), analysis (Import AI, Latent Space, Semianalysis, Mollick, Zvi, Ben's Bites), research (arXiv, HuggingFace Papers), developer community (GitHub Trending, Reddit r/MachineLearning, r/LocalLLaMA, Lobste.rs, HN), and policy (Stanford HAI, Brookings). {n_prev} are flagged [!] PREVIOUSLY COVERED.
 Tier mix available right now: {tier_summary}.
@@ -1056,7 +1056,7 @@ FORMAT:
 
 ---
 
-# The Bash — {nice_date}
+# theba.sh — {nice_date}
 
 *{n_sources} sources · ranked by impact · signal over noise*
 
@@ -1107,7 +1107,7 @@ FORMAT:
 
 ---
 
-*The Bash · {nice_date} · {n_sources} outlets monitored · built for builders*
+*theba.sh · {nice_date} · {n_sources} outlets monitored · built for builders*
 
 ---
 
@@ -1119,7 +1119,7 @@ ARTICLES (ranked by score — use this order as primary signal):
     try:
         msg = client.messages.create(
             model="claude-sonnet-4-6",
-            max_tokens=6000,
+            max_tokens=8000,
             messages=[{"role": "user", "content": prompt}],
         )
         content = msg.content[0].text
@@ -1148,7 +1148,7 @@ def generate_twitter_thread(articles, target_date, client):
     articles_text = "\n".join(
         f"- [{a['source']}] {a['title']}: {a['desc'][:150]}" for a in top
     )
-    prompt = f"""You are writing a Twitter/X thread for "The Bash" — an AI news account for developers.
+    prompt = f"""You are writing a Twitter/X thread for "theba.sh" — an AI news account for developers.
 
 Date: {target_date}
 Top stories:
@@ -1177,14 +1177,14 @@ def generate_newsletter_block(articles, target_date, client):
     articles_text = "\n".join(
         f"- [{a['source']}] {a['title']}: {a['desc'][:200]}" for a in top
     )
-    prompt = f"""You are writing the newsletter edition of "The Bash" for {target_date}.
+    prompt = f"""You are writing the newsletter edition of "theba.sh" for {target_date}.
 
 Stories:
 {articles_text}
 
 Write a newsletter block for email. Format:
 
-# The Bash — [date]
+# theba.sh — [date]
 
 [2-sentence intro: what's the big theme today?]
 
@@ -1202,7 +1202,7 @@ Write a newsletter block for email. Format:
 [5-7 one-line bullets for smaller stories]
 
 ---
-*The Bash — built for builders*
+*theba.sh — built for builders*
 
 TONE: sharp, direct, no hype. Builder-focused."""
 
@@ -1236,7 +1236,7 @@ def generate_weekly_recap(digests, week_start, week_end, client=None):
             ])
         )
 
-    prompt = f"""You are writing The Bash Weekly, the end-of-week version of The Bash for builders.
+    prompt = f"""You are writing the theba.sh weekly, the end-of-week version of theba.sh for builders.
 
 Date range: {week_label}
 Daily digest count: {len(digests)}
@@ -1247,7 +1247,7 @@ FORMAT:
 
 ---
 
-# The Bash Weekly - {week_label}
+# theba.sh weekly - {week_label}
 
 *{len(digests)} daily digests - one weekly signal pass*
 
@@ -1276,7 +1276,7 @@ FORMAT:
 
 ---
 
-*The Bash Weekly - built for builders*
+*theba.sh weekly - built for builders*
 
 ---
 
@@ -1303,10 +1303,11 @@ def save_weekly_recap(content, target, source_dates):
         f.write(content)
     print(f"Saved: {path}")
 
-    index = {"weeks": [], "lastUpdated": None}
+    index = {"weeks": []}
     if os.path.exists(WEEKLY_INDEX_PATH):
         with open(WEEKLY_INDEX_PATH, encoding="utf-8") as f:
             index = json.load(f)
+    index.pop("lastUpdated", None)
 
     entry = {
         "id": ident,
@@ -1321,7 +1322,6 @@ def save_weekly_recap(content, target, source_dates):
     weeks.insert(0, entry)
     weeks.sort(key=lambda item: item.get("endDate", ""), reverse=True)
     index["weeks"] = weeks[:26]
-    index["lastUpdated"] = datetime.now(timezone.utc).isoformat()
 
     with open(WEEKLY_INDEX_PATH, "w", encoding="utf-8") as f:
         json.dump(index, f, indent=2)
@@ -1380,14 +1380,14 @@ def save_news(content, target_date, twitter_thread=None, newsletter=None):
         print(f"Saved: {newsletter_path}")
 
     index_path = os.path.join(NEWS_DIR, "index.json")
-    index = {"dates": [], "lastUpdated": None}
+    index = {"dates": []}
     if os.path.exists(index_path):
         with open(index_path, encoding="utf-8") as f:
             index = json.load(f)
+    index.pop("lastUpdated", None)
     if target_date not in index["dates"]:
         index["dates"].insert(0, target_date)
         index["dates"] = index["dates"][:90]
-    index["lastUpdated"] = datetime.now(timezone.utc).isoformat()
     with open(index_path, "w", encoding="utf-8") as f:
         json.dump(index, f, indent=2)
     print(f"Updated index")
@@ -1405,7 +1405,7 @@ def git_push(target_date):
     run(["git", "config", "user.email", "ai-news-bot@users.noreply.github.com"])
     run(["git", "config", "user.name",  "AI News Bot"])
     run(["git", "add", "news/", "feed.xml", "sitemap.xml", "robots.txt"])
-    r = run(["git", "commit", "-m", f"bash: digest for {target_date}"])
+    r = run(["git", "commit", "-m", f"theba.sh: digest for {target_date}"])
     if "nothing to commit" in r.stdout + r.stderr:
         print("  Nothing new to commit.")
         return
@@ -1444,7 +1444,7 @@ def generate_rss_feed():
         pub_date = dt.strftime("%a, %d %b %Y %H:%M:%S +0000")
         items_xml.append(
             f"    <item>\n"
-            f"      <title>The Bash — {nice_date}</title>\n"
+            f"      <title>theba.sh — {nice_date}</title>\n"
             f"      <link>https://thebash.dev/{d}</link>\n"
             f"      <description>{desc}</description>\n"
             f"      <pubDate>{pub_date}</pubDate>\n"
@@ -1456,7 +1456,7 @@ def generate_rss_feed():
         '<?xml version="1.0" encoding="UTF-8"?>\n'
         '<rss version="2.0">\n'
         '  <channel>\n'
-        '    <title>The Bash</title>\n'
+        '    <title>theba.sh</title>\n'
         '    <link>https://thebash.dev</link>\n'
         '    <description>High-signal AI &amp; tech news for developers</description>\n'
         + "\n".join(items_xml) + "\n"
@@ -1554,7 +1554,7 @@ def main():
 
     if weekly_mode:
         print(f"\n{'='*55}")
-        print(f"  The Bash Weekly - {target_date}")
+        print(f"  theba.sh weekly - {target_date}")
         print(f"{'='*55}\n")
 
         ident = build_weekly_recap_for_date(parsed_target, client)
@@ -1574,7 +1574,7 @@ def main():
         return
 
     print(f"\n{'='*55}")
-    print(f"  The Bash — {target_date}")
+    print(f"  theba.sh — {target_date}")
     print(f"{'='*55}\n")
 
     print("Fetching RSS sources…")

@@ -1,4 +1,4 @@
-name: "The Bash — Daily Digest"
+name: "theba.sh — Daily Digest"
 
 on:
   schedule:
@@ -50,7 +50,7 @@ jobs:
             echo "Anthropic key missing. Generator will publish fallback digest output."
           fi
 
-      - name: Generate The Bash AI digest
+      - name: Generate theba.sh AI digest
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -78,5 +78,5 @@ jobs:
           git config user.name "AI News Bot"
           git config user.email "ai-news-bot@users.noreply.github.com"
           git add news/ feed.xml sitemap.xml robots.txt
-          git diff --cached --quiet || git commit -m "bash: digest for $(date +%Y-%m-%d)"
+          git diff --cached --quiet || git commit -m "theba.sh: digest for $(date +%Y-%m-%d)"
           git push

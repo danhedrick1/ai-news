@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="The Bash social card">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="theba.sh social card">
   <defs>
     <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
       <stop offset="0%" stop-color="#081018" />
@@ -26,8 +26,8 @@
   <circle cx="138" cy="97" r="7" fill="#ffbd2e" />
   <circle cx="164" cy="97" r="7" fill="#27c93f" />
   <text x="214" y="103" fill="#7a8a9e" font-family="'JetBrains Mono', monospace" font-size="22">/var/www/thebash/digest</text>
-  <text x="116" y="205" fill="#39d353" font-family="'JetBrains Mono', monospace" font-size="26">$ the-bash --today --signal</text>
-  <text x="116" y="292" fill="#e6edf3" font-family="'JetBrains Mono', monospace" font-size="92" font-weight="700">The Bash</text>
+  <text x="116" y="205" fill="#39d353" font-family="'JetBrains Mono', monospace" font-size="26">$ theba.sh --today --signal</text>
+  <text x="116" y="292" fill="#e6edf3" font-family="'JetBrains Mono', monospace" font-size="92" font-weight="700">$_ theba.sh</text>
   <text x="116" y="352" fill="#58a6ff" font-family="'JetBrains Mono', monospace" font-size="36">AI and developer news for builders</text>
   <text x="116" y="432" fill="#7a8a9e" font-family="'JetBrains Mono', monospace" font-size="27">stdout // top stories</text>
   <text x="458" y="432" fill="#7a8a9e" font-family="'JetBrains Mono', monospace" font-size="27">stderr // quick hits</text>

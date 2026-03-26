@@ -1,4 +1,4 @@
-# The Bash
+# theba.sh
 
 High-signal AI and developer news for builders. The site is a static Vercel deployment with a Python digest generator, lightweight Vercel Functions for newsletter capture, and scheduled GitHub Actions for daily and weekly publishing.
 
