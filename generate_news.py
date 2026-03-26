@@ -746,22 +746,245 @@ def digest_quality_stats(content):
         "tool_entries": tool_entries,
     }
 
+
+def format_nice_date(target_date):
+    y, m, d = target_date.split("-")
+    months = ["January","February","March","April","May","June",
+              "July","August","September","October","November","December"]
+    return f"{months[int(m)-1]} {int(d)}, {y}"
+
+
+def article_classification(article):
+    text = f"{article['title']} {article['desc']}".lower()
+    link = article["link"].lower()
+
+    if article["tier"] == "research" or "arxiv" in link or "huggingface.co/papers" in link:
+        return "research"
+    if article["source"] == "GitHub Trending" or "github.com" in link:
+        return "tool"
+    if any(token in text for token in ["policy", "regulation", "bill", "court", "copyright", "antitrust"]):
+        return "policy"
+    if any(token in text for token in ["raises", "raised", "funding", "valuation", "acquire", "acquisition"]):
+        return "funding"
+    if any(token in text for token in ["lawsuit", "backlash", "criticism", "controversy", "ban", "risk"]):
+        return "controversy"
+    if any(token in text for token in ["release", "launch", "api", "sdk", "model", "agent", "tool", "open source"]):
+        return "tool"
+    if article["tier"] == "primary":
+        return "breakthrough"
+    return "dev_insight"
+
+
+def clean_summary(text):
+    compact = re.sub(r"\s+", " ", (text or "")).strip(" -")
+    return compact or "No summary was available from the source feed."
+
+
+def summarize_for_bullet(article):
+    summary = clean_summary(article["desc"])
+    if len(summary) <= 180:
+        return summary
+    cutoff = summary[:177].rsplit(" ", 1)[0].strip()
+    return f"{cutoff}..."
+
+
+def source_signal(article):
+    signals = []
+    if article["hn_points"] > 0:
+        signals.append(f"HN {article['hn_points']}pts/{article['hn_comments']}cmts")
+    if article["cross_sources"] > 1:
+        signals.append(f"{article['cross_sources']} outlets")
+    if article["age_str"]:
+        signals.append(article["age_str"])
+    if article["prev_covered"]:
+        signals.append("update")
+    if article.get("paywalled"):
+        signals.append("paywalled")
+    return " · ".join(signals)
+
+
+def fallback_dev_take(article):
+    classification = article_classification(article)
+    if classification == "tool":
+        return "If this is real, developers will feel it first in APIs, tooling, and shipping velocity."
+    if classification == "research":
+        return "Worth tracking if it survives contact with real workloads, not just benchmark screenshots."
+    if classification == "policy":
+        return "Builders should treat this as product surface area, not background noise."
+    if classification == "funding":
+        return "Money matters less than distribution, but capital still changes who gets to scale fast."
+    if classification == "controversy":
+        return "The important question is whether this changes deployment constraints, not just the discourse."
+    if article["tier"] == "primary":
+        return "When the labs ship something concrete, downstream builders need to re-evaluate the stack quickly."
+    return "The signal here is operational: what changes for teams actually building with AI this week."
+
+
+def fallback_daily_digest(articles, target_date, reason=None):
+    """Produce a publishable digest even when the model pass is unavailable."""
+    nice_date = format_nice_date(target_date)
+    unique_sources = len(set(a["source"] for a in articles))
+    used_links = set()
+
+    def pick(stories, limit, predicate=None):
+        chosen = []
+        for article in stories:
+            if article["link"] in used_links:
+                continue
+            if predicate and not predicate(article):
+                continue
+            chosen.append(article)
+            used_links.add(article["link"])
+            if len(chosen) >= limit:
+                break
+        return chosen
+
+    top_stories = pick(
+        articles,
+        6,
+        lambda a: a["source"] not in {"GitHub Trending", "HuggingFace Papers"} and a["tier"] != "research",
+    )
+    if len(top_stories) < 5:
+        top_stories.extend(pick(articles, 6 - len(top_stories)))
+
+    research_entries = pick(articles, 4, lambda a: a["tier"] == "research")
+    tool_entries = pick(
+        articles,
+        4,
+        lambda a: a["source"] == "GitHub Trending" or "github.com" in a["link"].lower(),
+    )
+    quick_hits = pick(articles, 12)
+
+    tier_counts = {}
+    for article in articles[:20]:
+        tier_counts[article["tier"]] = tier_counts.get(article["tier"], 0) + 1
+    tier_summary = ", ".join(
+        f"{tier}={count}" for tier, count in sorted(tier_counts.items())
+    )
+
+    fallback_note = "automated fallback edition assembled from ranked source feeds"
+    if reason:
+        fallback_note += f" ({reason})"
+
+    lines = [
+        "---",
+        "",
+        f"# The Bash - {nice_date}",
+        "",
+        f"*{unique_sources} sources · ranked by impact · {fallback_note}*",
+        "",
+        "---",
+        "",
+        "## stdout // top stories",
+        "",
+    ]
+
+    for article in top_stories:
+        classification = article_classification(article)
+        signal = source_signal(article)
+        headline = article["title"]
+        if article.get("paywalled"):
+            headline += " [PAYWALL]"
+        lines.extend([
+            f"### {headline}",
+            f"*[{classification}]* - {clean_summary(article['desc'])}",
+            "",
+            f"- Why it matters: {summarize_for_bullet(article)}",
+            f"- Source signal: {signal or 'ranked from source authority and recency'}",
+            f"- Builder move: Read the primary link and decide whether this changes your stack, evals, or roadmap.",
+            "",
+            f"**Dev Take:** {fallback_dev_take(article)}",
+            "",
+            f"**Source:** [{article['source']}]({article['link']})",
+            f"[Read more ->]({article['link']})",
+            "",
+            "---",
+            "",
+        ])
+
+    lines.extend([
+        "## stderr // quick hits",
+        "",
+    ])
+    for article in quick_hits:
+        classification = article_classification(article)
+        lines.append(
+            f"- **{article['title']}** *[{classification}]* - {summarize_for_bullet(article)} "
+            f"[{article['source']}]({article['link']})"
+        )
+
+    lines.extend([
+        "",
+        "---",
+        "",
+        "## man bash-research // research radar",
+        "",
+    ])
+    if research_entries:
+        for article in research_entries:
+            lines.extend([
+                f"**{article['title']}** - {summarize_for_bullet(article)} [{article['source']}]({article['link']})",
+                f"**Dev Take:** {fallback_dev_take(article)}",
+                "",
+            ])
+    else:
+        lines.extend([
+            "No research items cleared the ranking threshold in this run.",
+            "",
+        ])
+
+    lines.extend([
+        "---",
+        "",
+        "## pkg ls // tools & repos",
+        "",
+    ])
+    if tool_entries:
+        for article in tool_entries:
+            lines.append(
+                f"**{article['title']}** - {summarize_for_bullet(article)} "
+                f"[{article['source']}]({article['link']})"
+            )
+    else:
+        lines.extend([
+            "No repo or tooling stories stood out enough to list separately in this run.",
+            "",
+        ])
+
+    lines.extend([
+        "",
+        "---",
+        "",
+        "## crontab -l // trend watch",
+        "",
+        f"The highest-ranked stories today skew toward {tier_summary or 'a mixed board'}, which is a good reminder that AI news quality improves when we rank by source strength and community confirmation instead of raw volume.",
+        "",
+        "Community signal still matters: stories carrying Hacker News traction, multi-outlet confirmation, or repeated mention across feeds tend to be the ones builders actually talk about after the headline cycle passes.",
+        "",
+        "The next thing to watch is which of these stories turns into working software, real usage, or concrete deployment changes. Demos are cheap; durable product shifts are the real signal.",
+        "",
+        "---",
+        "",
+        f"*The Bash · {nice_date} · {unique_sources} outlets monitored · built for builders*",
+        "",
+        "---",
+    ])
+
+    return "\n".join(lines)
+
 def generate_summary(articles, target_date):
+    if not ANTHROPIC_API_KEY:
+        print("  [warn] ANTHROPIC_API_KEY not set - using fallback daily digest")
+        return fallback_daily_digest(articles, target_date, "Anthropic key unavailable")
+
     try:
         import anthropic
     except ImportError:
-        print("ERROR: run: pip install anthropic")
-        sys.exit(1)
-    if not ANTHROPIC_API_KEY:
-        print("ERROR: ANTHROPIC_API_KEY not set")
-        sys.exit(1)
+        print("  [warn] anthropic package unavailable - using fallback daily digest")
+        return fallback_daily_digest(articles, target_date, "anthropic package missing")
 
     client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
-
-    y, m, d   = target_date.split("-")
-    months    = ["January","February","March","April","May","June",
-                 "July","August","September","October","November","December"]
-    nice_date = f"{months[int(m)-1]} {int(d)}, {y}"
+    nice_date = format_nice_date(target_date)
 
     def fmt(a):
         signals = []
@@ -893,12 +1116,28 @@ ARTICLES (ranked by score — use this order as primary signal):
 {articles_text}"""
 
     print("Generating digest with Claude…")
-    msg = client.messages.create(
-        model="claude-sonnet-4-6",
-        max_tokens=6000,
-        messages=[{"role": "user", "content": prompt}],
-    )
-    return msg.content[0].text
+    try:
+        msg = client.messages.create(
+            model="claude-sonnet-4-6",
+            max_tokens=6000,
+            messages=[{"role": "user", "content": prompt}],
+        )
+        content = msg.content[0].text
+    except Exception as e:
+        print(f"  [warn] Claude digest generation failed: {e}")
+        return fallback_daily_digest(articles, target_date, "model request failed")
+
+    stats = digest_quality_stats(content)
+    if (
+        stats["top_stories"] < 4
+        or stats["quick_hits"] < 8
+        or stats["research_entries"] < 2
+        or stats["tool_entries"] < 2
+    ):
+        print(f"  [warn] Claude digest was too thin ({stats}) - using fallback daily digest")
+        return fallback_daily_digest(articles, target_date, "model output below quality threshold")
+
+    return content
 
 
 # ── Multi-format output ───────────────────────────────────────────────────────

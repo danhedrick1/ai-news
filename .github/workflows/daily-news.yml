@@ -13,7 +13,12 @@ on:
     # - cron: '0 17 * * *'  # 12 PM EST = 5 PM UTC
     # - cron: '0 23 * * *'  # 6 PM EST = 11 PM UTC
     # - cron: '0 5 * * *'   # 12 AM EST = 5 AM UTC
-  workflow_dispatch:  # allows manual trigger from GitHub UI
+  workflow_dispatch:
+    inputs:
+      target_date:
+        description: "Optional date to generate in YYYY-MM-DD format"
+        required: false
+        type: string
 
 jobs:
   generate-news:
@@ -34,11 +39,28 @@ jobs:
       - name: Install dependencies
         run: pip install anthropic
 
+      - name: Preflight environment
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          python --version
+          if [ -n "$ANTHROPIC_API_KEY" ]; then
+            echo "Anthropic key detected."
+          else
+            echo "Anthropic key missing. Generator will publish fallback digest output."
+          fi
+
       - name: Generate The Bash AI digest
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: python generate_news.py
+          TARGET_DATE: ${{ github.event.inputs.target_date }}
+        run: |
+          if [ -n "$TARGET_DATE" ]; then
+            python generate_news.py "$TARGET_DATE"
+          else
+            python generate_news.py
+          fi
 
       - name: Generate weekly recap on Sundays in New York
         env:
