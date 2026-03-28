@@ -1,78 +1,68 @@
 # theba.sh — 2026-03-28
 
-The terminal is eating the world, and agents are the ones doing the typing. Today's signal: the shift from GUIs to CLIs isn't a regression—it's infrastructure for the agentic layer being built on top of everything.
+The command line is back at the center of the AI stack, and the tools being built around it are starting to look less like toys and more like infrastructure. Today's digest is heavy on frameworks, workflows, and one uncomfortable question about where all this autonomy is heading.
 
 ---
 
 ## Headlines
 
-### Everything is CLI: The Agentic Interface Convergence
-Latent Space and AINews are calling out what builders have quietly noticed—CLIs are becoming the default interface layer for AI agents, not a niche developer preference. When your primary "user" is another piece of software, a clean CLI beats a polished GUI every time.
-- Agents need deterministic, composable interfaces—CLIs deliver exactly that
-- The explosion of agent frameworks is accelerating CLI-first design patterns
-- This is infrastructure thinking, not nostalgia for the command line
+### Everything is CLI: Agents Are Finding Their Natural Habitat
+The Latent Space / AINews crew noticed something on a quiet news day: the dominant interface pattern for AI agents isn't chat, it's the terminal. CLIs give agents the composability, scriptability, and lack of UI overhead that GUIs simply can't match.
+- Agent frameworks are converging on stdin/stdout as the default communication layer
+- Claude Code, shell-native tooling, and headless pipelines are driving the trend
+- The GUI wrapper is becoming the exception, not the rule
 
-**🔧 Dev Take:** "If your tool doesn't have a CLI in 2026, your tool doesn't have an agent story."
-
----
-
-### Anthropic, the Pentagon, and Autonomous Weapons
-Bloomberg is reporting on Anthropic's deepening relationship with the U.S. Department of Defense and what it means for AI-driven autonomous weapons systems. This isn't hypothetical anymore—the decisions being made now about AI autonomy in warfare will be locked in for decades.
-- Constitutional AI meets the laws of war: a collision course with no clean answers
-- Anthropic's "safety-focused" brand identity is under real pressure here
-- Every major AI lab will face this moment; Anthropic is just first in the spotlight
-
-**🔧 Dev Take:** "The most consequential alignment problem right now isn't a benchmark—it's a contract."
+**🔧 Dev Take:** "If your agent needs a UI to be useful, you've probably built a product — not a tool."
 
 ---
 
-### The Era of Human Coding Is Over (r/singularity Weighs In)
-Reddit's singularity community is declaring the end of human-authored code as the primary mode of software production. Hyperbole aside, the underlying trend is real—AI-generated code is no longer a curiosity, it's the majority output in many professional workflows.
-- The debate isn't whether AI writes code, it's whether humans understand what's being written
-- Code review skills are now more valuable than code-writing skills
-- "Over" is too strong, but "dominant" is probably accurate within 18 months
+### The Neuron's AI Skill Digest: 10 Practical Skills Worth Stealing
+Ten skills across prompt engineering, multi-agent workflows, and thinking modes — distilled from two weeks of The Neuron's daily newsletter. Less theory, more copy-paste-and-ship.
+- Company research prompts and self-improving prompt loops are the standouts
+- Multi-agent workflow design gets concrete treatment, not just buzzword coverage
+- Claude Code gets its own dedicated skill breakdown
 
-**🔧 Dev Take:** "The job title is shifting from 'software engineer' to 'software editor'—get comfortable with that."
-
----
-
-### How to Install Skills in Claude Code: A Practical Guide
-dev.to drops a concrete walkthrough on extending Claude Code with packaged skill sets—think of it as plugins for your AI coding agent. This is the kind of applied, unglamorous tooling content that actually moves the needle for working developers.
-- Skills encapsulate repeatable task logic: commit messages, code review patterns, deploy checklists
-- Three distinct install methods give flexibility depending on your workflow and team setup
-- This is the missing manual that Anthropic's docs haven't fully covered yet
-
-**🔧 Dev Take:** "Customizing your AI coding agent is now a legitimate part of your dev environment setup—treat it like dotfiles."
+**🔧 Dev Take:** "Skills digests like this are worth more than most $500 courses — just actually implement one."
 
 ---
 
-### Haystack Hits 24K Stars: Context Engineering Is the New RAG
-deepset-ai/haystack is trending on GitHub as the framing shifts from "RAG pipelines" to "context engineering"—a more deliberate, architectural approach to what goes into an LLM's context window. The star count reflects a maturing ecosystem looking for production-grade primitives.
-- Modular pipeline design means you own the data flow, not the framework
-- "Context-engineered" is doing a lot of work in the AI tooling space right now—worth watching
-- Haystack is positioning itself as the serious alternative to LangChain for teams that want explicit control
+### Anthropic, the Pentagon, and the Future of Autonomous Weapons
+Bloomberg digs into Anthropic's relationship with the Department of Defense and what it means for the trajectory of AI in warfare. This is the conversation the AI safety crowd and the defense sector are both avoiding having in public.
+- Autonomous weapons development is accelerating faster than governance frameworks
+- AI labs with safety mandates are now active players in military procurement
+- The gap between "safe AI" messaging and defense contracts is getting hard to ignore
 
-**🔧 Dev Take:** "Context engineering is just prompt engineering with better version control and less magical thinking."
+**🔧 Dev Take:** "The most important AI alignment problem in 2026 might not be in a research paper — it might be in a DoD contract."
 
 ---
 
-### MLflow Expands to Full AI Engineering Platform
-MLflow is no longer just experiment tracking—it's making a credible play for the entire AI engineering lifecycle, from agent debugging to production monitoring. At nearly 25K stars and Python-native, it's the incumbent with the broadest adoption base in the space.
-- Covers agents, LLMs, and classical ML in one platform—rare breadth
-- Production monitoring for agents is the genuinely hard, underserved problem MLflow is targeting
-- Teams already using MLflow for ML will find the LLM tooling a natural extension
+### Haystack & MLflow Both Trending: Production AI Pipelines Are the New Battleground
+Two serious open-source frameworks are climbing GitHub trending simultaneously — Haystack (context-engineered LLM pipelines) and MLflow (AI engineering platform for agents and models). The market is clearly hungry for production-grade scaffolding.
+- Haystack at 24.6k stars focuses on modular, explicit pipeline control for LLM apps
+- MLflow at 25k stars covers the full lifecycle: debug, evaluate, monitor, optimize
+- Both signal that "vibe-coding an agent" isn't cutting it in production anymore
 
-**🔧 Dev Take:** "MLflow is the unsexy choice that keeps winning because it works in the stack you already have."
+**🔧 Dev Take:** "Pick one, go deep. Switching costs between orchestration frameworks are higher than they look."
+
+---
+
+### OpenAI Kills Sora — While VCs Keep Writing Checks
+TechCrunch asks the obvious question: if investors are pouring billions into AI's next wave, why is OpenAI quietly shutting down one of its most publicly hyped products? The answer probably involves unit economics and focus, but the optics aren't great.
+- Sora was OpenAI's flagship bet on generative video — now it's being wound down
+- VC enthusiasm for AI hasn't cooled, but the gap between demos and durable products is widening
+- Meanwhile, an 82-year-old Kentucky woman turned down $26M for a data center site — respect
+
+**🔧 Dev Take:** "Hype cycles kill products that demos built — ship revenue, not impressions."
 
 ---
 
 ## Quick Hits
 
-- **9to5Mac | RIP Mac Pro:** Apple quietly sunsets the Mac Pro, closing a chapter on modular pro desktop hardware—pour one out for the cheese grater.
-- **GitHub Trending | f/prompts.chat (154K ⭐):** The prompt-sharing community isn't slowing down—still the biggest repo of its kind, now with self-hosting for orgs.
-- **GitHub Trending | OpenBB (63K ⭐):** OpenBB is becoming the Bloomberg Terminal alternative for teams that want AI agents running on financial data pipelines.
-- **GitHub Trending | PyTorch Lightning (31K ⭐):** Zero-code-change scaling from 1 to 10,000 GPUs is trending again—fine-tuning season is apparently not over.
-- **Meta signal:** Three of today's top GitHub repos are orchestration or tooling layers—the model wars are cooling, the infrastructure wars are heating up.
+- **f/prompts.chat** crossed 154k GitHub stars — the prompt-sharing community isn't slowing down; self-hosting option now available for orgs with privacy requirements
+- **OpenBB** (63.7k stars) keeps climbing — if you're building anything in fintech + AI agents, this is the data layer worth evaluating
+- **PyTorch Lightning** at 31k stars — still the go-to for scaling model training from 1 GPU to 10,000 without refactoring your training loop
+- **Garmin watch guide from Wired** — off-topic, but if you're training for anything outdoors this spring, the Fenix line still dominates for serious use cases
+- **Multi-agent workflows** show up in three separate stories today — if you're not designing for agent composition yet, you're already behind the curve
 
 ---
 
