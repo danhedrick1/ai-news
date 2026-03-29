@@ -8,54 +8,54 @@
 
 ## Week in One Screen
 
-This was a week of strategic retreat and structural acceleration happening simultaneously. OpenAI killed Sora, killed Instant Checkout, and killed its erotic chatbot mode — three product shutdowns in five days — while SoftBank wired $40B and IPO signals started appearing. Anthropic won its Pentagon injunction, leaked a model tier above Opus, and shipped what Latent Space called its biggest launch ever. The labs are pruning surfaces and concentrating firepower. The consumer product era at OpenAI may be quietly over; the research infrastructure era is beginning.
+The week's defining tension was between the labs' internal velocity and the world's ability to absorb it. ARC-AGI-3 dropped with sub-1% scores across every frontier model on the same day Claude Opus's successor was leaking above it. OpenAI killed Sora and pulled Instant Checkout while simultaneously prepping for what SoftBank's $40B loan implies is an imminent IPO. The pruning isn't retreat — it's concentration. Every major lab is shedding experimental surface area to pour resources into the bets they actually believe in: enterprise agents, research automation, and whatever comes after the current generation of frontier models.
 
-Underneath the lab drama, the builder stack shifted. The CLI-as-agent-interface pattern hardened from trend to consensus. Agent security debt became a named problem with enterprise budget attached. Apple's iOS 27 multi-model routing quietly threatened every lab's distribution strategy. Chinese humanoid robot manufacturing crossed 10,000 units while Western coverage slept. And ARC-AGI-3 dropped with sub-1% scores across every frontier model on the same day Reddit declared human coding dead — a clean illustration of the gap builders need to understand before they ship anything.
+The platform and infrastructure layer clarified fast this week. Apple's iOS 27 multi-model routing strategy, Google's memory import feature, Anthropic's Pentagon injunction win, and Agibot's 10,000 humanoid unit announcement all landed within the same five-day window. These aren't isolated events — they're signals that the competitive terrain is shifting from model capability to distribution control, from research demos to manufacturing scale, and from voluntary safety commitments to court-enforced ones. Builders who are still optimizing for "best model access" as a moat are likely already one planning cycle behind.
 
 ---
 
 ## Biggest Shifts
 
-### OpenAI Is Pruning Products to Concentrate on the Core Bets
-Sora shutdown. Instant Checkout pulled back. Erotic chatbot mode killed indefinitely. Three consumer product retreats in one week is not coincidence — it's a resource reallocation signal. The Disney deal collapse confirms even high-profile partnerships couldn't justify the compute cost. OpenAI is converging on enterprise, agents, and research automation as the actual bets, with an IPO on the horizon that requires a cleaner story than "we tried a lot of things."
-- **Takeaway:** If you're building on or around OpenAI consumer products, audit your dependency surface now. The pruning isn't done.
-- **Watch next:** What gets cut next — and whether the research automation "grand challenge" framing hardens into a product category or stays aspirational.
+### Apple Becomes an AI Router, Not an AI Player
+iOS 27's Siri overhaul isn't about Siri getting better — it's about Apple controlling the surface layer while every AI lab fights for backend position. Multi-model routing means Apple can commoditize the entire foundation model industry by treating Claude, Gemini, GPT, and whatever comes next as interchangeable inference endpoints. The App Store Extensions play is the same move run at the developer layer. Every lab that spent the last year optimizing to be the default Siri backend may have fundamentally misread Apple's strategy.
+- Build for the App Store Extensions API if you're targeting iOS distribution — the "preferred backend" race is probably a trap
+- Watch whether Google and Microsoft mirror the multi-routing approach on Android and Windows in Q2; if they do, the "be the OS-level AI" narrative collapses across the board
 
-**Source trail:** [Tue digest](https://thebash.dev/2026-03-24), [Thu digest](https://thebash.dev/2026-03-26), [Fri digest](https://thebash.dev/2026-03-27)
-
----
-
-### Apple's Multi-AI Routing Layer Is the Biggest Distribution Story Nobody Covered
-iOS 27 opens Siri to Claude, Gemini, and other backends, with routing across multiple AI providers by query type. If this ships as described, Apple becomes the largest AI distribution channel on earth — and no single lab controls the relationship. Every lab currently optimizing to be "the default Siri backend" may have misread the play entirely. Apple wants leverage over all of them, not a preferred partner.
-- **Takeaway:** "Be the default" is not a durable distribution strategy against a platform that's actively building a routing layer. Start thinking about what your product does when Apple is the middleman.
-- **Watch next:** How Apple handles context and memory portability across backends — that's where the lock-in question actually lives.
-
-**Source trail:** [Thu digest](https://thebash.dev/2026-03-26), [Fri digest](https://thebash.dev/2026-03-27)
+**Source trail:** [Thu digest](https://thebash.dev/2026-03-26), [Fri digest](https://thebash.dev/2026-03-27), [Sun digest](https://thebash.dev/2026-03-29)
 
 ---
 
-### ARC-AGI-3 and the Capability Perception Gap
-Every frontier model scored under 1% on ARC-AGI-3 — a benchmark targeting novel reasoning under distribution shift — on the same day mainstream discourse declared human coding obsolete. These aren't contradictory results; they're measuring different things. AI has largely won task-specific pattern matching. It still can't do novel reasoning reliably. Builders who conflate them ship products that disappoint. Builders who understand the gap find durable moats in the space between.
-- **Takeaway:** Map your product's actual reliance on pattern matching versus novel reasoning before you commit to automation. The failure modes are completely different.
-- **Watch next:** Whether the post-training critique around distributional collapse — confidently wrong on genuinely uncertain problems — shows up in frontier model regressions at scale.
+### OpenAI Is Aggressively Pruning Its Product Surface
+Sora shutdown, Instant Checkout retreat, erotic chatbot mode killed indefinitely — three consumer product rollbacks in one week is a pattern, not a coincidence. The Disney deal collapse makes it explicit: even a billion-dollar partnership couldn't justify the GPU burn on products that aren't core to the enterprise/agents/research-automation thesis. The SoftBank $40B loan and IPO pricing pressure are almost certainly accelerating the cleanup.
+- If you built integrations on any of these features, treat them as deprecated infrastructure — audit your surface area against OpenAI's current stated priorities before Q2
+- Watch for additional consumer product deprecations in the next 60 days; the pruning cycle doesn't feel complete
 
-**Source trail:** [Thu digest](https://thebash.dev/2026-03-26), [Sun digest](https://thebash.dev/2026-03-29)
+**Source trail:** [Tue digest](https://thebash.dev/2026-03-24), [Thu digest](https://thebash.dev/2026-03-26), [Fri digest](https://thebash.dev/2026-03-27), [Sun digest](https://thebash.dev/2026-03-29)
 
 ---
 
-### Agent Security Debt Is Now a Named, Budgeted Problem
-Multiple threads this week converged on the same gap: agents with real access to deploys, secrets, and external APIs running under shared credentials with no audit trail. AgentGuard launched as an open-source policy engine and proxy. Cryptographic RBAC patterns circulated. The tooling for granting agents capability arrived roughly 18 months before the tooling for governing it. Enterprise buyers are now aware of the gap, which means there's budget attached.
-- **Takeaway:** If you're shipping agentic systems into enterprise, "what can this agent do and who authorized it" needs a concrete answer before the sales cycle ends — not after.
-- **Watch next:** YC batches in H2 2026. Agent security is a real problem with a clear buyer profile; expect a cluster of dedicated startups.
+### The Agent Security Debt Is Coming Due
+Agents with real access — deploys, secrets, external APIs — are running under shared credentials with no audit trail at scale. Tuesday's AgentGuard launch, Saturday's cryptographic RBAC and bubblewrap-your-dev-env threads, and NVIDIA's "harness engineering" framing at their panel all point at the same gap: the tooling for granting agent capability shipped 18 months before the tooling for governing it. Enterprise buyers are starting to notice, and that means budget is forming around the problem.
+- Instrument your agent workflows for credential scope, action logging, and rollback before you pitch enterprise — it's becoming a procurement checkbox, not a nice-to-have
+- Watch YC S26 batch for a cluster of agent security and policy enforcement startups; this is a fundable gap with a clear buyer
 
 **Source trail:** [Tue digest](https://thebash.dev/2026-03-24), [Sat digest](https://thebash.dev/2026-03-28)
 
 ---
 
-### Chinese Robotics Crossed a Manufacturing Threshold the West Isn't Watching
-Agibot hit 10,000 humanoid robots this week, with 5,000 units shipped in the last 90 days. The gap between "impressive demo" and "manufacturing scale" in Chinese robotics has closed. Physical Intelligence raised $1B at an $11B valuation the same week — a data point on how much capital the West is directing at the software side of robotics while the hardware production story accelerates elsewhere.
-- **Takeaway:** If your roadmap touches physical AI, robotics supply chain, or embodied agent deployment, the competitive timeline is shorter than Western coverage suggests.
-- **Watch next:** Whether Western robotics companies begin competing on production volume metrics, not just capability demos.
+### The Capability Ladder Has a Runaway Top End
+Claude Opus just shipped — described by Latent Space as Anthropic's biggest launch ever — and Mythos is already leaking above it. ARC-AGI-3 launched at sub-1% for all frontier models, but that benchmark measures a specific kind of novel reasoning that task-specific pattern matching doesn't touch. The internal roadmaps at the frontier labs are 6-12 months ahead of public availability, and the gap is widening, not closing. Builders architecting around "current best available model" are building for last quarter.
+- Design model interfaces with an abstraction layer — never hardcode model-specific behavior assumptions into product logic; assume the model you're shipping against will be obsolete within a product cycle
+- Watch the ARC-AGI-3 scoring trajectory; the first model to crack 5% will be a genuine signal, not just a benchmark story
+
+**Source trail:** [Thu digest](https://thebash.dev/2026-03-26), [Fri digest](https://thebash.dev/2026-03-27), [Sat digest](https://thebash.dev/2026-03-28)
+
+---
+
+### Chinese Robotics Manufacturing Scale Is Being Underreported
+Agibot hit 10,000 humanoid robots with 5,000 units produced in the last 90 days. That production velocity got buried in a Reddit thread. For context: the entire Western humanoid robotics narrative is still largely in the "impressive demo" phase. The gap between demo and manufacturing scale in Chinese robotics has closed in a way that hasn't registered in mainstream AI coverage, and the physical AI funding numbers — Physical Intelligence raising $1B at $11B at age two — suggest Western capital is just now catching up to the urgency.
+- If you're building in industrial automation, logistics, or physical AI adjacent spaces, model your competitive timeline against Chinese production scale, not Western lab timelines
+- Watch whether the Anthropic-Pentagon fight and the broader DoD AI procurement reshuffling accelerates US government investment in domestic robotics supply chain — the policy pressure is building
 
 **Source trail:** [Fri digest](https://thebash.dev/2026-03-27), [Sat digest](https://thebash.dev/2026-03-28)
 
@@ -63,25 +63,25 @@ Agibot hit 10,000 humanoid robots this week, with 5,000 units shipped in the las
 
 ## Builder Board
 
-- **AgentGuard** — Open-source policy engine and proxy for controlling what AI agents are allowed to do. Early but directly addresses the agent authorization gap that has no other clean solution right now. Worth evaluating before your next agentic deploy. [r/MachineLearning via Tue digest](https://thebash.dev/2026-03-24)
+- **AgentGuard** — Open-source policy engine and proxy for controlling what AI agents are allowed to do. If you're running agents against real infrastructure, this is worth a serious eval before your next security review. [Reddit r/MachineLearning](https://www.reddit.com/r/MachineLearning/comments/1s2x252/p_agentguard_a_policy_engine_proxy_to_control/)
 
-- **GigaChat open weights: 702B and 10B** — GigaChat-3.1-Ultra-702B and GigaChat-3.1-Lightning-10B-A1.8B are now available as open weights. The 10B-A1.8B MoE profile is the interesting one for local inference experimentation. [r/LocalLLaMA via Tue digest](https://thebash.dev/2026-03-24)
+- **GigaChat open weights** — GigaChat-3.1-Ultra-702B and the 10B MoE Lightning model are now public. The 702B is worth benchmarking against your workload if you're running local or on-prem inference at scale. [Reddit r/LocalLLaMA](https://www.reddit.com/r/LocalLLaMA/comments/1s2pkfw/new_open_weights_models_gigachat31ultra702b_and/)
 
-- **OpenAI Teen Safety Tools** — Open-source toolkit for age-appropriate AI interactions. If you're building anything in edtech, consumer health, or platforms with minors, this is now a compliance reference point, not just a resource. [Tue digest](https://thebash.dev/2026-03-24)
+- **Gemini 3.1 Flash Live** — Lower latency, better audio precision. If you have real-time voice or streaming audio pipelines built on Gemini, test this now — the latency reduction may unblock use cases that were previously marginal.
 
-- **Gemini 3.1 Flash** — Lower latency, better audio precision. If you're running latency-sensitive voice or audio pipelines on Gemini, this is worth a benchmark pass against your current setup. [Thu digest](https://thebash.dev/2026-03-26)
+- **OpenAI teen safety tools** — Open-sourced. If you're building anything with user-generated content or chat interfaces that touches under-18 users, these are worth pulling into your moderation stack before regulators make it mandatory. [OpenAI Blog](https://openai.com/index/update-on-the-openai-foundation)
 
-- **CLI-first tool design** — Not a single release, but a hardening pattern across Codex, Claude Code, Cursor terminal, and Warp: `--json` output, clean exit codes, composable text-in/text-out. If your tool doesn't have this, it won't chain reliably in agentic workflows. This is now a table-stakes API design requirement. [Sat digest](https://thebash.dev/2026-03-28), [Sun digest](https://thebash.dev/2026-03-29)
+- **Agentic Commerce Protocol** — OpenAI's new protocol for richer product discovery in ChatGPT, with side-by-side comparisons and merchant integration. Instant Checkout is dead, but this is what replaced it — if you're building commerce or product search tooling, this API is the live surface to watch. [OpenAI Blog](https://openai.com/index/powering-product-discovery-in-chatgpt)
 
-- **AI memory portability is actively competing** — Anthropic, Google (Import Memory + Import Chat History), and Apple (iOS 27 multi-backend routing) are all shipping context portability features. Context lock-in as a retention strategy has an 18-month shelf life at most. Start designing for portability now if you haven't. [Thu digest](https://thebash.dev/2026-03-26)
+- **AVO (Autonomous Variation Operators)** — Research replacing fixed mutation operators with autonomous coding agents in evolutionary search. Niche, but if you're doing any automated code generation or search-based software engineering, this is a meaningful architecture idea worth reading.
 
-- **Harness engineering as a discipline** — NVIDIA's framing of "harness engineering" — the work of building control and evaluation infrastructure around autonomous agents — is solidifying into a named role. If you're staffing an agentic product team, this is the capability gap most likely to bite you in production. [Tue digest](https://thebash.dev/2026-03-24)
+- **Local inference cost audit** — M5 Max 128GB benchmarks on Qwen3 Coder and MI50 clusters running 122B models are closing the gap faster than most roadmaps assume. Before Q2 planning, run a real cost comparison between your current API spend and what local/on-prem inference would cost at your volume. The crossover point is moving.
 
 ---
 
 ## What to Watch Next Week
 
-The Anthropic-Pentagon injunction win is the most consequential legal outcome in federal AI procurement in years, and its second-order effects haven't landed yet. Expect other AI safety companies to reassess their DoD engagement posture, and expect the Pentagon to clarify its supply-chain designation criteria under new legal scrutiny. Separately, with SoftBank's $40B loan now public and OpenAI in active IPO-signal mode, the next week will likely produce either a formal S-1 timeline or a deliberate non-confirmation that becomes its own signal — either way, the IPO narrative is now the frame through which OpenAI's every product decision will be read. Builders should watch whether OpenAI accelerates enterprise feature announcements in the next 30-60 days as IPO-readiness narrative management. If the pruning continues and the enterprise surface expands, that's confirmation the consumer product pivot is complete.
+The Meta open-weights release the community is speculating about is the single highest-leverage event on the near-term calendar. If it drops next week and lands at or above current Llama 3 performance with a permissive license, it accelerates every trend that defined this week: local inference becomes more viable, API-dependent products face steeper margin pressure, and the open-weights ecosystem gets crowded enough that "we use the best available model" stops being a differentiator for anyone. Pair that with Kimi K2.6 reportedly two weeks out and the Apple iOS 27 developer preview likely to formalize the multi-model routing architecture, and the platform and infrastructure picture will look materially different by the end of April. The builders who come out of this window in the best position will be the ones who spent this week auditing their model dependencies and distribution assumptions rather than waiting to react.
 
 ---
 
