@@ -5,6 +5,23 @@
     <link>https://thebash.dev</link>
     <description>High-signal AI &amp; tech news for developers</description>
     <item>
+      <title>theba.sh — March 29, 2026</title>
+      <link>https://thebash.dev/2026-03-29</link>
+      <description># theba.sh — March 29, 2026
+
+*26 sources · ranked by impact · signal over noise*
+
+---
+
+## stdout // the big story
+
+### Claude Code Token Efficiency: Give Agents Their Own OS, Cut Costs by 68.5%
+
+A developer figured out something that should have been obvious in retrospect: Claude Code agents running in shared environments spend enormous amounts of context window budget on environmental noise — filesystem state, process output, shell history, ambient system chatter. The fix? Give each agent its o</description>
+      <pubDate>Sun, 29 Mar 2026 12:00:00 +0000</pubDate>
+      <guid>https://thebash.dev/2026-03-29</guid>
+    </item>
+    <item>
       <title>theba.sh — March 28, 2026</title>
       <link>https://thebash.dev/2026-03-28</link>
       <description>---
