@@ -1,78 +1,78 @@
 # theba.sh — 2026-03-29
 
-The CLI is eating the AI interface layer, and the open-source tooling ecosystem keeps compounding quietly underneath. Today's a low-drama day worth using to audit what's actually in your stack.
+The agent layer is getting its plumbing installed: email inboxes, CLI interfaces, and orchestration frameworks are quietly becoming the connective tissue of the next wave of AI tooling. If you're building agents, the boring infrastructure work is suddenly the interesting work.
 
 ---
 
 ## Headlines
 
-### Everything is CLI Now — Agents Included
-The Latent Space crew used a slower news day to surface a real trend: agent interfaces are converging on CLI patterns, not GUIs. If your agent can't be driven from a terminal, it may already be a second-class citizen in the toolchain.
-- CLI-first design forces explicit, composable behavior — exactly what agents need
-- GUI wrappers are becoming optional layers, not the primary interface
-- Shell scripting and agent orchestration are quietly merging into the same discipline
+### Everything is CLI: Agents Are Getting a Terminal-First Interface
+A quiet news cycle gave the AI community space to notice a real pattern: CLI-first design is becoming the default for agent tooling, not the exception. The terminal is back — not because it's trendy, but because agents need composable, scriptable, low-friction interfaces to actually be useful in prod.
+- Shell-native agents are easier to chain, test, and audit than GUI-wrapped equivalents
+- The trend tracks with agentic workflows needing deterministic I/O over pretty dashboards
+- Latent Space's AINews called it out as a "quiet" trend — which usually means it's about to get loud
 
-**🔧 Dev Take:** "If you can't pipe it, you probably don't own it."
-
----
-
-### Haystack Doubles Down on Context Engineering
-deepset-ai/haystack (24.6k stars) is positioning itself squarely around "context-engineered" LLM applications — not just RAG pipelines. The framing shift matters: it's about deliberate control over what your model sees, not just retrieval.
-- Modular pipeline design lets you swap components without rearchitecting everything
-- Explicit control over context is the right abstraction for production use
-- Strong MDX-based docs signal they're taking developer UX seriously
-
-**🔧 Dev Take:** "Context engineering is just prompt engineering with version control and self-respect."
+**🔧 Dev Take:** "If your agent doesn't have a clean CLI interface, you're building a demo, not a tool."
 
 ---
 
-### MLflow Moves Upmarket Into Agent Observability
-MLflow (25k stars) has expanded well past experiment tracking — it's now a full AI engineering platform covering agents, LLMs, and classical ML in one surface. The bet is that teams don't want three separate tools for debug, eval, and monitoring.
-- Unified platform reduces context-switching tax for ML engineers shipping to prod
-- Agent evaluation tooling is still the hardest part; MLflow is actively investing here
-- Open source core with a clear path to enterprise observability
+### How to Give Your AI Agent a Real Email Inbox with MCP
+Sending email from an agent is solved. Receiving replies, tracking delivery events, and maintaining thread context is where most MCP email setups fall apart. This dev.to deep-dive covers the harder half of the problem — building a bidirectional email loop that an agent can actually reason over.
+- Most email MCPs stop at SMTP send; inbound webhook handling is where the real work is
+- Thread context management across replies requires persistent state most agent frameworks don't give you for free
+- Getting delivery events (bounces, opens) into your agent's context loop changes what it can do
 
-**🔧 Dev Take:** "Finally, one place to figure out why your agent did that thing at 3am."
-
----
-
-### OpenBB Hits 63k Stars — Financial AI Tooling Is Maturing
-OpenBB-finance/OpenBB keeps climbing and its positioning is now explicitly "for analysts, quants, and AI agents." That three-way audience is telling — it's not trying to be a chatbot, it's trying to be infrastructure.
-- Python-native, so it drops cleanly into existing quant workflows
-- Agent-ready data platform means you can wire it directly into tool-calling LLMs
-- 63k stars suggests genuine adoption beyond the hype cycle
-
-**🔧 Dev Take:** "The best fintech AI play right now isn't a new model — it's clean, agent-accessible data."
+**🔧 Dev Take:** "An agent that can only send email is a fancy cron job — don't stop at the outbox."
 
 ---
 
-### Netdata at 78k Stars: Observability Gets an AI Layer
-Netdata is framing itself as "the fastest path to AI-powered full stack observability" — and for lean teams, that pitch is landing. Written in C, it's fast where it counts, and the AI layer is additive, not load-bearing.
-- Real-time metrics with anomaly detection baked in
-- Lean-team focus means low ops overhead to get running
-- C codebase means it'll run on anything, including that server you forgot about
+### Haystack Hits 24.6K Stars: Context Engineering Is the New Prompt Engineering
+deepset-ai/haystack is trending hard, and the framing shift in their repo description is worth noting — they've moved to "context-engineered" applications front and center. The project offers modular pipeline design with explicit control over what goes into LLM context windows.
+- Explicit context control over pipelines is a direct response to the unpredictability of naive RAG
+- Modular pipeline design means you can swap retrievers, rerankers, and generators without rebuilding everything
+- Production-readiness is a first-class concern, not an afterthought
 
-**🔧 Dev Take:** "Observability tooling that makes the AI optional is the right call — don't let the demo drive the architecture."
+**🔧 Dev Take:** "Context engineering is just prompt engineering with better version control — Haystack is making that concrete."
 
 ---
 
-### prompts.chat Crosses 154k Stars — Community Prompt Libraries Aren't Going Away
-f/prompts.chat (formerly Awesome ChatGPT Prompts) is now a full community platform at 154.5k stars, with self-hosting support for organizations. The scale suggests prompt management is still an unsolved problem even in 2026.
-- Self-hosting option is the right call for teams with data sensitivity requirements
-- Community curation beats vendor-curated prompt libraries in practice
-- 154k stars is a signal, not noise — people are still manually managing prompts
+### MLflow Expands Hard into the Agent Evaluation Problem
+MLflow at nearly 25K stars is no longer just an ML experiment tracker — the platform is pushing deep into agent debugging, evaluation, and monitoring. If your org already runs MLflow for models, the path to agent observability just got shorter.
+- Agent evaluation is still the unsolved problem: MLflow is betting on being the logging layer that makes it tractable
+- Teams using MLflow for traditional ML get agent tooling without a new vendor
+- Monitoring production-quality agent apps is a different problem than tracking training runs — MLflow is stretching to cover both
 
-**🔧 Dev Take:** "If your org doesn't have a prompt library yet, you're just hoping everyone re-invents the wheel correctly."
+**🔧 Dev Take:** "Eval tooling for agents is the most underbuilt part of the stack — any serious framework moving here is worth watching."
+
+---
+
+### Sora Shutdown Rumors Are a Reality Check for AI Video
+TechCrunch is asking whether Sora's potential shutdown signals a broader pullback on AI-generated video, or just normal product strategy churn. Either way, it's a useful forcing function: video generation is expensive, quality is still inconsistent, and the use cases haven't compounded the way text did.
+- Sora was a research landmark but converting that into durable product traction is a different challenge
+- The economics of video generation at scale are significantly harder than text or image
+- A pullback here doesn't mean the tech is dead — it means the market is still finding where it actually fits
+
+**🔧 Dev Take:** "Video generation solving real workflows is still a 2027 problem — don't anchor your product roadmap to it yet."
+
+---
+
+### Meta Open Source Model Incoming?
+Rumblings on r/LocalLLaMA suggest Meta is preparing another open-source model drop. No confirmed specs yet, but the community is paying attention — Meta's Llama releases have consistently reset the baseline for what's runnable locally.
+- Timing speculation is rampant; nothing confirmed on architecture or parameter scale
+- If it follows Llama 3's pattern, expect strong instruction-following and broad fine-tune compatibility
+- Local inference community will stress-test it within 48 hours of release
+
+**🔧 Dev Take:** "Meta open-sourcing another frontier model is the best thing that keeps happening to this ecosystem."
 
 ---
 
 ## Quick Hits
 
-- **spaCy (33.4k ⭐)** — Industrial-strength NLP in Python, still the go-to when you need linguistics without an LLM attached
-- **photoprism (39.5k ⭐)** — AI photo management for the decentralized web; local-first AI applied to a real consumer problem
-- **google-research/google-research (37.6k ⭐)** — Trending again; worth a periodic browse for early-signal research before it hits papers
-- **LocalLLaMA r/ 2026** — The subreddit remains the fastest-moving signal feed for local model benchmarks and hardware discoveries
-- **MLX / llama.cpp adjacent hardware posts** — Anecdotally, Apple Silicon edge inference chatter is picking back up heading into Q2
+- **LocalLLaMA 2026 megathread** is up — community retrospective on how far local inference has come; worth a skim for the vibe check
+- **f/prompts.chat** (154K ⭐) trending again — the self-hostable prompt library is getting fresh traction as teams want private prompt catalogs
+- **OpenBB** (63.9K ⭐) is building serious momentum as the go-to financial data layer for quant and AI agent workflows
+- **Streamlining dev tasks with 8 AI agents** (dev.to) — practical breakdown of offloading email sorting, reply drafting, and note processing to a coordinated agent set
+- **The "boring infrastructure" moment** — this week's collective signal: the interesting AI work in 2026 is routing, context management, and observability, not model selection
 
 ---
 
