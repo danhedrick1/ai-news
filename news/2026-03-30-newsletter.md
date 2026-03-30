@@ -1,78 +1,78 @@
 # theba.sh — 2026-03-30
 
-The CLI is making a quiet comeback, and the research pipeline keeps moving — ACL 2026 is on the radar while the tooling layer around LLMs continues to mature in the background. Today's a good day to zoom out and look at what's actually getting built.
+The command line is eating the AI stack, and human-written code may be on borrowed time. Today's digest is heavy on tooling shifts, agent infrastructure, and the quiet reordering of how software gets built.
 
 ---
 
 ## Headlines
 
-### Everything is CLI: Agents Are Going Back to Basics
-Latent Space flags a growing pattern: agents and AI tooling are increasingly being built around CLI interfaces rather than flashy GUIs. It's a signal that the builder community is optimizing for composability and scriptability over demos.
-- CLI-first design plays well with agent pipelines that need deterministic, chainable outputs
-- Reflects a maturity shift — less "wow" factor, more "does it actually work in prod"
-- Ties into the broader context-engineering trend where control matters more than convenience
+### Everything is CLI: Agents Are Growing a Terminal Habit
+The Latent Space/AINews crew noticed something worth naming: the dominant interface pattern for AI agents isn't a chatbot UI — it's a CLI. From Claude Code to custom agent wrappers, the terminal is becoming the default control plane for agentic workflows.
+- CLI interfaces offer composability, scriptability, and pipe-ability that GUIs fundamentally can't match for agent orchestration
+- Tooling like Claude Code is accelerating developer comfort with agents-as-subprocesses rather than agents-as-apps
+- This mirrors the Unix philosophy: small, focused tools that chain together — except now the tools are reasoning
 
-**🔧 Dev Take:** "If your AI tool doesn't have a CLI, you're building for screenshots, not systems."
-
----
-
-### ACL 2026: The NLP Research Cycle Grinds Forward
-The ACL 2026 discussion thread is live on r/MachineLearning, with the community already dissecting submissions, reviewing trends, and speculating on what directions are gaining traction. No splashy announcements yet, but the signal-to-noise on these threads tends to be high.
-- Peer review discourse is always a useful proxy for what researchers think is *actually* moving the field
-- Watch for themes around long-context, reasoning benchmarks, and multilingual work
-- Community threads like these surface paper recommendations before the official proceedings drop
-
-**🔧 Dev Take:** "Read the ACL discourse threads now — the papers that matter will be obvious before they're famous."
+**🔧 Dev Take:** "If your agent can't be piped, it's a toy."
 
 ---
 
-### Apple Drops iOS 26.5 Beta — The Version Cadence Is Real
-Apple pushed the first iOS 26.5 developer beta immediately after iOS 26.4 hit general availability, maintaining an aggressive update cadence in 2026. If you're building on Apple platforms, the pipeline is moving fast and there's no coasting.
-- Back-to-back betas mean API surfaces are shifting more frequently than in prior years
-- Developers targeting on-device ML and AI features need to stay close to the release notes
-- 26.x cycle has been significant for on-device inference capabilities — worth tracking
+### The Era of Human Coding Is Over (According to Reddit)
+The r/singularity crowd is calling it: human-written code is becoming the exception, not the rule. Whether that's premature or right on time depends on what you're building — but the signal is getting harder to dismiss.
+- Coding agents are now handling non-trivial tasks end-to-end, not just autocompleting lines
+- The real question isn't whether AI writes code, it's who owns the architecture decisions behind it
+- Junior dev hiring pipelines are already showing stress fractures at forward-thinking shops
 
-**🔧 Dev Take:** "Aggressive beta cadence is Apple telling you the platform isn't stable yet — build defensively."
-
----
-
-### Haystack Hits 24K Stars: Production LLM Orchestration Is a Real Category Now
-deepset's Haystack framework is trending on GitHub with 24,658 stars, positioning itself squarely in the "context-engineered, production-ready LLM applications" space. The framing around explicit pipeline control is a direct response to the black-box frustrations of early LLM tooling.
-- Modular pipeline design means you can swap components without rebuilding everything
-- "Context engineering" as a framing is gaining traction as the successor to raw prompt engineering
-- Agent workflow support puts it in direct competition with LangGraph, CrewAI, and similar stacks
-
-**🔧 Dev Take:** "Haystack is worth a serious look if you've outgrown the duct-tape phase of your LLM pipeline."
+**🔧 Dev Take:** "The job isn't gone — it just moved one abstraction layer up, again."
 
 ---
 
-### MLflow Crosses 25K Stars: Observability for AI Is Non-Negotiable
-MLflow's continued rise up the GitHub trending charts reflects a hard-won industry lesson: you can't improve what you can't measure. The platform now covers agents, LLMs, and classical ML — one of the few tools that actually spans the full stack.
-- Evaluation and monitoring for LLM apps is still an unsolved problem at scale — MLflow is one serious attempt
-- The agents support is newer and worth stress-testing against your actual use cases
-- 25K stars means a large community and broad integrations, which matters for long-term adoption decisions
+### Haystack Hits 24K Stars: Context Engineering Is the New Prompt Engineering
+deepset's Haystack framework is trending hard, positioning itself explicitly around "context-engineered" LLM applications. The framing shift from "prompt engineering" to "context engineering" is deliberate and telling.
+- Haystack lets you build modular, production-ready pipelines with explicit control over what context flows where
+- The "context engineering" framing acknowledges that what you feed the model matters as much as how you instruct it
+- Strong fit for RAG pipelines, multi-step agents, and anything where data retrieval is load-bearing
 
-**🔧 Dev Take:** "If you're shipping AI to prod without an eval loop, you're flying blind — MLflow is a reasonable place to start."
+**🔧 Dev Take:** "Context engineering is just software architecture for models — and Haystack is finally making that legible."
 
 ---
 
-### MIT Tech Review: Brainless Clones and Uteruses Outside Bodies — Biotech Is Getting Strange Fast
-MIT Technology Review's Download covers two genuinely unsettling biotech developments: a startup working on brainless human clones, and the first uterus successfully kept alive outside a body. These aren't science fiction pitches — they're funded, real research programs.
-- The uterus-ex-vivo work has direct implications for fertility treatment and organ preservation research
-- The "brainless clone" framing is loaded, but the underlying work relates to organoid and tissue engineering
-- Both stories represent the biotech frontier moving faster than the ethical and regulatory frameworks around it
+### MLflow at 25K Stars: AI Engineering Needs an Ops Layer and It's Here
+MLflow is no longer just experiment tracking — it's repositioning as a full AI engineering platform covering agents, LLMs, and classical ML. The star count reflects how many teams are hitting the "now what do we do in production" wall.
+- Covers the full lifecycle: debug, evaluate, monitor, optimize — all in one platform
+- Agent observability is the new hot feature; knowing *why* your agent did something is a production requirement now
+- Works across team sizes, which matters when AI tooling has historically favored either hobbyists or hyperscalers
 
-**🔧 Dev Take:** "The most important tech stories right now aren't about LLMs — pay attention to what's happening in bio."
+**🔧 Dev Take:** "You don't have a real AI product until you can explain what broke and why — MLflow is how you get there."
+
+---
+
+### The Neuron's March AI Skill Digest: 10 Things Worth Stealing
+The Neuron packed 10 practical AI workflow skills into their March digest — less tutorial content, more immediately deployable technique. Highlights include self-improving prompts, multi-agent workflow design, and thinking mode selection.
+- Self-improving prompt patterns (prompts that critique and rewrite themselves) are underused outside of research contexts
+- Multi-agent workflow design is maturing from "cool demo" to "repeatable pattern" — worth learning the vocabulary now
+- Claude Code gets its own dedicated skill section, a sign of how fast it's moved from novelty to standard tooling
+
+**🔧 Dev Take:** "If you're not deliberately building your AI workflow muscle memory right now, someone else is."
+
+---
+
+### OpenBB at 64K Stars: Financial Data Infrastructure Goes Agent-Native
+OpenBB's financial data platform continues its climb, explicitly targeting AI agents alongside analysts and quants. It's one of the cleaner examples of an existing data platform retrofitting itself for agentic consumption.
+- Structured financial data + agent-ready APIs = a stack that can actually execute on "AI hedge fund" ideas
+- Open-source positioning matters here: proprietary financial data platforms are slow and expensive to work with
+- The quant-to-agent pipeline is one of the more concrete near-term AI automation stories
+
+**🔧 Dev Take:** "OpenBB is what happens when you build a data platform assuming agents will be the primary consumer."
 
 ---
 
 ## Quick Hits
 
-- **[Dev.to]** A college student from Kashmir built 250 AI tools for freelancers in a month — MyClaw Tools is free and worth a look for the prompt engineering patterns alone.
-- **[GitHub Trending]** `f/prompts.chat` (formerly Awesome ChatGPT Prompts) sits at 154K stars — still the go-to community prompt repository, now self-hostable.
-- **[GitHub Trending]** OpenBB Finance at 64K stars — if you're building AI agents that touch financial data, this is the open-source platform to know.
-- **[The Verge]** AI in music continues to generate legal and ethical friction — the tech is ahead of the industry contracts, which means liability is still a live wire.
-- **[Latent Space]** "Quiet days" in AI news are increasingly rare — when they happen, use them to read documentation, not feeds.
+- **f/prompts.chat at 155K stars** — the prompt library format refuses to die; community curation at this scale is its own kind of infrastructure
+- **PyTorch Lightning at 31K stars** — finetune any model on 1 to 10,000 GPUs with zero code changes; still the cleanest on-ramp for serious training work
+- **The Verge on AI music** — the full industry stack is touched: sampling, demos, playlists, liner notes, and a legal fight with no clear ending
+- **Apple testing AirPods-style pairing for third-party wearables in EU** — DMA compliance is slowly forcing Apple's hand on interoperability; watch this space for what it means beyond wearables
+- **Multi-agent workflows are trending in skills content** — when newsletters are teaching agent orchestration as a baseline skill, the mainstream is closer than it looks
 
 ---
 
