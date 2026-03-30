@@ -1,63 +1,64 @@
 # theba.sh — 2026-03-30
 
-The story today is control: who has it, who's giving it up, and what it means when the terminal becomes the new UI for both humans and agents. Meanwhile, OpenAI is quietly closing doors on products that didn't fit the roadmap.
+The CLI is eating the world, human coding is allegedly dead (again), and OpenAI quietly killed one of its most-hyped products. It's a Monday in AI, and the vibe is turbulent.
 
 ---
 
 ## Headlines
 
-### Everything is CLI: Agents Are Living in the Terminal Now
-The Latent Space crew noticed something on a slow news day: nearly every serious agent framework shipping in 2026 has a CLI-first interface. This isn't nostalgia — it's because structured text in, structured text out is the most reliable surface for LLMs to operate on.
-- Composability and scriptability make CLIs natural agent primitives
-- GUI-first tools are getting CLI wrappers as an afterthought; CLI-first tools are winning adoption
-- The quiet implication: developers who know shell are structurally ahead right now
-**🔧 Dev Take:** "If your agent can't run headless in a cron job, it's a demo, not a tool."
+### Everything is CLI: Agents Are Going Terminal-Native
+The Latent Space crew used a quiet news day to surface something worth paying attention to: the dominant interface pattern for agentic tools isn't chat, it's the command line. From Claude Code to emerging agent runtimes, CLIs are becoming the composable primitive for how agents plug into real workflows.
+- Shell-native interfaces fit neatly into existing dev pipelines without new UI overhead
+- CLIs are scriptable, loggable, and version-controllable — everything chat UIs are not
+- The quiet implication: agents are being built *for* developers first, consumers second
+**🔧 Dev Take:** "The terminal never left — AI just finally showed up to use it."
 
 ---
 
-### Why OpenAI Really Shut Down Sora
-Six months after launch, OpenAI pulled Sora — and TechCrunch dug into the real reasons behind the decision. The surface story is resource allocation; the underlying story is that video generation didn't fit cleanly into the agent/productivity narrative OpenAI is doubling down on.
-- Users had uploaded content that created legal and policy exposure
-- Video gen is compute-expensive with no clear enterprise monetization path yet
-- Shutting down a consumer product this fast signals tighter portfolio discipline at OpenAI
-**🔧 Dev Take:** "Sora was impressive tech that never became a workflow — that's the only product failure that matters."
+### OpenAI Shut Down Sora — Here's What Actually Happened
+Six months after its public launch, OpenAI pulled the plug on Sora, its AI video generation product. TechCrunch reports the decision was more calculated than sudden, with questions around cost, safety tooling, and strategic focus all factoring in.
+- Sora launched to fanfare but faced persistent complaints about output quality and generation speed
+- Shutting down a flagship consumer product this fast signals internal prioritization pressure
+- Resources almost certainly redirected toward reasoning models and agentic infrastructure
+**🔧 Dev Take:** "When a demo product meets a real cost structure, the demo loses."
 
 ---
 
-### Goldman's Argenti: AI Is Actually Improving the Work, Not Just Automating It
-Marco Argenti, Goldman Sachs CIO, returned to Odd Lots to talk about where AI deployment stands inside one of the most demanding technical organizations in finance. The shift in framing: less "we built a tool" and more "the tool is changing how our people think."
-- Goldman's internal AI tooling has moved from prototype to embedded workflow
-- Argenti distinguishes between AI that replaces tasks and AI that elevates output quality
-- Financial services is emerging as a serious real-world benchmark for enterprise AI maturity
-**🔧 Dev Take:** "When a Goldman CIO stops talking about pilots and starts talking about culture change, the adoption curve has already inflected."
+### r/LocalLLaMA in 2026: The Hobbyist Stack Is Maturing
+The LocalLLaMA community continues to be a reliable signal for where open-weight models and self-hosted inference are heading. The subreddit's 2026 state reflects a community that has moved past experimentation into serious local deployment.
+- Quantization tooling and consumer GPU support have meaningfully closed the gap with hosted APIs
+- Community-driven fine-tuning pipelines are becoming more reproducible and shareable
+- The conversation has shifted from "can it run?" to "how do I run it in production?"
+**🔧 Dev Take:** "LocalLLaMA is basically a distributed R&D lab at this point — ignore it at your peril."
 
 ---
 
-### r/LocalLLaMA 2026: The Community That Kept Shipping
-The LocalLLaMA subreddit has become one of the most reliable signals for where open-weight AI is actually going, and the 2026 edition of the community reflects a maturing ecosystem — quantization is boring now, agentic local deployments are the frontier.
-- Local inference is fast enough that latency is no longer the primary objection
-- The conversation has shifted from "can it run?" to "can it act reliably?"
-- Open-weight models are within striking distance of proprietary models on most practical coding and reasoning tasks
-**🔧 Dev Take:** "Local-first isn't a privacy choice anymore — for a lot of workloads, it's just the better engineering choice."
+### "The Era of Human Coding Is Over" — r/singularity Does Its Thing
+The r/singularity crowd is declaring human coding dead, presumably while a human typed the post. The thread reflects genuine sentiment shifts as AI coding tools become more capable, even if the framing is hyperbolic.
+- AI-assisted coding is unambiguously changing what junior and mid-level dev work looks like
+- The real question isn't replacement — it's what skills remain irreplaceable at each level of abstraction
+- Worth reading the thread for signal, filtering for the noise
+**🔧 Dev Take:** "Coding isn't over — copy-pasting Stack Overflow without understanding it is."
 
 ---
 
-### r/Singularity: The Era of Human Coding Is Over
-The post is provocative but the thread underneath it is worth reading — not for the doomerism, but for the nuanced breakdown of what "coding" actually means when most boilerplate is AI-generated. The real debate is about ownership, review, and where human judgment still has leverage.
-- Vibe coding is now the default entry point for new projects across skill levels
-- The disagreement isn't whether AI writes code — it's whether humans understand what they're shipping
-- Senior engineers are converging on "AI writes, humans architect and audit" as the practical model
-**🔧 Dev Take:** "The era of typing code is winding down; the era of being responsible for code is absolutely not."
+### Haystack Doubles Down on Context Engineering for Production LLM Apps
+deepset's Haystack framework is trending on GitHub at nearly 25k stars, positioning itself explicitly around "context-engineered" pipelines. The framing is deliberate — context engineering is emerging as the discipline that actually ships reliable LLM features.
+- Modular pipeline design lets teams control exactly what goes into model context at each step
+- Agent workflow support is baked in alongside traditional RAG and retrieval patterns
+- "Production-ready" is the operative phrase — this isn't a notebook demo framework
+**🔧 Dev Take:** "If your RAG pipeline is a vibe and not a designed system, Haystack is the intervention you need."
 
 ---
 
 ## Quick Hits
 
-- **deepset-ai/haystack** (⭐ 24.6k) is trending hard — context engineering as a first-class concept is catching on, and Haystack is the framework that made it legible for production pipelines
-- **mlflow/mlflow** (⭐ 25k) — agent observability is now a core MLflow use case, not just model tracking; worth a look if your evals are still living in notebooks
-- **OpenBB-finance/OpenBB** (⭐ 64.2k) — financial data platform with native AI agent support; quietly becoming the Bloomberg Terminal alternative for quant builders
-- **Lightning-AI/pytorch-lightning** (⭐ 31k) — zero-code-change multi-GPU training is trending again as teams start fine-tuning open-weight models at scale
-- **f/prompts.chat** (⭐ 154.7k) — the prompt library is now self-hostable for orgs; sharing institutional prompt knowledge internally is an underrated workflow unlock
+- **MLflow at ~25k stars** — the platform keeps expanding into agents and LLM eval; if you're not tracking experiments, you're just guessing
+- **prompts.chat (154k+ stars)** — formerly Awesome ChatGPT Prompts, now a community prompt marketplace; useful for seeding internal libraries
+- **OpenBB at 64k stars** — financial data infra for AI agents is serious business; quants are quietly building on this
+- **PyTorch Lightning (31k stars)** — multi-GPU fine-tuning with zero code changes is still the pitch, still worth it if you're training anything at scale
+- **Claude Code install guides proliferating** — Russian-language SEO content targeting "free Claude Code setup" is a reliable sign that developer tools have hit mainstream demand
+- **CLI-first agent tooling** — watch this space; the teams shipping the fastest are wrapping everything in shell scripts, not Electron apps
 
 ---
 
