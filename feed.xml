@@ -15,9 +15,9 @@
 
 ## stdout // the big story
 
-### The CLI Is Eating the Agent Layer
+### Claude Code Source Leaked — And It's Revealing
 
-Something quiet happened while everyone was arguing about which frontier model benchmarks harder: the interface layer for AI agents converged on the command line. Latent Space's "Everything is CLI" synthesis — backed by nine sources over the past week — captures a real architectural shift that builders should internalize now. Claude Code, Codex</description>
+The week's biggest developer story is a messy one: Claude Code's source code has been partially exposed via a memory map leak, lighting up r/LocalLLaMA and r/singularity simultaneously. The leak is significant not because it exposes some secret sauce — it's that it confirms what many suspected: Claude Code is architecturally more s</description>
       <pubDate>Tue, 31 Mar 2026 12:00:00 +0000</pubDate>
       <guid>https://thebash.dev/2026-03-31</guid>
     </item>
