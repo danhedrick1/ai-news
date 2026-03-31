@@ -1,78 +1,72 @@
 # theba.sh — 2026-03-31
 
-The CLI is eating the world, and autonomous agents are eating the codebase. Today's feed is a coherent signal: the interface layer is collapsing toward the terminal, and the human-in-the-loop is getting pushed further and further out.
+The money keeps flowing and the code keeps leaking — today's dispatch covers OpenAI's jaw-dropping $122B raise and a Claude source code exposure that should have every dev paying attention to their npm supply chain. Big week for anyone building with or against the frontier labs.
 
 ---
 
 ## Headlines
 
-### Computer Use Lands in Claude Code
-Anthropic has shipped computer use directly into Claude Code, meaning the model can now observe and interact with your actual desktop environment — not just your codebase. This closes the loop between code generation and execution in a way that makes "agentic" feel less like a buzzword.
-- Claude Code can now click, scroll, and interact with UI elements mid-session
-- Reduces the need for human handoffs between "write code" and "verify it works"
-- Raises the floor for what "autonomous coding agent" actually means in practice
-
-**🔧 Dev Take:** "Your QA pipeline just got a new intern that doesn't sleep."
-
----
-
-### Everything is CLI: The Quiet Consolidation of Agent Interfaces
-Latent Space's AINews flags a pattern that's been hiding in plain sight: nearly every serious agent framework, LLM toolchain, and dev product released in the last 90 days ships a CLI first. GUIs are an afterthought, if they exist at all.
-- Agents need scriptable, composable interfaces — GUIs don't fit that contract
-- CLI-first design aligns with how pipelines, cron jobs, and CI systems actually work
-- The "chat UI" era may be giving way to the "pipe operator" era
-
-**🔧 Dev Take:** "The terminal won. Again. It always wins."
+### OpenAI Closes $122B Round at $852B Valuation
+Amazon, Nvidia, and SoftBank led the largest funding round in AI history, pushing OpenAI's valuation to $852 billion as the company prepares for an eventual IPO. The capital is earmarked for chip infrastructure, expanded Codex and ChatGPT capacity, and global frontier AI deployment.
+- $122B dwarfs every previous AI funding round — by a lot
+- Retail investors got a slice via a $3B direct offering, unusual pre-IPO
+- At $852B, OpenAI is priced like it already won — execution risk is enormous
+**🔧 Dev Take:** "At this valuation, every API price increase you've been tolerating just got permanent."
 
 ---
 
-### "The Era of Human Coding Is Over"
-The r/singularity crowd is amplifying a narrative that's getting harder to dismiss: AI isn't augmenting developers anymore, it's replacing the core loop. The debate is less about *if* and more about *how fast* and *for whom*.
-- Junior and mid-level coding tasks are the most immediately exposed
-- The remaining human value is shifting toward architecture, judgment, and taste
-- "Vibe coding" discourse is maturing into a real skills conversation
-
-**🔧 Dev Take:** "Knowing what to build still matters — knowing how to type it, less so."
-
----
-
-### Google Research: LLMs Can Teach Each Other (Social Learning)
-Google Research published work on "social learning" — a framework where LLMs learn from each other's outputs without direct access to raw training data. It's a meaningful step toward distributed, privacy-preserving model improvement.
-- Models share learned behaviors via natural language rather than gradient updates
-- Has practical implications for fine-tuning in regulated or siloed environments
-- Could reduce the data-moat advantage of large centralized labs over time
-
-**🔧 Dev Take:** "If models can teach each other, your fine-tuning strategy needs a rethink."
+### Claude Source Code Leaked via npm Map File
+A build artifact containing a source map was inadvertently published to the npm registry, exposing what appears to be internal Claude Code source code. This is a supply chain hygiene failure, not a hack — and that almost makes it worse.
+- Source maps should be stripped or excluded before publishing to public registries
+- Leaked internals give competitors and researchers a look under the hood
+- Raises questions about Anthropic's release pipeline and artifact review process
+**🔧 Dev Take:** "Check your own `.npmignore` today — this is the kind of mistake any team shipping fast makes once."
 
 ---
 
-### Jack Dorsey Wants AI to Replace Middle Management at Block
-Dorsey is making the case internally and publicly that AI can absorb the coordination and oversight functions traditionally held by middle managers, weeks after Block announced layoffs. This is a live experiment in org design, not just rhetoric.
-- Dorsey frames it as flatter orgs enabled by AI-driven visibility and decision-making
-- Follows a broader Silicon Valley pattern of using AI as cover for structural cuts
-- The real question is whether AI tooling can actually absorb accountability, not just meetings
-
-**🔧 Dev Take:** "Replacing managers with AI only works if you've actually built the AI — most haven't."
+### Everything is CLI: Agents Are Eating the GUI
+The Latent Space/AINews crew notes a quiet but accelerating trend: the interface of choice for AI agents is the command line, not the chat box. CLIs compose, script, and chain — everything a good agent workflow needs.
+- Tools like Claude Code, Codex CLI, and Aider are normalizing terminal-first AI interaction
+- CLIs are easier to wrap in agents, easier to test, and easier to version-control
+- The "chat UI" era may already be giving way to programmatic, headless AI usage
+**🔧 Dev Take:** "If your AI tool doesn't have a CLI, it's a toy — if it only has a GUI, it won't survive the agent layer."
 
 ---
 
-### Granite 4.0 3B Vision: IBM's Multimodal Bet for the Enterprise Edge
-IBM's Hugging Face drop of Granite 4.0 3B Vision is a compact multimodal model targeting enterprise document workflows. 3B parameters with vision capability is a meaningful point on the efficiency curve.
-- Handles document understanding, tables, charts, and forms at low compute cost
-- Open weights, enterprise-licensed, aimed at on-prem and regulated deployments
-- Signals that the "vision on everything" trend is reaching the edge inference tier
+### The Era of Human Coding Is Over (Reddit r/singularity)
+The post is provocative but the signal underneath is real: AI coding tools are no longer assistants, they're increasingly the primary author. The conversation on r/singularity is less doomer and more practical than the title suggests.
+- Benchmarks and anecdotes are converging — AI is outperforming junior devs on well-scoped tasks
+- The debate has shifted from "will it happen" to "what does a senior dev look like in 2027"
+- Human value is migrating toward system design, review, and knowing what to build
+**🔧 Dev Take:** "You're not being replaced by AI — you're being replaced by a builder who uses AI and also does your job."
 
-**🔧 Dev Take:** "If you're still OCR-pipelining enterprise docs in 2026, this is your wake-up call."
+---
+
+### Gizmodo: Don't Get Too Attached to Any AI App
+A rare piece of clear-eyed infrastructure realism: compute is finite, and the apps sitting on top of it are more fragile than they appear. Consolidation, deprecations, and compute rationing will kill products you depend on.
+- Every AI app is a thin wrapper on someone else's GPU cluster — that's a business risk
+- OpenAI's pricing and access changes have already killed several startups mid-build
+- Diversifying your AI dependencies isn't paranoia, it's engineering
+**🔧 Dev Take:** "Abstract your LLM calls from day one — swapping providers should be a config change, not a rewrite."
+
+---
+
+### Google Research: Social Learning with LLMs
+Google published research on collaborative learning frameworks where LLMs learn from interaction with other models and human feedback in social settings — think multi-agent knowledge transfer, not just fine-tuning.
+- Explores how models can share learned behaviors without retraining from scratch
+- Relevant for anyone building multi-agent systems where consistency across agents matters
+- Early research, but points toward a future where agent "teams" self-calibrate
+**🔧 Dev Take:** "Multi-agent coordination is the next hard problem — Google doing foundational work here is worth tracking."
 
 ---
 
 ## Quick Hits
 
-- **Haystack hits 24.6k stars** — deepset's orchestration framework keeps climbing; context engineering is the new prompt engineering
-- **MLflow at 25k stars** — agent observability is no longer optional; if you're not tracking, you're guessing
-- **Gizmodo warns against app attachment** — compute constraints mean your favorite AI product can vanish overnight; build on APIs with exit strategies
-- **AI music roundup from The Verge** — sample sourcing to playlist curation, the legal and ethical fights are just getting started; don't ignore the IP exposure if you're building in this space
-- **r/singularity coding discourse heating up** — useful signal for where developer anxiety is concentrating, even if the takes need calibration
+- **[Haystack — GitHub Trending]** deepset-ai/haystack hits 24,670 stars — if you're building production RAG or agent pipelines and haven't evaluated it, now's the time
+- **[The Neuron]** Most developers are stuck at AI "Level 2" (autocomplete + chat) — the jump to Level 4-5 is agent workflows and project-level context management
+- **[OpenAI Blog]** Codex gets a specific callout in the funding announcement — expect significant capability and capacity investments on the coding side in H1 2026
+- **[Bloomberg]** $852B valuation means OpenAI is now priced above most Fortune 50 companies — before a single public share has traded
+- **[r/LocalLLaMA]** Claude Code leak thread is already generating detailed teardowns — expect a wave of "what Anthropic got right" posts by end of week
 
 ---
 
