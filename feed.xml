@@ -9,15 +9,15 @@
       <link>https://thebash.dev/2026-03-31</link>
       <description># theba.sh — March 31, 2026
 
-*30 sources · ranked by impact · signal over noise*
+*32 sources · ranked by impact · signal over noise*
 
 ---
 
 ## stdout // the big story
 
-### Claude Code Source Leaked — And It's Revealing
+### Claude Code's Source Code Leaked via Source Maps — and It's a Blueprint for Every Agent Builder
 
-The week's biggest developer story is a messy one: Claude Code's source code has been partially exposed via a memory map leak, lighting up r/LocalLLaMA and r/singularity simultaneously. The leak is significant not because it exposes some secret sauce — it's that it confirms what many suspected: Claude Code is architecturally more s</description>
+This one's genuinely significant. Claude Code — Anthropic's terminal-native agentic coding tool — had its full source code accidentally exposed via unstripped JavaScript source maps bundled in the npm package. This wasn't a server breach; it was a classic shipping mistake. The source</description>
       <pubDate>Tue, 31 Mar 2026 12:00:00 +0000</pubDate>
       <guid>https://thebash.dev/2026-03-31</guid>
     </item>
