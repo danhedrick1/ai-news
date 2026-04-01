@@ -9,15 +9,15 @@
       <link>https://thebash.dev/2026-04-01</link>
       <description># theba.sh — April 1, 2026
 
-*35 sources · ranked by impact · signal over noise*
+*37 sources · ranked by impact · signal over noise*
 
 ---
 
 ## stdout // the big story
 
-### Anthropic Accidentally Ships Claude Code's Source Code to Every User
+### Anthropic Accidentally Open-Sourced Claude Code — And It's a Goldmine
 
-This is the story of the day, and it's a spectacular own-goal. Anthropic accidentally embedded the full source code for Claude Code inside a publicly distributed build — apparently via a sourcemap or bundled artifact that wasn't stripped before release. The code was accessible to anyone who knew where to look, </description>
+This is the kind of incident that keeps security teams up at night and makes researchers very happy. Anthropic accidentally exposed the full source code of Claude Code through what appears to be a package mapping artifact — an npm-style source map left in a production build. Within hours, the community had ext</description>
       <pubDate>Wed, 01 Apr 2026 12:00:00 +0000</pubDate>
       <guid>https://thebash.dev/2026-04-01</guid>
     </item>
