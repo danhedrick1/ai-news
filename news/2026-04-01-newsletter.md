@@ -1,80 +1,78 @@
 # theba.sh — 2026-04-01
 
-April Fools' Day came early this year — except the jokes were real: Anthropic accidentally shipped their source code to the internet, and OpenAI quietly became worth more than most countries' GDP. If you were hoping for a slow news week, wrong industry.
+The CLI is eating the world, and somewhere between "AI writes all the code" and "don't let AI write for you," developers are figuring out what they actually own. Today's edition is less April Fools, more existential audit.
 
 ---
 
 ## Headlines
 
-### The Claude Code Source Leak
-Anthropic accidentally open-sourced Claude Code's entire codebase, and the internet did what the internet does: read everything immediately. The leak offers a rare look into how a frontier AI coding assistant is actually architected under the hood.
-- Prompting strategies, tool-use scaffolding, and safety layers all now visible
-- Community already dissecting design decisions around context management and agent loops
-- Anthropic has not confirmed a full incident response timeline yet
+### Everything is CLI Now
+The Latent Space crew took a quiet news day to zoom out on a real trend: agent interfaces are collapsing into the terminal. CLIs are becoming the default substrate for AI tooling, not GUIs, not chat bubbles.
+- Composability and scriptability win when agents need to chain tools
+- The terminal never died — it just waited for AI to catch up
+- This has real implications for how you design internal tooling and agent workflows
 
-**🔧 Dev Take:** "The best architecture docs are the ones vendors didn't mean to publish."
-
----
-
-### OpenAI Closes $122B Round at $852B Valuation
-OpenAI has raised what may be the largest single funding round in private tech history, crossing the $852B valuation mark. At this point the question isn't whether they're overvalued — it's what "value" even means at this scale.
-- Round presumably funds continued compute buildout and GPT-5+ development
-- Valuation now rivals or exceeds the market caps of most Fortune 50 companies
-- Pressure on returns from this round will be immense and structural
-
-**🔧 Dev Take:** "Nine-figure fundraising rounds are just marketing with more zeros."
+**🔧 Dev Take:** "If your AI tool doesn't have a CLI, it's a demo."
 
 ---
 
-### Concept Training for Human-Aligned Language Models (arXiv:2603.29123)
-A new paper challenges the next-token prediction paradigm, arguing that NTP forces models to optimize for surface-level token statistics rather than underlying conceptual structure. The proposed "concept training" objective aims to align model internals more closely with how humans actually represent meaning.
-- Replaces single-token prediction targets with concept-level supervision signals
-- Claims improved generalization on tasks requiring semantic reasoning
-- Early results, but the framing is sharp and worth tracking
+### The Era of Human Coding Is Over (Reddit Says)
+The r/singularity crowd is doing what they do — but the underlying signal is real: coding as a pure human craft is being redefined faster than most engineers want to admit.
+- The debate isn't whether AI assists coding, it's whether human intent remains the bottleneck
+- "Over" is wrong; "transformed beyond recognition" is closer to accurate
+- Junior dev pipelines, code review culture, and hiring filters are all quietly breaking
 
-**🔧 Dev Take:** "If the loss function is wrong, scaling won't fix it — it'll just make it wronger, faster."
-
----
-
-### The Last 4 Jobs in Tech
-Latent Space's quieter companion piece to the Claude Code chaos is actually the more interesting long-term read: a structured look at which technical roles are durable as AI automates more of the stack. The mental model it proposes is worth stress-testing against your own career.
-- Argues that surviving roles cluster around taste, accountability, ambiguity, and infrastructure
-- Coding-as-typing is effectively gone; coding-as-system-design has runway
-- Framed as observation, not consolation
-
-**🔧 Dev Take:** "The job isn't writing code anymore — it's knowing which code should exist."
+**🔧 Dev Take:** "The era of human *typing* code is over. The era of human *judging* code is just starting."
 
 ---
 
-### The Era of Human Coding Is Over (r/singularity)
-The Reddit post itself is a hot take, but the comment thread underneath is doing real work — engineers debating what "over" actually means in practice versus in benchmark land. Worth a skim for temperature-checking how the builder community is processing the shift.
-- Consensus: rote implementation is automated, architecture and judgment are not
-- Several senior engineers describe moving fully to review/direction roles already
-- Dissent exists, mostly from those working in domains where context is expensive to encode
+### Don't Let AI Write For You (Lobste.rs)
+A counterpoint worth reading: the argument that outsourcing writing to AI hollows out the thinking behind it. The Lobste.rs crowd chewed it over with predictable nuance.
+- Writing isn't output — it's the process by which you figure out what you think
+- This applies directly to documentation, design docs, and ADRs, not just blog posts
+- Codebases with AI-generated READMEs are already visibly worse to navigate
 
-**🔧 Dev Take:** "Saying coding is over is like saying cooking is over because microwaves exist."
+**🔧 Dev Take:** "Use AI to edit your thinking, not replace it."
 
 ---
 
-### Gig Workers Training Humanoid Robots (MIT Technology Review)
-The people teaching humanoid robots to navigate the physical world are overwhelmingly gig workers — underpaid, under-benefited, and doing the invisible labor that makes the automation economy run. The parallel to early ML dataset labeling is not subtle.
-- Humanoid deployments scaling faster than formal training pipelines can support
-- Worker classification and compensation structures mirror the worst of early gig economy patterns
-- Better AI benchmarks piece in same issue asks harder questions about how we measure progress
+### The Future of AI is Many, Not One (arXiv)
+New paper argues the dominant mental model of AI — one user, one model, one conversation — is the wrong abstraction. Multi-agent, ensemble, and federated approaches are structurally underexplored.
+- Current product design optimizes for single-model UX even when the backend is already multi-model
+- Coordination overhead between agents is the unsolved engineering problem
+- Has direct implications for anyone building on LLM orchestration frameworks like Haystack or LangGraph
 
-**🔧 Dev Take:** "Every robot learning to fold laundry has a human behind it who isn't getting equity."
+**🔧 Dev Take:** "Your monolithic AI assistant is the monolith before microservices — fine until it isn't."
+
+---
+
+### Concept Training for Human-Aligned LMs (arXiv)
+Researchers propose moving beyond next-token prediction as the sole training objective, targeting higher-level "concepts" to better align model outputs with how humans actually reason.
+- NTP is a great compression objective but a poor alignment objective
+- Concept-level supervision could reduce the gap between fluent output and coherent reasoning
+- Early work, but directionally important for anyone who cares about reliability over benchmarks
+
+**🔧 Dev Take:** "Predicting the next token was always a proxy — this is the field admitting it out loud."
+
+---
+
+### Google's March 2026 AI Recap
+Google dropped its monthly AI roundup and it's a dense one — model updates, infra announcements, and tooling across Workspace, Cloud, and research.
+- Gemini integrations continue spreading across every Google surface
+- Cloud AI tooling updates are the ones that actually matter for builders
+- Monthly recap format is useful — read it like a changelog, not a press release
+
+**🔧 Dev Take:** "Google is shipping. Whether it sticks is a different question."
 
 ---
 
 ## Quick Hits
 
-- **Axios got hacked** — disclosed alongside the OpenAI funding news, which had a rough Monday all around
-- **NVIDIA shipped DLSS 4.5** — incremental, but the gap between NVIDIA and everyone else in inference-adjacent silicon keeps widening
-- **Oracle cut thousands of jobs** — cloud infrastructure rationalization continues; read the org chart, not the press release
-- **Haystack hits 24.6k stars** — deepset's LLM orchestration framework is one of the quieter workhorses in production agent stacks
-- **MLflow at 25k stars** — still the default for experiment tracking in serious ML shops, Python-first and not going anywhere
-- **AI music roundup (The Verge)** — legal exposure in music is still the canary in the coalmine for IP liability across all generative domains
-- **Best AI Tools for Writers (dev.to)** — 2026's version of this list looks nothing like 2023's; the tools that survived are the ones that got out of the way
+- **deepset-ai/haystack** hits 24.6k stars — context-engineered pipelines are having a real moment, worth a look if you're past the "single prompt" stage
+- **mlflow/mlflow** at 25k stars continues its quiet ascent as the boring-but-essential AI ops layer
+- **Amazon/Globalstar talks** (Bloomberg) — if true, Amazon is buying satellite infrastructure; AWS in orbit is not a joke
+- **Claude Code "install for free" clickbait** (dev.to) — it's April 1st, yes, but also: don't trust engagement-farmed AI tutorials regardless of the date
+- **arXiv cs.AI paper count continues accelerating** — the volume problem is real; curation tools are becoming as important as the research itself
 
 ---
 

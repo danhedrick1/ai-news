@@ -15,9 +15,9 @@
 
 ## stdout // the big story
 
-### Anthropic Accidentally Open-Sources Claude Code — And It's a Blueprint for Agent Architecture
+### Anthropic accidentally shipped Claude Code's entire source code — then made it worse trying to clean it up
 
-This is the story of the week, possibly the month. Anthropic inadvertently published the full source code for Claude Code — its terminal-based agentic coding assistant — exposing what amounts to a detailed architectural playbook for how a frontier lab builds a production AI coding agent</description>
+This is the story of the day, and it's a proper disaster. Anthropic inadvertently published Claude Code's complete source code — the actual implementation of their flagship agentic coding product — via what Bloomberg is calling "process errors." The leak hit GitHub, spread </description>
       <pubDate>Wed, 01 Apr 2026 12:00:00 +0000</pubDate>
       <guid>https://thebash.dev/2026-04-01</guid>
     </item>
