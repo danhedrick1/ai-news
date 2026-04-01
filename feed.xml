@@ -5,6 +5,23 @@
     <link>https://thebash.dev</link>
     <description>High-signal AI &amp; tech news for developers</description>
     <item>
+      <title>theba.sh — April 1, 2026</title>
+      <link>https://thebash.dev/2026-04-01</link>
+      <description># theba.sh — April 1, 2026
+
+*35 sources · ranked by impact · signal over noise*
+
+---
+
+## stdout // the big story
+
+### Anthropic Accidentally Ships Claude Code's Source Code to Every User
+
+This is the story of the day, and it's a spectacular own-goal. Anthropic accidentally embedded the full source code for Claude Code inside a publicly distributed build — apparently via a sourcemap or bundled artifact that wasn't stripped before release. The code was accessible to anyone who knew where to look, </description>
+      <pubDate>Wed, 01 Apr 2026 12:00:00 +0000</pubDate>
+      <guid>https://thebash.dev/2026-04-01</guid>
+    </item>
+    <item>
       <title>theba.sh — March 31, 2026</title>
       <link>https://thebash.dev/2026-03-31</link>
       <description># theba.sh — March 31, 2026
