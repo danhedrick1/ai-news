@@ -15,9 +15,9 @@
 
 ## stdout // the big story
 
-### Anthropic's Claude Code Leak: The Accidental Blueprint
+### The Claude Code Leak: Anthropic's Accidental Open-Source Moment
 
-What started as a "human error" turned into one of the more consequential source code leaks in recent AI history. An internal-use file mistakenly bundled into a software update pointed to an archive containing nearly 2,000 files and ~500,000 lines of code from Anthropic's Claude Code — their AI-powered coding assistant. The </description>
+This is the story that keeps giving. Anthropic shipped Claude Code version 2.1.88 containing a source map file that pointed to a 512,000-line TypeScript codebase — nearly 2,000 internal files — which developers immediately cloned, forked, and mirrored across GitHub before Anthropic could respond. The company confirm</description>
       <pubDate>Thu, 02 Apr 2026 12:00:00 +0000</pubDate>
       <guid>https://thebash.dev/2026-04-02</guid>
     </item>
