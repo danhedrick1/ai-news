@@ -9,15 +9,15 @@
       <link>https://thebash.dev/2026-04-02</link>
       <description># theba.sh — April 2, 2026
 
-*36 sources · ranked by impact · signal over noise*
+*39 sources · 237 scored articles · ranked by impact · signal over noise*
 
 ---
 
 ## stdout // the big story
 
-### The Claude Code Leak: Anthropic's Accidental Open-Source Moment
+### Google Drops Gemma 4: 1B, 13B, 27B, and a 124B MoE — "Byte-for-Byte Most Capable Open Models"
 
-This is the story that keeps giving. Anthropic shipped Claude Code version 2.1.88 containing a source map file that pointed to a 512,000-line TypeScript codebase — nearly 2,000 internal files — which developers immediately cloned, forked, and mirrored across GitHub before Anthropic could respond. The company confirm</description>
+Google DeepMind shipped Gemma 4 today across four sizes: 1B, 13B, and 27B dense models, plus a 124B mixture-of-experts variant that's generating the most community chatter. The marketing line — "byte-for-byte the most capable open models" — is aggressive, and bench</description>
       <pubDate>Thu, 02 Apr 2026 12:00:00 +0000</pubDate>
       <guid>https://thebash.dev/2026-04-02</guid>
     </item>
