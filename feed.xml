@@ -9,15 +9,15 @@
       <link>https://thebash.dev/2026-04-03</link>
       <description># theba.sh — April 3, 2026
 
-*37 sources · ranked by impact · signal over noise*
+*35 sources · ranked by impact · signal over noise*
 
 ---
 
 ## stdout // the big story
 
-### Gemma 4 drops: Google's open-weight models just got uncomfortably competitive
+### Gemma 4 lands and the community can't stop benchmarking it
 
-Google DeepMind shipped Gemma 4 yesterday and the community reaction has been genuinely surprised — not just "good for open source" surprised, but "this changes my deployment calculus" surprised. The Gemma 4 family is multimodal across the board, with the headline 27B model outperforming models conside</description>
+Google dropped Gemma 4 this week and it's generating more genuine engineering discussion than any open model release in months. The community consensus is consolidating fast: byte-for-byte, this is the most capable open model family available. The headline number everyone's testing is the **31B variant running at full 25</description>
       <pubDate>Fri, 03 Apr 2026 12:00:00 +0000</pubDate>
       <guid>https://thebash.dev/2026-04-03</guid>
     </item>
