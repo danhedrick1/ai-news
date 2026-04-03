@@ -15,9 +15,9 @@
 
 ## stdout // the big story
 
-### Gemma 4 drops: Google's best open-weight model is genuinely good, and it runs on a Raspberry Pi
+### Gemma 4 drops: Google's open-weight models just got uncomfortably competitive
 
-Google DeepMind shipped Gemma 4 overnight and the community response has been unusually positive — not the typical "impressive for its size" hedging. The family spans 1B to 27B parameters with a sparse Mixture-of-Experts architecture (the flagship is 27B total, ~4B active), a 128K con</description>
+Google DeepMind shipped Gemma 4 yesterday and the community reaction has been genuinely surprised — not just "good for open source" surprised, but "this changes my deployment calculus" surprised. The Gemma 4 family is multimodal across the board, with the headline 27B model outperforming models conside</description>
       <pubDate>Fri, 03 Apr 2026 12:00:00 +0000</pubDate>
       <guid>https://thebash.dev/2026-04-03</guid>
     </item>
