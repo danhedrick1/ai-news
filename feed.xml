@@ -15,9 +15,9 @@
 
 ## stdout // the big story
 
-### OpenAI's Executive Layer Cracks Under IPO Pressure
+**Update: The Claude Code Source Leak — What We Actually Learned**
 
-OpenAI is losing bench depth at exactly the wrong moment. COO Brad Lightcap is out of his operating role and moving to lead "special projects" — a title that historically means "we're not sure what to do with you." More critically, Fidji Simo, CEO of OpenAI's AGI division, is taking a medical leave of absence, and CMO Kate Rouch</description>
+What started as an accidental exposure of Claude Code's internals has turned into one of the more illuminating unintentional disclosures in recent AI memory. The short version: Anthropic accidentally shipped Claude Code with its system prompt and internal scaffolding exposed, and now the internet has had ~72 hours to</description>
       <pubDate>Sat, 04 Apr 2026 12:00:00 +0000</pubDate>
       <guid>https://thebash.dev/2026-04-04</guid>
     </item>
