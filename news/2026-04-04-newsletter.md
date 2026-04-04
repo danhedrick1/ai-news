@@ -1,68 +1,68 @@
 # theba.sh — 2026-04-04
 
-The AI tooling layer keeps getting more transparent — sometimes accidentally. Today's digest covers a source leak that reveals how Claude Code actually works, Google's quietly impressive Gemma 4 drop, and the research community watching ACL 2026 decisions roll in.
+The AI tooling ecosystem keeps maturing — better models, better frameworks, and apparently better ways to pay gig workers in Nigeria to teach robots how to exist. Meanwhile, developers are still arguing about code comments, which means some things never change.
 
 ---
 
 ## Headlines
 
-### The Claude Code Source Leak
-Anthropic's Claude Code was accidentally "open sourced" — not intentionally, but the exposure gives researchers and developers an unusually clear look at the system's internals. If you've been curious how production-grade agentic coding tools are actually scaffolded, this is a rare primary source.
-- The leak surfaced prompt structures, tool definitions, and orchestration logic
-- Confirms several community theories about how context is managed across long coding sessions
-- Anthropic hasn't pulled a legal alarm yet — read it while it's being discussed openly
+### Gemma 4 Drops: Google's Small Model Game Gets Serious
+Google released Gemma 4, and the jump from Gemma 3 is described as dramatic across the board — multimodal capabilities, benchmarks, the works. If you've been sleeping on open-weight models for local or production use, this is the release that warrants a second look.
+- Multimodal support is now a first-class feature, not an afterthought
+- "Dramatically better" on every axis compared to Gemma 3 — size-to-performance ratio is the headline story
+- Strong signal that Google is serious about competing in the open-weights space, not just the API game
 
-**🔧 Dev Take:** "The best architecture docs are the ones that weren't supposed to be public."
-
----
-
-### Gemma 4: Google's Best Small Multimodal Model Yet
-Google dropped Gemma 4 and it's a meaningful step up — multimodal from the ground up and reportedly better than Gemma 3 across the board. For teams running open-weight models on constrained infrastructure, this is worth a benchmark run today.
-- Dramatically improved multimodal performance vs. Gemma 3
-- Open weights means you can actually deploy this without a vendor call
-- Positions Google more competitively against Llama and Mistral in the open model tier
-
-**🔧 Dev Take:** "Google keeps shipping open models quietly — this one deserves more noise than it's getting."
+**🔧 Dev Take:** "Pull it, benchmark it against your actual task, then decide — 'best small model' claims earn nothing until they hit your eval set."
 
 ---
 
-### ACL 2026 Decisions Are Out
-The ACL 2026 acceptance notifications have landed and r/MachineLearning is doing what it does — processing results publicly. Acceptance rates, paper quality debates, and the usual mix of relief and frustration are flooding the thread.
-- Competitive cycle; NLP research bar continues to rise
-- Rejection discussions are surfacing useful reviewer feedback patterns
-- Good signal for what research directions are getting traction in 2026
+### Your Code Is Worthless: The Comments Edition
+Lobste.rs is doing what Lobste.rs does — a thread on whether code comments have any real value sparked the kind of debate that reveals exactly how fractured developer opinion is on documentation culture. The title is deliberately provocative, but the underlying question is legitimate: are comments a crutch, a lifeline, or just technical debt in disguise?
+- The anti-comment camp argues self-documenting code renders comments redundant at best, misleading at worst
+- The pro-comment camp points to *why* decisions were made — something the code itself can never express
+- No consensus was reached, which is itself the answer
 
-**🔧 Dev Take:** "Peer review theater aside, the accepted papers list is a decent map of where the field is actually moving."
-
----
-
-### Gig Workers Training Humanoid Robots — From Their Apartments
-MIT Tech Review profiles a growing class of remote gig workers doing embodied AI data collection from home — strapping iPhones to their foreheads to capture motion data for humanoid robot training. It's a genuinely strange new category of labor.
-- Data collection for physical AI is now being distributed globally via gig platforms
-- Workers in Nigeria, Southeast Asia, and elsewhere are doing this for humanoid robotics companies
-- Raises real questions about data quality, labor conditions, and who captures value
-
-**🔧 Dev Take:** "The supply chain for robot intelligence runs through someone's studio apartment — that should make you think."
+**🔧 Dev Take:** "Write comments for the 2am you who forgot why you made that tradeoff, not for the compiler."
 
 ---
 
-### iOS 26.5 First Public Beta
-Apple pushed the first iOS 26.5 public beta, following closely behind the developer beta. Incremental, but if you're building for Apple platforms, the release cadence in 2026 has been notably compressed.
-- Public beta available now; dev beta revision also dropped earlier this week
-- No headline features announced yet — patch and polish territory
-- Worth installing on a test device if you're validating app behavior ahead of release
+### Gig Workers Are Training Humanoid Robots From Their Living Rooms
+MIT Technology Review profiles gig workers — including a medical student in Nigeria — strapping iPhones to their foreheads to capture motion data for humanoid robot training pipelines. It's a window into how the physical-AI data supply chain actually works, and it's more ad-hoc than the robotics companies' press releases suggest.
+- Data collection for embodied AI is being crowdsourced globally, at low cost, right now
+- The work is unglamorous, irregular, and structurally similar to early Mechanical Turk annotation gigs
+- The people doing it are skilled — a medical student is not a random hire — which raises questions about compensation equity
 
-**🔧 Dev Take:** "Apple's beta cadence is a calendar item, not a news event — but if you ship iOS apps, you already know that."
+**🔧 Dev Take:** "The humanoid robot future is being built on a gig economy foundation — that's not a footnote, it's a risk factor."
+
+---
+
+### ACL 2026 Decisions Are Out — ML Twitter Is Processing
+ACL 2026 decisions landed and the r/MachineLearning thread is the usual mix of relief, confusion, and frustration. Acceptance rates remain brutal; the discussion around reviewing quality is ongoing and unresolved.
+- Researchers are comparing notes on reviewer feedback quality — inconsistency is the dominant complaint
+- The signal-to-noise ratio in top NLP venues continues to be questioned by the community itself
+- KDD decisions are also dropping simultaneously, making this a rough week for anyone waiting on two submissions
+
+**🔧 Dev Take:** "If your good paper got rejected, the reviewers were probably wrong — publish the preprint and move on."
+
+---
+
+### Haystack Keeps Building: 24K Stars and Growing
+deepset's Haystack framework for production LLM pipelines continues to gain traction, now sitting at nearly 25K GitHub stars. It's positioned squarely in the "explicit control over your pipeline" camp — a direct counter to the magic-box orchestration approaches that have caused so much production pain.
+- Modular pipeline design with agent workflow support is the core value prop
+- Context engineering is now a stated first-class concept in the framework's positioning
+- Competes directly with LangChain and LlamaIndex, but with a stronger enterprise/production focus
+
+**🔧 Dev Take:** "If your LangChain pipeline has become a mystery box, Haystack's explicit control model is worth the migration cost."
 
 ---
 
 ## Quick Hits
 
-- **haystack (⭐24.7k)** — deepset-ai's AI orchestration framework keeps climbing; solid option if you're building production RAG or agent pipelines and want explicit pipeline control
-- **mlflow (⭐25.1k)** — Now positioned as a full AI engineering platform for agents + LLMs, not just experiment tracking; worth revisiting if you haven't recently
-- **prompts.chat (⭐157k)** — Formerly Awesome ChatGPT Prompts, now a full community prompt discovery platform; absurdly starred, still useful for quick prompt archaeology
-- **OpenBB (⭐65.3k)** — Open financial data platform now explicitly targeting AI agents; quants building on top of LLMs should have this in their stack
-- **Agentic AI for Enterprises** — dev.to piece covers the basics cleanly; good link to share with stakeholders who still need the "why autonomous AI" pitch
+- **MLflow hits 25K stars** — the MLOps stalwart keeps growing; evaluation and monitoring for agents is now a headlining feature, not an add-on
+- **LLMs from Scratch (rasbt) at 90K stars** — if you haven't bookmarked this repo for onboarding new ML engineers, fix that today
+- **Prompts.chat crosses 157K stars** — the renamed Awesome ChatGPT Prompts is now a community platform; wild that prompt libraries are a category now
+- **OpenBB at 65K stars** — open-source financial data for quants and AI agents; worth knowing this exists before you pay for a Bloomberg terminal integration
+- **KDD 2026 reviews also dropping** — double-blind season in full effect; check r/MachineLearning for the temperature read
 
 ---
 
