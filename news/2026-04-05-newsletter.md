@@ -1,78 +1,68 @@
 # theba.sh — 2026-04-05
 
-The AI tooling ecosystem keeps expanding in every direction — local models, robot training pipelines, agentic frameworks — while the supply chain attack surface for AI skills and packages quietly grows. Eyes open out there.
+The money is moving fast and the headcount isn't. This week's theme: AI is eating both the labor market and the dev toolchain at the same time, and nobody's pretending otherwise anymore.
 
 ---
 
 ## Headlines
 
-### Claude Code: Up and Running in 5 Minutes
-A developer in Kyiv documented a quick-start Claude Code setup over morning coffee, and the short answer is: the barrier to entry is now genuinely low. If you haven't experimented with it on a real project yet, there's no longer a good excuse.
-- Setup friction is minimal — the hard part is figuring out where it fits your workflow
-- Works best when you treat it as a pair programmer, not an autocomplete engine
-- Context window discipline matters more than ever at this level of code generation
+### OpenAI Raises $122B at $852B Valuation — Anthropic Catches Secondary Market Overflow
+OpenAI closed what is almost certainly the largest private funding round in history, while spooked investors simultaneously piled into Anthropic on secondary markets as a hedge. Meanwhile, Oracle laid off roughly 25,000 employees to redirect capital toward AI infrastructure — the clearest signal yet that the "AI creates jobs" narrative is wearing thin at the executive level.
+- $122B round makes OpenAI's war chest larger than most sovereign tech budgets
+- Oracle's 25K cuts are explicitly tied to data center buildout — this is the new capex story
+- Secondary market Anthropic demand suggests investors want diversification, not conviction
 
-**🔧 Dev Take:** "Get it running on a throwaway project this weekend — you'll have opinions by Monday."
-
----
-
-### Gemma 4 Fits in 16 GB VRAM
-The r/LocalLLaMA crowd is benchmarking Gemma 4 on consumer-grade GPUs, and a 16 GB VRAM ceiling is looking increasingly workable. This continues the trend of capable open-weight models becoming accessible without a data center budget.
-- RTX 3090/4080-class cards are the new "minimum viable local inference" hardware
-- Quantization quality is the real variable to watch, not just raw model size
-- Local-first workflows are becoming legitimate for production prototyping
-
-**🔧 Dev Take:** "If you're still paying per-token for every dev experiment, run the numbers on your own GPU."
+**🔧 Dev Take:** "When the hedge against your AI bet *is* another AI bet, you're not hedging anymore."
 
 ---
 
-### Gig Workers Are Training Humanoid Robots From Home
-MIT Technology Review profiles remote contractors — including a medical student in Nigeria — strapping iPhones to their heads to capture motion data for humanoid robot training. The data pipeline for embodied AI runs through the gig economy.
-- Ring lights and iPhones are now legitimate robotics research infrastructure
-- Geographic distribution of contractors is a deliberate strategy, not an afterthought
-- The line between "crowdsourced labor" and "AI training dataset" is fully dissolved
+### Anthropic's Claude Code Will Charge Extra for OpenClaw Integration
+Anthropic is splitting its Claude Code pricing so that usage through OpenClaw and other third-party tool integrations costs subscribers more on top of their existing plan. This is the classic platform tax move — let the ecosystem grow, then monetize the connective tissue.
+- Affects developers who've built Claude Code into multi-tool agentic workflows
+- Signals Anthropic is watching where usage concentrates and pricing accordingly
+- OpenClaw users should audit their integration costs before next billing cycle
 
-**🔧 Dev Take:** "The most interesting ML infrastructure story of 2026 involves a headband and a smartphone."
-
----
-
-### 172 Malicious AI Skills Found in This Week's Audit
-The weekly clawsec audit indexed 41,805 AI skills, flagged 172 as malicious and 1,010 as suspicious. This is not a small number — the AI plugin and skill ecosystem has the same supply chain problems npm had in 2018, and we haven't collectively learned the lesson yet.
-- Pre-install checks (`npx clawsearch-guard <skill-name>`) should be non-negotiable in team environments
-- "Suspicious" at 1,010 entries means the gray zone is wide and the incentives are bad
-- Audit tooling is catching up, but it's reactive by nature
-
-**🔧 Dev Take:** "Treat AI skills like npm packages: assume nothing, verify everything, pin versions."
+**🔧 Dev Take:** "Every 'open' AI platform eventually finds the tollbooth — build your abstraction layer now."
 
 ---
 
-### Haystack Keeps Maturing as a Production LLM Framework
-deepset's Haystack is trending at 24,720 stars, positioning itself around "context-engineered" pipelines rather than the vague "agentic" label everyone else is chasing. The explicit pipeline control angle is the right call for teams that actually ship.
-- Modular pipeline design means you can replace components without rebuilding everything
-- "Context engineering" is the framing that actually maps to real production problems
-- Worth evaluating alongside LangChain if you're making a framework choice right now
+### r/LocalLLaMA: Gemma 4 Fits in 16GB VRAM
+Google's Gemma 4 is generating serious traction in the local inference community, with usable performance confirmed on consumer 16GB VRAM setups. For the self-hosted crowd, this is a meaningful capability jump without a hardware upgrade.
+- 16GB puts it within reach of RTX 3080/4080-class cards that are already in most dev rigs
+- Local-first builders gain a capable model with no API costs or rate limits
+- Expect quantized variants to push this even lower in the coming weeks
 
-**🔧 Dev Take:** "Explicit control over your LLM pipeline is a feature, not a limitation — Haystack gets this."
+**🔧 Dev Take:** "If your app can't run on local Gemma 4, ask yourself why you're still paying per token."
 
 ---
 
-### ACL 2026 Decisions Are Out
-The r/MachineLearning thread on ACL 2026 decisions is live, with the usual mix of relief, confusion, and reviewer complaints. Decision day in academic NLP is always a signal for what research directions will be publicly discussed in the next cycle.
-- Acceptance rates remain brutal; strong work gets rejected on reviewer lottery
-- Watch accepted papers for early signals on where NLP benchmarking is heading
-- Preprints of rejected work often surface within weeks anyway
+### r/Singularity Thread: "The Era of Human Coding Is Over"
+The post is provocative but the underlying conversation is worth tracking — developers are openly debating whether coding as a human skill is entering terminal decline or just a permanent transformation. The signal here isn't the hot take, it's that this is now a mainstream discussion rather than a fringe one.
+- Community split between "AI as copilot" and "AI as replacement" camps is narrowing
+- Most working devs in the thread report spending more time on review and prompting than raw code
+- The meta-question is shifting from "will AI replace coders" to "what does a coder even do now"
 
-**🔧 Dev Take:** "Read the preprints, not just the proceedings — the rejection pile has good stuff in it."
+**🔧 Dev Take:** "The job isn't writing code anymore — it's knowing which code is wrong."
+
+---
+
+### Haystack Hits 24.7K Stars — Context Engineering Is the New Framing
+deepset-ai's Haystack is trending with explicit positioning around "context-engineered" LLM applications, a deliberate reframe away from "prompt engineering." The framework targets production pipelines with modular, auditable components rather than monolithic chains.
+- "Context engineering" framing is gaining traction as the serious alternative to vibe-coding pipelines
+- Modular pipeline design means individual components can be swapped, tested, and monitored
+- 24.7K stars with an MDX-heavy codebase suggests strong documentation investment — rare
+
+**🔧 Dev Take:** "If your RAG pipeline isn't modular, you don't have a pipeline — you have a prayer."
 
 ---
 
 ## Quick Hits
 
-- **MLflow at 25,128 stars** — solidifying its position as the default ML experiment tracking layer for teams that need to grow up fast
-- **KDD 2026 reviews** are being discussed on r/MachineLearning — data mining / applied ML conference decisions are another leading indicator for enterprise AI trends
-- **f/prompts.chat at 157,495 stars** — still the go-to community prompt library; self-hosting for org-internal use is the underrated move here
-- **OpenBB at 65,368 stars** — financial data tooling for quants and AI agents continues to grow; if you're building anything in fintech AI, this is worth a close look
-- **Local LLM VRAM optimization** is becoming a genuine engineering discipline, not just a hobbyist concern — budget for it accordingly
+- **MLflow (25.1K ⭐)** trending again — evaluation and monitoring tooling is having a moment as prod AI deployments mature and teams need observability
+- **prompts.chat (157K ⭐)** remains the highest-starred repo in today's trending list — prompt libraries are unglamorous infrastructure that nobody admits they use
+- **screenpipe (18K ⭐, Rust)** — local agent that watches what you do and acts on it; privacy-first angle is the differentiator, latency will be the real test
+- **OpenBB (65.4K ⭐)** trending in finance+AI overlap — quant tooling with native agent support is a quiet but fast-moving space
+- **PyTorch Lightning (31K ⭐)** still trending — "zero code changes across 1 to 10,000 GPUs" is a claim that keeps attracting new believers every time someone hits a scaling wall
 
 ---
 
