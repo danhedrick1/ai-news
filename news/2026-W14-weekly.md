@@ -8,80 +8,90 @@
 
 ## Week in One Screen
 
-This was the week the "trust the vendor" model of AI infrastructure cracked at multiple seams simultaneously. The Claude Code source leak spiraled from accidental npm publish to active malware bundling within days. AWS lost availability zones in Bahrain and Dubai to kinetic conflict. Anthropic killed OpenClaw's subscription-sharing with a weekend email. Oracle laid off thousands while getting its Dubai office struck. These aren't coincident bad luck — they're a stress test of centralized AI dependency, and several of those tests failed publicly. The developer response was immediate and visible: Gemma 4 running on 16GB Macs, Qwen 3.5 27B as a Claude Code drop-in, `gstack` getting 30+ contributors in days. The local/open-weight threshold crossed from "privacy trade-off" to "control with roughly equivalent capability."
+This was the week the AI industry's foundational assumptions got stress-tested simultaneously. Anthropic accidentally open-sourced its most-used agent tool, then made it worse with DMCA overcorrection. OpenAI closed the largest private fundraise in history while losing its COO, sidelining its AGI deployment lead, and buying a talk show. Four Apache 2.0 frontier-capable models shipped in a single week. Agent security went from afterthought to active threat surface in 72 hours, with slopsquatting, supply-chain malware, and a training data breach all landing before Friday. The land-grab phase of AI tooling is ending. The extraction and consolidation phase is beginning.
 
-The second major shift was technical and underreported: multiple independent papers this week converge on the same uncomfortable finding — reasoning models commit to decisions *before* generating reasoning tokens. CoT isn't a window into model cognition; it's post-hoc narration. This lands at an awkward moment, as the entire "reasoning model" product category is being sold on the premise that visible chain-of-thought is meaningful. Combined with the surface-heuristics paper showing LLMs weight prompt cues 8.7–38x more than goal constraints, and the 350K-token-per-session waste finding in agent frameworks, the gap between how production agents are being designed and how they actually behave is wider than most builders are accounting for.
+The deeper technical signal was quieter but matters more long-term: two independent research threads — one on CoT faithfulness, one on video diffusion — converged on the same finding. Reasoning models appear to commit to decisions before generating reasoning tokens. If chain-of-thought is post-hoc rationalization rather than actual deliberation, then the entire interpretability and alignment stack built on "let the model think step by step" needs to be rebuilt from different foundations. That's not a this-week problem. It's an every-week problem until it gets solved.
 
 ---
 
 ## Biggest Shifts
 
-### The Claude Code Leak Became a Supply Chain Attack Vector
-What started Monday as an accidental source map publish escalated by Saturday into active malware being bundled with leaked code distributions. Anthropic's DMCA carpet-bomb response made the company look panicked to enterprise buyers at exactly the wrong moment — mid a $122B OpenAI raise and active enterprise sales cycles. The community rebuilt a Python reimplementation within hours of the initial leak, confirming that the moat in coding agents is model + distribution + feedback loop, not the application code itself.
-- **Takeaway:** If you're deploying Claude Code or any agent tooling via npm/pip in CI/CD, audit your dependency chain now — the malware-bundling window is open and active.
-- **Watch:** Whether Anthropic's enterprise renewal conversations take a hit in Q2; also watch for a hardened, verified-release Claude Code that uses signed artifacts as a trust recovery move.
+### The Claude Code Leak Was an Accidental Architecture Review — and Anthropic Mostly Passed
 
-**Source trail:** [Mon digest](https://thebash.dev/2026-03-30), [Tue digest](https://thebash.dev/2026-03-31), [Wed digest](https://thebash.dev/2026-04-01), [Fri digest](https://thebash.dev/2026-04-03), [Sat digest](https://thebash.dev/2026-04-04)
+Anthropic shipped Claude Code's full source via npm map files, then issued DMCA takedowns that landed harder than the leak itself. The community had a Python reimplementation running within hours. What the code actually revealed: reasonable engineering, thoughtful internal structure, and a clear signal that the moat in coding agents isn't the code — it's the model, the distribution, and the feedback loop. The DMCA panic was the real reputational damage. Enterprise buyers don't care that your source leaked; they care whether you respond to incidents like a competent organization or a scared one.
 
----
+- **Concrete takeaway:** If you're building agent tooling, design for the assumption that your architecture will be public. Moats from code structure are thin. Moats from model quality, user data, and deployment integrations are real.
+- **Watch next:** How Anthropic handles OpenClaw and whether the third-party Claude Code ecosystem consolidates around the leaked architecture or fragments further.
 
-### CoT Faithfulness Is Broken — Reasoning Models Decide Before They Think
-Two independent papers this week, plus the earlier CoT faithfulness result, all point at the same mechanistic finding: reasoning models encode tool-calling and decision commitments in pre-generation activations before a single reasoning token is produced. The "think step by step" paradigm was sold as interpretability. It's increasingly looking like storytelling. Separately, the surface-heuristics paper quantified that LLMs override goal constraints in favor of surface prompt cues at 8.7–38x rates — a specific, reproducible failure mode in agent reliability.
-- **Takeaway:** Stop using CoT logs as a debugging or alignment signal for agent behavior. The log is the rationalization, not the reasoning. Instrument activations or tool-call sequences instead.
-- **Watch:** Whether any major lab acknowledges this publicly in model documentation, and whether "constraint-aware fine-tuning" emerges as a named pipeline step in open-source agent frameworks by Q3.
-
-**Source trail:** [Wed digest](https://thebash.dev/2026-04-01), [Fri digest](https://thebash.dev/2026-04-03), [Sat digest](https://thebash.dev/2026-04-04), [Sun digest](https://thebash.dev/2026-04-05)
+**Source trail:** [Mon digest](https://thebash.dev/2026-03-30), [Tue digest](https://thebash.dev/2026-03-31), [Wed digest](https://thebash.dev/2026-04-01), [Thu digest](https://thebash.dev/2026-04-02), [Fri digest](https://thebash.dev/2026-04-03), [Sat digest](https://thebash.dev/2026-04-04), [Sun digest](https://thebash.dev/2026-04-05)
 
 ---
 
-### The Local Model Threshold Crossed — Gemma 4 on 16GB Changes the Calculus
-Gemma 4 26B under Apache 2.0 running on a stock 16GB MacBook Pro is not a benchmark story — it's a deployment story. Combined with Qwen 3.5 27B being used as a functional Claude Code replacement and the 397B quantized experiment getting serious community uptake, the capability/convenience tradeoff that kept developers on hosted APIs has narrowed to primarily a latency and context-length question. r/LocalLLaMA traction, the `gstack` contributor surge, and immediate Gemma community tooling all confirm developers are actively building vendor-redundancy, not just talking about it.
-- **Takeaway:** If your agent pipeline uses a 27B-or-smaller model for any subtask and you're paying per-token, run the numbers on local inference this week. The math likely changed.
-- **Watch:** Whether the next Llama or Mistral drop closes the remaining latency gap for function-calling workloads, which is the last meaningful hosted-API advantage at this model size.
+### Reasoning Models Decide Before They Think — CoT Is a Narrative, Not a Window
 
-**Source trail:** [Thu digest](https://thebash.dev/2026-04-02), [Sat digest](https://thebash.dev/2026-04-04), [Sun digest](https://thebash.dev/2026-04-05)
+Two independent papers this week, largely buried under leak drama, landed a significant technical result: reasoning models encode tool-calling decisions in pre-generation activations before producing a single reasoning token. Video diffusion models show the same pattern — motion plans committed in the first denoising steps. CoT reasoning, the mechanism that was supposed to make agents auditable and trustworthy, appears to be post-hoc rationalization. This invalidates a significant portion of the current interpretability stack and has direct implications for any production system where you're trusting the model's stated reasoning as a signal of what it actually did.
+
+- **Concrete takeaway:** Stop logging CoT outputs as audit trails for agent decisions. They're not. Build audit infrastructure around actual tool calls, state transitions, and external effects — not token outputs.
+- **Watch next:** Whether any major lab responds to this finding with architectural changes before end of year, or whether the interpretability community's response moves faster than product teams'.
+
+**Source trail:** [Fri digest](https://thebash.dev/2026-04-03), [Sat digest](https://thebash.dev/2026-04-04), [Sun digest](https://thebash.dev/2026-04-05)
 
 ---
 
-### Geopolitical Risk Is Now a Direct Infrastructure Variable
-AWS Bahrain and Dubai went hard down due to the Iran conflict. Oracle's Dubai office was struck. Bloomberg and Axios flagged oil price volatility as a driver of tech equity selloffs. NVIDIA's $2B photonic interconnect bet and Microsoft's direct $7B Texas power plant acquisition are rational responses to an infrastructure stack that is now downstream of kinetic conflict, energy markets, and fab supply chains simultaneously. This is not abstract geopolitical risk — it's a specific, demonstrated availability failure with a named cause.
-- **Takeaway:** If your production stack has single-region exposure in the Gulf or depends on Middle East routing for latency optimization, add a redundant region to your runbook this sprint.
-- **Watch:** Whether AWS and Azure accelerate announced capacity in politically stable regions (EU, US, Japan) as a direct response, and how this reshapes data-residency conversations with enterprise customers.
+### Four Apache 2.0 Frontier Models in One Week — API Dependency Is Now a Choice
+
+Gemma 4 26B running on a 16GB Mac. Qwen and Mistral derivatives covering everything from 4GB mobile to multi-GPU data center. All Apache 2.0. In a single week, the open-weight tier crossed a threshold where "we use a closed API because we have to" is no longer an honest answer for most use cases. The capability gap between open and closed is narrowing faster than the operational simplicity gap. The cost and vendor-dependency arguments for closed APIs are getting harder to justify at the same rate the open-weight models are getting easier to run.
+
+- **Concrete takeaway:** If you're building an inference-heavy product and haven't run a build-vs-rent analysis against current open-weight options in the last 60 days, run one now. The numbers have moved.
+- **Watch next:** Whether the 124B MoE models rumored from Qwen and Mistral close the remaining gap on complex reasoning tasks that still favor closed APIs.
+
+**Source trail:** [Thu digest](https://thebash.dev/2026-04-03), [Sat digest](https://thebash.dev/2026-04-04), [Sun digest](https://thebash.dev/2026-04-05)
+
+---
+
+### Agent Security Went From Afterthought to Active Threat Surface in 72 Hours
+
+Three distinct attack vectors landed in parallel: slopsquatting (agents installing hallucinated malicious packages), Claude Code leak bundled with malware in third-party distributions, and the Mercor breach exposing AI training data and lab secrets. The Agent Guard, AgentWatcher, and related tooling drops on Thursday weren't coincidence — the security research community had been watching this surface develop. The pattern is consistent: AI tooling has been deployed at speed without adversarial design, and the attack surface is now large enough that adversaries are systematically exploiting it.
+
+- **Concrete takeaway:** If you're running agents that install packages, call external APIs, or execute code, you need an explicit supply-chain audit layer now, not after your first incident. Treat agent tool access like you treat production database access.
+- **Watch next:** Whether OAuth-for-agents and the prompt injection monitor tooling that dropped this week gets adopted at the framework level (LangChain, CrewAI, Haystack) or stays in the "security-first teams only" tier.
+
+**Source trail:** [Thu digest](https://thebash.dev/2026-04-02), [Fri digest](https://thebash.dev/2026-04-03), [Sat digest](https://thebash.dev/2026-04-04)
+
+---
+
+### The Iran War Is an AI Infrastructure Variable — and Almost Nobody Is Modeling It
+
+The Hormuz closure and Iran conflict are being covered as geopolitical events, but their downstream effect on AI infrastructure economics is underpriced in most builder thinking. GPU fab inputs, data center energy costs, and enterprise IT budgets are all downstream of oil price volatility. Microsoft going direct to a $7B Texas power plant and NVIDIA betting on silicon photonics for interconnects aren't disconnected moves — they're the same industrial-scale bet that physical infrastructure constraints will be the binding limit on AI scaling before model quality is. If power costs structurally increase 30-40% and hold, the unit economics of every inference-heavy product get repriced.
+
+- **Concrete takeaway:** If you're doing infrastructure cost modeling right now, widen your energy cost uncertainty band significantly and model the open-weight self-hosting scenario explicitly as a hedge against cloud inference repricing.
+- **Watch next:** Whether the Microsoft/Chevron power plant deal closes and whether other hyperscalers make similar direct energy acquisition moves in Q2.
 
 **Source trail:** [Mon digest](https://thebash.dev/2026-03-30), [Tue digest](https://thebash.dev/2026-03-31), [Sun digest](https://thebash.dev/2026-04-05)
 
 ---
 
-### The Extraction Phase Began — Vendor Monetization Tightened Across the Board
-Anthropic killed OpenClaw subscription-sharing via weekend email. OpenAI repriced business seats. Elon strong-arming banks into Grok subscriptions. The land-grab phase (free/cheap developer access to build ecosystem) visibly ended this week. The timing is not coincidental — OpenAI just closed at $852B and needs revenue to justify it; Anthropic raised $830M and launched a PAC; both need cash flow that matches their valuations. The open-weight response was immediate, which tells you developers were already watching for this inflection.
-- **Takeaway:** Audit your AI spend line items against open-weight alternatives now, before the next repricing round. The capability gap at the 27B–70B range is narrow enough to justify the migration cost in most non-frontier use cases.
-- **Watch:** Whether OpenAI's TBPN acquisition and Anthropic's PAC formation are the opening moves of a broader pattern — AI labs buying distribution and political leverage simultaneously as organic goodwill erodes.
-
-**Source trail:** [Thu digest](https://thebash.dev/2026-04-02), [Fri digest](https://thebash.dev/2026-04-03), [Sat digest](https://thebash.dev/2026-04-04), [Sun digest](https://thebash.dev/2026-04-05)
-
----
-
 ## Builder Board
 
-- **Gemma 4 26B (Apache 2.0)** — Runs on 16GB Mac, function-calling capable, immediate community tooling shipping. First open-weight model that makes a credible Claude Code replacement argument on consumer hardware. Test it against your current 27B workloads this week.
+- **Gemma 4 26B on 16GB VRAM** — this is the practical deployment threshold. If your target hardware is a MacBook Pro or a single-GPU inference node, the open-weight option is now viable for most non-frontier tasks. [Sat](https://thebash.dev/2026-04-04) / [Sun](https://thebash.dev/2026-04-05)
 
-- **Gemini API Flex + Priority Inference Tiers** — Tiered inference pricing is a real operations lever. If your workload has latency-tolerant batch jobs mixed with interactive calls, you can cut costs materially by routing correctly. Map your call patterns before the architecture calcifies.
+- **Gemini API Flex and Priority inference tiers** — Google quietly added tiered SLA options to the Gemini API. If you're running batch workloads where latency doesn't matter, Flex tier pricing is worth benchmarking against self-hosted open-weight costs. [Thu digest](https://thebash.dev/2026-04-02)
 
-- **Agent Security Stack (AgentWatcher, KiloClaw, OAuth-for-agents spec)** — All dropped in the same week, which means the security tooling market is real now. The prompt injection monitor and OAuth agent spec in particular are filling gaps that will become compliance requirements. Get familiar with the primitives before they're mandated.
+- **Surface heuristics override constraints paper (HuggingFace)** — LLMs weight surface cues 8.7–38x more than goal constraints. Specific failure mode with direct production implications: your agent's behavior is more sensitive to how a tool is named and described than to the actual task objective. Test your tool descriptions adversarially. [Wed digest](https://thebash.dev/2026-04-01)
 
-- **Slopsquatting** — AI agents hallucinating package names that attackers then register is a live, confirmed attack vector. If your agent can run `pip install` or `npm install` in any execution environment, you need an allowlist or a package verification layer. This is not theoretical.
+- **350K tokens/session on static files in agent frameworks** — the token waste finding from Friday is a specific, fixable problem. If your agent framework is re-reading unchanged files every session, you have a cost leak that compounds at scale. Audit your context window usage before you hit production load. [Fri digest](https://thebash.dev/2026-04-03)
 
-- **`gstack` (Garry Tan, open-sourced)** — 30+ contributors in days. Watch whether it becomes a serious infra scaffolding standard or a flash of YC-network enthusiasm. The appetite for composable, open agent infrastructure is clearly there; whether the code matures is the question.
+- **Agent security tooling cluster** — Agent Guard, AgentWatcher, KiloClaw, and OAuth-for-agents spec all dropped within 48 hours. None are production-hardened yet, but this is the starting lineup for the agent security layer. Worth tracking all four for the one that gets framework-level adoption first. [Thu digest](https://thebash.dev/2026-04-02)
 
-- **Token waste in agent frameworks (350K tokens/session on static files)** — The audit methodology from the Friday digest is worth running against your own agent sessions. The optimization surface is large, the tooling to find waste is now available, and the cost delta at scale is non-trivial. This is uncontested infra work with immediate ROI.
+- **Microsoft MAI three new foundation models** — Microsoft is visibly building model capability independent of OpenAI across text, code, and multimodal. If you're on Azure and currently routing everything through the OpenAI endpoint, the MAI models are worth a capability benchmark. The decoupling is real and accelerating. [Thu digest](https://thebash.dev/2026-04-02)
 
-- **Mercor breach / AI training data exposure** — Meta paused a vendor after a breach exposed lab training secrets. If you use third-party data annotation or RLHF vendors, your training pipeline is a data exfiltration surface. Audit what leaves your environment and under what contractual controls.
+- **Legora at $100M ARR** — legal AI is generating real enterprise revenue at scale. If you're building vertical AI and still getting "but will enterprises pay for this" pushback, this is your comp. The pattern (domain-specific agent + structured workflow + clear liability ownership) is portable to other regulated verticals. [Wed digest](https://thebash.dev/2026-04-01)
 
 ---
 
 ## What to Watch Next Week
 
-The two threads most likely to compound next week are the OpenAI org instability and the open-weight momentum. OpenAI lost or sidelined three executives in a single memo this week — COO out, CMO fighting cancer, AGI lead on leave — while simultaneously closing the largest private fundraise in history. That's a company under maximum internal pressure at maximum external visibility, and pressure-driven orgs ship erratically. Watch for either a major product announcement timed to distract from the org story, or a further executive departure that the TBPN acquisition can't paper over. On the open-weight side: if Qwen 3.5 or the incoming 124B MoE model ships with strong function-calling benchmarks next week, the migration conversation at mid-market enterprises goes from "interesting" to "urgent." The local-model infrastructure tooling (`gstack`, the Claude Code reimplementations, LM Studio integrations) is moving fast enough that a capable open-weight drop could absorb developer attention faster than any hosted-API feature release. The builders who have already mapped their vendor dependencies and sized the open-weight gap will move first.
+The Claude Code ecosystem fracture is the most live operational situation going into next week. Anthropic has to decide whether to re-open third-party tooling or hold the line on OpenClaw restrictions — and whichever way they go, the decision will signal whether they're treating developers as a community or a distribution channel. Watch for a formal policy statement. On the model side, the 124B MoE rumors from the open-weight tier are the capability test that matters: if a fully open, permissively licensed model clears the frontier reasoning bar convincingly in the next two weeks, the API-dependency conversation in every AI startup board deck changes the same week. The geopolitical variable — Iran, energy costs, enterprise budget freezes — is the wildcard that doesn't resolve on a weekly cadence but will show up in infrastructure pricing before most builders notice it in their invoices. Start watching your cost-per-inference trend line now, not after the bill surprises you.
 
 ---
 
