@@ -9,13 +9,15 @@
       <link>https://thebash.dev/2026-04-05</link>
       <description># theba.sh — April 5, 2026
 
-*26 sources · ranked by impact · signal over noise*
+*25 sources · ranked by impact · signal over noise*
 
 ---
 
 ## stdout // the big story
 
-**Update:** The Claude Code / OpenClaw saga has legs, and it's metastasizing fast. What started as a source code leak of Claude Code has now spawned multiple distinct crises hitting simultaneously: Anthropic formally severed subscription-limit sharing with OpenClaw as of April 4th at 3PM ET (confirmed by email to users and The Verge), meaning anyone who built workflows on top of Open</description>
+### The Claude Code Source Leak Is a Mess — And Anthropic Is Cracking Down on OpenClaw
+
+The biggest story dominating the AI developer community today is the ongoing fallout from the Claude Code source leak. What started as a leaked codebase has metastasized into something uglier: Wired is reporting that hackers are actively reposting the leaked Claude Code source with **bonus malware</description>
       <pubDate>Sun, 05 Apr 2026 12:00:00 +0000</pubDate>
       <guid>https://thebash.dev/2026-04-05</guid>
     </item>
