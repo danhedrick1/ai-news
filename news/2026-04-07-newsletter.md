@@ -1,74 +1,73 @@
 # theba.sh — 2026-04-07
 
-The AI industry is colliding with geopolitics in real time, and the cracks are showing everywhere — from executive suites to data centers in the Gulf. Meanwhile, the models keep shipping and the "is coding dead" discourse refuses to die.
+The AI stack is shifting fast on two fronts: new models are landing that make last month's benchmarks look quaint, and the world's physical infrastructure — data centers, supply chains, geopolitics — is now directly in the blast radius. Builders need to pay attention to both.
 
 ---
 
 ## Headlines
 
-### Iran Strikes Target U.S. AI Infrastructure — AWS Goes Dark in the Gulf
-Iran followed through on threats against Stargate-linked data centers, and the collateral damage hit AWS infrastructure across the Gulf region. This is no longer a hypothetical risk for teams with regional deployments.
-- AWS Gulf regions experienced outages tied to the strikes
-- Iran explicitly named U.S.-linked AI data centers as targets
-- Stargate's centralized infrastructure model is now a geopolitical liability
-**🔧 Dev Take:** "Your multi-region DR plan just became a geopolitical requirement, not a nice-to-have."
+### Anthropic Unveils Claude Mythos — with Apple as a Co-Signer
+Anthropic launched Project Glasswing, a cybersecurity-focused initiative with Apple as a partner, and dropped a preview of Claude Mythos, their next flagship model. Benchmark numbers are circulating on r/singularity and the early reads suggest a meaningful jump over Claude 3.x.
+- Glasswing frames AI as a defensive security tool, not just a productivity layer
+- Apple's involvement signals this goes beyond a press release — expect OS/device-level integration
+- Mythos preview benchmarks haven't been fully published; treat leaks with appropriate skepticism
+**🔧 Dev Take:** "Apple + Anthropic on security is the partnership nobody predicted and everybody should be watching."
 
 ---
 
-### OpenAI's Executive Bench Collapses Ahead of IPO
-Multiple senior departures hit OpenAI right as it's trying to stick the landing on what would be one of the biggest tech IPOs in years. The timing is brutal.
-- Leadership instability at exactly the wrong moment for investor confidence
-- Pattern continues a long string of high-profile exits from the company
-- IPO timeline and valuation expectations now under serious scrutiny
-**🔧 Dev Take:** "Building on a platform whose leadership is in freefall is a dependency risk, full stop."
+### Iran Strikes Take Down AWS in the Gulf — Stargate in the Crosshairs
+Iran has explicitly threatened U.S.-linked AI data centers as the U.S.–Iran conflict escalates, and strikes already knocked AWS infrastructure offline in the Gulf region. This is no longer a hypothetical tail risk for cloud-dependent applications.
+- Stargate's announced data center buildout in the region becomes a geopolitical liability overnight
+- Gulf-based deployments should audit failover regions and SLA assumptions immediately
+- This is the first major kinetic event to directly disrupt hyperscaler availability
+**🔧 Dev Take:** "Your multi-region strategy just became a geopolitical document — update it accordingly."
 
 ---
 
-### Gemma 4 Drops — Google's Best Small Multimodal Model Yet
-Google shipped Gemma 4 and it's a meaningful jump over Gemma 3 across the board — multimodal capability, performance, and efficiency. Small open models are getting genuinely competitive.
-- Dramatically better than Gemma 3 on multimodal benchmarks
-- Runs at a size range that's practical for self-hosted and edge deployments
-- Puts real pressure on the "just use the API" default for common workloads
-**🔧 Dev Take:** "If you haven't re-evaluated open weights in the last 90 days, Gemma 4 is your reason to do it now."
+### Gemma 4 Drops: Google's Best Small Open Model Yet
+Google released Gemma 4, a multimodal open model that reportedly beats Gemma 3 across the board and lands as the strongest small open model available. For builders who need on-device or low-cost inference, this matters.
+- Multimodal out of the box — vision + text in a small footprint
+- "Dramatically better than Gemma 3" is a high bar given how fast Gemma 3 was adopted
+- Open weights mean you can actually run, fine-tune, and ship this without API dependency
+**🔧 Dev Take:** "If you're still defaulting to a closed API for edge or cost-sensitive workloads, Gemma 4 just eliminated your excuse."
 
 ---
 
-### An AI Agent Hacked FreeBSD in Four Hours
-An autonomous AI agent compromised a FreeBSD system in under four hours — no human in the loop. This is the kind of benchmark that matters more than any leaderboard score.
-- Demonstrates agentic capability has crossed into meaningful offensive security territory
-- Raises the floor on what "autonomous agent risk" actually looks like in practice
-- Red teams and security orgs need to be running drills against AI-assisted attacks now
-**🔧 Dev Take:** "If an agent can root FreeBSD in four hours, your threat model from 2024 is already obsolete."
+### The Era of Human Coding Is Over (Redux)
+The r/singularity thread on AI-generated code is making the rounds again, but this cycle feels different — the combination of Mythos previews, agentic tooling, and the FreeBSD hack story gives the claim more empirical weight than it had six months ago. An AI agent reportedly compromised FreeBSD in four hours over the weekend.
+- Four-hour FreeBSD exploit is a concrete benchmark for autonomous offensive capability
+- The conversation has shifted from "will AI replace coders" to "what does the human role actually look like now"
+- Tooling like Haystack and MLflow is being built for a world where LLMs generate the code that runs on them
+**🔧 Dev Take:** "The question isn't whether to use AI for code — it's whether your review and security practices have caught up."
 
 ---
 
-### Anthropic Hits $30B in Revenue
-Anthropic crossed $30 billion in revenue, a number that reframes the entire "when does this become a real business" conversation. The enterprise Claude adoption story is accelerating hard.
-- $30B revenue puts Anthropic firmly in tier-one infrastructure territory
-- Comes alongside an acquisition (details still emerging) that signals aggressive expansion
-- DeepSeek V4 on Huawei chips in the same week — the competitive pressure isn't letting up
-**🔧 Dev Take:** "At $30B, Anthropic isn't a research lab with a product anymore — architect your integrations accordingly."
+### Google Research: LLMs Can Learn From Each Other Socially
+Google published research on "social learning" — collaborative learning frameworks where LLMs teach and learn from other LLMs without direct access to each other's training data. This has real implications for federated fine-tuning and multi-agent system design.
+- Models share learned behaviors through interaction rather than weight sharing
+- Could unblock privacy-constrained fine-tuning scenarios in enterprise and healthcare
+- Early-stage research, but the architecture ideas are worth tracking for agent workflow design
+**🔧 Dev Take:** "This is the paper to read if you're building multi-agent systems and haven't thought about how agents update each other."
 
 ---
 
-### Lobste.rs: LLMs and the Enshittification Thesis
-A Lobste.rs thread is making the rounds arguing that LLMs represent the pinnacle of enshittification — the idea that the product degrades the more it scales and monetizes. The comments are worth reading.
-- Core argument: optimization for engagement and revenue corrupts model utility over time
-- Counter-arguments focus on open weights as a structural escape valve
-- Underlying tension between "AI as tool" and "AI as platform" is real and worth sitting with
-**🔧 Dev Take:** "The enshittification risk is real — it's why your stack should have an exit path from any single model provider."
+### Gig Workers Are Now Training Humanoid Robots
+MIT Tech Review covers the emerging labor market of gig workers doing teleoperation and demonstration data collection for humanoid robotics companies. It's the same data labeling economy, one abstraction layer up.
+- Physical task demonstration is the new ImageNet labeling — low pay, high leverage for the companies
+- Raises the same data quality and labor ethics questions as the original annotation economy
+- Humanoid robot training pipelines are now a real employment category
+**🔧 Dev Take:** "The data supply chain for physical AI has the same structural problems as the data supply chain for language AI — expect the same scandals."
 
 ---
 
 ## Quick Hits
 
-- **"The era of human coding is over"** trending on r/singularity again — the discourse is recursive at this point, but the agentic coding benchmarks backing it are less easy to dismiss
-- **DeepSeek V4** confirmed running on Huawei chips — the hardware decoupling story for non-U.S. AI is moving faster than most expected
-- **Haystack** (deepset-ai) trending on GitHub at 24.7k stars — solid pick if you're building production RAG or agent pipelines and want explicit control over your architecture
-- **MLflow** at 25.1k stars and still the default for teams who need agent + LLM observability without vendor lock-in — worth a look if you're not already tracking evals
-- **MIT Tech Review** flags gig workers training humanoid robots — the data labeling economy is quietly pivoting to physical-world AI training
-- **Better AI benchmarks** piece from MIT is worth a skim — current evals are garbage and smarter people are finally trying to fix it
-- **dev.to take on AI as collaborator** is soft, but the underlying point about using models for brainstorming rather than just codegen is one practitioners actually report working
+- **OpenAI's executive bench thinned ahead of its IPO** — not great timing for a company trying to instill investor confidence
+- **DeepSeek V4 is targeting Huawei chips** — the China AI stack is actively decoupling from NVIDIA at the model layer
+- **Haystack hit 24.7k stars** — the context-engineering framing is resonating; worth a look if you're building RAG or agent pipelines
+- **MLflow at 25.1k stars** — production ML observability is having a moment as agentic deployments hit prod and immediately break
+- **Anthropic acquired a company over the weekend** — details thin, but The Neuron flagged it; watch for the official announcement
+- **AI benchmarks are getting a rethink** — MIT Tech Review flags the inadequacy of current evals; if you're making model selection decisions, your benchmark suite is probably lying to you
 
 ---
 
