@@ -1,73 +1,76 @@
 # theba.sh — 2026-04-08
 
-The AI model race is accelerating on multiple fronts this week, while geopolitical shockwaves from Iran continue rippling through cloud infrastructure. If you're building on any of this stack, buckle up.
-
----
+The AI arms race is entering a new phase: models too dangerous to ship, open-source frameworks maturing fast, and the question of who actually controls the stack is getting louder. Meanwhile, the rest of tech is busy renaming itself to avoid accountability.
 
 ## Headlines
 
-### Claude Mythos Preview Benchmarks Drop on r/singularity
-Early benchmark leaks for Anthropic's rumored "Mythos" model are circulating, and the numbers are generating serious discussion about where the frontier actually sits right now. The timing is notable given Anthropic's recent acquisition activity and OpenAI's leadership instability ahead of its IPO.
-- Benchmark figures suggest a meaningful step above current Claude releases
-- Community speculation is high on whether this is an internal eval or staged leak
-- OpenAI's rumored response release is already being discussed in parallel threads
-**🔧 Dev Take:** "Don't retool your stack on Reddit benchmarks — wait for API access."
+### Anthropic @ $30B ARR — and a Model They Won't Release
+Anthropic is reportedly hitting $30B ARR while teasing Project GlassWing, a Claude-lineage model they've deemed too dangerous to release publicly — the first such decision since OpenAI sat on GPT-2 back in 2019. The timing, right as OpenAI navigates IPO turbulence, is not subtle.
+- GlassWing reportedly exceeds internal safety thresholds Anthropic set for public deployment
+- $30B ARR positions Anthropic as a credible rival heading into OpenAI's messy public market debut
+- "Claude Mythos" previews suggest a bifurcated release strategy: constrained public models, more capable private/API tiers
+
+**🔧 Dev Take:** "The most interesting model is the one you can't access — plan your architecture around that reality."
 
 ---
 
-### Gemma 4: Google's Best Small Multimodal Open Model Yet
-Google dropped Gemma 4 and it's a meaningful upgrade across the board — multimodal from the ground up and reportedly outperforming Gemma 3 on every tracked metric. For teams running local or edge inference, this one is worth a serious look.
-- Multimodal support baked in natively, not bolted on
-- Strong performance-per-parameter gains versus the Gemma 3 generation
-- Open weights means you can actually use it without Google's permission slip
-**🔧 Dev Take:** "If you're still on Gemma 3 for your edge pipeline, this is your upgrade window."
+### Gemma 4: Google's Open Multimodal Story Gets Serious
+Google dropped Gemma 4 and it's a meaningful leap — dramatically better than Gemma 3 across multimodal benchmarks, and the best small open model in its class by most measures. For teams running on-prem or building cost-sensitive pipelines, this changes the calculus.
+- Multimodal performance closes the gap significantly on proprietary alternatives
+- "Small" doesn't mean neutered anymore — Gemma 4 is genuinely capable at production tasks
+- Reinforces Google's strategy of using open weights to stay relevant in the developer layer
+
+**🔧 Dev Take:** "If you benchmarked Gemma 3 and moved on, run the evals again — this isn't incremental."
 
 ---
 
-### Iran Ceasefire Announced 90 Minutes Before US Strike Deadline
-Trump announced a two-week ceasefire with Iran with 90 minutes to spare before an 8 PM Tuesday deadline for US military action. The reprieve matters for the tech sector because Iranian strikes earlier took down AWS infrastructure in the Gulf region.
-- AWS Gulf region outages from earlier strikes are still being assessed for lasting impact
-- Two-week window is a patch, not a fix — infra teams should not stand down
-- Any resumption of hostilities puts Middle East cloud availability back at risk immediately
-**🔧 Dev Take:** "If your disaster recovery plan depends on a single region in a conflict zone, this ceasefire just bought you two weeks to fix that."
+### Haystack & MLflow Both Trending: The Orchestration Layer is Consolidating
+deepset's Haystack (24.7k stars) and MLflow (25.2k stars) are both surging on GitHub Trending, signaling that builders are moving past "which LLM" and into "how do I run this reliably in production." Two different philosophies — pipeline-first vs. experiment-and-deploy — both gaining ground simultaneously.
+- Haystack emphasizes explicit pipeline control and context engineering for production LLM apps
+- MLflow covers the full lifecycle: debugging, eval, monitoring, and optimization for agents and LLMs
+- The fact that both are trending suggests teams are hedging and exploring rather than converging on one tool
 
----
-
-### OpenAI Executive Bench Collapses Ahead of IPO
-Per The Neuron's weekend digest, OpenAI's leadership layer thinned out significantly over the weekend — bad timing with an IPO on the horizon. Combined with an AI agent reportedly hacking FreeBSD in four hours, it was a chaotic few days at the frontier.
-- Executive departures raise questions about org stability during a critical capital markets window
-- The FreeBSD autonomous hack is a concrete data point on offensive agent capability, not a thought experiment
-- DeepSeek V4 running on Huawei chips signals continued progress outside the US export control perimeter
-**🔧 Dev Take:** "An AI that can own a production OS in four hours is not a future concern anymore."
+**🔧 Dev Take:** "Pick the one that matches how your team thinks about the problem — Haystack if you design pipelines, MLflow if you instrument experiments."
 
 ---
 
 ### Google Research: Social Learning with LLMs
-Google published research on collaborative learning frameworks where LLMs learn from each other through structured social interaction — essentially multi-agent feedback loops as a training signal. This is early-stage but directionally important for how future models get refined post-deployment.
-- Agents sharing learned context could reduce the need for expensive human feedback at scale
-- Raises obvious questions about error amplification and coordinated misalignment
-- Practical near-term applications likely in fine-tuning pipelines and RLHF alternatives
-**🔧 Dev Take:** "Interesting research — but 'models teaching models' needs rigorous eval infrastructure before you trust it in prod."
+Google Research published work on collaborative learning frameworks where LLMs learn from peer interactions rather than purely from human feedback or static datasets. It's early, but the implications for agent architectures and multi-model systems are worth tracking.
+- Agents improving via structured peer critique loops could reduce reliance on expensive human annotation
+- Opens questions about emergent behavior and alignment drift in multi-agent training setups
+- Directly relevant to anyone building agent workflows where models need to self-correct
+
+**🔧 Dev Take:** "Interesting research direction, but don't deploy multi-agent self-improvement loops in prod until you understand the failure modes cold."
 
 ---
 
-### MIT Technology Review: Better AI Benchmarks and Gig Workers Training Humanoids
-Two threads worth tracking: the push for more meaningful AI benchmarks, and gig economy labor now flowing into humanoid robot training pipelines. Both say something uncomfortable about how the sausage gets made.
-- Current benchmarks are widely acknowledged as gameable and poorly predictive of real-world utility
-- Humanoid training data is being collected via TaskRabbit-style gig work — same playbook as early LLM labeling
-- The benchmark problem directly affects how builders evaluate model selection
-**🔧 Dev Take:** "Run your own evals on your own data — external benchmarks are marketing at this point."
+### Space Data Centers: Four Hard Problems
+MIT Technology Review breaks down what it would actually take to operate data centers in orbit — and the answer is: a lot of unsolved engineering. Beyond the Musk-adjacent hype, there are four concrete blockers that make this a 2030s problem at best.
+- Power generation, thermal dissipation, latency, and maintenance are all harder in orbit than on the ground
+- The pitch is lower land/cooling costs and proximity to satellites — the reality is far higher operational complexity
+- Worth understanding as context for where hyperscaler capex conversations are heading
+
+**🔧 Dev Take:** "Cool concept, irrelevant to your infrastructure decisions for at least a decade — stay focused on optimizing what's available now."
+
+---
+
+### Social Media Is Rebranding. Again.
+Meta and YouTube are reportedly pushing to shed the "social media" label amid mounting criticism and regulatory pressure. This is less a product strategy and more a narrative defense — but the framing shift will matter for how platforms get regulated.
+- "Social media" carries legal and political baggage; new terminology could complicate liability arguments
+- YouTube is leaning into "video platform," Meta toward "connection infrastructure" or similar abstraction
+- Regulators and legislators tend to ignore rebrandings — but enterprise buyers and advertisers may not
+
+**🔧 Dev Take:** "If your product roadmap depends on how Meta describes itself this quarter, that's the real problem."
 
 ---
 
 ## Quick Hits
 
-- **r/singularity — "The era of human coding is over"**: Usual discourse, but the signal-to-noise is shifting; more engineers agreeing than arguing these days.
-- **haystack (deepset-ai) — 24.7k stars**: Production-grade LLM orchestration with explicit pipeline control; solid alternative if LangChain is giving you headaches.
-- **mlflow — 25.2k stars**: Still the go-to for experiment tracking and model evaluation; if you're not using it for agent evals, you should be.
-- **DeepSeek V4 on Huawei chips**: Export controls have a ceiling — China's model development is not slowing down.
-- **"Is OpenAI about to release a Mythos-level model?"**: The Reddit speculation loop is running hot; realistically watch for a GPT-5 class release within weeks, not months.
+- 🕊️ **U.S.-Iran two-week ceasefire agreed**, brokered by Pakistan — geopolitical risk window temporarily reduced, watch energy and supply chain implications
+- 📉 **Reddit r/singularity declares "the era of human coding is over"** — the comments section remains, fittingly, written by humans
+- 📱 **iPhone scores a D– on repairability** — up from previous years, still embarrassing; Samsung gets a D, so the bar is low
+- 🔬 **Gemma 4 open weights are out** — pull them, run your evals, update your benchmarks before making model decisions this quarter
+- 🧵 **MLflow hitting 25k+ stars** — if you're not using structured experiment tracking for LLM evals yet, now is a good time to start
 
 ---
-
 *theba.sh — built for builders*
