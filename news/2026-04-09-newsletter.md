@@ -1,73 +1,78 @@
 # theba.sh — 2026-04-09
 
-The open-source model ecosystem is moving faster than any one lab can keep up with, while OpenAI is quietly showing cracks despite sitting on nearly a trillion dollars in paper valuation. It's a weird week to be in AI.
+The AI infrastructure and model wars are accelerating on every front simultaneously — new frontier models, massive compute deals, and serious cracks in the OpenAI narrative. If you blinked this week, you missed three industry shifts.
 
 ---
 
 ## Headlines
 
-### EXAONE-4.5-33B Drops from LGAI
-LG's AI research arm quietly released EXAONE-4.5-33B on HuggingFace, adding another serious 33B contender to an already crowded weight class. Worth benchmarking if you're running inference at scale and tired of paying Anthropic invoices.
-- 33B parameter open model from LG AI Research
-- Available on HuggingFace under LGAI-EXAONE
-- Joins a increasingly competitive open-weight tier alongside Qwen, Mistral, and friends
-**🔧 Dev Take:** "The 33B tier is where the real open-source value war is being fought right now — pull it and run evals before assuming you need something bigger."
-
----
-
 ### The Vibes Are Off at OpenAI
-Despite closing a staggering $122B round at an $852B post-money valuation, The Verge is reporting that internal morale and external perception at OpenAI are increasingly shaky. Money is not the same thing as stability, and the cracks are starting to show in public.
-- $122B raise at $852B valuation — numbers that require serious squinting
-- Internal culture and leadership continuity remain persistent concerns
-- Competitors are shipping fast while OpenAI manages investor narratives
-**🔧 Dev Take:** "A $852B valuation is a number that needs a product roadmap to match it — and right now that roadmap is anyone's guess."
+Despite closing $122B in funding at an $852B valuation, something feels structurally unstable at OpenAI right now. Anthropic is eating their lunch on the safety narrative, the IPO path is complicated, and the cultural tension inside the company is leaking everywhere.
+- $852B valuation with no clear public market path is a pressure cooker
+- Anthropic is explicitly timing moves to disrupt OpenAI's momentum
+- The gap between "most funded" and "most trusted" is widening fast
+
+**🔧 Dev Take:** "Your stack shouldn't depend on a company whose biggest risk is itself."
 
 ---
 
-### Gemma 4 Is a Genuine Leap
-Google's Gemma 4 landed and by most accounts it's a meaningful improvement over Gemma 3 across the board — multimodal capability, reasoning, and efficiency. For teams running local or on-prem inference, this is the most compelling open-weight multimodal option Google has shipped yet.
-- Dramatically better than Gemma 3 on multimodal benchmarks
-- Strong small-model performance makes it practical for edge and on-device use
-- Google appears to be taking the open-weights race seriously again
-**🔧 Dev Take:** "Gemma 4 is the first Google open model that doesn't feel like a consolation prize — actually test it before defaulting to Llama."
+### Anthropic Hits $30B ARR, Drops "Project GlassWing" and Claude Mythos Preview
+Anthropic is playing offense hard — $30B ARR is a real number, and a model they're calling too dangerous to release publicly (first time since GPT-2) is a legitimately significant claim. Claude Mythos is apparently the preview of something substantially more capable.
+- $30B ARR means enterprise adoption is no longer theoretical for Anthropic
+- A withheld model is a calculated PR move, but the safety credibility it builds is real
+- Timing against OpenAI's IPO vulnerability is clearly intentional
+
+**🔧 Dev Take:** "Anthropic is winning the narrative war by being the responsible adult in a room full of reckless fundraisers."
 
 ---
 
-### Google Research Publishes "Social Learning" for LLMs
-Google Research dropped a paper on collaborative learning between LLMs — essentially exploring how models can share knowledge without sharing weights or raw training data. It's early-stage research but points toward a genuinely different paradigm for distributed model improvement.
-- Models learn from each other via generated examples, not shared gradients
-- Privacy-preserving approach — no raw data exchanged between models
-- Potential implications for federated AI systems and multi-agent architectures
-**🔧 Dev Take:** "This is the kind of research that sounds academic until suddenly it's the reason your fine-tuning pipeline works differently in two years."
+### Meta Superintelligence Labs Ships Muse Spark on a Completely New Stack
+Meta's newly branded Superintelligence Labs has shipped Muse Spark, their first frontier model built on an entirely new infrastructure stack. Quiet launch, but the signal here is that MSL is now a real org shipping real things — not just a rebrand.
+- A new stack from scratch means Meta is betting on long-term architectural independence
+- "Quiet day" launches from frontier labs are often the ones worth watching most carefully
+- MSL is now a credible fourth player alongside OpenAI, Anthropic, and Google
+
+**🔧 Dev Take:** "Meta has the compute, the data, and now apparently the org chart — don't sleep on them in the second half of 2026."
 
 ---
 
-### Anthropic's Week: Dangerous Models, $30B Revenue, Managed Agents
-Per The Neuron's digest, Anthropic built a model internally that it deemed too dangerous to release, disclosed $30B in annualized revenue, and shipped a Managed Agents product. That's a lot of news to process from a single company in three days.
-- A model was built and deliberately not released on safety grounds — rare public acknowledgment
-- $30B revenue signals Anthropic has crossed into genuine enterprise scale
-- Managed Agents is a direct play for the agentic workflow market
-**🔧 Dev Take:** "Anthropic saying 'we built it and won't ship it' is either the most responsible thing in AI right now or the best PR move — probably both."
+### CoreWeave Lands $21B Deal to Supply Meta with AI Compute Through 2032
+CoreWeave just signed the largest compute supply deal in the industry's history with Meta — $21B through 2032. This is vertical integration through the back door, and it locks in CoreWeave's position as critical infrastructure for at least one hyperscaler.
+- A six-year deal at this scale means CoreWeave is now systemically important infrastructure
+- Meta is diversifying away from pure AWS/GCP dependency for AI workloads
+- CoreWeave's business model just got a lot more defensible to public market investors
+
+**🔧 Dev Take:** "The real AI economy isn't models — it's who owns the GPUs they run on."
 
 ---
 
-### Haystack Hits 24K Stars — AI Orchestration Is Infrastructure Now
-Deepset's Haystack framework continues its climb, sitting at nearly 25K GitHub stars, positioning itself alongside LangChain and LlamaIndex as a serious choice for production LLM pipeline work. The emphasis on "context-engineered" pipelines is a deliberate signal about where the framework is headed.
-- 24,775 stars and actively maintained by deepset
-- Focus on modular pipelines and explicit agent workflow control
-- Production-readiness is a first-class concern, not an afterthought
-**🔧 Dev Take:** "If you're choosing an orchestration framework in 2026 and you haven't looked at Haystack, you're making the decision with incomplete information."
+### Gemma 4: Google's Best Small Multimodal Open Models Yet
+Google dropped Gemma 4, described as dramatically better than Gemma 3 across the board and their strongest small multimodal open model release to date. For builders who need capable, deployable, open-weight models, this matters.
+- Multimodal capability in a small open model changes the local deployment calculus significantly
+- "Dramatically better" from Google Research usually holds up under benchmarks — watch this space
+- Strong small models continue to erode the moat of API-only frontier providers
+
+**🔧 Dev Take:** "Gemma 4 just moved back onto the shortlist for any project where you actually want to own your inference."
+
+---
+
+### Haystack Trends on GitHub — AI Orchestration Keeps Maturing
+Deepset's Haystack is trending at 24K+ stars, positioning itself as the production-grade alternative to the more experimental ends of the LLM orchestration ecosystem. Context-engineering and explicit pipeline control are the pitch.
+- "Context-engineered" is the right framing for 2026 — prompt engineering is table stakes now
+- Modular pipelines with explicit control is what teams actually need when moving to prod
+- Haystack vs LangChain vs LlamaIndex is still a real decision teams are making weekly
+
+**🔧 Dev Take:** "If your AI pipeline is a black box, you don't have a pipeline — you have a prayer."
 
 ---
 
 ## Quick Hits
 
-- **MLflow (25K★)** continues to be the unglamorous backbone of serious ML ops teams — if you're not using it for eval tracking, you're probably doing it worse
-- **Meta shipped Muse Spark** — another generative media tool entering an already saturated creative AI market
-- **Z.ai's GLM-5.1** is open-source and reportedly worth a look if you're tracking non-Western lab output
-- **prompts.chat (158K★)** remains the most-starred prompt resource on GitHub, which says something about where most people are in their AI journey
-- **OpenBB (65K★)** is becoming the default financial data layer for quant/AI agent workflows — relevant if you're building anything in fintech
-- **PyTorch Lightning (31K★)** — if you're fine-tuning at scale and writing raw training loops, you're wasting time
+- **Multimodal Embedding & Reranker Models (HuggingFace):** Sentence Transformers now supports multimodal embeddings and rerankers — a meaningful upgrade for retrieval pipelines handling mixed content.
+- **Social Learning with LLMs (Google Research):** Google drops research on collaborative/social learning frameworks for LLMs — interesting foundational work, unclear near-term application.
+- **"The Era of Human Coding Is Over" (r/singularity):** Reddit thread going viral; the takes range from insightful to unhinged, but the underlying tension is real and worth reading the comments on.
+- **AstroTurf Wars & Exponential AI Growth (MIT Tech Review):** MIT's Download covers coordinated AI influence campaigns picking up — the synthetic content problem is getting worse, not better.
+- **OpenAI IPO Pressure:** Multiple signals suggest OpenAI's path to public markets is messier than the valuation implies — Anthropic's timing on every recent announcement looks deliberate.
 
 ---
 
