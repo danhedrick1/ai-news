@@ -1,63 +1,73 @@
 # theba.sh — 2026-04-09
 
-The open model ecosystem keeps shipping while OpenAI's internal culture starts showing cracks. If you're building, the tooling and model landscape just got meaningfully better this week.
+The open-source model ecosystem is moving faster than any one lab can keep up with, while OpenAI is quietly showing cracks despite sitting on nearly a trillion dollars in paper valuation. It's a weird week to be in AI.
 
 ---
 
 ## Headlines
 
-### EXAONE-4.5-33B Drops from LG AI Research
-LG's AI division quietly released a 33B parameter model that's turning heads on r/LocalLLaMA. At this size, it's squarely in the "run it on a single high-end GPU" tier — worth benchmarking against your current local stack.
-- 33B parameter open model from LG AI Research (EXAONE series)
-- Active community testing and evals already underway on r/LocalLLaMA
-- Adds meaningful competition in the 30B+ local model bracket
-**🔧 Dev Take:** "Pull it, run it, form your own opinion — don't wait for the benchmark consensus."
-
----
-
-### Gemma 4: Google's Best Small Multimodal Open Model Yet
-Google pushed a significant update to the Gemma line, and the Latent Space team is calling it dramatically better than Gemma 3 across the board — including multimodal capabilities. For devs who need a capable, deployable open model without the weight of a 70B+, this is the one to watch right now.
-- Multimodal support is the headline upgrade over Gemma 3
-- "Best small open multimodal model" is a strong claim, but early reports back it up
-- Production-ready small models matter more than frontier benchmarks for most builders
-**🔧 Dev Take:** "If you've been sleeping on Gemma, Gemma 4 is the reason to wake up."
+### EXAONE-4.5-33B Drops from LGAI
+LG's AI research arm quietly released EXAONE-4.5-33B on HuggingFace, adding another serious 33B contender to an already crowded weight class. Worth benchmarking if you're running inference at scale and tired of paying Anthropic invoices.
+- 33B parameter open model from LG AI Research
+- Available on HuggingFace under LGAI-EXAONE
+- Joins a increasingly competitive open-weight tier alongside Qwen, Mistral, and friends
+**🔧 Dev Take:** "The 33B tier is where the real open-source value war is being fought right now — pull it and run evals before assuming you need something bigger."
 
 ---
 
 ### The Vibes Are Off at OpenAI
-The Verge is reporting on a noticeable cultural and internal tension at OpenAI — even as the company just closed $122B in funding at an $852B valuation. Money is not the problem; clarity of mission and organizational coherence apparently are.
-- $122B raise, $852B post-money valuation — the numbers are staggering
-- Internal culture described as increasingly strained and misaligned
-- Rapid product pivots and leadership pressure are likely contributors
-**🔧 Dev Take:** "The richest lab in history having a vibe problem is a signal, not a footnote."
+Despite closing a staggering $122B round at an $852B post-money valuation, The Verge is reporting that internal morale and external perception at OpenAI are increasingly shaky. Money is not the same thing as stability, and the cracks are starting to show in public.
+- $122B raise at $852B valuation — numbers that require serious squinting
+- Internal culture and leadership continuity remain persistent concerns
+- Competitors are shipping fast while OpenAI manages investor narratives
+**🔧 Dev Take:** "A $852B valuation is a number that needs a product roadmap to match it — and right now that roadmap is anyone's guess."
 
 ---
 
-### Google Research: Social Learning with LLMs
-Google's research blog published work on collaborative, multi-agent learning frameworks where LLMs learn socially — essentially by interacting with each other. This is foundational work for anyone building multi-agent pipelines who wants more than just tool-calling chains.
-- Explores how LLMs can learn collaboratively rather than in isolation
-- Relevant to agent framework design and multi-model pipeline architecture
-- Points toward more adaptive, emergent behavior in production agent systems
-**🔧 Dev Take:** "The shift from 'single model doing tasks' to 'models learning from each other' is where agentic systems get actually interesting."
+### Gemma 4 Is a Genuine Leap
+Google's Gemma 4 landed and by most accounts it's a meaningful improvement over Gemma 3 across the board — multimodal capability, reasoning, and efficiency. For teams running local or on-prem inference, this is the most compelling open-weight multimodal option Google has shipped yet.
+- Dramatically better than Gemma 3 on multimodal benchmarks
+- Strong small-model performance makes it practical for edge and on-device use
+- Google appears to be taking the open-weights race seriously again
+**🔧 Dev Take:** "Gemma 4 is the first Google open model that doesn't feel like a consolation prize — actually test it before defaulting to Llama."
 
 ---
 
-### Haystack Hits 24.7K Stars — Production LLM Pipelines Getting Serious
-deepset's Haystack continues trending on GitHub, signaling that the "context-engineered, production-ready LLM application" framing is resonating with builders. Modular pipelines with explicit control are winning over magic black-box frameworks.
-- Open-source orchestration framework for production LLM apps
-- 24,772 GitHub stars and trending — adoption is real, not just hype
-- Explicit pipeline control and modularity are the design philosophy
-**🔧 Dev Take:** "If your LLM app is held together with string and LangChain callbacks, Haystack is worth an honest look."
+### Google Research Publishes "Social Learning" for LLMs
+Google Research dropped a paper on collaborative learning between LLMs — essentially exploring how models can share knowledge without sharing weights or raw training data. It's early-stage research but points toward a genuinely different paradigm for distributed model improvement.
+- Models learn from each other via generated examples, not shared gradients
+- Privacy-preserving approach — no raw data exchanged between models
+- Potential implications for federated AI systems and multi-agent architectures
+**🔧 Dev Take:** "This is the kind of research that sounds academic until suddenly it's the reason your fine-tuning pipeline works differently in two years."
+
+---
+
+### Anthropic's Week: Dangerous Models, $30B Revenue, Managed Agents
+Per The Neuron's digest, Anthropic built a model internally that it deemed too dangerous to release, disclosed $30B in annualized revenue, and shipped a Managed Agents product. That's a lot of news to process from a single company in three days.
+- A model was built and deliberately not released on safety grounds — rare public acknowledgment
+- $30B revenue signals Anthropic has crossed into genuine enterprise scale
+- Managed Agents is a direct play for the agentic workflow market
+**🔧 Dev Take:** "Anthropic saying 'we built it and won't ship it' is either the most responsible thing in AI right now or the best PR move — probably both."
+
+---
+
+### Haystack Hits 24K Stars — AI Orchestration Is Infrastructure Now
+Deepset's Haystack framework continues its climb, sitting at nearly 25K GitHub stars, positioning itself alongside LangChain and LlamaIndex as a serious choice for production LLM pipeline work. The emphasis on "context-engineered" pipelines is a deliberate signal about where the framework is headed.
+- 24,775 stars and actively maintained by deepset
+- Focus on modular pipelines and explicit agent workflow control
+- Production-readiness is a first-class concern, not an afterthought
+**🔧 Dev Take:** "If you're choosing an orchestration framework in 2026 and you haven't looked at Haystack, you're making the decision with incomplete information."
 
 ---
 
 ## Quick Hits
 
-- **MLflow (25.2K ⭐)** — Also trending; the AI engineering platform for agents and LLMs is becoming the de facto eval/monitor layer for production ML teams.
-- **Claude Opus vs. Mythos (r/singularity)** — Community benchmark thread comparing Anthropic's Opus to Mythos; worth skimming if you're choosing a frontier model for complex reasoning tasks.
-- **"Too Dangerous to Release" (The Neuron)** — Another capability apparently being held back from public release; the pattern of selective disclosure continues.
-- **Project Glasswing called out as cartel behavior (r/artificial)** — Community flagging coordinated AI industry behavior; details murky but the thread is heated and worth watching.
-- **Peacock promo codes (Wired)** — 40% off streaming. Not a dev tool. Skip it.
+- **MLflow (25K★)** continues to be the unglamorous backbone of serious ML ops teams — if you're not using it for eval tracking, you're probably doing it worse
+- **Meta shipped Muse Spark** — another generative media tool entering an already saturated creative AI market
+- **Z.ai's GLM-5.1** is open-source and reportedly worth a look if you're tracking non-Western lab output
+- **prompts.chat (158K★)** remains the most-starred prompt resource on GitHub, which says something about where most people are in their AI journey
+- **OpenBB (65K★)** is becoming the default financial data layer for quant/AI agent workflows — relevant if you're building anything in fintech
+- **PyTorch Lightning (31K★)** — if you're fine-tuning at scale and writing raw training loops, you're wasting time
 
 ---
 
