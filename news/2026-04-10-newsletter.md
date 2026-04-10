@@ -1,79 +1,79 @@
 # theba.sh — 2026-04-10
 
-The AI industry's internal tensions are boiling over while the models themselves keep getting more capable and more dangerous. It's a week where the business drama is almost as interesting as the technical headlines.
+The AI industry is having a full identity crisis this week: OpenAI is bleeding executives ahead of its IPO while Anthropic is quietly eating its lunch, and somewhere in between, an AI agent pwned FreeBSD in four hours. If you're still writing code by hand, the discourse is coming for you.
 
 ---
 
 ## Headlines
 
-### The Vibes Are Off at OpenAI
-Despite closing $122B in funding at an $852B valuation, OpenAI is looking increasingly shaky from the inside — cultural friction, leadership tension, and an IPO looming over everything. When you're raising at those numbers and people are still describing the vibes as "off," something structural is broken.
-- $122B round closed, post-money valuation hits $852B
-- Internal morale and cultural coherence reportedly deteriorating
-- IPO pressure is reshaping priorities in real time
+### Anthropic Hits $30B ARR, Drops Claude Mythos — Too Dangerous to Ship
+Anthropic is flexing hard ahead of OpenAI's IPO, announcing $30B ARR and previewing Claude Mythos — reportedly the first model since GPT-2 that the lab deemed too dangerous to release publicly. Project GlassWing details remain sparse, but the timing is surgical.
+- $30B ARR puts Anthropic in serious revenue territory, not just valuation theater
+- Claude Mythos joins GPT-2 in the "we built something and got scared" club — a very short list
+- Project GlassWing appears to be a new internal safety/capability research initiative
 
-**🔧 Dev Take:** "A $852B valuation is a liability when your engineers stop believing in the mission."
-
----
-
-### Anthropic Hits $30B ARR — And Drops Something Too Dangerous to Ship
-Anthropic is playing offense hard ahead of OpenAI's IPO with Project GlassWing and a Claude Mythos preview — and apparently one model in the pipeline was deemed too dangerous to release, the first such call since GPT-2. The $30B ARR number is the real gut punch for OpenAI's roadshow narrative.
-- Anthropic ARR reportedly at $30B — serious enterprise traction
-- Project GlassWing details emerging; Claude Mythos previewed
-- First model withheld for safety reasons since GPT-2 sets a notable precedent
-
-**🔧 Dev Take:** "Anthropic is doing the one thing that actually differentiates them: shipping the safety story alongside the capability story."
+**🔧 Dev Take:** "Anthropic is doing more damage to OpenAI's IPO roadshow than any competitor ever has with a product."
 
 ---
 
-### Meta Superintelligence Labs Ships Muse Spark
-Meta's newly branded Superintelligence Labs quietly dropped Muse Spark, their first frontier model built on a completely new stack. "Quiet day" aside, this is a significant signal that MSL is past the organizational reshuffling and into actual delivery mode.
-- First frontier model on MSL's new infrastructure stack
-- Signals Meta is serious about competing at the frontier, not just open-weights mid-tier
-- Timing feels deliberate — OpenAI's IPO window is wide open
+### OpenAI's Executive Bench Collapses Ahead of IPO
+OpenAI's leadership is thinning out at the worst possible moment — right before it needs to convince public market investors it's a stable, governable company. The departures follow months of internal tension and restructuring drama.
+- Multiple senior executives have exited in a compressed window pre-IPO
+- Public market investors hate leadership instability more than almost anything else
+- Florida AG is now probing OpenAI over alleged harms to minors and a possible link to the FSU shooting
 
-**🔧 Dev Take:** "Meta has infinite compute and nothing to lose — don't sleep on Muse Spark just because the launch was quiet."
-
----
-
-### AI CEO vs. Engineer — The 2026 Edition
-The r/artificial thread on CEO vs. engineer dynamics in AI companies is going viral for a reason: the power balance between technical contributors and executives is actively being renegotiated as AI compresses headcount. The tension is real and it's not going away.
-- Engineers watching AI eat junior roles are reassessing their leverage
-- CEO class doubling down on "AI-first" orgs that need fewer humans
-- The r/singularity "era of human coding is over" post is the same conversation, different frame
-
-**🔧 Dev Take:** "The engineers who understand the models will always have leverage — the ones who just write the code are right to be worried."
+**🔧 Dev Take:** "You can't IPO on vibes alone when your C-suite has a revolving door and a state AG is asking questions."
 
 ---
 
-### Google Research: Social Learning With LLMs
-Google Research published work on collaborative learning frameworks where LLMs learn from each other in structured social contexts — essentially multi-agent knowledge transfer at training time. Interesting infrastructure-level research with real implications for how next-gen models are built.
-- Multi-agent learning frameworks applied at training, not just inference
-- Mirrors human collaborative learning patterns in model architecture decisions
-- Potential to reduce single-model training bottlenecks
+### AI Agent Hacks FreeBSD in Four Hours
+An AI agent autonomously identified and exploited a vulnerability in FreeBSD in under four hours. This is no longer a theoretical threat surface — autonomous offensive security is here and it works.
+- Four-hour full exploit cycle is well within operational attack windows
+- No human in the loop for the discovery or exploitation chain
+- Red teams and security engineers need to be modeling AI-assisted adversaries *now*
 
-**🔧 Dev Take:** "If models can teach each other, the human-in-the-loop for fine-tuning gets a lot less crowded."
+**🔧 Dev Take:** "If you're still threat-modeling for human attackers only, your security posture is already outdated."
 
 ---
 
-### Haystack Gets Serious About Context Engineering
-deepset-ai/haystack (24.7k stars) is repositioning explicitly around "context-engineered" LLM applications — a notable framing shift that reflects where production AI development is actually heading. Modular pipelines, agent workflows, explicit control: this is the antidote to vibe-based prompting.
-- 24,786 GitHub stars and growing
-- New positioning emphasizes context engineering as a first-class concept
-- Competes directly with LangChain and LlamaIndex in the production orchestration space
+### ChatGPT Gets a $100/Month Tier
+OpenAI is launching a $100/month ChatGPT tier, targeting power users and professionals who've maxed out what the $20 plan offers. It's a revenue play, but also a signal about where the product ceiling is heading.
+- Positions OpenAI between prosumer and enterprise pricing
+- Likely bundles higher rate limits, priority access, and advanced model access
+- Sets a new anchor price in the consumer AI market — expect competitors to respond
 
-**🔧 Dev Take:** "Context engineering is the right frame — Haystack is betting on it before most people know the term."
+**🔧 Dev Take:** "Charging $100/month for a chat interface is bold when Claude and Gemini are one tab away."
+
+---
+
+### "The Era of Human Coding Is Over" — r/singularity Weighs In
+The r/singularity thread is doing what it does, but the underlying conversation is worth tracking: developers are genuinely renegotiating what their jobs look like, not theoretically, but in day-to-day practice.
+- Anecdotes range from "AI writes 90% of my PRs" to "I just review and redirect now"
+- The role is shifting from implementation to specification and judgment
+- Adjacent thread: "What my job feels like now" — the emotional reality is hitting people hard
+
+**🔧 Dev Take:** "The era of *typing* code may be ending; the era of *understanding* code just got more important."
+
+---
+
+### Google Research: Collaborative Learning with LLMs
+Google published work on "social learning" — LLMs learning from each other through collaborative interaction rather than purely from static datasets. Early research, but the architectural implications are real.
+- Models sharing learned behaviors without direct weight transfer
+- Could reduce fine-tuning costs for specialized domains
+- Opens questions about emergent behavior in multi-agent learning environments
+
+**🔧 Dev Take:** "Multi-agent training loops are the next frontier — watch this space closely, it'll matter for how you architect systems."
 
 ---
 
 ## Quick Hits
 
-- **MLflow hits 25.2k stars** — if you're not using it for agent eval and monitoring in production, you're flying blind
-- **r/singularity: "The era of human coding is over"** — the thread is loud but the nuance is buried; domain expertise + AI still wins
-- **OpenAI IPO shadow** — every competitor is timing their announcements to land during OpenAI's roadshow window. Expect more of this through Q2.
-- **Anthropic's "too dangerous to release" model** — no details yet, but the fact they're talking about it is itself a calculated move
-- **Meta MSL new stack** — the infrastructure rewrite underneath Muse Spark is arguably the more important story than the model itself
-- *(Wired is running Naturepedic mattress coupons and Hungryroot promo codes — even AI newsletters have to pay the bills, apparently)*
+- **Iran strikes took down AWS in the Gulf** — regional cloud redundancy is a geopolitical problem now, not just an engineering one
+- **DeepSeek V4 targeting Huawei chips** — the non-Nvidia inference stack is becoming a real, shipping reality
+- **[GitHub] deepset-ai/haystack** (⭐24.8k) — context-engineered LLM pipelines with explicit control; worth a look if LangChain's abstractions are driving you nuts
+- **[GitHub] mlflow/mlflow** (⭐25.3k) — agent and LLM observability is becoming table stakes; MLflow keeps expanding here
+- **r/artificial: "When LLMs can do X, I'll be impressed"** — useful signal for calibrating where actual gaps still exist vs. hype
+- **Anthropic acquired [undisclosed company]** — details truncated but the acquisition spree continues heading into H1 2026
 
 ---
 
