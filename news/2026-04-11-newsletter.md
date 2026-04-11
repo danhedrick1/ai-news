@@ -1,74 +1,81 @@
 # theba.sh — 2026-04-11
 
-The week's AI news has a split personality: models too dangerous to ship sitting alongside $100/month ChatGPT tiers, and someone throwing a molotov cocktail at the CEO's house. The stakes are getting weird at every layer of the stack.
+The machines are writing the code, and someone's throwing molotovs at the guy building them. It's a normal week in AI.
 
 ---
 
 ## Headlines
 
-### Anthropic Built a Model It Won't Release
-Anthropic trained a model and made the deliberate call not to release it — citing safety concerns significant enough to shelve the work entirely. This is either a principled milestone in responsible AI development or the most expensive PR move in recent memory, depending on your priors.
-- First major lab to publicly acknowledge building and withholding a frontier model on safety grounds
-- Happens in the same week Anthropic hit $30B in annualized revenue — they can afford to say no
-- Sets a precedent (or at least a talking point) for what "too dangerous" actually means in practice
-**🔧 Dev Take:** "Anthropic drawing a line is meaningful; whether anyone else follows it is the actual question."
+### The Era of Human Coding Is Over (According to Reddit, At Least)
+The r/singularity crowd is declaring victory for AI coding tools, and the anecdotal evidence is stacking up fast. Whether it's "over" or just "fundamentally changed" depends on what you're shipping.
+- Vibe coding is moving from side projects to production systems
+- Junior dev hiring freezes are becoming a real pattern at AI-native shops
+- The debate is no longer *if* but *how much* human oversight is still needed
+**🔧 Dev Take:** "The era of human *typing* code may be over — the era of human *judgment* in code is just getting started."
 
 ---
 
-### ChatGPT Launches $100/Month Tier
-OpenAI introduced a $100 Pro tier for ChatGPT, targeting power users who need higher limits, priority access, and presumably more compute per request. This is a straightforward move up-market — squeeze more from your most committed users before the commoditization floor drops out.
-- Positions OpenAI to capture professional and prosumer spend before enterprise contracts kick in
-- $100/month is still cheap compared to API costs at serious usage volumes
-- Expect the tier to come with early access to new models and extended context as differentiators
-**🔧 Dev Take:** "If you're billing clients based on AI output, $100/month pays for itself fast — just do the math before complaining about the price."
+### Claude Code + n8n: Agents That Actually Do Stuff
+Builders are pairing Anthropic's Claude Code with n8n's workflow automation and getting genuinely useful autonomous pipelines. This combo is quietly becoming one of the more practical agentic stacks in the wild.
+- n8n handles the workflow orchestration and integrations; Claude Code handles the reasoning and code execution
+- Low-code entry point means non-engineers can wire up surprisingly capable agents
+- Still early, but the Reddit thread is full of working demos, not just promises
+**🔧 Dev Take:** "If you haven't spun up an n8n + Claude pipeline yet, you're leaving real automation hours on the table."
 
 ---
 
-### Sam Altman's Home Targeted With Molotov Cocktail
-A 20-year-old suspect allegedly threw a molotov cocktail at Sam Altman's residence and has reportedly made similar threats against OpenAI's San Francisco HQ. No injuries reported; suspect was arrested.
-- Incident reflects escalating real-world tension around AI's most visible figureheads
-- OpenAI HQ threats suggest this wasn't an isolated or impulsive act
-- Physical security for AI lab leadership is now apparently a legitimate operational concern
-**🔧 Dev Take:** "Disagreeing with where AI is headed is valid; this is not that — it's just dangerous, and it doesn't help anyone."
+### OpenAI Launches $100/Month ChatGPT Tier
+OpenAI is moving upmarket with a premium tier aimed at power users who've been hitting limits on the $20 plan. More compute, higher rate limits, and access to frontier models first.
+- Positions OpenAI to capture prosumer and solo-dev budgets before enterprise contracts kick in
+- Pressure mounts on Anthropic and Google to match or differentiate on value
+- The gap between free-tier and paid-tier AI capability is widening fast
+**🔧 Dev Take:** "At $100/month, this needs to save you at least two hours a week to justify itself — for most heavy users, it probably does."
 
 ---
 
-### ClawBench: Testing AI Agents on Real Online Tasks
-A new benchmark called ClawBench asks whether AI agents can handle the kind of routine online tasks most people actually do — not curated demos, but real-world browser-based workflows. Early results suggest agents are capable but inconsistent in ways that matter for production deployment.
-- Benchmarks grounded in everyday tasks (email, forms, search) are more honest than cherry-picked evals
-- Inconsistency at the task level is the core unsolved problem for agent reliability
-- If you're building on top of agents, this is the kind of eval suite worth watching and potentially adopting
-**🔧 Dev Take:** "A benchmark that reflects what users actually need agents to do is worth ten demos where everything works perfectly."
+### Sam Altman's House Targeted With Molotov Cocktail
+A 20-year-old suspect allegedly threw a molotov cocktail at Altman's home and has reportedly made similar threats toward OpenAI's SF HQ. The suspect was arrested; no injuries reported.
+- A stark reminder that AI's cultural footprint now comes with real-world threat surfaces
+- OpenAI's physical security posture will almost certainly be reviewed industry-wide after this
+- The incident reflects growing public hostility toward AI leadership figures, not just the technology
+**🔧 Dev Take:** "This is what happens when the discourse around AI stays abstract and the frustration becomes very concrete."
 
 ---
 
-### Haystack Hits 24K Stars as LLM Orchestration Matures
-deepset's Haystack framework continues gaining traction as a production-focused alternative to the higher-abstraction orchestration tools. The "context-engineered" framing is deliberate — they're positioning around explicit pipeline control rather than magic.
-- 24,800+ stars signals real adoption beyond the tutorial crowd
-- Explicit pipeline design is a direct response to developer frustration with black-box abstractions
-- MDX-based docs suggest a focus on developer experience alongside the core framework
-**🔧 Dev Take:** "If LangChain felt like too much magic and too little control, Haystack is worth a serious look for your next production build."
+### OpenAI Has a Model "Too Dangerous to Release"
+Reports indicate OpenAI has internally shelved a model deemed too risky to put in front of the public. No confirmed details on what it does or why — which is part of the story.
+- Raises legitimate questions about what the evaluation criteria actually are
+- Skeptics will ask whether "too dangerous" is safety or liability talking
+- If true, it's one of the first high-profile cases of frontier labs actually pulling back
+**🔧 Dev Take:** "A model too dangerous to ship is either a genuine safety win or the best marketing they've never run — hard to know which without transparency."
 
 ---
 
-### MLflow Expands to Full AI Engineering Platform
-MLflow has grown well past its ML experiment-tracking roots into a platform covering agents, LLMs, and traditional ML — evaluation, monitoring, debugging, and optimization under one roof. At 25K+ stars it's clearly not a niche tool anymore.
-- Broad scope means you can standardize tooling across ML and LLM projects in one stack
-- Evaluation and monitoring for agents is the genuinely hard new addition — worth testing against your use case
-- Open source core keeps it viable for teams that can't justify per-seat SaaS costs
-**🔧 Dev Take:** "If your team is juggling three different tools for eval, tracking, and monitoring, MLflow's consolidation pitch is worth an honest evaluation."
+### ClawBench: Can Agents Handle Real Everyday Online Tasks?
+A new benchmark tests whether AI agents can complete realistic, routine web tasks — think managing forms, navigating portals, handling multi-step online workflows. Results are humbling.
+- Current agents handle clean, well-structured tasks reasonably well; messy real-world UIs wreck them
+- Highlights the gap between demo-quality agents and production-ready automation
+- A useful reality check for anyone building browser-based agent products
+**🔧 Dev Take:** "Benchmark your agent against ClawBench before you pitch it to a client — you'll thank yourself later."
+
+---
+
+### Haystack & MLflow Both Trending: The OSS AI Stack Is Maturing
+Deepset's Haystack (24.8k ⭐) and MLflow (25.3k ⭐) are both climbing GitHub trending — a signal that teams are standardizing on open-source tooling for production AI pipelines.
+- Haystack focuses on context-engineered LLM pipelines and agent workflows with modular design
+- MLflow covers the full lifecycle: debugging, evaluation, monitoring, and optimization
+- Together they represent a viable open-source answer to the managed AI platform stack
+**🔧 Dev Take:** "If you're paying for a managed AI ops platform and haven't audited what Haystack + MLflow can replace, do that audit."
 
 ---
 
 ## Quick Hits
 
-- **Meta shipped Muse Spark** — another creative AI tool in the pipeline; details light, worth watching for multimodal capabilities
-- **Z.ai dropped GLM-5.1 as open-source** — Chinese lab releasing competitive open weights is becoming a regular cadence, not an event
-- **Anthropic launched Managed Agents** alongside the safety news — the commercial and safety arms of the business are moving in parallel
-- **OpenBB at 65K stars** — financial data platform built for AI agents and quants; if you're in fintech AI, this is your Bloomberg alternative rabbit hole
-- **r/MachineLearning discussing large-scale OCR** — production OCR at scale is still a genuinely messy problem; community thread worth skimming if it's on your roadmap
-- **prompts.chat at 159K stars** — the prompt-sharing community isn't going anywhere; useful reference for prompt engineering patterns even if the format is informal
-- **Anthropic hit $30B in revenue** — the safety-first positioning hasn't hurt business; make of that what you will
+- **Large-Scale OCR [r/MachineLearning]:** The discussion thread is surfacing solid practical approaches — vision models are making classical OCR pipelines look dated fast.
+- **Apple iPhone Ultra (Foldable):** The foldable iPhone is reportedly being branded "Ultra" — expect a premium price point that makes the $100 ChatGPT tier look reasonable.
+- **n8n adoption** is accelerating specifically among AI builders; the self-hosted option is worth a look if you're building agent workflows with data you can't send to the cloud.
+- **MLflow 25k stars** — if your team isn't tracking experiments and model versions in prod, this is the week to fix that.
+- **ClawBench is open** — worth running your agent stack against it before your competitors do.
 
 ---
 
