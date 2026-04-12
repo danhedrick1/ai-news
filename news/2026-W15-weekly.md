@@ -8,90 +8,90 @@
 
 ## Week in One Screen
 
-The defining story of this week was Anthropic executing on multiple fronts simultaneously while OpenAI dealt with structural noise. Claude Code drove measurable enterprise spend shifts, Claude Mythos became the first model since GPT-2 to trigger a government-convened risk briefing, and Anthropic's compute posture (multi-gigawatt TPU deal, expanded Google/Broadcom arrangement, $30B ARR run rate) looks increasingly like a company that has decided it's playing a long game on infrastructure as much as capability. OpenAI countered with a $100/month Pro tier restructure, a Codex push, and its own policy moves in DC — but spent most of the week playing defense on legal exposure, leadership optics, and the Musk trial countdown.
+This was the week AI infrastructure stopped being an abstraction and became a physical, legal, and geopolitical problem simultaneously. Stargate data centers got named as military targets on Monday; by Tuesday a ceasefire had dropped oil 16%; by Friday a Treasury Secretary was convening bank CEOs over a model Anthropic won't ship. The underlying technical progress didn't slow — six agent infrastructure papers dropped in a single day Thursday, TurboQuant + TriAttention quietly delivered a 6.8× KV cache reduction in llama.cpp, and the inference efficiency research pile reached critical mass — but the operational context for every infrastructure decision shifted materially across seven days.
 
-The second through-line is harder to see in individual headlines but impossible to miss in aggregate: the AI stack is fragmenting by design. Multi-architecture inference (TPUs, Ascend, custom silicon) is becoming a real deployment variable. Agent protocol layers are splitting into MCP (tool access), A2A (agent coordination), and ACP (commerce/transactions). The "open" model ecosystem is under dual pressure from monetization pivots (Alibaba/Qwen) and license-washing (MiniMax M2.7). And the security threat model for agents — persistent resource access, GPU hijacking, adversarial injection — is outrunning the tooling available to defend it. Builders who treat these as separate stories are going to be caught flat-footed.
+The competitive story that sharpened most this week: Anthropic is winning enterprise, and Claude Code is the specific lever. Independent spending data, government deployments, and partner integrations all pointed the same direction. Meanwhile the open-weight ecosystem took two hits — MiniMax M2.7 killed on launch by a bad license, Alibaba pivoting Qwen toward monetization — leaving the open-source frontier more dependent on Meta's Llama cadence than it was entering Q2. The agentic protocol layer (MCP, A2A, ACP) started showing real signs of standardization. The memory and state management layer underneath it remains the unsexy problem nobody has solved yet.
 
 ---
 
 ## Biggest Shifts
 
-### Claude Code Is the Enterprise Wedge — and the Data Is Independent
+### Anthropic's Mythos Playbook: "Not Releasing" Is Now a Strategy
 
-This wasn't one announcement; it was five separate signals in the same direction in the same week. FT/Business Insider enterprise spend data, a DHHS government deployment, n8n integration momentum, an AMD executive endorsement, and analyst commentary all pointed to Claude Code as the mechanism closing the gap between Anthropic and OpenAI in enterprise. The consumer moat for ChatGPT looks durable. The enterprise battle looks genuinely live in a way it didn't 12 months ago.
+The "too dangerous to release" framing stopped being a safety disclosure and became a business move this week. Wall Street banks are stress-testing Mythos at the Trump administration's urging. Treasury is in the room. Anthropic hit $30B ARR in the same news cycle. The pattern is deliberate: controlled access to extreme-capability models as a premium enterprise tier, backed by a safety narrative that simultaneously generates regulatory goodwill and differentiates from OpenAI's IPO story. Whether Mythos actually finds and fixes vulnerabilities or just showcases them is the open question — but the playbook will get copied regardless.
 
-- **Concrete takeaway:** If you're building enterprise tooling and haven't tested Claude Code as your primary coding agent layer, you're evaluating a market that's shifted. Run the comparison now, not after your customers ask why you haven't.
-- **Watch next:** Whether OpenAI accelerates Codex feature development or pivots to pricing pressure in response. The $100/month Pro tier with Codex access is the opening move.
+- **Takeaway:** If you're selling to regulated industries (finance, defense, healthcare), watch how Anthropic's GlassWing access structure works. That's the procurement template you'll be pitching against or into.
+- **Watch next:** OpenAI's response. Expect a capability + safety disclosure in the next two weeks designed to reframe the narrative before the trial.
 
-**Source trail:** [Sat digest](https://thebash.dev/2026-04-11), [Sun digest](https://thebash.dev/2026-04-12), [Thu digest](https://thebash.dev/2026-04-09)
-
----
-
-### Claude Mythos and the New Regime for Capability Disclosure
-
-The Treasury Secretary convening bank CEOs to stress-test an AI model is not a communications evolution — it's a category shift. We've moved from "system card and safety report" to "government-convened systemic risk briefing." Anthropic is leaning into this framing rather than softening it, which is simultaneously genuine safety disclosure and a competitive move against OpenAI's IPO narrative. The "too dangerous to release" positioning is doing real marketing work to enterprise risk officers and regulators.
-
-- **Concrete takeaway:** If you're building compliance or security tooling for financial services, the Mythos deployment path (controlled release to high-stakes institutional users) is the template to study. Enterprise AI procurement is converging on that model.
-- **Watch next:** OpenAI's counter-disclosure. They will publish something — likely a capability + safety framing — in the next two to three weeks. Watch how they calibrate it against Mythos.
-
-**Source trail:** [Wed digest](https://thebash.dev/2026-04-08), [Fri digest](https://thebash.dev/2026-04-10), [Sat digest](https://thebash.dev/2026-04-11)
+**Source trail:** [Mon digest](https://thebash.dev/2026-04-06), [Wed digest](https://thebash.dev/2026-04-08), [Fri digest](https://thebash.dev/2026-04-10), [Sat digest](https://thebash.dev/2026-04-11), [Sun digest](https://thebash.dev/2026-04-12)
 
 ---
 
-### Agent Security Has a Structural Gap — and It Showed This Week
+### Claude Code Is the Enterprise Wedge — and It's Working
 
-Three incidents landed in parallel: a compromised agent hijacked GPUs for crypto mining (Alibaba-linked), agents with Plaid access to live bank accounts went into broader deployment, and a physical retail agent hit $100K deployed capital with no published safety architecture. The threat model for agents is categorically different from API abuse: agents hold *persistent access to real resources over time*, which means a single compromised agent can cause ongoing damage across sessions. The security industry has not caught up.
+This wasn't a vibe shift; it showed up in spending data. FT/Business Insider numbers, DHHS government deployment, n8n integration momentum, AMD executive endorsements — independent signals, same direction. Claude Code has become Anthropic's actual enterprise sales motion in a way that Claude-as-assistant never quite was. OpenAI's consumer dominance is intact. The enterprise battle is live and competitive in a way it wasn't twelve months ago, and the gap is driven by a specific product, not brand.
 
-- **Concrete takeaway:** Before your next agent deployment with any resource access (compute, money, external APIs), run an adversarial input threat model. Document what happens if a malicious prompt reaches your agent through a third-party data source it reads. That's the attack surface that matters now.
-- **Watch next:** Whether any of the major agent orchestration frameworks (Haystack, LangGraph, n8n) ship a security policy layer in Q2. First mover here has a significant enterprise sales story.
+- **Takeaway:** If you're building enterprise tooling, Claude Code's API and extension surface is worth prioritizing alongside OpenAI's stack. The enterprise budget allocation is shifting.
+- **Watch next:** Whether OpenAI accelerates Codex bundling (already moved to $100/mo Pro tier) and whether that's enough to hold the coding-focused enterprise accounts.
 
-**Source trail:** [Sun digest](https://thebash.dev/2026-04-12), [Fri digest](https://thebash.dev/2026-04-10), [Thu digest](https://thebash.dev/2026-04-09)
-
----
-
-### The Agent Protocol Stack Is Consolidating — Three Layers, Three Winners
-
-This week clarified a structure that's been forming for months. MCP (Anthropic, 97M downloads) owns tool access. Google's A2A is establishing the agent-to-agent coordination layer. IBM/Linux Foundation's ACP is targeting commerce and transactions. These aren't competing for the same role — they're layering. That's a meaningful architectural signal: you can now make protocol decisions with higher confidence that you're not building on something that will be deprecated in six months.
-
-- **Concrete takeaway:** If you're building multi-agent orchestration, map your architecture against these three layers explicitly. Tool access → MCP. Agent coordination → A2A. Transactional/commerce workflows → watch ACP. Building all three yourself is waste you don't need to absorb.
-- **Watch next:** Whether OpenAI publishes a competing or compatible agent coordination protocol. Their silence on this layer relative to Anthropic and Google is increasingly conspicuous.
-
-**Source trail:** [Sat digest](https://thebash.dev/2026-04-11), [Thu digest](https://thebash.dev/2026-04-09)
+**Source trail:** [Sat digest](https://thebash.dev/2026-04-11), [Thu digest](https://thebash.dev/2026-04-09), [Fri digest](https://thebash.dev/2026-04-10)
 
 ---
 
-### Inference Efficiency Research Is Compounding — and Being Underpriced
+### The Open-Weight License War Went Hot
 
-REAM, Cactus, Squeez, expert-choice routing (Wednesday), TurboQuant + TriAttention delivering 6.8× KV cache reduction in llama.cpp (Friday), and the RAGEN-2 reasoning collapse finding all landed in the same week. The pattern: meaningful inference improvements are arriving from multiple independent directions simultaneously. If speculative decoding, MoE merging, context pruning, and quantization improvements compound, the cost curve for frontier-quality inference bends significantly faster than training cost curves would suggest.
+MiniMax M2.7 was declared dead on arrival within hours of release — not because of the model, but because of the license. The developer community has now pattern-matched enough bait-and-switch "open" releases that they're reading the license before the model card. The middle ground of custom licenses with commercial restrictions is being priced in as closed-source by the people who drive adoption. Meanwhile Gemma 4 hit 2M downloads on a permissive license, and Alibaba is pivoting Qwen away from open-weight releases entirely. The open frontier is concentrating around Meta's Llama cadence faster than most people expected.
 
-- **Concrete takeaway:** The TurboQuant + TriAttention result will likely land in llama.cpp main within weeks. If you're running self-hosted inference, track that PR. A 6.8× KV cache reduction changes your memory footprint math at scale.
-- **Watch next:** RAGEN-2's reasoning collapse finding is potentially significant for the agentic RL literature broadly — if entropy metrics stay stable while reasoning degrades to input-agnostic templates, a lot of current eval frameworks are measuring the wrong thing. Watch for lab responses and follow-on papers.
+- **Takeaway:** If you're choosing a base model for a production system this quarter, license risk is now a first-class evaluation criterion. Apache 2.0 / MIT or treat it as closed. No middle.
+- **Watch next:** Nathan Lambert's "open model consortium" proposal at Interconnects — if it gains traction, it's the coordination structure that could prevent Llama monoculture.
 
-**Source trail:** [Fri digest](https://thebash.dev/2026-04-10), [Wed digest](https://thebash.dev/2026-04-08), [Tue digest](https://thebash.dev/2026-04-07)
+**Source trail:** [Sun digest](https://thebash.dev/2026-04-12), [Sat digest](https://thebash.dev/2026-04-11), [Mon digest](https://thebash.dev/2026-04-06)
+
+---
+
+### Inference Efficiency Research Hit Critical Mass
+
+REAM, Cactus, Squeez, expert-choice routing, speculative decoding improvements, MoE merging — and then TurboQuant + TriAttention delivering 6.8× KV cache reduction in llama.cpp as a community result that will get absorbed into main within weeks. These aren't isolated papers. The next round of capability improvements at production scale is coming from inference efficiency compounding, not purely from training scale. The cost curve for running frontier-quality models is bending faster than the training cost curve, and most enterprise buyers haven't priced this in yet.
+
+- **Takeaway:** KV cache reduction of that magnitude changes the economics of long-context and multi-turn agent workloads materially. If you're capacity planning for H2, run the numbers again with a 4-6× cache assumption.
+- **Watch next:** Which of these techniques land in llama.cpp and vLLM main branches first — that's when the economics become real for production operators, not just researchers.
+
+**Source trail:** [Wed digest](https://thebash.dev/2026-04-08), [Fri digest](https://thebash.dev/2026-04-10), [Mon digest](https://thebash.dev/2026-04-06)
+
+---
+
+### The Agentic Protocol Stack Started to Solidify
+
+MCP (Anthropic, 97M downloads) owns the tool-access layer. Google's A2A is establishing the agent-coordination layer. IBM/Linux Foundation's ACP is targeting commerce and transactions. Three layers, three leading candidates, all active this week. This is materially better than six months ago when everything was bespoke. Simultaneously, six distinct agent infrastructure papers dropped in a single Thursday — Combee, AgentGL, AgentOpt, RAGEN-2, IntentScore, Qualixar OS — but production tooling is still fragmented, and the memory/state management layer that actually determines whether agents work in production remains unsolved.
+
+- **Takeaway:** You can now make MCP a default architecture decision with reasonable confidence it won't get deprecated. A2A is worth prototyping against if you're building multi-agent systems. ACP is worth monitoring for commerce-adjacent use cases.
+- **Watch next:** The agent memory problem. Three independent dev writeups this week hit the same production failure mode — agents that can't remember across sessions, logs that don't agree, context that drops. Whoever solves durable, cheap, queryable agent memory at scale wins the infrastructure layer.
+
+**Source trail:** [Sat digest](https://thebash.dev/2026-04-11), [Thu digest](https://thebash.dev/2026-04-09), [Sun digest](https://thebash.dev/2026-04-12)
 
 ---
 
 ## Builder Board
 
-- **TurboQuant + TriAttention (llama.cpp):** 6.8× KV cache reduction landed in the community this week. Track the upstream PR. If you're running self-hosted inference at any scale, this changes your memory provisioning calculus before the PR even merges.
+- **TurboQuant + TriAttention (llama.cpp):** 6.8× KV cache reduction. Track the PR — when it lands in main, long-context inference economics change for everyone running local or self-hosted inference. [Fri digest](https://thebash.dev/2026-04-10)
 
-- **ClawBench:** New agent benchmark testing against 144 live production platforms — not synthetic tasks. This is the eval framework to run if you're shipping agents into real workflows. The gap between ClawBench scores and existing benchmarks will tell you something real about your production readiness. [Released Fri](https://thebash.dev/2026-04-10)
+- **ClawBench:** 153 real-world agent tasks across 144 live platforms. This is the benchmark to run if you're claiming production agent capability — it tests actual errand completion, not toy environments. [Fri digest](https://thebash.dev/2026-04-10), [Sun digest](https://thebash.dev/2026-04-12)
 
-- **MCP adoption number to anchor on:** 97M downloads as of this week. If you're building agent tooling and haven't implemented MCP for tool access, you're increasingly outside the default integration path for enterprise buyers. The switching cost is low now; it won't be in six months.
+- **RAGEN-2 (reasoning collapse paper):** If entropy metrics stay stable while reasoning degrades to input-agnostic templates, a significant chunk of agentic RL evals are measuring the wrong thing. Read before shipping any RL-trained agent to production. [Fri digest](https://thebash.dev/2026-04-10)
 
-- **MiniMax M2.7 — skip it:** Released Sunday, DOA within hours. Commercial use restrictions, no fine-tuning rights, no self-hosting in production. The community verdict was correct and fast. This is the license-check checklist you need: commercial use permitted? Fine-tunable? Self-hostable in production? Modifiable and redistributable? If any answer is no, treat it as closed.
+- **Haystack (24.8K stars) / MLflow (25.2K stars):** Still the production leaders for agent orchestration. Agent-specific tooling is fragmenting around them, not replacing them. If you're starting a new agent project, these are still the lowest-risk foundation. [Thu digest](https://thebash.dev/2026-04-09)
 
-- **OpenAI Dark Factory stat:** 1M lines of code, 1B tokens/day, zero human code review. This is the production AI-writes-its-own-code story that's been theoretical for two years. The harness engineering, eval frameworks, and audit tooling that makes this safe are the unsolved infrastructure problems worth building on now.
+- **MCP + A2A protocol pairing:** MCP for tool access, A2A for agent coordination. The dev.to A2A vs ANP writeup is a solid architectural primer if you're making stack decisions now. [Sat digest](https://thebash.dev/2026-04-11)
 
-- **Haystack (24.8K stars) and MLflow (25.2K stars):** Still the production leaders for agent orchestration and experiment tracking respectively. The agent-specific tooling layer (AgentGL, AgentOpt, Qualixar OS, Combee) is still fragmented. If you're making a framework bet today, these two have the integration surface area that matters for enterprise buyers.
+- **AVLLM interpretability paper:** Rich internal representations that don't surface in model outputs. The mechanistic findings track — this is the kind of research that changes how you build evals, not just how you read benchmarks. Relevant if you're doing any structured output or multi-modal work. [Mon digest](https://thebash.dev/2026-04-06)
 
-- **Reasoning collapse (RAGEN-2):** Bookmark this paper now. The finding — entropy metrics stable while reasoning degrades to input-agnostic templates — means a meaningful portion of agentic RL evals may be measuring the wrong signal. If you're training or fine-tuning reasoning models, add input-sensitivity checks to your eval suite today, not after you ship a regression.
+- **OpenAI Pro tier restructure ($100/mo with Codex access):** The pricing signal matters more than the tier itself. Codex bundled into Pro is a direct response to Claude Code momentum. If your team is on ChatGPT Enterprise, the next renewal conversation will involve a Codex vs Claude Code comparison. Plan for it. [Fri digest](https://thebash.dev/2026-04-10), [Sat digest](https://thebash.dev/2026-04-11)
 
 ---
 
 ## What to Watch Next Week
 
-The OpenAI trial countdown is the forcing function. With the Musk trial weeks out, the Florida AG probe active, the stalking lawsuit framing ("we were warned and ignored it") gaining traction, and the IPO roadshow needing a clean narrative, OpenAI will need to make at least one significant positive move — likely a capability disclosure, a safety publication, or an enterprise partnership announcement — to shift the media frame before the trial dominates coverage. Watch whether they respond to Mythos directly with their own frontier capability disclosure, and watch the stalking lawsuit specifically: the "warned and ignored" legal theory is the most structurally dangerous of the three legal fronts because it creates a template for future plaintiffs. On the technical side, the agent protocol consolidation around MCP/A2A/ACP will either attract a competing proposal from OpenAI or get a significant adoption announcement — that's the architecture decision that will shape enterprise agent deployments through the end of 2026, and builders should have a position on it before it's settled for them.
+The OpenAI trial is the single highest-signal event for the industry next week — not because of the Musk angle, which is mostly noise, but because the discovery and testimony will surface details about OpenAI's governance, revenue trajectory, and technical roadmap that haven't been public. Whatever comes out of that courtroom will hit the IPO narrative directly and will likely force public responses from both OpenAI and Anthropic on capability claims and safety disclosures. Simultaneously, watch whether the US-Iran ceasefire holds through the Islamabad talks — the AWS Gulf outage and the Chime/Pinterest cyberattacks this week were a preview of what sustained conflict does to AI infrastructure dependencies, and the hyperscalers have not publicly adjusted their capex posture to account for it. If the ceasefire frays, Gulf-region infrastructure risk reprices fast and the compute diversification moves (Anthropic's TPU deal, DeepSeek on Huawei Ascend) start looking less like hedging and more like the actual plan.
 
 ---
 
