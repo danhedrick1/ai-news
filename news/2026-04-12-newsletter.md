@@ -1,69 +1,78 @@
 # theba.sh — 2026-04-12
 
-The AI safety-vs-shipping tension hit a new high this week as Anthropic sat on a model it deemed too dangerous to release — while OpenAI quietly rolled out a $100/month tier for users who want more. The gap between "what's possible" and "what's deployed" is widening fast.
+The AI money is getting serious and the tooling is maturing fast — $30B ARR at Anthropic, a $100/mo ChatGPT tier, and a model too dangerous to ship. Meanwhile, the open-source build stack keeps compounding.
 
 ---
 
 ## Headlines
 
-### Anthropic Built a Model Too Dangerous to Ship
-Anthropic trained a frontier model and made the call not to release it — a rare, public acknowledgment that capability outpaced their safety bar. This is the first time a major lab has explicitly shelved a model on those grounds rather than quietly delaying it.
-- Anthropic hit $30B in annualized revenue the same week, so this isn't a resource constraint
-- Their "Managed Agents" launch happened alongside this — controlled deployment may be the real strategy
-- Sets a precedent other labs will be measured against whether they want to be or not
+### 💸 ChatGPT Launches $100/Month Pro Tier
+OpenAI is moving upmarket with a premium tier aimed at power users willing to pay for priority access and expanded capabilities. This is a clear monetization play ahead of their IPO, signaling they believe there's a ceiling-less market for heavy AI users.
+- Targets professionals, researchers, and enterprise power users
+- Likely unlocks higher rate limits and advanced model access
+- Competitive pressure on Anthropic's Claude Pro and similar offerings
 
-**🔧 Dev Take:** "If the lab that ships the most is also the one shelving models, your threat model for what's coming needs an update."
-
----
-
-### ChatGPT Gets a $100/Month Tier
-OpenAI launched a $100 Pro tier, positioning it above the existing $20 Plus plan with presumably higher rate limits, priority access, and more compute headroom. This is OpenAI explicitly segmenting its user base by willingness to pay rather than use case.
-- Power users and small teams are the obvious target — this is below API costs for heavy usage
-- Expect competitors to follow; the $20 price point is becoming the new "free tier"
-- No word yet on what specifically unlocks at that price — read the fine print before upgrading
-
-**🔧 Dev Take:** "If you're doing enough with ChatGPT to consider $100/month, you should probably just be on the API."
+**🔧 Dev Take:** "If your workflow depends on it, $100/mo is noise — but watch if the API pricing follows suit."
 
 ---
 
-### Minimax M2.7 Drops on LocalLLaMA
-Minimax released M2.7 as an open-source model, landing on r/LocalLLaMA with community benchmarking already underway. Early reports suggest strong performance at its weight class, though real-world evals from the community will matter more than official numbers.
-- Another week, another capable open model — the local inference ecosystem keeps getting stronger
-- Watch the context handling and instruction-following — those are where mid-size models usually crack
-- Haystack and MLflow both support drop-in integration if you want to wire this into a pipeline fast
+### 🦇 Anthropic Hits $30B ARR, Drops Project GlassWing and a Model Too Hot to Ship
+Anthropic is aggressively flexing before OpenAI's IPO window: $30B ARR, a new initiative called Project GlassWing, and a Claude variant they've internally flagged as too dangerous to release — the first model in that category since GPT-2. This is a calculated narrative move as much as a technical milestone.
+- $30B ARR puts Anthropic in serious revenue territory, not just valuation theater
+- "Claude Mythos" preview signals a new capability frontier being gated deliberately
+- Anthropic is positioning safety restraint as a competitive differentiator
 
-**🔧 Dev Take:** "Run your own evals before committing — community benchmarks are a starting point, not a verdict."
-
----
-
-### ClawBench Tests AI Agents on Actual Everyday Tasks
-A new benchmark called ClawBench evaluates AI agents on realistic, everyday online tasks — think inbox management, form filling, and routine web workflows. The framing is deliberately unglamorous: can agents handle the boring stuff reliably, not just impressive demos?
-- Most current agents fail on tasks that require multi-step recovery from partial failures
-- Benchmark design matters here — "everyday tasks" is a high bar because error tolerance is low
-- If your agent product targets end users, this is the benchmark to watch and eventually beat
-
-**🔧 Dev Take:** "The gap between 'impressive demo' and 'reliably handles Tuesday afternoon tasks' is still enormous."
+**🔧 Dev Take:** "A model too dangerous to release is either genuinely alarming or the best marketing Anthropic has ever done — possibly both."
 
 ---
 
-### Trump Pitches Iran Blockade as U.S. Oil Opportunity
-The White House is framing the Iran blockade not just as geopolitical leverage but as a direct sales pitch to China: buy American oil instead of routing through the Strait of Hormuz. Energy markets and AI infrastructure are more connected than they look — data centers run on power, power runs on energy markets.
-- GPU clusters and hyperscaler buildouts are energy-intensive; energy price volatility hits infrastructure costs
-- Oil-for-data-center calculus is increasingly relevant for anyone planning long-horizon infrastructure spend
-- This is geopolitics as supply chain risk — worth a line in your infrastructure cost models
+### 🤖 ClawBench: Can AI Agents Actually Handle Everyday Online Tasks?
+A new benchmark paper tests AI agents on the kind of mundane browser-based tasks real users actually care about — booking, forms, inbox management, and routine web workflows. Results suggest agents are improving but still inconsistent on the long-tail of real-world friction.
+- Tests multi-step tasks that require navigating real UI states, not toy environments
+- Highlights the gap between demo performance and reliable daily-driver behavior
+- Useful signal for teams building agentic products on top of LLMs
 
-**🔧 Dev Take:** "Energy costs are an AI infrastructure variable now — this story isn't just for macro traders."
+**🔧 Dev Take:** "Benchmarks on real tasks > benchmarks on benchmarks — ClawBench is the kind of eval that actually maps to production pain."
+
+---
+
+### 🧱 Haystack: Open-Source LLM Orchestration Worth a Second Look
+deepset's Haystack continues trending with 24K+ stars as teams look for production-grade alternatives to LangChain with more explicit pipeline control. Its modular, component-based architecture is a good fit for teams who want observability and reproducibility baked in.
+- Pipelines are declarative and composable — easier to debug than magic abstractions
+- Native support for RAG, agents, and custom component integration
+- Strong fit for teams already operating in Python-heavy ML infrastructure
+
+**🔧 Dev Take:** "If LangChain feels like magic you can't control, Haystack is the boring-in-a-good-way alternative."
+
+---
+
+### 📊 MLflow Doubles Down on Agents and LLM Evaluation
+MLflow (25K+ stars) is expanding beyond experiment tracking into a full AI engineering platform covering agents, LLM evaluation, and production monitoring. For teams already using MLflow for traditional ML, this is a low-friction path into structured LLM ops.
+- Evaluation and monitoring hooks for LLM outputs are now first-class features
+- Integrates with major model registries and deployment targets
+- Lowers the barrier to bringing MLOps discipline to LLM workflows
+
+**🔧 Dev Take:** "MLflow eating into the LLMOps space makes sense — don't rebuild observability infrastructure if you already have it."
+
+---
+
+### 💀 Reddit Declares "The Era of Human Coding Is Over"
+The r/singularity crowd is doing what they do, but the underlying signal — that AI coding tools are now genuinely displacing significant chunks of human-written code in production workflows — is worth separating from the hype. The debate is real even if the framing is dramatic.
+- Cursor, Copilot, and agent-based coding workflows are compressing junior dev output
+- The real question is scope: automation of tasks vs. replacement of engineering judgment
+- Productivity multiplier framing is more accurate than "replacement" for most senior devs
+
+**🔧 Dev Take:** "The era of writing boilerplate by hand might be over. The era of needing engineers who can reason about systems is not."
 
 ---
 
 ## Quick Hits
 
-- **deepset-ai/haystack** (⭐24.8k) — solid production LLM orchestration framework if you want explicit pipeline control without locking into a vendor
-- **mlflow/mlflow** (⭐25.3k) — if you're not tracking experiments and evaluating agent runs, you're flying blind; MLflow is still the most practical option
-- **f/prompts.chat** (⭐159k) — yes, 159k stars on a prompt library; useful for teams onboarding non-technical users to structured prompting
-- **OpenBB-finance/OpenBB** (⭐65.7k) — financial data platform with AI agent hooks built in; relevant if you're building anything in the quant or fintech space
-- **Meta shipped Muse Spark** — creative AI tooling from Meta, details sparse, worth tracking if you're in the generative media space
-- **Z.ai's GLM-5.1 went open source** — another open frontier model entry; the open-source model race has no signs of slowing
+- **f/prompts.chat** (159K ⭐) — the community prompt library keeps growing; self-hostable for org privacy if you need it
+- **rasbt/LLMs-from-scratch** (90K ⭐) — still the best resource if you want to actually understand what you're building on top of
+- **OpenBB** (65K ⭐) — financial data platform with native AI agent support; worth a look if you're building in fintech
+- **netdata/netdata** (78K ⭐) — AI-assisted full-stack observability in C; lean teams take note if you're not already on it
+- **Anthropic IPO watch** — OpenAI's IPO timeline makes every Anthropic announcement land with extra weight right now; read accordingly
 
 ---
 
