@@ -1,78 +1,78 @@
 # theba.sh — 2026-04-12
 
-The AI safety vs. capability tension hit a new peak this week, with Anthropic shelving a model it deemed too dangerous while simultaneously closing the revenue gap with OpenAI. Buckle up — the frontier is getting weird fast.
+The big story this week isn't what AI can do — it's what Anthropic decided it *shouldn't*. Meanwhile, the rest of the ecosystem is shipping fast and charging more for the privilege.
 
 ---
 
 ## Headlines
 
-### Anthropic Built a Model Too Dangerous to Release
-Anthropic trained a model capable enough that they decided not to ship it — a rare, public acknowledgment that internal red lines exist and sometimes get crossed. This is the first high-profile case of a frontier lab voluntarily spiking a model at this scale.
-- Signals that capability evaluations are actually catching something real, not just PR theater
-- Raises questions about what "dangerous" means and who gets to decide
-- Sets a precedent other labs will now be pressured to match (or ignore)
+### 😺 Anthropic Built a Model Too Dangerous to Release
+Anthropic trained a model capable enough that they benched it internally rather than ship it to the public. This is a rare admission that capability and safety aren't always on the same deployment timeline.
+- First known instance of a frontier lab hard-stopping a model at the release gate
+- Raises immediate questions about what the evaluation criteria actually looked like
+- Happens the same week Anthropic reportedly crossed $30B in revenue — this wasn't a resource problem
 
-**🔧 Dev Take:** "The most interesting model of 2026 is the one you'll never get an API key for."
-
----
-
-### Anthropic Closes In on OpenAI as US Enterprise Adoption Surges
-The FT reports Anthropic is rapidly narrowing the business-use gap with OpenAI, driven almost entirely by Claude Code's traction in engineering teams. This isn't consumer hype — it's developers voting with procurement budgets.
-- Claude Code appears to be the killer app that enterprise devs actually stick with
-- Anthropic hit $30B in annualized revenue, a number that would've sounded absurd 18 months ago
-- OpenAI's head start in brand recognition is compressing faster than expected
-
-**🔧 Dev Take:** "When devs control the budget, code-quality wins beat brand loyalty every time."
+**🔧 Dev Take:** "If your most capable model is also your most dangerous one, that's an architecture problem, not just a policy problem."
 
 ---
 
-### ChatGPT Launches $100/Month Pro Tier
-OpenAI introduced a $100/month subscription tier, positioning it well above the existing Plus plan and targeting power users and professionals. The pricing move signals OpenAI is comfortable segmenting its user base aggressively.
-- Likely unlocks higher rate limits, priority access, and advanced model variants
-- Tests whether users will pay 5x more for meaningfully better throughput and capability
-- Sets a ceiling that competitors can undercut or a floor that validates premium AI spend
+### 💸 ChatGPT Gets a $100/Month Tier
+OpenAI launched a $100/month subscription tier, pushing well past the $20 Pro ceiling most users know. The bet: power users and small teams will pay for priority access and higher rate limits before committing to enterprise contracts.
+- Sits between Pro ($20) and full Enterprise — filling a gap that was clearly leaking revenue
+- Likely targets developers and solo operators who keep hitting API friction
+- No word yet on what's actually gated behind it vs. what's just rate-limit headroom
 
-**🔧 Dev Take:** "If you're expensing it anyway, $100/month is cheap — the real question is what you're actually getting that Plus doesn't."
-
----
-
-### Anthropic Launches Managed Agents
-Alongside the revenue news, Anthropic shipped Managed Agents — a framework for deploying and orchestrating AI agents in production environments. This moves Anthropic further up the stack, from model provider toward full-platform player.
-- Direct shot across the bow at AWS, Azure, and AI orchestration startups
-- "Managed" implies Anthropic handles infrastructure, scaling, and reliability — not just the model
-- Pairs with Claude Code dominance to create a vertically integrated dev workflow
-
-**🔧 Dev Take:** "Every model provider eventually wants to own the orchestration layer — Anthropic just stopped pretending otherwise."
+**🔧 Dev Take:** "If you're building on top of ChatGPT and this tier unlocks reliability, it's probably cheaper than your debugging time."
 
 ---
 
-### ClawBench: Can AI Agents Actually Handle Everyday Online Tasks?
-New benchmark paper asks whether AI agents can reliably complete routine browser-based tasks — the kind of stuff that sounds easy but requires navigating messy, real-world UIs. Spoiler: agents are better than before but still frustratingly brittle on edge cases.
-- Tests tasks like form submission, email workflows, and account management — not toy problems
-- Current agents fail on ambiguity, dynamic page states, and multi-step auth flows
-- Useful calibration tool for teams building on top of browser-use or similar frameworks
+### 🤖 ClawBench: Can AI Agents Actually Handle Everyday Online Tasks?
+New benchmark paper out of HuggingFace drops ClawBench, a realistic evaluation suite for AI agents doing routine web tasks — think scheduling, inbox management, form-filling. Results suggest current agents are improving but still unreliable on real-world task completion.
+- Fills a gap between toy demos and actual production agentic workflows
+- Everyday task completion rates are measurably lower than curated benchmark performance
+- Useful signal for anyone scoping what to automate vs. what to keep human-in-the-loop
 
-**🔧 Dev Take:** "Before you promise your stakeholders 'autonomous agents,' run ClawBench and manage expectations accordingly."
+**🔧 Dev Take:** "Benchmark your agent on ClawBench before you promise your users it can 'just handle it.'"
 
 ---
 
-### Haystack Hits 24K Stars as Context Engineering Goes Mainstream
-Deepset's Haystack has rebranded its pitch around "context-engineered" pipelines, reflecting where serious LLM app development has actually moved — away from prompt tricks toward deliberate data and retrieval architecture. The star count signals it's become a default consideration for production builds.
-- Modular pipeline design means you swap components without rebuilding everything
-- Native agent workflow support puts it in direct competition with LangGraph and similar tools
-- "Context engineering" as a term is doing real work now — it's not just RAG anymore
+### 🔓 Minimax M2.7 Released (Open Source)
+Minimax dropped M2.7 publicly on r/LocalLLaMA, adding another capable open-weight model to an increasingly crowded field. Early community reports suggest competitive performance in the mid-size model range.
+- Open-weight release means you can run it locally or fine-tune without API dependency
+- Lands in a week where Z.ai also shipped open-source GLM-5.1 — the open model cadence isn't slowing
+- LocalLLaMA community is already benchmarking; watch that thread
 
-**🔧 Dev Take:** "If your LLM app doesn't have an explicit context strategy, you don't have a production app — you have a demo."
+**🔧 Dev Take:** "Two open-source drops in one week means your 'we need to use a closed API' argument just got harder to defend."
+
+---
+
+### 🛠️ Haystack Keeps Building the Right Abstraction
+deepset's Haystack framework hit 24.8K stars and continues to be one of the more thoughtful open-source approaches to LLM pipeline orchestration. Explicit control over pipeline flow and agent workflows is the differentiator vs. magic-heavy alternatives.
+- Modular design means you can swap components without rebuilding the whole pipeline
+- Context engineering is increasingly the job; Haystack is built around that assumption
+- Production-ready framing is backed by real enterprise adoption, not just GitHub stars
+
+**🔧 Dev Take:** "If your LLM pipeline is a black box, you don't have a pipeline — you have a prayer."
+
+---
+
+### 📊 MLflow Grows Into the AI Engineering Platform Role
+MLflow at 25K+ stars is no longer just experiment tracking — it's positioning as the full AI engineering platform for agents, LLMs, and classical ML. The breadth is both its strength and its complexity risk.
+- Evaluation and monitoring for agents is the newest surface area and the most underdeveloped
+- Works across team sizes, which matters when your AI team is still 2 people
+- Integration surface is wide: if you're already in the MLflow ecosystem, the LLM tooling is worth revisiting
+
+**🔧 Dev Take:** "MLflow grew up. Whether it grew in the right direction depends entirely on your stack."
 
 ---
 
 ## Quick Hits
 
-- **MLflow (25K+ stars)** is quietly becoming the default experiment tracking layer for agent and LLM workflows, not just traditional ML — worth revisiting if you dismissed it as "ML Ops legacy tooling"
-- **Meta shipped Muse Spark** this week — details thin, but it's another signal Meta is pushing hard on generative creative tooling
-- **Z.ai's GLM-5.1** dropped as open-source — Chinese open-weight models continue to close the gap with frontier closed models faster than most Western labs want to admit
-- **OpenBB (65K+ stars)** continues trending — financial data + AI agents is a real use case, not a gimmick, and the community around it reflects that
-- **rasbt/LLMs-from-scratch (90K+ stars)** is still the go-to pedagogical resource for devs who want to actually understand the thing they're building on top of — read it if you haven't
+- **OpenBB hits 65.7K stars** — financial data infra for agents is a real category now, not a niche
+- **f/prompts.chat at 159K stars** — the prompt-sharing economy is still very much alive; fork it for internal use
+- **Meta shipped Muse Spark** this week per the Neuron digest — another generative media tool in the pile
+- **Anthropic launched Managed Agents** — hosted agentic infra for enterprise, worth watching for what it abstracts away
+- **Best Mug Warmers of 2026** via Wired — unironically relevant when you're debugging agents at midnight ☕
 
 ---
 
