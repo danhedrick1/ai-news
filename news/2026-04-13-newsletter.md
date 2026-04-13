@@ -1,64 +1,68 @@
 # theba.sh — 2026-04-13
 
-The AI agent economy is no longer theoretical — it's eating financial infrastructure, reshaping how models decode language, and apparently ending human coding as we know it. Meanwhile, geopolitics just sent oil past $100, which will ripple through every datacenter budget on the planet.
+The AI safety conversation just got concrete: Anthropic is sitting on a model it considers too dangerous to ship, while the research community keeps pushing the boundaries of how language models decode and evaluate themselves. Buckle up — the gap between "can build" and "should ship" is the story of the week.
 
 ---
 
 ## Headlines
 
-### Anthropic at $30B ARR — and Claude Mythos Is Too Dangerous to Ship
-Anthropic is flexing hard ahead of OpenAI's IPO turbulence, posting $30B ARR and teasing Project GlassWing. Claude Mythos is apparently their first model since GPT-2 to be deemed too dangerous to release — a claim that will either age very well or very badly.
-- $30B ARR puts Anthropic in legitimate enterprise territory, not just research-lab territory
-- "Too dangerous to release" is a high bar to set publicly — reputational risk if the reasoning ever leaks
-- OpenAI's IPO process now has a very loud competitor making noise at exactly the wrong time
-**🔧 Dev Take:** "Safety theater or genuine constraint — either way, the benchmark arms race just got a PR dimension."
+### Anthropic Hits $30B ARR, Sits on "Project GlassWing" — Too Dangerous to Release
+Anthropic has reportedly crossed $30B ARR and is previewing "Claude Mythos," with internal documentation framing GlassWing as the first model they've declined to release since OpenAI shelved GPT-2 back in 2019. The timing — right as OpenAI navigates IPO turbulence — is not subtle.
+- First credible "we built it and won't ship it" moment in the post-GPT-2 era
+- Anthropic is weaponizing safety optics directly against OpenAI's investor narrative
+- Claude Mythos preview suggests a tiered rollout strategy, not an outright hold
+
+**🔧 Dev Take:** "If your competitor's biggest story before an IPO is 'we released something dangerous,' a well-timed safety embargo is better marketing than any product launch."
 
 ---
 
-### AI Agents Now Drive 50% of Fintech API Calls
-A deep-dive into 2026's fintech data infrastructure reveals that half of all broker API calls are now initiated by AI agents, not humans. By 2027, 30% of financial transactions are projected to come from autonomous agents acting on behalf of consumers.
-- MCP (Model Context Protocol) is emerging as the connective tissue between LLMs and financial data feeds
-- Traditional rate-limiting and auth models were designed for human-paced developers — they're already breaking under agent load
-- Compliance and audit trails for agent-initiated trades remain a largely unsolved problem
-**🔧 Dev Take:** "Your API was built for a human with a cup of coffee — it's now being hammered by a thousand agents at 3am."
+### Attention-Based Sampler for Diffusion Language Models
+Diffusion language models have long promised parallel decoding but struggled to match autoregressive quality — this paper proposes an attention-based sampler that closes the gap without sacrificing speed. If it holds up, it's a meaningful step toward breaking the sequential decoding bottleneck.
+- Targets the core weakness of diffusion LMs: sample quality at inference
+- Attention mechanism reweights the denoising process rather than treating all tokens equally
+- Could unlock practical use cases where latency matters more than marginal quality gains
+
+**🔧 Dev Take:** "Autoregressive isn't a law of physics — it's a habit, and papers like this are what eventually break habits."
 
 ---
 
-### Attention-Based Sampler Challenges Autoregressive Dominance
-A new arXiv paper proposes an attention-based sampler for diffusion language models, directly attacking the sequential decoding bottleneck that makes ARMs slow. If this holds up, it's a meaningful step toward parallelized generation that doesn't sacrifice coherence.
-- ARMs decode one token at a time — diffusion models can, in theory, refine entire sequences in parallel
-- The attention-based sampler is the proposed bridge between diffusion's parallelism and the quality ARMs deliver
-- Still early/research-stage, but the direction is clear: the autoregressive monopoly on LLM inference is being contested
-**🔧 Dev Take:** "Autoregressive isn't a law of nature — it's just what we got good at first."
+### Multi-User LLM Agents: Finally Thinking About the Other People in the Room
+Most LLM agent research optimizes for a single user's goals; this paper explicitly models multi-user settings where agents must balance competing instructions and interests. It's an underexplored problem that becomes critical the moment you deploy anything in a shared or organizational context.
+- Addresses conflicting instructions, priority hierarchies, and accountability across users
+- Directly relevant to enterprise deployments where a single agent serves a team
+- Framework proposes explicit user modeling rather than collapsing all inputs into one context
+
+**🔧 Dev Take:** "Every B2B agent deployment is a multi-user problem — the research is just catching up to what production engineers already know."
 
 ---
 
-### Multi-User LLM Agents: Finally Thinking About the Real Deployment Case
-New research on multi-user LLM agent architectures addresses what most production teams already know: single-user agent assumptions fall apart fast in shared environments. The paper tackles planning and decision-making when multiple users with competing goals are in the loop.
-- Most agent frameworks today implicitly assume one user, one context, one goal — enterprise reality is messier
-- Multi-user scenarios introduce conflict resolution, permission scoping, and state isolation as first-class problems
-- This is the research catching up to what teams building on Haystack and LangGraph are already hacking around
-**🔧 Dev Take:** "Single-user agents are demos. Multi-user agents are products."
+### Neural Networks for TTS Evaluation: Scaling Quality Assessment Without Humans
+Automated TTS evaluation has historically been unreliable — this paper surveys and advances neural approaches that correlate with human perceptual judgments at scale. Getting evaluation right is the unglamorous prerequisite to getting the models right.
+- Human listening studies don't scale; neural evaluators that track perceptual quality do
+- Benchmarking TTS without robust automated metrics creates invisible regressions
+- Relevant to anyone building voice products who can't run MOS studies on every commit
+
+**🔧 Dev Take:** "You can't iterate fast on audio quality if your eval loop requires humans — this is the kind of tooling that unlocks the rest of the stack."
 
 ---
 
-### Oil Breaks $100 After US-Iran Talks Collapse, Hormuz Blockade Threatened
-Peace talks in Pakistan between VP Vance and Iranian counterparts failed, and Trump's threat to blockade the Strait of Hormuz sent oil surging past $100/barrel. Roughly 20% of global oil supply transits Hormuz — this isn't a footnote.
-- Energy cost spikes hit cloud and datacenter opex with a lag — plan accordingly for Q3/Q4
-- Any sustained $100+ oil environment pressures hardware manufacturing and logistics chains
-- Geopolitical risk is back as a material variable for infrastructure budgeting, not just a macro talking point
-**🔧 Dev Take:** "Your GPU cluster's electricity bill just got a new line item — geopolitics."
+### Haystack & MLflow Both Trending — Context Engineering Is the New MLOps
+Haystack (24.8k ⭐) and MLflow (25.3k ⭐) are both sitting in GitHub trending, signaling that the "build a demo" phase is giving way to "run this thing reliably in production." Haystack's framing around "context-engineered pipelines" is notable — context engineering as a named discipline is gaining traction fast.
+- Haystack's pivot to explicit context engineering language reflects where serious builders are spending time
+- MLflow's agent evaluation and monitoring features are filling a gap that most teams are patching manually
+- Both projects trending simultaneously suggests a maturation wave, not a hype spike
+
+**🔧 Dev Take:** "If you're still winging your context construction and calling it prompt engineering, Haystack's current roadmap is a useful mirror."
 
 ---
 
 ## Quick Hits
 
-- **Hypergraph NNs for MUS Enumeration** — New arXiv work applies hypergraph neural nets to constraint satisfaction problems; niche but relevant if you're doing formal verification or SAT-adjacent work. `[arXiv:2604.09001]`
-- **Haystack hits 24.8k stars** — deepset's orchestration framework keeps climbing; worth a look if you want explicit pipeline control without magic abstractions.
-- **MLflow at 25.3k stars** — Still the quiet workhorse for agent/LLM eval and monitoring in production; trending again for a reason.
-- **prompts.chat at 159k stars** — Formerly Awesome ChatGPT Prompts, now a community prompt marketplace. Useful signal on what non-developers actually want from LLMs.
-- **Reddit r/singularity declares human coding dead** — Discourse is predictably overheated; the actual story is that junior code-writing tasks are under real pressure, not that engineers are obsolete.
+- **Meta building an AI clone of Zuckerberg** — because what every product needs is a chatbot that pivots to talking about the metaverse at 2% engagement. *(Reddit r/artificial)*
+- **f/prompts.chat hits 159k ⭐** — prompt sharing is apparently evergreen; the community prompt library keeps compounding while everyone debates AGI timelines. *(GitHub Trending)*
+- **OpenBB at 65.8k ⭐ and climbing** — financial data for AI agents is a real infrastructure gap; OpenBB is quietly becoming the default answer. *(GitHub Trending)*
+- **Lobste.rs weekly thread is live** — good week to surface side projects given the amount of new tooling dropping; go post what you're building. *(Lobste.rs)*
+- **arXiv cs.CL volume remains high** — three papers in today's digest alone; the language modeling research surface is too wide to track manually, filter ruthlessly. *(arXiv)*
 
 ---
-
 *theba.sh — built for builders*
