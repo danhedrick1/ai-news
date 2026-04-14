@@ -1,63 +1,72 @@
 # theba.sh — 2026-04-14
 
-The AI coding debate has collapsed into a single question: are you orchestrating models or still hand-writing logic? Meanwhile, the infrastructure layer keeps consolidating — from satellite networks to robotics reasoning engines.
+The "AI is replacing developers" discourse hit another peak this week, while the tools we actually use to build with AI keep getting more production-ready. Whether the era of human coding is truly over depends on whether you're reading Reddit or shipping code.
 
 ---
 
 ## Headlines
 
-### The Era of Human Coding Is Over (According to Reddit)
-The r/singularity crowd is in full declaration mode again, and honestly the thread has more signal than usual. The real argument isn't whether AI writes code — it's whether the human in the loop is steering or just reviewing.
-- Agentic coding workflows are table stakes in 2026; the debate has shifted to *control granularity*
-- Senior devs are repositioning as system designers, not syntax writers
-- The counterargument: debugging AI-generated code at scale is its own new hell
-**🔧 Dev Take:** "The era of *thoughtless* human coding is over — the rest is just a job description update."
+### The Era of Human Coding Is Over (r/singularity Says So)
+Another wave of "developers are done" posts is flooding r/singularity, and this time the sentiment is louder than usual. Worth reading if only to calibrate where the public narrative is versus what's actually happening in your codebase.
+- Anecdote-driven, not data-driven — treat accordingly
+- The real question isn't *if* but *which parts* of coding get automated first
+- Junior dev pipelines and boilerplate generation are the real near-term targets
+**🔧 Dev Take:** "The era of *thoughtless* coding is over — the era of engineers who can direct AI precisely is just getting started."
 
 ---
 
-### Anthropic Hits $30B ARR, Drops Claude Mythos Preview — and Locks a Model Away
-Anthropic is playing offense hard ahead of OpenAI's IPO turbulence, announcing Project GlassWing and teasing Claude Mythos — the first model they've deemed too dangerous to release since GPT-2 set that precedent. $30B ARR makes this a revenue story as much as a safety one.
-- "Too dangerous to release" is either genuine restraint or the most effective marketing in AI history
-- Project GlassWing details are thin but positioned as an enterprise infrastructure play
-- Timing against OpenAI's IPO noise is not accidental
-**🔧 Dev Take:** "Withholding a model is a power move — Anthropic just made capability *ceilings* part of their brand."
+### Claude Code Degradation: A Novel Find (r/artificial)
+Users are reporting measurable degradation in Claude Code's output quality — not just vibes, but documented, reproducible examples. This is becoming a recurring theme across frontier models and matters if you're building production pipelines on top of them.
+- Model behavior drift without a version bump is a real reliability problem
+- If you're not pinning model versions and logging outputs, you're flying blind
+- Anthropic hasn't commented publicly as of this writing
+**🔧 Dev Take:** "Treat LLM API calls like external dependencies — version them, test them, monitor them in prod."
 
 ---
 
-### Amazon Acquires Globalstar for $11.6 Billion
-Amazon is buying satellite operator Globalstar, folding it into what is clearly a Kuiper-anchored connectivity strategy. This is less about satellites and more about owning the full stack from cloud to orbit.
-- AWS + Kuiper + Globalstar = Amazon building independent global connectivity infrastructure
-- Direct competitive pressure on Starlink's enterprise and IoT segments
-- Expect this to show up in AWS pricing and edge compute offerings within 18 months
-**🔧 Dev Take:** "Amazon is not buying a satellite company — they're buying the right to ignore other people's networks."
+### Human-like Working Memory Interference in LLMs (arXiv:2604.09670)
+New research shows LLMs exhibit interference patterns eerily similar to human working memory limits — later context can corrupt earlier task-relevant information. This has direct implications for long-context agents and multi-step reasoning chains.
+- The failure mode: models "forget" or distort earlier instructions as context grows
+- Mirrors the classic cognitive psychology concept of proactive/retroactive interference
+- Relevant for anyone building agents that need to maintain state across long task horizons
+**🔧 Dev Take:** "Your agent's context window isn't a reliable scratchpad — build explicit state management instead of trusting the model to remember."
 
 ---
 
-### Gemini Robotics-ER 1.6: Embodied Reasoning Gets an Upgrade
-DeepMind pushed Gemini Robotics-ER 1.6 with a focus on spatial reasoning and multi-view understanding for autonomous robotics tasks. This is the quiet, compounding work — not flashy, but it's what closes the gap between lab demos and production deployments.
-- Enhanced multi-view understanding is directly targeted at real-world manipulation tasks
-- Spatial reasoning improvements reduce the brittle failure modes that kill robotics demos in the field
-- ER 1.6 signals a versioning cadence for robotics models similar to foundation model releases
-**🔧 Dev Take:** "Robotics is finally getting the iterative release culture that LLMs normalized — about time."
+### Haystack & MLflow Both Trending on GitHub
+deepset's Haystack (24.8k ⭐) and MLflow (25.4k ⭐) are both climbing GitHub Trending this week, signaling that the "production AI" tooling layer is where builder attention is consolidating. Context engineering and agent observability are no longer nice-to-haves.
+- Haystack: modular pipelines with explicit control — good for teams who want to own their RAG/agent architecture
+- MLflow: evaluation, monitoring, and debugging for agents and LLMs — fills the observability gap
+- Both are open-source; neither requires vendor lock-in
+**🔧 Dev Take:** "If you're building AI features without an eval and monitoring layer, you're not shipping software — you're crossing fingers."
 
 ---
 
-### Human-Like Working Memory Interference Found in LLMs (arXiv)
-Researchers found that LLMs exhibit interference patterns in working memory analogous to those observed in humans — earlier context degrades later task performance in predictable ways. This has direct implications for anyone building long-context agentic pipelines.
-- Proactive and retroactive interference effects both appear in tested models
-- The failure modes are systematic, not random — meaning they're potentially mitigatable by design
-- Context window size alone doesn't fix it; *how* you structure context matters
-**🔧 Dev Take:** "Your agent isn't forgetting randomly — it's forgetting in ways you can engineer around, if you bother to."
+### Google Turns Prompts into One-Click Chrome Tools
+Google's new "Skills" feature in Chrome lets users save, remix, and replay AI prompt workflows as single-click tools. It's a small UX shift but signals something bigger: AI workflows becoming first-class UI primitives in the browser.
+- Power users can now package complex prompt chains and share them
+- The "remix" angle is interesting — collaborative prompt engineering at the browser level
+- Expect every browser vendor to ship a version of this within 12 months
+**🔧 Dev Take:** "The browser is becoming an agent runtime. Start thinking about what your web app looks like when users have scriptable AI sitting on top of it."
+
+---
+
+### ChatGPT Launches $100/Month Tier
+OpenAI is rolling out a $100/month tier for ChatGPT, targeting heavy users and prosumers who've been hitting limits on the standard plans. Pricing power is a signal of where OpenAI thinks its leverage is.
+- Presumably unlocks higher rate limits, priority access, or advanced model variants
+- Interesting positioning: OpenAI is segmenting its consumer base more aggressively
+- For devs: API pricing is still the relevant number — this is a consumer play
+**🔧 Dev Take:** "OpenAI is building a SaaS revenue ladder. Know which rung you're on and whether the API is still the better deal for your use case."
 
 ---
 
 ## Quick Hits
 
-- **r/LocalLLaMA Best Local LLMs Apr 2026** — Monthly rankings updated; the gap between local and frontier is narrowing faster than most expected. *(Go check the thread.)*
-- **deepset-ai/haystack (⭐24.8k)** — Still the most production-serious open-source LLM orchestration framework; context-engineering focus is the right bet right now.
-- **mlflow/mlflow (⭐25.4k)** — MLflow's agent evaluation and monitoring tooling is quietly becoming the default for teams running LLMs in prod.
-- **OpenClaw vs ZeroClaw comparison on dev.to** — Useful breakdown if you're evaluating AI agent platforms; OpenClaw's marketplace ecosystem seems to be its main differentiator.
-- **r/artificial: OpenClaw vs just using ChatGPT** — The real answer is always "it depends on whether you need orchestration or just answers," but the thread is worth a skim.
+- **iOS 26.5 public beta 2 is out** — includes an Apple Maps ads explainer, which is either transparency or a warning sign depending on your disposition
+- **[The Neuron] Something was "too dangerous to release"** — details sparse, but the pattern of labs announcing what they *didn't* ship is becoming its own genre
+- **[Latent Space] Top Local Models — April 2026** — good roundup of where the local/on-device model landscape sits right now; worth a skim if you're evaluating edge inference
+- **Claude Code degradation compounds the broader reliability question** — if top-tier coding assistants drift, the case for robust evals in your dev workflow gets stronger every week
+- **Context engineering is the new prompt engineering** — Haystack's framing of "context-engineered applications" is quietly becoming the dominant mental model for serious LLM builders
 
 ---
 
