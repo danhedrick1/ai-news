@@ -1816,7 +1816,7 @@
   async function checkForNewStories() {
     try {
       const today = getCurrentDateET();
-      const res = await fetch(`news/${today}.md?t=${Date.now()}`);
+      const res = await fetch(`news/${today}.md`);
       if (!res.ok) return;
 
       const md = await res.text();
@@ -1999,7 +1999,7 @@
     const targetId = format === 'twitter' ? 'twitter-content' : 'newsletter-content';
     const el = document.getElementById(targetId);
     try {
-      const res = await fetch(`news/${dateStr}${suffix}.md?t=${Date.now()}`);
+      const res = await fetch(`news/${dateStr}${suffix}.md`);
       if (!res.ok) throw new Error('not found');
       const md = await res.text();
       el.innerHTML = marked.parse(md);

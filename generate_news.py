@@ -25,6 +25,7 @@ import urllib.request
 from datetime import date, datetime, timezone, timedelta
 from email.utils import parsedate_to_datetime
 from xml.etree import ElementTree as ET
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # ── Config ─────────────────────────────────────────────────────────────────────
 
@@ -286,13 +287,70 @@ def parse_rss(data):
     return items
 
 
+def _fetch_single_source(tier, source_name, url, weight, max_age, limit, now, seen_links):
+    """Helper: fetch and process a single RSS source. Returns (articles, stats, message)."""
+    articles = []
+    added = stale = 0
+    fetched = 0
+
+    try:
+        data  = fetch_url(url)
+        items = parse_rss(data)[:limit]
+
+        for title, link, desc, pub_str in items:
+            fetched += 1
+            if link in seen_links:
+                continue
+            pub_dt = parse_pub_date(pub_str)
+            if not is_fresh(pub_dt, max_age):
+                stale += 1
+                continue
+            seen_links.add(link)
+            age_str = ""
+            if pub_dt:
+                age_h = (now - pub_dt).total_seconds() / 3600
+                age_str = f"{age_h:.0f}h ago"
+            try:
+                from urllib.parse import urlparse
+                domain = urlparse(link).netloc.lower().lstrip("www.")
+                is_paywalled = any(d in domain for d in PAYWALLED_DOMAINS)
+            except Exception:
+                is_paywalled = False
+            articles.append({
+                "source":        source_name,
+                "tier":          tier,
+                "weight":        weight,
+                "title":         title,
+                "link":          link,
+                "desc":          desc,
+                "pub_dt":        pub_dt.isoformat() if pub_dt else None,
+                "age_str":       age_str,
+                "hn_points":     0,
+                "hn_comments":   0,
+                "cross_sources": 1,
+                "prev_covered":  False,
+                "paywalled":     is_paywalled,
+                "score":         weight,
+            })
+            added += 1
+
+        label = f"{added} added" + (f", {stale} stale" if stale else "")
+        message = f"  [{tier:8}] {source_name}: {label}"
+        return articles, {"fetched": fetched, "stale": stale, "added": added}, message
+    except Exception as e:
+        message = f"  [{tier:8}] {source_name}: SKIP ({type(e).__name__}: {e})"
+        return [], {"fetched": 0, "stale": 0, "added": 0}, message
+
+
 def fetch_rss_sources():
-    """Fetch all sources, apply freshness filter, return scored article dicts."""
+    """Fetch all sources in parallel, apply freshness filter, return scored article dicts."""
     articles  = []
     seen_links = set()
     now        = datetime.now(timezone.utc)
     totals     = {"fetched": 0, "stale": 0, "added": 0}
 
+    # Collect all feed tasks
+    feed_tasks = []
     for tier, cfg in SOURCES.items():
         weight       = cfg["weight"]
         max_age      = cfg["max_age_hours"]
@@ -304,54 +362,22 @@ def fetch_rss_sources():
             limit = 8
 
         for source_name, url in cfg["feeds"]:
-            try:
-                data  = fetch_url(url)
-                items = parse_rss(data)[:limit]
-                added = stale = 0
+            feed_tasks.append((tier, source_name, url, weight, max_age, limit))
 
-                for title, link, desc, pub_str in items:
-                    totals["fetched"] += 1
-                    if link in seen_links:
-                        continue
-                    pub_dt = parse_pub_date(pub_str)
-                    if not is_fresh(pub_dt, max_age):
-                        stale += 1
-                        totals["stale"] += 1
-                        continue
-                    seen_links.add(link)
-                    age_str = ""
-                    if pub_dt:
-                        age_h = (now - pub_dt).total_seconds() / 3600
-                        age_str = f"{age_h:.0f}h ago"
-                    try:
-                        from urllib.parse import urlparse
-                        domain = urlparse(link).netloc.lower().lstrip("www.")
-                        is_paywalled = any(d in domain for d in PAYWALLED_DOMAINS)
-                    except Exception:
-                        is_paywalled = False
-                    articles.append({
-                        "source":        source_name,
-                        "tier":          tier,
-                        "weight":        weight,
-                        "title":         title,
-                        "link":          link,
-                        "desc":          desc,
-                        "pub_dt":        pub_dt.isoformat() if pub_dt else None,
-                        "age_str":       age_str,
-                        "hn_points":     0,
-                        "hn_comments":   0,
-                        "cross_sources": 1,
-                        "prev_covered":  False,
-                        "paywalled":     is_paywalled,
-                        "score":         weight,
-                    })
-                    added += 1
-                    totals["added"] += 1
+    # Fetch feeds in parallel
+    with ThreadPoolExecutor(max_workers=10) as executor:
+        futures = {
+            executor.submit(_fetch_single_source, tier, source_name, url, weight, max_age, limit, now, seen_links): (tier, source_name)
+            for tier, source_name, url, weight, max_age, limit in feed_tasks
+        }
 
-                label = f"{added} added" + (f", {stale} stale" if stale else "")
-                print(f"  [{tier:8}] {source_name}: {label}")
-            except Exception as e:
-                print(f"  [{tier:8}] {source_name}: SKIP ({type(e).__name__}: {e})")
+        for future in as_completed(futures):
+            source_articles, stats, message = future.result()
+            articles.extend(source_articles)
+            totals["fetched"] += stats["fetched"]
+            totals["stale"] += stats["stale"]
+            totals["added"] += stats["added"]
+            print(message)
 
     print(f"  -> {totals['added']} fresh / {totals['stale']} stale filtered / {totals['fetched']} total")
     return articles
