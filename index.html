@@ -992,6 +992,11 @@
       z-index: 1;
     }
 
+    /* ── UTILITY CLASSES ── */
+    .hidden { display: none; }
+    .error-icon { font-size: 2rem; }
+    .timestamp-label { font-size: 0.7rem; color: var(--text-muted); margin-left: 8px; }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
       aside { display: none; }
@@ -1018,11 +1023,11 @@
     <span class="tagline">your daily terminal into AI & tech</span>
   </div>
   <div class="header-right">
-    <button id="theme-toggle" class="header-btn" onclick="toggleTheme()" title="Toggle theme">&#9790;</button>
+    <button id="theme-toggle" class="header-btn" onclick="toggleTheme()" title="Toggle theme" aria-label="Toggle dark/light theme">&#9790;</button>
     <button id="subscribe-btn" onclick="scrollToNewsletterSignup()">subscribe</button>
     <div style="position:relative">
-      <button id="archive-btn" class="header-btn" onclick="toggleArchive()">archive</button>
-      <div id="archive-dropdown" class="archive-dropdown" style="display:none">
+      <button id="archive-btn" class="header-btn" onclick="toggleArchive()" aria-label="Open archive" aria-expanded="false" aria-controls="archive-dropdown">archive</button>
+      <div id="archive-dropdown" class="archive-dropdown hidden" role="menu">
         <div id="dropdown-dates"></div>
       </div>
     </div>
@@ -1067,19 +1072,19 @@
         <div class="spinner"></div>
         <span>Booting latest digest...</span>
       </div>
-      <div id="error-msg" style="display:none">
-        <span style="font-size:2rem">!</span>
+      <div id="error-msg" class="hidden">
+        <span class="error-icon">!</span>
         <span id="error-text">Failed to load digest.</span>
       </div>
-      <div id="format-tabs" class="format-tabs" style="display:none">
+      <div id="format-tabs" class="format-tabs hidden">
         <button class="format-tab active" data-format="website" onclick="switchFormat('website')">Website</button>
         <button class="format-tab" data-format="twitter" onclick="switchFormat('twitter')">Twitter/X Thread</button>
         <button class="format-tab" data-format="newsletter" onclick="switchFormat('newsletter')">Newsletter</button>
       </div>
-      <div id="content" class="format-content active" style="display:none"></div>
-      <div id="twitter-content" class="format-content" style="display:none"></div>
-      <div id="newsletter-content" class="format-content" style="display:none"></div>
-      <div id="support-footer" class="support-footer" style="display:none">
+      <div id="content" class="format-content active hidden"></div>
+      <div id="twitter-content" class="format-content hidden"></div>
+      <div id="newsletter-content" class="format-content hidden"></div>
+      <div id="support-footer" class="support-footer hidden">
         <div class="support-footer-grid">
           <div>
             <div class="footer-section-label">newsletter</div>
@@ -1533,12 +1538,18 @@
   // ── Archive Dropdown ────────────────────────────────────────────────────────
 
   function toggleArchive() {
+    const btn = document.getElementById('archive-btn');
     const dropdown = document.getElementById('archive-dropdown');
-    dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+    const isOpen = !dropdown.classList.contains('hidden');
+    dropdown.classList.toggle('hidden');
+    btn.setAttribute('aria-expanded', String(!isOpen));
   }
 
   function closeArchiveDropdown() {
-    document.getElementById('archive-dropdown').style.display = 'none';
+    const btn = document.getElementById('archive-btn');
+    const dropdown = document.getElementById('archive-dropdown');
+    dropdown.classList.add('hidden');
+    btn.setAttribute('aria-expanded', 'false');
   }
 
   function populateDropdown(dates) {
@@ -1838,7 +1849,7 @@
         newStories.forEach(story => {
           if (story.tagName === 'H3') {
             const timeLabel = document.createElement('span');
-            timeLabel.style.cssText = 'font-size:0.7rem;color:var(--text-muted);margin-left:8px;';
+            timeLabel.className = 'timestamp-label';
             timeLabel.textContent = `(${timestamp})`;
             story.appendChild(timeLabel);
           }

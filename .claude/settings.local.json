@@ -3,7 +3,8 @@
     "allow": [
       "Bash(git clone:*)",
       "Bash(git add:*)",
-      "Bash(git commit -m 'perf: fix critical bugs and parallelize RSS fetching:*)"
+      "Bash(git commit -m 'perf: fix critical bugs and parallelize RSS fetching:*)",
+      "Bash(git commit -m 'refactor: extract inline styles and improve accessibility:*)"
     ]
   }
 }
