@@ -890,6 +890,90 @@
       }
     }
 
+    /* ── RELATED DIGESTS ── */
+    .related-digests {
+      margin: 48px 0 32px 0;
+      padding: 0;
+      border-top: 1px solid var(--border);
+      padding-top: 24px;
+    }
+
+    .related-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .related-header h3 {
+      margin: 0;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-weight: 400;
+    }
+
+    .related-toggle {
+      display: none;
+      background: transparent;
+      border: none;
+      color: var(--text-primary);
+      cursor: pointer;
+      font-size: 1rem;
+      padding: 0;
+      width: 24px;
+      height: 24px;
+      line-height: 1;
+    }
+
+    .related-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: max-height 0.3s ease;
+    }
+
+    .related-item {
+      display: flex;
+      align-items: center;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-primary);
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-family: var(--font-mono);
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s ease;
+    }
+
+    .related-item:hover {
+      background: var(--card-bg);
+      border-color: var(--text-primary);
+    }
+
+    .related-item.active {
+      background: var(--text-primary);
+      color: var(--bg);
+      border-color: var(--text-primary);
+    }
+
+    .related-date {
+      display: block;
+    }
+
+    @media (max-width: 768px) {
+      .related-list {
+        max-height: 0;
+        overflow: hidden;
+      }
+
+      .related-toggle {
+        display: block;
+      }
+    }
+
     /* ── DATE HEADER ── */
     .news-meta {
       display: flex;
@@ -1883,6 +1967,55 @@
           });
         });
       });
+
+      // Add related digests sidebar
+      if (newsIndex.length > 1) {
+        const recentDates = newsIndex.slice(0, 10).map(entry => entry.date);
+        const relatedEl = document.createElement('div');
+        relatedEl.className = 'related-digests';
+        relatedEl.innerHTML = `
+          <div class="related-header">
+            <h3>// recent digests</h3>
+            <button class="related-toggle" aria-label="Toggle related digests" style="display: none;">▼</button>
+          </div>
+          <div class="related-list">
+            ${recentDates.map(date => {
+              const isCurrentDate = date === dateStr;
+              const daysDiff = Math.floor((new Date(dateStr) - new Date(date)) / (1000 * 60 * 60 * 24));
+              let label = formatDate(date);
+              if (daysDiff === 0) label += ' (today)';
+              else if (daysDiff === 1) label += ' (yesterday)';
+              else if (daysDiff > 1 && daysDiff <= 7) label += ` (${daysDiff}d ago)`;
+
+              return `
+                <button class="related-item ${isCurrentDate ? 'active' : ''}" data-date="${date}" onclick="loadNews('${date}')">
+                  <span class="related-date">${label}</span>
+                </button>
+              `;
+            }).join('')}
+          </div>
+        `;
+
+        if (contentEl.lastElementChild) {
+          contentEl.lastElementChild.after(relatedEl);
+        } else {
+          contentEl.appendChild(relatedEl);
+        }
+
+        // Mobile toggle for related digests
+        const toggleBtn = relatedEl.querySelector('.related-toggle');
+        const relatedList = relatedEl.querySelector('.related-list');
+        if (window.innerWidth < 768) {
+          toggleBtn.style.display = 'block';
+          relatedList.style.maxHeight = '0';
+          relatedList.style.overflow = 'hidden';
+          toggleBtn.addEventListener('click', () => {
+            const isOpen = relatedList.style.maxHeight !== '0px';
+            relatedList.style.maxHeight = isOpen ? '0' : relatedList.scrollHeight + 'px';
+            toggleBtn.textContent = isOpen ? '▼' : '▲';
+          });
+        }
+      }
 
       postProcessContent(contentEl);
       updateTerminalIntro(dateStr, md, contentEl);
