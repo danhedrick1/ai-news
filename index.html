@@ -1730,6 +1730,7 @@
     const input = form.querySelector('input[type="email"]');
     const button = form.querySelector('button[type="submit"]');
     const email = input.value.trim();
+    const source = currentWeek ? `weekly:${currentWeek}` : (currentDate ? `daily:${currentDate}` : 'site');
 
     statusEl.className = 'newsletter-status';
     statusEl.textContent = '';
@@ -1743,7 +1744,7 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           email,
-          source: currentWeek ? `weekly:${currentWeek}` : (currentDate ? `daily:${currentDate}` : 'site')
+          source
         })
       });
       const data = await res.json();
