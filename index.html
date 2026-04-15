@@ -93,11 +93,13 @@
       --terminal-shadow: rgba(15, 20, 25, 0.3);
     }
 
+    html {
+      background: #0a0e14 !important;
+    }
+
     body {
       font-family: var(--font-mono);
-      background:
-        radial-gradient(circle at top, rgba(57,211,83,0.12), transparent 32%),
-        linear-gradient(180deg, #0a0e14 0%, #050709 100%);
+      background: #0a0e14 !important;
       color: var(--text);
       min-height: 100vh;
       display: flex;
@@ -262,7 +264,7 @@
     aside {
       width: 240px;
       min-width: 240px;
-      background: var(--sidebar-bg);
+      background: #0f1419 !important;
       border-right: 1px solid var(--border);
       padding: 20px 0;
       position: sticky;
@@ -308,6 +310,7 @@
       padding: 36px 48px;
       max-width: 980px;
       width: 100%;
+      background: #0a0e14 !important;
     }
 
     .terminal-shell {
