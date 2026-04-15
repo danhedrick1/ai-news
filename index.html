@@ -1234,6 +1234,7 @@
   function updateDigestMetadata(dateStr, container) {
     const origin = window.location.origin || 'https://thebash.dev';
     const pageUrl = `${origin}/${dateStr}`;
+    const ogImageUrl = `${origin}/news/og-images/${dateStr}.png`;
     const firstStory = cleanHeadingText(container.querySelector('h3')?.textContent || '');
     const title = `${formatDate(dateStr)} | theba.sh`;
     const description = truncate(
@@ -1241,29 +1242,50 @@
         ? `theba.sh for ${formatDate(dateStr)}: ${firstStory}. High-signal AI and developer news for builders.`
         : `theba.sh for ${formatDate(dateStr)}: high-signal AI and developer news for builders.`
     );
+
+    // Enhanced structured data using NewsArticle schema
     const structuredData = {
       '@context': 'https://schema.org',
-      '@type': 'CollectionPage',
-      name: `theba.sh - ${formatDate(dateStr)}`,
-      headline: `theba.sh - ${formatDate(dateStr)}`,
+      '@type': 'NewsArticle',
+      headline: `${formatDate(dateStr)} — theba.sh`,
       description,
       url: pageUrl,
-      isPartOf: {
-        '@type': 'WebSite',
+      datePublished: dateStr + 'T00:00:00Z',
+      dateModified: new Date().toISOString(),
+      image: {
+        '@type': 'ImageObject',
+        url: ogImageUrl,
+        width: 1200,
+        height: 630
+      },
+      author: {
+        '@type': 'Organization',
         name: 'theba.sh',
         url: origin
       },
-      about: ['Artificial intelligence', 'Software development', 'Machine learning'],
-      dateModified: new Date().toISOString()
+      publisher: {
+        '@type': 'Organization',
+        name: 'theba.sh',
+        logo: {
+          '@type': 'ImageObject',
+          url: origin + '/favicon.svg'
+        }
+      },
+      about: ['Artificial intelligence', 'Software development', 'Machine learning']
     };
 
     document.title = title;
     setMeta('meta[name="description"]', description);
+    setMeta('meta[property="og:type"]', 'article');
     setMeta('meta[property="og:title"]', title);
     setMeta('meta[property="og:description"]', description);
     setMeta('meta[property="og:url"]', pageUrl);
+    setMeta('meta[property="og:image"]', ogImageUrl);
+    setMeta('meta[property="og:image:width"]', '1200');
+    setMeta('meta[property="og:image:height"]', '630');
     setMeta('meta[name="twitter:title"]', title);
     setMeta('meta[name="twitter:description"]', description);
+    setMeta('meta[name="twitter:image"]', ogImageUrl);
     setMeta('link[rel="canonical"]', pageUrl, 'href');
     setStructuredData(structuredData);
   }

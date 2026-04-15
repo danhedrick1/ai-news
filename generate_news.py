@@ -1441,6 +1441,81 @@ def build_weekly_recap_for_date(target_date, client=None):
     return week_id(target_date)
 
 
+def generate_og_image(content, target_date):
+    """Generate a 1200x630px OG image for social sharing."""
+    try:
+        from PIL import Image, ImageDraw, ImageFont
+    except ImportError:
+        print("  [og-image] Pillow not installed, skipping OG image generation")
+        return None
+
+    try:
+        # Create image
+        width, height = 1200, 630
+        img = Image.new('RGB', (width, height), color='#0a0e14')
+        draw = ImageDraw.Draw(img)
+
+        # Colors from theba.sh theme
+        accent_green = '#39d353'
+        text_color = '#e6edf3'
+        muted_color = '#7a8a9e'
+
+        # Try to use a nice font, fall back to default
+        try:
+            title_font = ImageFont.truetype("/System/Library/Fonts/Helvetica.ttc", 36)
+            story_font = ImageFont.truetype("/System/Library/Fonts/Helvetica.ttc", 24)
+            footer_font = ImageFont.truetype("/System/Library/Fonts/Helvetica.ttc", 18)
+        except:
+            title_font = ImageFont.load_default()
+            story_font = ImageFont.load_default()
+            footer_font = ImageFont.load_default()
+
+        # Draw border
+        border_width = 4
+        draw.rectangle(
+            [(border_width//2, border_width//2), (width - border_width//2, height - border_width//2)],
+            outline=accent_green,
+            width=border_width
+        )
+
+        # Extract top 3 stories from markdown
+        lines = content.split('\n')
+        stories = []
+        for i, line in enumerate(lines):
+            if line.startswith('### ') and len(stories) < 3:
+                story_title = line[4:].strip()
+                # Remove [PAYWALL] tag if present
+                story_title = story_title.replace('[PAYWALL]', '').strip()
+                if len(story_title) > 60:
+                    story_title = story_title[:57] + '...'
+                stories.append(story_title)
+
+        # Draw title (date)
+        y = 40
+        formatted_date = format_nice_date(target_date)
+        draw.text((60, y), f"theba.sh — {formatted_date}", fill=accent_green, font=title_font)
+
+        # Draw stories
+        y = 140
+        for story in stories:
+            draw.text((60, y), f"• {story}", fill=text_color, font=story_font)
+            y += 60
+
+        # Draw footer
+        draw.text((60, height - 60), "35 sources • ranked by impact", fill=muted_color, font=footer_font)
+
+        # Save image
+        og_images_dir = os.path.join(NEWS_DIR, 'og-images')
+        os.makedirs(og_images_dir, exist_ok=True)
+        image_path = os.path.join(og_images_dir, f"{target_date}.png")
+        img.save(image_path)
+        print(f"  [og-image] Generated: {image_path}")
+        return image_path
+    except Exception as e:
+        print(f"  [og-image] Failed to generate: {e}")
+        return None
+
+
 # ── Save & Push ────────────────────────────────────────────────────────────────
 
 def save_news(content, target_date, twitter_thread=None, newsletter=None):
@@ -1449,6 +1524,9 @@ def save_news(content, target_date, twitter_thread=None, newsletter=None):
     with open(filepath, "w", encoding="utf-8") as f:
         f.write(content)
     print(f"Saved: {filepath}")
+
+    # Generate OG image for social sharing
+    generate_og_image(content, target_date)
 
     # Save Twitter thread
     if twitter_thread:
