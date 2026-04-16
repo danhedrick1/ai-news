@@ -5,6 +5,23 @@
     <link>https://thebash.dev</link>
     <description>High-signal AI &amp; tech news for developers</description>
     <item>
+      <title>theba.sh — April 16, 2026</title>
+      <link>https://thebash.dev/2026-04-16</link>
+      <description># theba.sh — April 16, 2026
+
+*37 sources · ranked by impact · signal over noise*
+
+---
+
+## stdout // the big story
+
+### Claude Is Getting Worse — and Anthropic Is Testing "Mythos" While Users Burn
+
+Something changed with Claude. Over the past few weeks, a chorus of power users across X, GitHub, and Reddit have been comparing notes, sharing benchmarks, and reaching the same uncomfortable conclusion: Claude has regressed. The complaints are specific — less nuanced code output, more hedging, shorter</description>
+      <pubDate>Thu, 16 Apr 2026 12:00:00 +0000</pubDate>
+      <guid>https://thebash.dev/2026-04-16</guid>
+    </item>
+    <item>
       <title>theba.sh — April 15, 2026</title>
       <link>https://thebash.dev/2026-04-15</link>
       <description># theba.sh — April 15, 2026
@@ -328,23 +345,6 @@ On Tuesday, OpenAI quietly dismantled one of its most-hyped products. Sora, the 
 Bloomberg dropped a detailed look today at the tension between Anthropic and the U.S. military over autonomous weapons systems — and it's messier than the usual "AI safety" PR framing suggests. The short version: Anthropic has been pushing back internally on how its models can be used in lethal aut</description>
       <pubDate>Sat, 28 Mar 2026 12:00:00 +0000</pubDate>
       <guid>https://thebash.dev/2026-03-28</guid>
-    </item>
-    <item>
-      <title>theba.sh — March 27, 2026</title>
-      <link>https://thebash.dev/2026-03-27</link>
-      <description># theba.sh — March 27, 2026
-
-*34 sources · ranked by impact · signal over noise*
-
----
-
-## stdout // the big story
-
-### Claude Mythos Leaks: Anthropic's New Tier Above Opus Is Real
-
-A leaked Anthropic internal post has confirmed what the rumor mill has been churning for weeks: Anthropic is testing a new model called **Claude Mythos**, positioned explicitly above Claude Opus in the capability hierarchy. This isn't a minor bump — the framing suggests an entirely new tier, not just an incremental up</description>
-      <pubDate>Fri, 27 Mar 2026 12:00:00 +0000</pubDate>
-      <guid>https://thebash.dev/2026-03-27</guid>
     </item>
   </channel>
 </rss>
