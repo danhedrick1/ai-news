@@ -9,15 +9,15 @@
       <link>https://thebash.dev/2026-04-16</link>
       <description># theba.sh — April 16, 2026
 
-*37 sources · ranked by impact · signal over noise*
+*36 sources · ranked by impact · signal over noise*
 
 ---
 
 ## stdout // the big story
 
-### Claude Is Getting Worse — and Anthropic Is Testing "Mythos" While Users Burn
+### AI Agent Reliability Is the Wrong Metric — Consistency Is What Actually Breaks Production
 
-Something changed with Claude. Over the past few weeks, a chorus of power users across X, GitHub, and Reddit have been comparing notes, sharing benchmarks, and reaching the same uncomfortable conclusion: Claude has regressed. The complaints are specific — less nuanced code output, more hedging, shorter</description>
+The conversation around AI agents has been dominated by average-case accuracy benchmarks, and today's coverage across a dozen sources makes clear that framing is dangerously misleading. The real killer in safety-critical deployments isn't a bad average — it's variance. An agent that's righ</description>
       <pubDate>Thu, 16 Apr 2026 12:00:00 +0000</pubDate>
       <guid>https://thebash.dev/2026-04-16</guid>
     </item>
