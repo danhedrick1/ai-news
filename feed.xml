@@ -15,9 +15,9 @@
 
 ## stdout // the big story
 
-### AI Agent Reliability Is the Wrong Metric — Consistency Is What Actually Breaks Production
+### Claude Opus 4.7 drops — and it's complicated
 
-The conversation around AI agents has been dominated by average-case accuracy benchmarks, and today's coverage across a dozen sources makes clear that framing is dangerously misleading. The real killer in safety-critical deployments isn't a bad average — it's variance. An agent that's righ</description>
+Anthropic shipped Claude Opus 4.7 today, and the story has at least three layers worth unpacking. The model itself appears to be a genuine capability leap: benchmarks circulating on r/singularity show strong performance on VALS/AI evals and software engineering tasks, and 9to5Mac notes Anthropic is explicitly positioning it around "a</description>
       <pubDate>Thu, 16 Apr 2026 12:00:00 +0000</pubDate>
       <guid>https://thebash.dev/2026-04-16</guid>
     </item>
