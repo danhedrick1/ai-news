@@ -5,6 +5,23 @@
     <link>https://thebash.dev</link>
     <description>High-signal AI &amp; tech news for developers</description>
     <item>
+      <title>theba.sh — April 17, 2026</title>
+      <link>https://thebash.dev/2026-04-17</link>
+      <description># theba.sh — April 17, 2026
+
+*35 sources · ranked by impact · signal over noise*
+
+---
+
+## stdout // the big story
+
+**Update: Claude Opus 4.7 — more depth on what's actually in it, and the drama emerging around it**
+
+Anthropic dropped Claude Opus 4.7 this week and the fallout is still coming in. The headline capability is **Mythos Preview** — Anthropic's most capable cybersecurity-focused model, which apparently performed well enough against real adversarial scenarios that the **FT is reporting f</description>
+      <pubDate>Fri, 17 Apr 2026 12:00:00 +0000</pubDate>
+      <guid>https://thebash.dev/2026-04-17</guid>
+    </item>
+    <item>
       <title>theba.sh — April 16, 2026</title>
       <link>https://thebash.dev/2026-04-16</link>
       <description># theba.sh — April 16, 2026
@@ -326,25 +343,6 @@ Anthropic accidentally leaked details about Claude Mythos, described in early re
 On Tuesday, OpenAI quietly dismantled one of its most-hyped products. Sora, the text-to-video model that generated a frenzy of press coverage when it debuted, is being shuttered. But the Sora killing is just the headline — the full story is stranger. In the same week, OpenAI also wound down a $1 billion Disney content deal, rev</description>
       <pubDate>Sun, 29 Mar 2026 12:00:00 +0000</pubDate>
       <guid>https://thebash.dev/2026-03-29</guid>
-    </item>
-    <item>
-      <title>theba.sh — March 28, 2026</title>
-      <link>https://thebash.dev/2026-03-28</link>
-      <description>---
-
-# theba.sh — March 28, 2026
-
-*29 sources · ranked by impact · signal over noise*
-
----
-
-## stdout // the big story
-
-### Anthropic vs. the Pentagon: The Fight Over Autonomous Weapons Is Now Public
-
-Bloomberg dropped a detailed look today at the tension between Anthropic and the U.S. military over autonomous weapons systems — and it's messier than the usual "AI safety" PR framing suggests. The short version: Anthropic has been pushing back internally on how its models can be used in lethal aut</description>
-      <pubDate>Sat, 28 Mar 2026 12:00:00 +0000</pubDate>
-      <guid>https://thebash.dev/2026-03-28</guid>
     </item>
   </channel>
 </rss>
