@@ -8,90 +8,90 @@
 
 ## Week in One Screen
 
-The week opened with Mythos dominating the policy conversation and closed with the clearest picture yet of what the agentic infrastructure layer actually looks like in production. Three threads ran through every day: frontier capability is outpacing public access (and the informational asymmetry is now a geopolitical variable), the labs are consolidating around workflows rather than benchmarks, and the physical constraints on AI expansion — hardware supply, data center siting, power grid capacity — stopped being theoretical. The capital stack repriced visibly: $800B Anthropic valuations, $5.7B junk bonds for compute, $500M for self-teaching AI, and a Cerebras IPO filing, all in the same week.
+The dominant story this week wasn't a model launch — it was the **capability-governance collision going live**. Mythos sat at the center of it: an Anthropic model in controlled enterprise deployment while the White House, Pentagon, and UK Parliament were simultaneously trying to figure out what to do with it. Claude Opus 4.7 dropped mid-week with a mixed community verdict and a rate-limit tax nobody budgeted for. OpenAI countered with Codex expansion and GPT-Rosalind, then shed Sora, killed its science team, and lost two senior executives in the same week. The pattern underneath all of it: the "AI for everything" era is ending and vertical specialization plus workflow ownership is replacing it.
 
-The quieter but more durable story is the agentic coding workflow becoming a real engineering discipline with real failure modes. Claude Code's context drift problem, the OpenAI Codex counter-move, the native sandbox execution in OpenAI Agents SDK, and the week-long community verdict on Opus 4.7's hidden rate-limit tax are all aspects of the same transition: the gap between demo agent and production agent is no longer primarily a model quality problem. It's a systems design problem — context management, memory architecture, token cost opacity, and multi-principal authority. The builders solving those problems this quarter are building the primitives everyone else will depend on in 18 months.
+The **agentic infrastructure layer** hardened considerably this week, quietly and without a single headline carrying the full weight of it. Cloudflare Agent Cloud went live with GPT-5.4 + Codex. OpenAI's Agents SDK got native sandbox execution. Claude Code got Repeatable Routines but ran into documented context drift at the two-week mark. Gemma 4 26B displaced Qwen in local deployment benchmarks. Speculative checkpointing merged into llama.cpp. Benchmark contamination got quantified with a 41-point documented gap. Separately: Vercel got hacked, Seattle floated a data center moratorium, and Cal.com went closed-source. It was a dense week. Here's what actually matters.
 
 ---
 
 ## Biggest Shifts
 
-### The Frontier Capability Gap Is Now a Geopolitical Variable
+### The Mythos Containment Problem Is Now a Geopolitical Variable
 
-Mythos was briefed to the Trump White House, reviewed formally by the UK government, flagged by Goldman Sachs at the CEO level, and is simultaneously the subject of a Pentagon lawsuit and White House access conversations. This is not a safety story anymore — it's a structural information asymmetry story. The most capable deployed AI systems are not in any public API, and national security establishments are working off incomplete information while the labs hold the full picture. For builders, the practical implication is that "the best available model" is a moving target you have no visibility into, and vendor relationships are now geopolitical exposure.
+Anthropic briefed both the Trump White House and UK Parliament on Mythos this week while simultaneously being sued by the Pentagon and recommended by US government agencies. Goldman's CEO is publicly discussing cybersecurity defenses against it. This is not the usual "AI safety" discourse — this is a model in controlled enterprise deployment while national security establishments are still mid-review. The business track and the safety track have fully collided, and no coherent governance framework exists to manage the intersection.
 
-- **Concrete takeaway:** If you're in a regulated industry or government-adjacent market, start mapping which parts of the US government are favorable vs. adversarial toward your AI vendor stack. DoD and civilian agencies are operating under different threat models right now.
-- **Watch next week:** Whether the Pentagon freeze on Anthropic continues thawing, and whether any formal Mythos access framework gets announced.
+- **Takeaway:** If you're building anything in a regulated industry or government-adjacent stack, treat "the US government" as multiple competing actors with different and sometimes contradictory AI risk postures — not a single policy environment.
+- **Watch:** Whether the Pentagon lawsuit thaws further or becomes the template for other DoD conflicts with frontier labs. The Amodei/White House meeting this week suggests the executive branch is moving toward accommodation; the DoD may not follow.
 
 **Source trail:** [Mon digest](https://thebash.dev/2026-04-13), [Tue digest](https://thebash.dev/2026-04-14), [Fri digest](https://thebash.dev/2026-04-17), [Sat digest](https://thebash.dev/2026-04-18)
 
 ---
 
-### Agentic Coding Workflows Hit a Messy Adolescence
+### OpenAI's "No Side Quests" Purge Reshapes the Competitive Map
 
-Claude Code's 2-week quality cliff, the Repeatable Routines feature, Opus 4.7's always-on thinking tokenizer tax, and OpenAI Codex going broad with native macOS integration all landed in the same week. The pattern is consistent: these tools have moved past early adopters and into teams that are now hitting systems-level failure modes rather than model-level ones. The 2-week cliff is not a model regression — it's accumulated context state degrading output quality. That's a memory architecture problem, and every agentic framework is going to hit it. The Codex counter-move from OpenAI is reactive but correct; Anthropic currently owns the agentic coding workflow more clearly than any other lab.
+Sora is dead. Kevin Weil and Bill Peebles are out. The science team is dissolved. OpenAI is not in chaos — it's executing a hard pivot to enterprise revenue focus. That pivot creates real openings: video AI, scientific computing, and consumer creative tooling are now explicitly de-prioritized at the lab that had the most visible presence in each. The Codex counter-move against Claude Code is the right call but it's reactive. Claude Design shipped this week. Claude Code has two-week production deployments. Anthropic is winning workflows; OpenAI is still repositioning.
 
-- **Concrete takeaway:** Audit your Claude Code session hygiene now. Long-running sessions with accumulated state are your biggest quality risk, not model capability. If you don't have explicit context-reset checkpoints in your workflow, build them.
-- **Watch next week:** Whether OpenAI's Codex superapp gains real adoption or whether Anthropic's head start in developer workflow lock-in proves durable.
+- **Takeaway:** If you're building in any of the spaces OpenAI just vacated — video generation, scientific AI, creative tooling — the competitive pressure from OpenAI just dropped materially. That won't last, but the window is real.
+- **Watch:** OpenAI's acquisition posture. The Sunday digest framed their existential problems as acquisition problems. If they move on a video AI or scientific computing target in the next 90 days, that confirms the strategic read.
 
-**Source trail:** [Tue digest](https://thebash.dev/2026-04-14), [Thu digest](https://thebash.dev/2026-04-16), [Sat digest](https://thebash.dev/2026-04-18)
-
----
-
-### Token Cost Opacity Is the Hidden Ops Tax of 2026
-
-Opus 4.7 shipped with always-on extended thinking baked into the tokenizer, which means the rate-limit and cost profile changed without a commensurate headline price change. This isn't unique to Anthropic — it's a pattern across the labs. GPT-5.4's pricing structure in the Cloudflare Agent Cloud context, and the general shift toward "same price" announcements that obscure per-task cost increases, are all versions of the same move. Labs have every incentive to hold headline prices flat while shifting the cost/token calculus on capability-intensive tasks.
-
-- **Concrete takeaway:** Treat any "same price" or "no price change" announcement as a trigger for a mandatory token-count audit on your top-10 production prompts before migrating. Do not rely on vendor documentation for this — measure actual token throughput in your workload.
-- **Watch next week:** Whether the community builds standardized cost-audit tooling for model migrations, or whether this remains a manual per-team exercise.
-
-**Source trail:** [Sat digest](https://thebash.dev/2026-04-18), [Sun digest](https://thebash.dev/2026-04-19), [Thu digest](https://thebash.dev/2026-04-16)
+**Source trail:** [Fri digest](https://thebash.dev/2026-04-17), [Sat digest](https://thebash.dev/2026-04-18), [Sun digest](https://thebash.dev/2026-04-19)
 
 ---
 
-### Vertical Model Fragmentation Is Accelerating
+### Agentic Coding Workflows Hit the "Messy Adolescence" Wall
 
-GPT-Rosalind for life sciences, GPT-5.4-Cyber for security, Claude Opus 4.7 with hardened cybersecurity evals, and NVIDIA's Ising for quantum error correction all dropped within the same week. The labs are executing a portfolio strategy faster than most builders have updated their evaluation frameworks. "Which LLM is best" is the wrong question for any non-trivial production deployment. The right question is domain-specific, and the answer is increasingly not the largest general-purpose model. The open-weights side is moving too: Gemma 4 26B displacing Qwen in local deployments is real competitive pressure from a Western lab on the Chinese open-weight ecosystem.
+Claude Code's context drift at the two-week mark is the most technically important production signal this week. The model hasn't degraded — the accumulated session state has. This is a systems failure, not a model failure, and it's the same failure mode every long-running distributed system hits when state accumulates without explicit cleanup. The Repeatable Routines feature addresses part of this. It doesn't address the underlying context management architecture problem. Meanwhile OpenAI's Agents SDK added native sandbox execution and model-native harness, tightening the scaffolding layer across both major agentic platforms.
 
-- **Concrete takeaway:** If you're running general-purpose frontier models on domain-specific tasks (security, bio, legal, finance), run a head-to-head eval against the new vertical models before your next billing cycle. The gap may be large enough to justify a routing change.
-- **Watch next week:** Whether any vertical model gains enough third-party validation to become the default recommendation for its domain, and whether other labs announce their own vertical model roadmaps.
+- **Takeaway:** If you have Claude Code deployments running beyond one week of continuous context, build explicit state checkpointing and context reset triggers into your workflow now. Don't wait for the framework to solve it.
+- **Watch:** Whether Anthropic ships a memory architecture update to Claude Code before the context drift problem becomes a documented production failure pattern that enterprise buyers use to slow procurement.
 
-**Source trail:** [Thu digest](https://thebash.dev/2026-04-16), [Wed digest](https://thebash.dev/2026-04-15), [Mon digest](https://thebash.dev/2026-04-13)
+**Source trail:** [Tue digest](https://thebash.dev/2026-04-14), [Wed digest](https://thebash.dev/2026-04-15), [Sat digest](https://thebash.dev/2026-04-18)
 
 ---
 
-### Physical Infrastructure Scarcity Is Now a Product Risk
+### Local Models Are Crossing Thresholds, Not Approaching Them
 
-Seattle's data center moratorium, Apple Silicon delays pushing Mac Studio to October, copper supply constraints on data center expansion, and memory shortages affecting the MacBook Pro timeline all hit the same week. These are not coincidental. AI's physical infrastructure requirements are large enough to hit local political limits — grid, zoning, water — and supply chains that were running on demand pull for two years are showing real stress. The "just build more compute" assumption is broken at the municipal and supply chain level simultaneously.
+Gemma 4 26B displaced Qwen in local deployments this week. Speculative checkpointing merged into llama.cpp. Community benchmarks have Qwen 3.6 35B at 8-bit on M5 Max 128GB matching Claude on coding tasks. The open-weights ecosystem is getting a structural tailwind that isn't ideological — it's enterprise procurement risk management. Rate-limit taxes on Claude Opus 4.7 are already prompting migration conversations. Thursday's digest put a 12-month timeline on "no proprietary model APIs in prod" becoming a regulated-industry procurement requirement. The hardware constraint (Mac Studio delayed to October) is the main friction point, not capability.
 
-- **Concrete takeaway:** If your production workload or your hardware roadmap has a hard dependency on specific GPU SKUs, Apple Silicon release cycles, or data center regions in major metros, you need more buffer than you currently have. Audit those dependencies and identify fallback paths.
-- **Watch next week:** Whether other cities follow Seattle's lead and whether Apple's October Mac Studio timeline slips further as memory constraints persist.
+- **Takeaway:** Run perturbation tests on any open-weights model you're deploying for reasoning-heavy tasks. The Robust Reasoning Benchmark finding from Monday holds: frontier proprietary models handle formatting perturbations; open-weights reasoning models collapse. Benchmark scores on clean datasets are not deployment signals.
+- **Watch:** Whether Qwen3's MoE releases or Gemma 4's trajectory captures the enterprise procurement conversation first. Mozilla's Thunderbolt announcement and the broader vendor lock-in anxiety are creating demand that someone will capture.
 
-**Source trail:** [Sat digest](https://thebash.dev/2026-04-18), [Sun digest](https://thebash.dev/2026-04-19), [Wed digest](https://thebash.dev/2026-04-15)
+**Source trail:** [Mon digest](https://thebash.dev/2026-04-13), [Wed digest](https://thebash.dev/2026-04-15), [Thu digest](https://thebash.dev/2026-04-16), [Sun digest](https://thebash.dev/2026-04-19)
+
+---
+
+### Benchmark Contamination Is Breaking Evaluation as a Signal
+
+Sunday's LLMatcher post quantified a 41-point gap between contaminated and clean benchmark performance. This isn't a new concern — it's a newly measured one, with numbers attached. The field is still running evals on benchmarks that top models have seen during training, generating leaderboards that are more marketing than measurement. Combined with the Robust Reasoning Benchmark perturbation findings from Monday, the practical conclusion is the same: if you're making deployment decisions based on published benchmark scores, you're using a corrupted signal.
+
+- **Takeaway:** Build your own eval suite. It doesn't need to be exhaustive — it needs to be contamination-resistant, domain-specific, and include perturbation variants of your core task types. A small clean eval beats a large published one for deployment decisions.
+- **Watch:** Whether any major lab announces continuously-generated fresh evaluation sets with cryptographic provenance in the next two quarters. The lab that gets ahead of this owns the capability narrative when the contamination problem becomes mainstream.
+
+**Source trail:** [Mon digest](https://thebash.dev/2026-04-13), [Sun digest](https://thebash.dev/2026-04-19)
 
 ---
 
 ## Builder Board
 
-- **llama.cpp merges speculative checkpointing** — Direct impact on local inference performance for long-context tasks. If you run llama.cpp in any production or near-production context, pull and benchmark this week. This is not a minor patch.
+- **Claude Opus 4.7 rate-limit tax is real and underdocumented.** Two separate digest updates this week (Sat + Sun) flagged that production deployments are hitting limits nobody budgeted for. Before you route high-volume workloads to Opus 4.7, map your actual token-per-minute ceiling against your traffic profile. The capability uplift may not survive the throttle math.
 
-- **OpenAI Agents SDK native sandbox execution + model-native harness** — The gap between "agent demo" and "agent with guardrails" just got smaller. If you're building on the Agents SDK, the sandbox execution layer is now the right place to contain side effects. Read the harness docs before your next agent release.
+- **OpenAI Agents SDK native sandbox execution is worth a weekend.** Model-native harness plus sandboxed execution in one release is a meaningful step toward safe agentic pipelines. If you're building multi-step code execution workflows on OpenAI's stack, the new SDK surface is the right foundation — don't build on the old completions-with-tools pattern.
 
-- **Cloudflare Agent Cloud live with GPT-5.4 + Codex** — Agentic workloads at the edge with OpenAI models is now a real deployment option, not a preview. Evaluate latency and cost against your current hosted setup, especially if you're doing anything geographically distributed.
+- **Gemini 3.1 Flash TTS granular audio tags are underrated for voice product builders.** Expressive speech control at the tag level (not just SSML) opens up voice UX patterns that were previously hand-coded or unavailable. If you've been waiting for controllable TTS without building your own prosody layer, this week's release is the unlock.
 
-- **Gemma 4 26B local deployment adoption** — If your local model stack is still defaulting to Qwen, run a comparison eval. Multiple independent builders are reporting Gemma 4 26B as the current quality leader for local deployments. The Qwen displacement appears to be genuine, not hype.
+- **12 recurring security holes in vibe-coded apps (Sunday digest) is required reading before your next ship.** The list is empirical, not theoretical — ShinyHunters selling Vercel data the same week this dropped is not a coincidence. Run it as a checklist against anything AI-assisted that's touched auth, file I/O, or external API calls in the last 90 days.
 
-- **RAG architecture: navigation over retrieval** — The Corpus2Skill and hierarchical CTI retrieval papers converging on the same finding as the FT/arXiv reliability analysis is a strong signal. Flat vector similarity search is being actively replaced in research. If you're building a new RAG pipeline, architect for hierarchical navigation from the start rather than retrofitting later.
+- **Speculative checkpointing in llama.cpp changes the local inference calculus.** Merge happened this week. If you're running local inference for any latency-sensitive task, pull the latest llama.cpp and benchmark your actual throughput before assuming your old numbers hold.
 
-- **Open-source license watch: Cal.com goes closed** — Add this to the HashiCorp/Redis/Terraform pattern. AI-assisted fork-and-rebrand has broken the OSS commercial exploitation assumption. Audit your dependencies for projects that might be BSL or SSPL candidates before you build deeper integrations.
+- **RAG architecture: start thinking in navigators, not retrievers.** The Corpus2Skill and iterative RAG convergence from Friday's digest is a research signal with a short lag to production impact. Flat vector similarity is being replaced by hierarchical agentic navigation in the papers that will ship as frameworks in 6-12 months. If you're designing a RAG system today that needs to last, build with that transition in mind.
 
-- **Robotics half-marathon record (50:26, bipedal)** — Don't file this under stunts. The performance envelope for embodied AI in uncontrolled environments moved meaningfully this week. If your product roadmap has any logistics, warehousing, or physical-world automation component in a 3-5 year horizon, update your assumptions.
+- **Claude Design is a real competitive threat to Figma's AI layer — and Anthropic's CPO just left Figma's board over it.** If your product stack includes Figma-based design workflows with AI augmentation, this is worth tracking. The board-level governance conflict is the leading indicator; the product conflict is the follow-on.
 
 ---
 
 ## What to Watch Next Week
 
-The Anthropic-Pentagon relationship is the highest-signal policy story going into next week — if the freeze continues thawing, expect formal guidance on Mythos access tiers for government contractors, which will create immediate procurement decisions for anyone in that space. Beyond policy, the Opus 4.7 community verdict was mixed enough and the tokenizer tax discovery was late enough that a significant portion of teams who migrated this week haven't done their cost audits yet. Expect a wave of "we rolled back" reports and a sharper community conversation about evaluation frameworks for model migrations. The more durable watch is the OpenAI organizational consolidation: losing Weil and Peebles after the Sora shutdown marks the end of OpenAI's "everything simultaneously" phase, and what they actually ship in the next 60 days under the enterprise-revenue-focused regime will tell you more about the competitive landscape for the rest of 2026 than any benchmark.
+The vertical model fragmentation story is about to get louder. GPT-Rosalind for life sciences, GPT-5.4-Cyber for security, Claude Opus 4.7 with hardened cybersecurity evals — these are the first visible outputs of a portfolio strategy shift that all major labs are making simultaneously. Next week, watch for either a Gemini vertical release (Google has the distribution to move fast here) or a second OpenAI vertical announcement that confirms the portfolio thesis is intentional, not opportunistic. The builders who update their model selection frameworks from "biggest general-purpose model" to "best domain-specific model" first will have a meaningful latency advantage — both in performance and in cost, since vertical-specialized models tend to be smaller and cheaper to run at scale. The labs are already there. Most production stacks aren't.
 
 ---
 
