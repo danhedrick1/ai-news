@@ -9,15 +9,15 @@
       <link>https://thebash.dev/2026-04-19</link>
       <description># theba.sh — April 19, 2026
 
-*26 sources · ranked by impact · signal over noise*
+*25 sources · ranked by impact · signal over noise*
 
 ---
 
 ## stdout // the big story
 
-**Update: Claude Opus 4.7 — the tokenizer tax nobody budgeted for**
+### OpenAI's Existential Problems Are Now Acquisition Problems
 
-Anthropic's Opus 4.7 landed this week and the benchmarks are real: coding and vision both show measurable gains over 4.6 across the board, and the model is shipping at the same sticker price as its predecessor. Sounds great. Here's the catch nobody put in the headline: Anthropic quietly changed the tokenizer *and* </description>
+TechCrunch's Equity pod dropped an episode today framing OpenAI's recent acquisition spree around two structural threats the company can't model its way out of: distribution and defensibility. The argument is that OpenAI is essentially a capability factory with a thin consumer surface and no native platform — ChatGPT is</description>
       <pubDate>Sun, 19 Apr 2026 12:00:00 +0000</pubDate>
       <guid>https://thebash.dev/2026-04-19</guid>
     </item>
