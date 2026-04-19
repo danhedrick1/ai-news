@@ -1,68 +1,68 @@
 # theba.sh — 2026-04-19
 
-AI's gender gap is getting harder to ignore, Anthropic and OpenAI are trading punches again, and the open-source tooling ecosystem keeps stacking stars. Let's get into it.
+AI's gender gap is getting harder to ignore, Google is betting on LLMs teaching each other, and your GitHub feed is full of orchestration frameworks competing for the same job.
 
 ---
 
 ## Headlines
 
-### The AI Industry's Gender Problem Is Structural, Not Incidental
-83.6% of VC flows to all-male founding teams. Only 14% of AI research papers carry a female first author, and 96% of deepfake video targets are women — this isn't a pipeline issue, it's a compounding systems failure baked into who builds, who funds, and who gets harmed.
-- The funding gap means the products being shipped reflect a narrow slice of human experience
-- Research monoculture produces models trained on similarly skewed assumptions
-- Deepfake harm patterns show where unchecked build-fast culture lands in the real world
+### The AI Industry Has a Gender Problem — And the Numbers Are Ugly
+83.6% of VC funding goes to all-male founding teams, only 14% of AI research papers have a female first author, and 96% of deepfake victims are women. This isn't a pipeline issue anymore — it's a structural failure at every layer of the stack.
+- The funding gap means the products getting built reflect a narrow slice of humanity
+- Research monoculture produces models with baked-in blind spots
+- Deepfake targeting is downstream of who gets to set the norms
 
-**🔧 Dev Take:** "If your team looks like a CS dept circa 2008, your product's blind spots will too."
-
----
-
-### Anthropic Ships Opus 4.7, OpenAI Responds
-The frontier model race has a new beat: Anthropic pushed Opus 4.7 and OpenAI moved quickly to counter, continuing the pattern of tightly coupled release cycles at the top of the capability stack. Details on OpenAI's response are still thin, but the cadence alone is worth tracking.
-- Opus 4.7 continues Anthropic's iterative push on reasoning and long-context tasks
-- OpenAI's counter-move signals neither company is comfortable ceding narrative ground, even briefly
-- For builders, rapid frontier churn means your model abstraction layer is no longer optional
-
-**🔧 Dev Take:** "Stop hardcoding model names — this release cycle will embarrass you in production."
+**🔧 Dev Take:** "If your AI can't serve half the population safely, it's not production-ready."
 
 ---
 
-### Google Research: Collaborative Learning With LLMs
-Google Research dropped work on "social learning" — a framework where LLMs learn collaboratively, sharing knowledge across model instances without centralizing raw training data. It's an early-stage concept but points toward a future where models improve from peer interaction rather than pure gradient descent on static datasets.
-- Addresses privacy constraints by avoiding direct data sharing between nodes
-- Draws parallels to federated learning but operates at the behavioral/knowledge level
-- Could matter enormously for enterprise deployments where data can't leave org boundaries
+### Google Research: LLMs That Learn From Each Other
+Google's social learning research explores whether LLMs can improve through structured collaboration — models teaching, critiquing, and refining outputs with other models. Think peer review, but the peer is also a neural network.
+- Opens a path to continuous improvement without constant human labeling
+- Raises real questions about error propagation when the teacher is also fallible
+- Potentially huge for low-resource domains where human expert feedback is scarce
 
-**🔧 Dev Take:** "Federated learning had a rough decade — let's see if the LLM version actually ships."
-
----
-
-### Haystack Hits 24.9K Stars — Context Engineering Is the New Prompt Engineering
-deepset-ai/haystack is trending hard, positioning itself as the go-to orchestration framework for "context-engineered" LLM applications. The framing shift from "prompt engineering" to "context engineering" is deliberate and worth paying attention to.
-- Modular pipeline design lets you swap retrievers, generators, and rankers independently
-- Agent workflow support is now first-class, not bolted on
-- The "production-ready" framing is doing real work — this isn't a demo framework
-
-**🔧 Dev Take:** "Context engineering is just software architecture applied to LLMs — finally someone said it plainly."
+**🔧 Dev Take:** "Collaborative learning sounds great until two models confidently agree on something wrong."
 
 ---
 
-### MLflow at 25.4K Stars: The AI Engineering Platform Wants to Own the Full Lifecycle
-MLflow is trending again, now explicitly targeting agents and LLMs alongside classical ML. The pitch: one platform to debug, evaluate, monitor, and optimize — from experiment to production. It's maturing fast and the community momentum is real.
-- Evaluation tooling for LLMs is the newest and most contested surface area
-- Teams already using MLflow for ML get agent observability without a new vendor
-- The "teams of all sizes" positioning is a direct shot at enterprise-only incumbents
+### Haystack Hits ~25K Stars — AI Orchestration Is a Crowded Arena
+deepset's Haystack continues climbing as an open-source framework for building context-engineered, production-ready LLM pipelines with modular design and explicit agent control. It's squarely in the same ring as LangChain, LlamaIndex, and now MLflow.
+- Modular pipeline design is the right instinct — monolithic LLM apps don't survive production
+- "Context engineering" is quietly becoming the term that replaces "prompt engineering"
+- The orchestration framework wars will consolidate; pick your bets carefully
 
-**🔧 Dev Take:** "If you're running evals in a Jupyter notebook and calling it a workflow, MLflow is your intervention."
+**🔧 Dev Take:** "Great primitives — just make sure you actually need a framework before you adopt one."
+
+---
+
+### MLflow Pushes Into Agents and LLM Evaluation
+MLflow (25K+ stars) is no longer just experiment tracking — it now positions itself as a full AI engineering platform covering agents, LLMs, debugging, evaluation, and monitoring. The pivot from ML lifecycle tool to LLM ops hub is real.
+- Evaluation and monitoring are where most teams are currently underinvested
+- MLflow's existing enterprise adoption gives it a serious foothold
+- The risk: feature sprawl that makes it harder to reason about what the tool actually does
+
+**🔧 Dev Take:** "If you're already using MLflow for classical ML, upgrading to LLM eval workflows is low-friction — do it."
+
+---
+
+### OpenBB Crosses 66K Stars — Finance Data Is Going Agent-Native
+OpenBB is a fully open financial data platform targeting analysts, quants, and increasingly AI agents as first-class users. The star count signals serious traction outside the traditional Bloomberg-or-bust crowd.
+- Agent-native data interfaces are going to matter as autonomous trading and research tooling matures
+- Open alternative to expensive proprietary terminals has obvious appeal in lean research shops
+- Python-first API means it plugs cleanly into most existing quant stacks
+
+**🔧 Dev Take:** "The terminal is dead — building agentic finance workflows on open data is the right call for 2026."
 
 ---
 
 ## Quick Hits
 
-- **f/prompts.chat (160K ⭐)** — 160K stars on a prompt library says the gap between "knows LLMs exist" and "knows how to use them" is still enormous
-- **OpenBB (66K ⭐)** — Financial data platform for analysts and AI agents; if you're building anything in fintech AI, this is the data plumbing layer worth knowing
-- **Netdata (78.5K ⭐)** — AI-powered full-stack observability in C; lean teams especially, this one's worth a look before you sign another observability contract
-- **PhotoPrism (39.5K ⭐)** — AI photo management for the decentralized web; self-hosted, privacy-respecting, and apparently people still care about owning their photos
-- **MIT Pi Day 2026** — Ellie at MIT orchestrated the baking of 30 pies for Pi Day; genuinely the most wholesome logistics story in this edition, read it
+- **PyTorch Lightning (31K ⭐)** — Zero-code-change multi-GPU training for any model size; still the cleanest abstraction for serious training runs
+- **Netdata (78K ⭐)** — AI-powered full-stack observability in C; lean teams have no excuse for flying blind in prod
+- **PhotoPrism (39K ⭐)** — Self-hosted, AI-powered photo management for the decentralized web; privacy-first alternative to Google Photos
+- **prompts.chat (160K ⭐)** — Community prompt sharing and discovery, now self-hostable for org-level privacy; the star count alone tells you prompting is still not solved
+- **MIT Admissions: Pi Day 2026** — Ellie baked 30 pies for MIT's Pi Day and wrote the behind-the-scenes breakdown; a genuinely delightful read for when you need to close a Dockerfile tab
 
 ---
 
