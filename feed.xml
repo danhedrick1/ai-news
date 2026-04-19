@@ -5,6 +5,23 @@
     <link>https://thebash.dev</link>
     <description>High-signal AI &amp; tech news for developers</description>
     <item>
+      <title>theba.sh — April 19, 2026</title>
+      <link>https://thebash.dev/2026-04-19</link>
+      <description># theba.sh — April 19, 2026
+
+*26 sources · ranked by impact · signal over noise*
+
+---
+
+## stdout // the big story
+
+### Claude Opus 4.7's Hidden Cost: The Rate-Limit Tax Nobody Budgeted For
+
+Anthropic's Claude Opus 4.7 landed this week and the benchmarks check out — real improvements on coding and vision tasks over Opus 4.6. But the developer community is now surfacing something Anthropic didn't exactly headline: a tokenizer change combined with always-on extended thinking mode means your effecti</description>
+      <pubDate>Sun, 19 Apr 2026 12:00:00 +0000</pubDate>
+      <guid>https://thebash.dev/2026-04-19</guid>
+    </item>
+    <item>
       <title>theba.sh — April 18, 2026</title>
       <link>https://thebash.dev/2026-04-18</link>
       <description># theba.sh — April 18, 2026
@@ -326,23 +343,6 @@ This is the story of the day, and it's a proper disaster. Anthropic inadvertentl
 OpenAI just closed what is unambiguously the largest private funding round ever assembled: $122 billion at an $852 billion valuation. To put that in perspective, this values OpenAI higher than most Fortune 50 companies — above Visa, above JPMorgan, approaching Meta's market cap. The round is</description>
       <pubDate>Tue, 31 Mar 2026 12:00:00 +0000</pubDate>
       <guid>https://thebash.dev/2026-03-31</guid>
-    </item>
-    <item>
-      <title>theba.sh — March 30, 2026</title>
-      <link>https://thebash.dev/2026-03-30</link>
-      <description># theba.sh — March 30, 2026
-
-*32 sources · ranked by impact · signal over noise*
-
----
-
-## stdout // the big story
-
-### Claude Mythos Leaked — And Cybersecurity Stocks Felt It
-
-Anthropic accidentally leaked details about Claude Mythos, described in early reactions as "by far the most powerful AI" the company has produced. The leak — apparently unintentional — spread fast enough that cybersecurity stocks took a measurable hit, with traders apparently reading Mythos's capabilities as a threat to en</description>
-      <pubDate>Mon, 30 Mar 2026 12:00:00 +0000</pubDate>
-      <guid>https://thebash.dev/2026-03-30</guid>
     </item>
   </channel>
 </rss>
