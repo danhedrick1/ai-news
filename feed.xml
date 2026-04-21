@@ -5,6 +5,26 @@
     <link>https://thebash.dev</link>
     <description>High-signal AI &amp; tech news for developers</description>
     <item>
+      <title>theba.sh — April 21, 2026</title>
+      <link>https://thebash.dev/2026-04-21</link>
+      <description>---
+
+# theba.sh - April 21, 2026
+
+*33 sources · ranked by impact · automated fallback edition assembled from ranked source feeds (model request failed)*
+
+---
+
+## stdout // the big story
+
+### Pie Day 2026 [PAYWALL]
+*[dev_insight]* - Ellie’s Pi Day post: https://mitadmissions.org/blogs/entry/pi-day-2026-food-institute/ How Ellie orchestrated the baking of 30 pies: https://mitadmissions.org/blogs/entry/behind-the-scenes-of-thirty-pies/
+
+- Why it matters: Ellie’s Pi Day post: https://mitadmissions.o</description>
+      <pubDate>Tue, 21 Apr 2026 12:00:00 +0000</pubDate>
+      <guid>https://thebash.dev/2026-04-21</guid>
+    </item>
+    <item>
       <title>theba.sh — April 20, 2026</title>
       <link>https://thebash.dev/2026-04-20</link>
       <description>---
@@ -329,23 +349,6 @@ Two senior OpenAI executives are out (or nearly out) simultaneously, and the tim
 Google shipped Gemma 4 today, and the community is treating it as a genuine inflection point for open-weight models. The release covers three sizes — 1B, 13B, and 27B dense models — plus a 124B MoE variant that's already triggering the perennial LocalLLaMA question: "will the MoE actually open too?" Benchmarks are cir</description>
       <pubDate>Thu, 02 Apr 2026 12:00:00 +0000</pubDate>
       <guid>https://thebash.dev/2026-04-02</guid>
-    </item>
-    <item>
-      <title>theba.sh — April 1, 2026</title>
-      <link>https://thebash.dev/2026-04-01</link>
-      <description># theba.sh — April 1, 2026
-
-*37 sources · ranked by impact · signal over noise*
-
----
-
-## stdout // the big story
-
-### Anthropic accidentally shipped Claude Code's entire source code — then made it worse trying to clean it up
-
-This is the story of the day, and it's a proper disaster. Anthropic inadvertently published Claude Code's complete source code — the actual implementation of their flagship agentic coding product — via what Bloomberg is calling "process errors." The leak hit GitHub, spread </description>
-      <pubDate>Wed, 01 Apr 2026 12:00:00 +0000</pubDate>
-      <guid>https://thebash.dev/2026-04-01</guid>
     </item>
   </channel>
 </rss>
