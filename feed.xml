@@ -5,6 +5,26 @@
     <link>https://thebash.dev</link>
     <description>High-signal AI &amp; tech news for developers</description>
     <item>
+      <title>theba.sh — April 24, 2026</title>
+      <link>https://thebash.dev/2026-04-24</link>
+      <description>---
+
+# theba.sh - April 24, 2026
+
+*34 sources · ranked by impact · automated fallback edition assembled from ranked source feeds (model request failed)*
+
+---
+
+## stdout // the big story
+
+### Introducing GPT-5.5
+*[tool]* - Introducing GPT-5.5, our smartest model yet—faster, more capable, and built for complex tasks like coding, research, and data analysis across tools.
+
+- Why it matters: Introducing GPT-5.5, our smartest model yet—faster, more capable, and built for complex tasks like coding, res</description>
+      <pubDate>Fri, 24 Apr 2026 12:00:00 +0000</pubDate>
+      <guid>https://thebash.dev/2026-04-24</guid>
+    </item>
+    <item>
       <title>theba.sh — April 23, 2026</title>
       <link>https://thebash.dev/2026-04-23</link>
       <description>---
@@ -338,23 +358,6 @@ The war between the U.S. and Iran has officially collided with AI infrastructure
 Google dropped Gemma 4 earlier this week, and the community is still unpacking what it actually means. The r/LocalLLaMA verdict is blunt: it "casually destroyed every model on [the benchmark]" at its weight class, and the Interconnects analysis goes deeper on *why* — specifically the per-layer emb</description>
       <pubDate>Sun, 05 Apr 2026 12:00:00 +0000</pubDate>
       <guid>https://thebash.dev/2026-04-05</guid>
-    </item>
-    <item>
-      <title>theba.sh — April 4, 2026</title>
-      <link>https://thebash.dev/2026-04-04</link>
-      <description># theba.sh — April 4, 2026
-
-*30 sources · ranked by impact · signal over noise*
-
----
-
-## stdout // the big story
-
-### The Claude Code Ecosystem is Fracturing — and Anthropic Just Lit the Match
-
-The biggest story in dev tooling this week isn't a new model — it's Anthropic drawing a hard line around its Claude Code subscription economics. Effective today at 3PM ET, Claude subscribers can no longer use their subscription limits with third-party harnesses including **OpenClaw**, the popular open-sou</description>
-      <pubDate>Sat, 04 Apr 2026 12:00:00 +0000</pubDate>
-      <guid>https://thebash.dev/2026-04-04</guid>
     </item>
   </channel>
 </rss>
