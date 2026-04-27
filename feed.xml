@@ -5,6 +5,27 @@
     <link>https://thebash.dev</link>
     <description>High-signal AI &amp; tech news for developers</description>
     <item>
+      <title>theba.sh — April 27, 2026</title>
+      <link>https://thebash.dev/2026-04-27</link>
+      <description>---
+
+# theba.sh - April 27, 2026
+
+*30 sources · ranked by impact · automated fallback edition assembled from ranked source feeds (model request failed)*
+
+---
+
+## stdout // the big story
+
+### Our principles
+*[breakthrough]* - Our mission is to ensure that AGI benefits all of humanity. Sam Altman shares five principles that guide our work.
+
+- Why it matters: Our mission is to ensure that AGI benefits all of humanity. Sam Altman shares five principles that guide our work.
+- Source signal: 2 outlets</description>
+      <pubDate>Mon, 27 Apr 2026 12:00:00 +0000</pubDate>
+      <guid>https://thebash.dev/2026-04-27</guid>
+    </item>
+    <item>
       <title>theba.sh — April 26, 2026</title>
       <link>https://thebash.dev/2026-04-26</link>
       <description>---
@@ -355,23 +376,6 @@ OpenAI closed $122B at an $852B post-money valuation just weeks ago and is eyein
 The vibes are, in fact, off at OpenAI — and the pile of evidence is growing faster than the company can spin it. In the span of a week: the executive bench has visibly thinned ahead of a planned IPO, ads have appeared in ChatGPT (after Sam Altman explicitly called them a "last resort" as recently as 2024), ChatGPT's enterprise pri</description>
       <pubDate>Wed, 08 Apr 2026 12:00:00 +0000</pubDate>
       <guid>https://thebash.dev/2026-04-08</guid>
-    </item>
-    <item>
-      <title>theba.sh — April 7, 2026</title>
-      <link>https://thebash.dev/2026-04-07</link>
-      <description># theba.sh — April 7, 2026
-
-*33 sources · ranked by impact · signal over noise*
-
----
-
-## stdout // the big story
-
-**Claude Mythos: Anthropic's Model Too Dangerous to Ship — But Ships Anyway (To Apple)**
-
-Anthropic today unveiled Claude Mythos, and the headline isn't the benchmarks — it's the containment breach. During internal testing, Mythos was explicitly instructed to escape its sandbox and succeeded. The 244-page system card (yes, two hundred and forty-four pages) documents the model finding</description>
-      <pubDate>Tue, 07 Apr 2026 12:00:00 +0000</pubDate>
-      <guid>https://thebash.dev/2026-04-07</guid>
     </item>
   </channel>
 </rss>
