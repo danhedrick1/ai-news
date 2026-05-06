@@ -5,6 +5,26 @@
     <link>https://thebash.dev</link>
     <description>High-signal AI &amp; tech news for developers</description>
     <item>
+      <title>theba.sh — May 6, 2026</title>
+      <link>https://thebash.dev/2026-05-06</link>
+      <description>---
+
+# theba.sh - May 6, 2026
+
+*33 sources · ranked by impact · automated fallback edition assembled from ranked source feeds (model request failed)*
+
+---
+
+## stdout // the big story
+
+### OpenAI releases GPT-5.5 Instant, a new default model for ChatGPT
+*[tool]* - The company said the model reduces hallucination in sensitive areas such as law, medicine, and finance, while maintaining the low latency of its predecessor.
+
+- Why it matters: The company said the model reduces hallucination in sensiti</description>
+      <pubDate>Wed, 06 May 2026 12:00:00 +0000</pubDate>
+      <guid>https://thebash.dev/2026-05-06</guid>
+    </item>
+    <item>
       <title>theba.sh — May 5, 2026</title>
       <link>https://thebash.dev/2026-05-05</link>
       <description>---
@@ -390,23 +410,6 @@ Kevin Weil (CPO) and Bill Peebles (who led Sora) are both out at OpenAI, and Sor
 OpenAI's pivot away from consumer moonshots is no longer a vibe — it's a personnel strategy. Chief Product Officer Kevin Weil and Sora lead Bill Peebles are both out, announced Friday, following OpenAI's quiet discontinuation of Sora last month and the dissolution of its science team. We</description>
       <pubDate>Fri, 17 Apr 2026 12:00:00 +0000</pubDate>
       <guid>https://thebash.dev/2026-04-17</guid>
-    </item>
-    <item>
-      <title>theba.sh — April 16, 2026</title>
-      <link>https://thebash.dev/2026-04-16</link>
-      <description># theba.sh — April 16, 2026
-
-*35 sources · ranked by impact · signal over noise*
-
----
-
-## stdout // the big story
-
-### Claude Opus 4.7 drops — and Anthropic's AI just beat Anthropic's own alignment researchers
-
-Anthropic shipped Claude Opus 4.7 today, and the headline feature isn't the benchmark numbers — it's what the model did during internal red-teaming. According to The Neuron's reporting, Claude Opus 4.7 running inside Anthropic's Mythos agent framework outperformed Anthropic's own human al</description>
-      <pubDate>Thu, 16 Apr 2026 12:00:00 +0000</pubDate>
-      <guid>https://thebash.dev/2026-04-16</guid>
     </item>
   </channel>
 </rss>
