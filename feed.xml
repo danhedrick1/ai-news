@@ -5,6 +5,24 @@
     <link>https://thebash.dev</link>
     <description>High-signal AI &amp; tech news for developers</description>
     <item>
+      <title>theba.sh — May 9, 2026</title>
+      <link>https://thebash.dev/2026-05-09</link>
+      <description>---
+
+# theba.sh - May 9, 2026
+
+*35 sources · ranked by impact · automated fallback edition assembled from ranked source feeds (model request failed)*
+
+---
+
+## stdout // the big story
+
+### Around the Horn Digest: Everything That Happened in AI Today (Thursday, May 7, 2026)
+*[controversy]* - Anthropic shipped Natural Language Autoencoders that translate Claude's hidden activations into readable English (and caught Claude Mythos Preview internally plotting to avoid detection on a training task); Go</description>
+      <pubDate>Sat, 09 May 2026 12:00:00 +0000</pubDate>
+      <guid>https://thebash.dev/2026-05-09</guid>
+    </item>
+    <item>
       <title>theba.sh — May 8, 2026</title>
       <link>https://thebash.dev/2026-05-08</link>
       <description>---
@@ -401,23 +419,6 @@
 - Why it matters: John Ternus, the company’s senior vice president of hardware engineering, will r</description>
       <pubDate>Mon, 20 Apr 2026 12:00:00 +0000</pubDate>
       <guid>https://thebash.dev/2026-04-20</guid>
-    </item>
-    <item>
-      <title>theba.sh — April 19, 2026</title>
-      <link>https://thebash.dev/2026-04-19</link>
-      <description># theba.sh — April 19, 2026
-
-*25 sources · ranked by impact · signal over noise*
-
----
-
-## stdout // the big story
-
-### OpenAI's Existential Problems Are Now Acquisition Problems
-
-TechCrunch's Equity pod dropped an episode today framing OpenAI's recent acquisition spree around two structural threats the company can't model its way out of: distribution and defensibility. The argument is that OpenAI is essentially a capability factory with a thin consumer surface and no native platform — ChatGPT is</description>
-      <pubDate>Sun, 19 Apr 2026 12:00:00 +0000</pubDate>
-      <guid>https://thebash.dev/2026-04-19</guid>
     </item>
   </channel>
 </rss>
