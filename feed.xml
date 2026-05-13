@@ -5,6 +5,28 @@
     <link>https://thebash.dev</link>
     <description>High-signal AI &amp; tech news for developers</description>
     <item>
+      <title>theba.sh — May 13, 2026</title>
+      <link>https://thebash.dev/2026-05-13</link>
+      <description>---
+
+# theba.sh - May 13, 2026
+
+*34 sources · ranked by impact · automated fallback edition assembled from ranked source feeds (model request failed)*
+
+---
+
+## stdout // the big story
+
+### [AINews] The End of Finetuning
+*[dev_insight]* - a quiet day lets us reflect on whither finetuning
+
+- Why it matters: a quiet day lets us reflect on whither finetuning
+- Source signal: 6 outlets · 4h ago · update
+- Builder move: Read the primary link and decide whether this changes your stack, evals, or roadma</description>
+      <pubDate>Wed, 13 May 2026 12:00:00 +0000</pubDate>
+      <guid>https://thebash.dev/2026-05-13</guid>
+    </item>
+    <item>
       <title>theba.sh — May 12, 2026</title>
       <link>https://thebash.dev/2026-05-12</link>
       <description>---
@@ -393,26 +415,6 @@
 **Dev Take:** The sig</description>
       <pubDate>Fri, 24 Apr 2026 12:00:00 +0000</pubDate>
       <guid>https://thebash.dev/2026-04-24</guid>
-    </item>
-    <item>
-      <title>theba.sh — April 23, 2026</title>
-      <link>https://thebash.dev/2026-04-23</link>
-      <description>---
-
-# theba.sh - April 23, 2026
-
-*35 sources · ranked by impact · automated fallback edition assembled from ranked source feeds (model request failed)*
-
----
-
-## stdout // the big story
-
-### Introducing GPT-5.5
-*[tool]* - Introducing GPT-5.5, our smartest model yet—faster, more capable, and built for complex tasks like coding, research, and data analysis across tools.
-
-- Why it matters: Introducing GPT-5.5, our smartest model yet—faster, more capable, and built for complex tasks like coding, res</description>
-      <pubDate>Thu, 23 Apr 2026 12:00:00 +0000</pubDate>
-      <guid>https://thebash.dev/2026-04-23</guid>
     </item>
   </channel>
 </rss>
