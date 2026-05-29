@@ -17,8 +17,8 @@
 
 ## stdout // the big story
 
-### Opus 4.8 vs Opus 4.7 实测：开发者该不该升级？
-*[tool]* - Claude Opus 4.8 上线后，开发者最关心的问题不是“官方说强不强”，而是：真实 API 调用里，它相比 Opus 4.7 到底有没有提升？ 我们用 Crazyrouter 的 OpenAI-compatible API 做了一组实测，模型 ID 分别是： claude-opus-4-8 claude-opus-4-7 测试覆盖推理、代码、长上下文、JSON 抽取、工具调用风格结构化输出、中日多语言、成本计算等 7 个任务。 核心结论 两个模型都是 7/7 通过。 Opus 4.8 平均延迟：9.86s。 Opus </description>
+### Anthropic Valuation of $965 Billion Passes OpenAI [PAYWALL]
+*[policy]* - Anthropic raised $65 billion in a funding round that valued the AI company at $965 billion including the new investment, eclipsing rival OpenAI’s value for the first time. Bloomberg's AI reporter Shirin Ghaffary joins Tim Stenovec on "Blo</description>
       <pubDate>Fri, 29 May 2026 12:00:00 +0000</pubDate>
       <guid>https://thebash.dev/2026-05-29</guid>
     </item>
