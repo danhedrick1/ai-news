@@ -5,6 +5,24 @@
     <link>https://thebash.dev</link>
     <description>High-signal AI &amp; tech news for developers</description>
     <item>
+      <title>theba.sh — May 30, 2026</title>
+      <link>https://thebash.dev/2026-05-30</link>
+      <description>---
+
+# theba.sh - May 30, 2026
+
+*30 sources · ranked by impact · automated fallback edition assembled from ranked source feeds (model request failed)*
+
+---
+
+## stdout // the big story
+
+### Google’s Gemini co-leads explain what comes next
+*[funding]* - Jeff Dean, Koray Kavukcuoglu, Noam Shazeer, and Oriol Vinyals gave the clearest version yet of Google’s Gemini strategy: one unified model, better coding and agents, world models, self-improvement, and a lot more work on memory, evaluation, and har</description>
+      <pubDate>Sat, 30 May 2026 12:00:00 +0000</pubDate>
+      <guid>https://thebash.dev/2026-05-30</guid>
+    </item>
+    <item>
       <title>theba.sh — May 29, 2026</title>
       <link>https://thebash.dev/2026-05-29</link>
       <description>---
@@ -395,24 +413,6 @@
 *[dev_insight]* - How I Use Claude to Build Full-Stack Apps in Under 4 Hours — The Complete Workflow Three months ago, I spent 3 weeks building a SaaS dashboard. Last week, I built a more complex one in 3 hours and 42 minutes — </description>
       <pubDate>Mon, 11 May 2026 12:00:00 +0000</pubDate>
       <guid>https://thebash.dev/2026-05-11</guid>
-    </item>
-    <item>
-      <title>theba.sh — May 10, 2026</title>
-      <link>https://thebash.dev/2026-05-10</link>
-      <description>---
-
-# theba.sh - May 10, 2026
-
-*28 sources · ranked by impact · automated fallback edition assembled from ranked source feeds (model request failed)*
-
----
-
-## stdout // the big story
-
-### Around the Horn Weekend Digest: Everything That Happened in AI This Weekend (Saturday-Sunday, May 9-10, 2026)
-*[funding]* - Anthropic is weighing a $50B primary round at a $900B valuation that would top OpenAI; the Trump administration drafted an AI security order that omits mandatory model tests; Apple and In</description>
-      <pubDate>Sun, 10 May 2026 12:00:00 +0000</pubDate>
-      <guid>https://thebash.dev/2026-05-10</guid>
     </item>
   </channel>
 </rss>
