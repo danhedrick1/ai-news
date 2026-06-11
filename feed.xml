@@ -5,6 +5,26 @@
     <link>https://thebash.dev</link>
     <description>High-signal AI &amp; tech news for developers</description>
     <item>
+      <title>theba.sh — June 11, 2026</title>
+      <link>https://thebash.dev/2026-06-11</link>
+      <description>---
+
+# theba.sh - June 11, 2026
+
+*33 sources · ranked by impact · automated fallback edition assembled from ranked source feeds (model request failed)*
+
+---
+
+## stdout // the big story
+
+### Everything That Happened in AI Today (Monday, June 8, 2026)
+*[dev_insight]* - Apple unveiled a rebuilt Siri AI and next-generation Apple Intelligence at WWDC; OpenAI confidentially filed for an IPO; Anthropic showed Mythos can exploit flaws in hours; NVIDIA expanded its AI factory push; plus much more.
+
+- Why</description>
+      <pubDate>Thu, 11 Jun 2026 12:00:00 +0000</pubDate>
+      <guid>https://thebash.dev/2026-06-11</guid>
+    </item>
+    <item>
       <title>theba.sh — June 10, 2026</title>
       <link>https://thebash.dev/2026-06-10</link>
       <description>---
@@ -390,24 +410,6 @@
 *[tool]* - AiFinPay SDK The AiFinPay SDK offers a seamless and efficient way to integrate AI-powered payment processing into your applications, enabling secure and reliable transactions for AI agents and enhancing the overall payment experience. pip </description>
       <pubDate>Sat, 23 May 2026 12:00:00 +0000</pubDate>
       <guid>https://thebash.dev/2026-05-23</guid>
-    </item>
-    <item>
-      <title>theba.sh — May 22, 2026</title>
-      <link>https://thebash.dev/2026-05-22</link>
-      <description>---
-
-# theba.sh - May 22, 2026
-
-*37 sources · ranked by impact · automated fallback edition assembled from ranked source feeds (model request failed)*
-
----
-
-## stdout // the big story
-
-### AiFinPay: Autonomous Payments for cirosantilli/china-dictatorship
-*[tool]* - AI Agents Need Payments We are excited to partner with cirosantilli/china-dictatorship, a platform dedicated to anti-Chinese government propaganda and providing valuable resources such as FAQs, news, and recommendations. Through our c</description>
-      <pubDate>Fri, 22 May 2026 12:00:00 +0000</pubDate>
-      <guid>https://thebash.dev/2026-05-22</guid>
     </item>
   </channel>
 </rss>
