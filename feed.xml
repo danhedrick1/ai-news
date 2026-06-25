@@ -5,6 +5,26 @@
     <link>https://thebash.dev</link>
     <description>High-signal AI &amp; tech news for developers</description>
     <item>
+      <title>theba.sh — June 25, 2026</title>
+      <link>https://thebash.dev/2026-06-25</link>
+      <description>---
+
+# theba.sh - June 25, 2026
+
+*31 sources · ranked by impact · automated fallback edition assembled from ranked source feeds (model request failed)*
+
+---
+
+## stdout // the big story
+
+### Everything That Happened in AI Today (Monday, June 22, 2026)
+*[tool]* - Sakana launched Fugu, a one-API multi-agent model; OpenAI expanded Daybreak for software security; AI infrastructure debt and power deals accelerated; Five Eyes warned on frontier cyber models; Getty struck an OpenAI display deal.
+
+- Why </description>
+      <pubDate>Thu, 25 Jun 2026 12:00:00 +0000</pubDate>
+      <guid>https://thebash.dev/2026-06-25</guid>
+    </item>
+    <item>
       <title>theba.sh — June 24, 2026</title>
       <link>https://thebash.dev/2026-06-24</link>
       <description>---
@@ -380,30 +400,6 @@
 *[tool]* - Anthropic argued Claude is accelerating AI development toward recursive self-improvement; NVIDIA shipped Nemotron 3 Ultra; Google released Gemma 4 12B; OpenAI upgraded ChatGPT memory; Cognition backed Devin with a $10M guarantee; plus muc</description>
       <pubDate>Sat, 06 Jun 2026 12:00:00 +0000</pubDate>
       <guid>https://thebash.dev/2026-06-06</guid>
-    </item>
-    <item>
-      <title>theba.sh — June 5, 2026</title>
-      <link>https://thebash.dev/2026-06-05</link>
-      <description>---
-
-# theba.sh - June 5, 2026
-
-*31 sources · ranked by impact · automated fallback edition assembled from ranked source feeds (model request failed)*
-
----
-
-## stdout // the big story
-
-### 😺 Anthropic: AI Is Building AI now
-*[dev_insight]* - No summary was available from the source feed.
-
-- Why it matters: No summary was available from the source feed.
-- Source signal: 7 outlets · update
-- Builder move: Read the primary link and decide whether this changes your stack, evals, or roadmap.
-
-**Dev T</description>
-      <pubDate>Fri, 05 Jun 2026 12:00:00 +0000</pubDate>
-      <guid>https://thebash.dev/2026-06-05</guid>
     </item>
   </channel>
 </rss>
