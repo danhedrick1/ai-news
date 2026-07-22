@@ -11,14 +11,14 @@
 
 # theba.sh - July 22, 2026
 
-*31 sources · ranked by impact · automated fallback edition assembled from ranked source feeds (model request failed)*
+*32 sources · ranked by impact · automated fallback edition assembled from ranked source feeds (model request failed)*
 
 ---
 
 ## stdout // the big story
 
-### Evaluating LLM Models
-*[funding]* - I needed a fast way to compare open-source models for a long-context agent project. Instead of trusting public leaderboards, I built a lightweight evaluation harness that calls multiple models through Oxlo.ai and scores their outputs with a dedicated judge. Because Oxlo.ai </description>
+### Everything That Happened in AI Today (Monday, July 20, 2026)
+*[tool]* - Moonshot and Alibaba sharpened China's open-model challenge; Washington weighed a Chinese-model crackdown; OpenAI shared long-horizon safety lessons; Claude reportedly cracked a math conjecture; Hugging Face disclosed an agent-led breach;</description>
       <pubDate>Wed, 22 Jul 2026 12:00:00 +0000</pubDate>
       <guid>https://thebash.dev/2026-07-22</guid>
     </item>
