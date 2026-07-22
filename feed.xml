@@ -11,16 +11,14 @@
 
 # theba.sh - July 22, 2026
 
-*33 sources · ranked by impact · automated fallback edition assembled from ranked source feeds (model request failed)*
+*31 sources · ranked by impact · automated fallback edition assembled from ranked source feeds (model request failed)*
 
 ---
 
 ## stdout // the big story
 
-### OpenAI says Hugging Face was breached by its pre-release models
-*[tool]* - OpenAI has come forward to claim responsibility for the Hugging Face breach, saying it was the result of internal testing gone awry.
-
-- Why it matters: OpenAI has come forward to claim responsibility for the Hugging Face breach, saying</description>
+### Evaluating LLM Models
+*[funding]* - I needed a fast way to compare open-source models for a long-context agent project. Instead of trusting public leaderboards, I built a lightweight evaluation harness that calls multiple models through Oxlo.ai and scores their outputs with a dedicated judge. Because Oxlo.ai </description>
       <pubDate>Wed, 22 Jul 2026 12:00:00 +0000</pubDate>
       <guid>https://thebash.dev/2026-07-22</guid>
     </item>
