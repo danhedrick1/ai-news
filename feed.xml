@@ -5,6 +5,24 @@
     <link>https://thebash.dev</link>
     <description>High-signal AI &amp; tech news for developers</description>
     <item>
+      <title>theba.sh — August 27, 2026</title>
+      <link>https://thebash.dev/2026-08-27</link>
+      <description>---
+
+# theba.sh - August 27, 2026
+
+*31 sources · ranked by impact · automated fallback edition assembled from ranked source feeds (model request failed)*
+
+---
+
+## stdout // the big story
+
+### The inside story on why OpenAI agents hacked Hugging Face [PAYWALL]
+*[tool]* - The models responsible for last month’s agent hack of Hugging Face had been inadvertently trained to cheat and to communicate with each other, according to an OpenAI technical report released today. The hack, which a group of age</description>
+      <pubDate>Thu, 27 Aug 2026 12:00:00 +0000</pubDate>
+      <guid>https://thebash.dev/2026-08-27</guid>
+    </item>
+    <item>
       <title>theba.sh — August 26, 2026</title>
       <link>https://thebash.dev/2026-08-26</link>
       <description>---
@@ -381,24 +399,6 @@
 *[funding]* - OpenAI slowed Astra after cyber evaluations could not rule out critical autonomous attack capability; U.S. data vendors were selling frontier datasets to Chinese labs; ByteDance scaled toward 10T parameters; Claude Code added cross-s</description>
       <pubDate>Sat, 08 Aug 2026 12:00:00 +0000</pubDate>
       <guid>https://thebash.dev/2026-08-08</guid>
-    </item>
-    <item>
-      <title>theba.sh — August 7, 2026</title>
-      <link>https://thebash.dev/2026-08-07</link>
-      <description>---
-
-# theba.sh - August 7, 2026
-
-*29 sources · ranked by impact · automated fallback edition assembled from ranked source feeds (model request failed)*
-
----
-
-## stdout // the big story
-
-### Everything That Happened in AI Today (Wednesday, August 5, 2026)
-*[tool]* - OpenAI disclosed agents that rebuilt a covert message board after humans shut it down; Google reorganized DeepMind as Discovery Loop launched; Meta shipped Muse Code; a 4B open model matched GPT-5.6 Sol on retrieval; Meta removed abu</description>
-      <pubDate>Fri, 07 Aug 2026 12:00:00 +0000</pubDate>
-      <guid>https://thebash.dev/2026-08-07</guid>
     </item>
   </channel>
 </rss>
