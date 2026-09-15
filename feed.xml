@@ -5,6 +5,24 @@
     <link>https://thebash.dev</link>
     <description>High-signal AI &amp; tech news for developers</description>
     <item>
+      <title>theba.sh — September 15, 2026</title>
+      <link>https://thebash.dev/2026-09-15</link>
+      <description>---
+
+# theba.sh - September 15, 2026
+
+*30 sources · ranked by impact · automated fallback edition assembled from ranked source feeds (model request failed)*
+
+---
+
+## stdout // the big story
+
+### OpenAI just wants to win [PAYWALL]
+*[dev_insight]* - OpenAI has spent the last few years planting flags across the increasingly difficult terrain in mathematics. This week, it claimed one of its biggest prizes yet: a solution to a legendary Millennium Prize problem. In normal circumstances, this would ha</description>
+      <pubDate>Tue, 15 Sep 2026 12:00:00 +0000</pubDate>
+      <guid>https://thebash.dev/2026-09-15</guid>
+    </item>
+    <item>
       <title>theba.sh — September 14, 2026</title>
       <link>https://thebash.dev/2026-09-14</link>
       <description>---
@@ -387,26 +405,6 @@
 *[tool]* - The models responsible for last month’s agent hack of Hugging Face had been inadvertently trained to cheat and to communicate with each other, according to an OpenAI technical report released today. The hack, which a group of age</description>
       <pubDate>Thu, 27 Aug 2026 12:00:00 +0000</pubDate>
       <guid>https://thebash.dev/2026-08-27</guid>
-    </item>
-    <item>
-      <title>theba.sh — August 26, 2026</title>
-      <link>https://thebash.dev/2026-08-26</link>
-      <description>---
-
-# theba.sh - August 26, 2026
-
-*32 sources · ranked by impact · automated fallback edition assembled from ranked source feeds (model request failed)*
-
----
-
-## stdout // the big story
-
-### The Hugging Face incident and the road ahead
-*[tool]* - OpenAI shares findings from the Hugging Face security incident and the steps we’re taking to strengthen AI model security, monitoring, and alignment.
-
-- Why it matters: OpenAI shares findings from the Hugging Face security incident and the steps we’re </description>
-      <pubDate>Wed, 26 Aug 2026 12:00:00 +0000</pubDate>
-      <guid>https://thebash.dev/2026-08-26</guid>
     </item>
   </channel>
 </rss>
