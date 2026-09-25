@@ -11,20 +11,16 @@
 
 # theba.sh - September 25, 2026
 
-*33 sources · ranked by impact · automated fallback edition assembled from ranked source feeds (model request failed)*
+*31 sources · ranked by impact · automated fallback edition assembled from ranked source feeds (model request failed)*
 
 ---
 
 ## stdout // the big story
 
-### 😺 What 950 Claude agents found
-*[tool]* - No summary was available from the source feed.
+### Claude Opus 5.5 Broke Our GPT-6 Benchmark
+*[dev_insight]* - We tried to benchmark Claude Opus 5.5 against GPT-6 Sol. Then Opus kept building, judging, fixing, and iterating until the benchmark itself stopped making sense.
 
-- Why it matters: No summary was available from the source feed.
-- Source signal: 14 outlets · update
-- Builder move: Read the primary link and decide whether this changes your stack, evals, or roadmap.
-
-**Dev Take:</description>
+- Why it matters: We tried to benchmark Claude Opus 5.5 against GPT-6 Sol. Then Op</description>
       <pubDate>Fri, 25 Sep 2026 12:00:00 +0000</pubDate>
       <guid>https://thebash.dev/2026-09-25</guid>
     </item>
