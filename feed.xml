@@ -17,10 +17,14 @@
 
 ## stdout // the big story
 
-### Claude Opus 5.5 Broke Our GPT-6 Benchmark
-*[dev_insight]* - We tried to benchmark Claude Opus 5.5 against GPT-6 Sol. Then Opus kept building, judging, fixing, and iterating until the benchmark itself stopped making sense.
+### Who Is Open Source About?
+*[tool]* - Comments
 
-- Why it matters: We tried to benchmark Claude Opus 5.5 against GPT-6 Sol. Then Op</description>
+- Why it matters: Comments
+- Source signal: 6 outlets · 27h ago · update
+- Builder move: Read the primary link and decide whether this changes your stack, evals, or roadmap.
+
+**Dev Take:** If this is real, developers will feel it first in APIs, tooling, and </description>
       <pubDate>Sat, 26 Sep 2026 12:00:00 +0000</pubDate>
       <guid>https://thebash.dev/2026-09-26</guid>
     </item>
