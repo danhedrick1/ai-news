@@ -5,6 +5,26 @@
     <link>https://thebash.dev</link>
     <description>High-signal AI &amp; tech news for developers</description>
     <item>
+      <title>theba.sh — September 26, 2026</title>
+      <link>https://thebash.dev/2026-09-26</link>
+      <description>---
+
+# theba.sh - September 26, 2026
+
+*28 sources · ranked by impact · automated fallback edition assembled from ranked source feeds (model request failed)*
+
+---
+
+## stdout // the big story
+
+### Claude Opus 5.5 Broke Our GPT-6 Benchmark
+*[dev_insight]* - We tried to benchmark Claude Opus 5.5 against GPT-6 Sol. Then Opus kept building, judging, fixing, and iterating until the benchmark itself stopped making sense.
+
+- Why it matters: We tried to benchmark Claude Opus 5.5 against GPT-6 Sol. Then Op</description>
+      <pubDate>Sat, 26 Sep 2026 12:00:00 +0000</pubDate>
+      <guid>https://thebash.dev/2026-09-26</guid>
+    </item>
+    <item>
       <title>theba.sh — September 25, 2026</title>
       <link>https://thebash.dev/2026-09-25</link>
       <description>---
@@ -379,28 +399,6 @@
 - Builder move: Read the primary link and decide whether this changes your stack, eva</description>
       <pubDate>Mon, 07 Sep 2026 12:00:00 +0000</pubDate>
       <guid>https://thebash.dev/2026-09-07</guid>
-    </item>
-    <item>
-      <title>theba.sh — September 6, 2026</title>
-      <link>https://thebash.dev/2026-09-06</link>
-      <description>---
-
-# theba.sh - September 6, 2026
-
-*23 sources · ranked by impact · automated fallback edition assembled from ranked source feeds (model request failed)*
-
----
-
-## stdout // the big story
-
-### GPT-6 Astra can stay on the job and use your computer
-*[dev_insight]* - No summary was available from the source feed.
-
-- Why it matters: No summary was available from the source feed.
-- Source signal: 7 outlets · update
-- Builder move: Read the primary link and decide whether this changes your stack, eva</description>
-      <pubDate>Sun, 06 Sep 2026 12:00:00 +0000</pubDate>
-      <guid>https://thebash.dev/2026-09-06</guid>
     </item>
   </channel>
 </rss>
