@@ -11,16 +11,20 @@
 
 # theba.sh - September 27, 2026
 
-*22 sources · ranked by impact · automated fallback edition assembled from ranked source feeds (model request failed)*
+*23 sources · ranked by impact · automated fallback edition assembled from ranked source feeds (model request failed)*
 
 ---
 
 ## stdout // the big story
 
-### Claude Opus 5.5 Broke Our GPT-6 Benchmark
-*[dev_insight]* - We tried to benchmark Claude Opus 5.5 against GPT-6 Sol. Then Opus kept building, judging, fixing, and iterating until the benchmark itself stopped making sense.
+### Anthropic’s Dario Amodei gets the SNL treatment
+*[breakthrough]* - "AI is the devil and I its maker."
 
-- Why it matters: We tried to benchmark Claude Opus 5.5 against GPT-6 Sol. Then Op</description>
+- Why it matters: "AI is the devil and I its maker."
+- Source signal: 4 outlets · 3h ago · update
+- Builder move: Read the primary link and decide whether this changes your stack, evals, or roadmap.
+
+**</description>
       <pubDate>Sun, 27 Sep 2026 12:00:00 +0000</pubDate>
       <guid>https://thebash.dev/2026-09-27</guid>
     </item>
