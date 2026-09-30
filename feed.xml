@@ -11,18 +11,14 @@
 
 # theba.sh - September 30, 2026
 
-*29 sources · ranked by impact · automated fallback edition assembled from ranked source feeds (model request failed)*
+*31 sources · ranked by impact · automated fallback edition assembled from ranked source feeds (model request failed)*
 
 ---
 
 ## stdout // the big story
 
-### [AINews] OpenAI DevDay 2026: Dots, 6.1 Sol, Ultrafast, Decisions API, Agents API, Spaces, Marketplace, and 1.2 Billion ChatGPT WAU
-*[policy]* - the most confident DevDay yet.
-
-- Why it matters: the most confident DevDay yet.
-- Source signal: 5 outlets · 5h ago · update
-- Builder move: Read the primary li</description>
+### AI Agent 多代理人自動化開發實作：讓 Agents 夜巡，協作開發 SVG 圓形連線工具
+*[tool]* - 本篇要解決的問題 上週為了在 Grok Bot 的 7 天試用期內，看可以玩些什麼，搜了一下網路，看到一個有趣的用法：讓 Agents 在半夜自己「夜巡」，找題目、做出有趣的東西。 覺得這很有趣，很像每天在開盲盒或抽一番賞一樣，所以 August 也建了一個夜巡 Team，看會寫出什麼有趣的功能。 這篇就拿其中一個成果來介紹，主要是一個讓你拉動滑桿，把圓圈上的線變成不同圖案的功能。 成果放上 GitHub 了，可以直接看原始碼及 Demo： GitHub：https://github.</description>
       <pubDate>Wed, 30 Sep 2026 12:00:00 +0000</pubDate>
       <guid>https://thebash.dev/2026-09-30</guid>
     </item>
