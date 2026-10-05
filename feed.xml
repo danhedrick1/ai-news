@@ -5,6 +5,28 @@
     <link>https://thebash.dev</link>
     <description>High-signal AI &amp; tech news for developers</description>
     <item>
+      <title>theba.sh — October 5, 2026</title>
+      <link>https://thebash.dev/2026-10-05</link>
+      <description>---
+
+# theba.sh - October 5, 2026
+
+*26 sources · ranked by impact · automated fallback edition assembled from ranked source feeds (model request failed)*
+
+---
+
+## stdout // the big story
+
+### [AINews] Pi 1.0, Pi Durable, and AIE NYC
+*[dev_insight]* - the minimalist harness goes stable... and TypeScript!
+
+- Why it matters: the minimalist harness goes stable... and TypeScript!
+- Source signal: 6 outlets · 77h ago · update
+- Builder move: Read the primary link and decide whether this changes your s</description>
+      <pubDate>Mon, 05 Oct 2026 12:00:00 +0000</pubDate>
+      <guid>https://thebash.dev/2026-10-05</guid>
+    </item>
+    <item>
       <title>theba.sh — October 4, 2026</title>
       <link>https://thebash.dev/2026-10-04</link>
       <description>---
@@ -391,24 +413,6 @@
 *[dev_insight]* - Apple surprised us with the first beta of iOS 27.2 today instead of releasing an iOS 27.1 beta. Apple likely went straight to iOS 27.2 to keep iPhone Duo code under wraps for now, since we already know the &amp;zwnj;iPhone Duo&amp;zwnj; will ship with iOS 27.1 </description>
       <pubDate>Wed, 16 Sep 2026 12:00:00 +0000</pubDate>
       <guid>https://thebash.dev/2026-09-16</guid>
-    </item>
-    <item>
-      <title>theba.sh — September 15, 2026</title>
-      <link>https://thebash.dev/2026-09-15</link>
-      <description>---
-
-# theba.sh - September 15, 2026
-
-*32 sources · ranked by impact · automated fallback edition assembled from ranked source feeds (model request failed)*
-
----
-
-## stdout // the big story
-
-### I Tested dsh-desktop — Here's What You Need to Know
-*[tool]* - The News 为 DeepSeek Harness (DSH) 插件生态打造的现代化桌面端解决方案。万物皆「插件」，桌面本身也是「插件 What is dsh-desktop? dsh-desktop is a new open-source project with 26794 stars. Why This Matters 1. Open Source Free to use — no API costs Self-hosted — run on your own inf</description>
-      <pubDate>Tue, 15 Sep 2026 12:00:00 +0000</pubDate>
-      <guid>https://thebash.dev/2026-09-15</guid>
     </item>
   </channel>
 </rss>
