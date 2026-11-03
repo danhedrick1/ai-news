@@ -5,6 +5,27 @@
     <link>https://thebash.dev</link>
     <description>High-signal AI &amp; tech news for developers</description>
     <item>
+      <title>theba.sh — November 3, 2026</title>
+      <link>https://thebash.dev/2026-11-03</link>
+      <description>---
+
+# theba.sh - November 3, 2026
+
+*29 sources · ranked by impact · automated fallback edition assembled from ranked source feeds (model request failed)*
+
+---
+
+## stdout // the big story
+
+### Scaling Git at OpenAI
+*[breakthrough]* - How OpenAI built Pando, a Git-compatible backend designed for the scale of development that Codex makes possible.
+
+- Why it matters: How OpenAI built Pando, a Git-compatible backend designed for the scale of development that Codex makes possible.
+- Source signal: 8 </description>
+      <pubDate>Tue, 03 Nov 2026 12:00:00 +0000</pubDate>
+      <guid>https://thebash.dev/2026-11-03</guid>
+    </item>
+    <item>
       <title>theba.sh — November 2, 2026</title>
       <link>https://thebash.dev/2026-11-02</link>
       <description>---
@@ -380,24 +401,6 @@
 *[tool]* - The News Tool for automatic PS5 executables porting to Linux and Wind What is AnyPS5? AnyPS5 is a new open-source project with 38643 stars. Why This Matters 1. Open Source Free to use — no API costs Self-hosted — run on your own infrastructure Priva</description>
       <pubDate>Thu, 15 Oct 2026 12:00:00 +0000</pubDate>
       <guid>https://thebash.dev/2026-10-15</guid>
-    </item>
-    <item>
-      <title>theba.sh — October 14, 2026</title>
-      <link>https://thebash.dev/2026-10-14</link>
-      <description>---
-
-# theba.sh - October 14, 2026
-
-*33 sources · ranked by impact · automated fallback edition assembled from ranked source feeds (model request failed)*
-
----
-
-## stdout // the big story
-
-### FBI arrests OpenAI employee accused of planting hidden recording device in conference room
-*[breakthrough]* - It's not clear exactly for what purpose the recording device was used, but FBI director Kash Patel said the scheme was to "capture sensitive communications about the company’s super intelligence te</description>
-      <pubDate>Wed, 14 Oct 2026 12:00:00 +0000</pubDate>
-      <guid>https://thebash.dev/2026-10-14</guid>
     </item>
   </channel>
 </rss>
