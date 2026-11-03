@@ -11,14 +11,17 @@
 
 # theba.sh - November 2, 2026
 
-*28 sources · ranked by impact · automated fallback edition assembled from ranked source feeds (model request failed)*
+*27 sources · ranked by impact · automated fallback edition assembled from ranked source feeds (model request failed)*
 
 ---
 
 ## stdout // the big story
 
-### The agentic web is here [PAYWALL]
-*[tool]* - In 2001, a decade after he invented the World Wide Web, Tim Berners-Lee articulated a new vision. Together with two colleagues, he published an article in the magazine Scientific American in which he outlined what he called the “Semantic Web”: an internet design</description>
+### Scaling Git at OpenAI
+*[breakthrough]* - How OpenAI built Pando, a Git-compatible backend designed for the scale of development that Codex makes possible.
+
+- Why it matters: How OpenAI built Pando, a Git-compatible backend designed for the scale of development that Codex makes possible.
+- Source signal: 9 </description>
       <pubDate>Mon, 02 Nov 2026 12:00:00 +0000</pubDate>
       <guid>https://thebash.dev/2026-11-02</guid>
     </item>
