@@ -23,7 +23,7 @@ Anthropic briefed both the Trump White House and UK Parliament on Mythos this we
 - **Takeaway:** If you're building anything in a regulated industry or government-adjacent stack, treat "the US government" as multiple competing actors with different and sometimes contradictory AI risk postures — not a single policy environment.
 - **Watch:** Whether the Pentagon lawsuit thaws further or becomes the template for other DoD conflicts with frontier labs. The Amodei/White House meeting this week suggests the executive branch is moving toward accommodation; the DoD may not follow.
 
-**Source trail:** [Mon digest](https://thebash.dev/2026-04-13), [Tue digest](https://thebash.dev/2026-04-14), [Fri digest](https://thebash.dev/2026-04-17), [Sat digest](https://thebash.dev/2026-04-18)
+**Source trail:** [Mon digest](https://theba.sh/2026-04-13), [Tue digest](https://theba.sh/2026-04-14), [Fri digest](https://theba.sh/2026-04-17), [Sat digest](https://theba.sh/2026-04-18)
 
 ---
 
@@ -34,7 +34,7 @@ Sora is dead. Kevin Weil and Bill Peebles are out. The science team is dissolved
 - **Takeaway:** If you're building in any of the spaces OpenAI just vacated — video generation, scientific AI, creative tooling — the competitive pressure from OpenAI just dropped materially. That won't last, but the window is real.
 - **Watch:** OpenAI's acquisition posture. The Sunday digest framed their existential problems as acquisition problems. If they move on a video AI or scientific computing target in the next 90 days, that confirms the strategic read.
 
-**Source trail:** [Fri digest](https://thebash.dev/2026-04-17), [Sat digest](https://thebash.dev/2026-04-18), [Sun digest](https://thebash.dev/2026-04-19)
+**Source trail:** [Fri digest](https://theba.sh/2026-04-17), [Sat digest](https://theba.sh/2026-04-18), [Sun digest](https://theba.sh/2026-04-19)
 
 ---
 
@@ -45,7 +45,7 @@ Claude Code's context drift at the two-week mark is the most technically importa
 - **Takeaway:** If you have Claude Code deployments running beyond one week of continuous context, build explicit state checkpointing and context reset triggers into your workflow now. Don't wait for the framework to solve it.
 - **Watch:** Whether Anthropic ships a memory architecture update to Claude Code before the context drift problem becomes a documented production failure pattern that enterprise buyers use to slow procurement.
 
-**Source trail:** [Tue digest](https://thebash.dev/2026-04-14), [Wed digest](https://thebash.dev/2026-04-15), [Sat digest](https://thebash.dev/2026-04-18)
+**Source trail:** [Tue digest](https://theba.sh/2026-04-14), [Wed digest](https://theba.sh/2026-04-15), [Sat digest](https://theba.sh/2026-04-18)
 
 ---
 
@@ -56,7 +56,7 @@ Gemma 4 26B displaced Qwen in local deployments this week. Speculative checkpoin
 - **Takeaway:** Run perturbation tests on any open-weights model you're deploying for reasoning-heavy tasks. The Robust Reasoning Benchmark finding from Monday holds: frontier proprietary models handle formatting perturbations; open-weights reasoning models collapse. Benchmark scores on clean datasets are not deployment signals.
 - **Watch:** Whether Qwen3's MoE releases or Gemma 4's trajectory captures the enterprise procurement conversation first. Mozilla's Thunderbolt announcement and the broader vendor lock-in anxiety are creating demand that someone will capture.
 
-**Source trail:** [Mon digest](https://thebash.dev/2026-04-13), [Wed digest](https://thebash.dev/2026-04-15), [Thu digest](https://thebash.dev/2026-04-16), [Sun digest](https://thebash.dev/2026-04-19)
+**Source trail:** [Mon digest](https://theba.sh/2026-04-13), [Wed digest](https://theba.sh/2026-04-15), [Thu digest](https://theba.sh/2026-04-16), [Sun digest](https://theba.sh/2026-04-19)
 
 ---
 
@@ -67,7 +67,7 @@ Sunday's LLMatcher post quantified a 41-point gap between contaminated and clean
 - **Takeaway:** Build your own eval suite. It doesn't need to be exhaustive — it needs to be contamination-resistant, domain-specific, and include perturbation variants of your core task types. A small clean eval beats a large published one for deployment decisions.
 - **Watch:** Whether any major lab announces continuously-generated fresh evaluation sets with cryptographic provenance in the next two quarters. The lab that gets ahead of this owns the capability narrative when the contamination problem becomes mainstream.
 
-**Source trail:** [Mon digest](https://thebash.dev/2026-04-13), [Sun digest](https://thebash.dev/2026-04-19)
+**Source trail:** [Mon digest](https://theba.sh/2026-04-13), [Sun digest](https://theba.sh/2026-04-19)
 
 ---
 

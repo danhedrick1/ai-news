@@ -5,17 +5,19 @@ Multi-tier source coverage with impact-based ranking.
 
 Stories are filtered to 24h freshness (tier-adjusted), scored by source tier +
 HN engagement + cross-source signal, and deduplicated against previous issues.
+The digest and weekly recap are composed from those sources. Summaries come
+from each feed's own description. No model API is called.
 
 Usage:
   python generate_news.py              # today
   python generate_news.py 2026-03-24   # specific date
   python generate_news.py --weekly     # weekly recap for current ET date
 
-Required env vars (in .env):
-  ANTHROPIC_API_KEY
-  GITHUB_TOKEN
+Optional env vars:
+  GITHUB_TOKEN   local auto-push, and a higher GitHub API rate limit
 """
 
+import html
 import os
 import sys
 import json
@@ -29,12 +31,13 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # ── Config ─────────────────────────────────────────────────────────────────────
 
-ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
+SITE_URL          = "https://theba.sh"
 GITHUB_TOKEN      = os.environ.get("GITHUB_TOKEN", "")
 REPO_PATH         = os.environ.get("REPO_PATH", os.path.dirname(os.path.abspath(__file__)))
 NEWS_DIR          = os.path.join(REPO_PATH, "news")
 COVERED_PATH      = os.path.join(NEWS_DIR, "covered.json")
 WEEKLY_INDEX_PATH = os.path.join(NEWS_DIR, "weekly-index.json")
+MIN_PUBLISH_STORIES = 5
 
 # ── Sources by tier ────────────────────────────────────────────────────────────
 #
@@ -102,7 +105,7 @@ SOURCES = {
         ],
     },
     "industry": {
-        # Broad news coverage — higher volume, Claude filters by relevance + score
+        # Broad news coverage — higher volume, kept or dropped by score
         "weight": 3,
         "max_age_hours": 28,
         "feeds": [
@@ -233,7 +236,7 @@ def parse_pub_date(s):
 def is_fresh(pub_date, max_age_hours):
     """True if pub_date is within max_age_hours of now (or unknown)."""
     if pub_date is None:
-        return True   # no date = don't reject, let Claude judge
+        return True   # no date = keep it and let scoring decide
     cutoff = datetime.now(timezone.utc) - timedelta(hours=max_age_hours)
     return pub_date >= cutoff
 
@@ -242,7 +245,7 @@ def is_fresh(pub_date, max_age_hours):
 
 def fetch_url(url, timeout=12):
     # Reddit blocks bots; use a browser UA for .rss endpoints
-    ua = ("Mozilla/5.0 (compatible; theba-sh-bot/1.0; +https://thebash.dev)"
+    ua = ("Mozilla/5.0 (compatible; theba-sh-bot/1.0; +https://theba.sh)"
           if "reddit.com" not in url else
           "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
           "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
@@ -252,7 +255,9 @@ def fetch_url(url, timeout=12):
 
 
 def strip_html(text):
-    return re.sub(r"<[^>]+>", "", text or "").strip()
+    text = re.sub(r"<[^>]+>", " ", text or "")
+    text = html.unescape(text)
+    return re.sub(r"\s+", " ", text).strip()
 
 
 def parse_rss(data):
@@ -481,11 +486,15 @@ def key_words(title):
             if len(w) >= 4 and w not in stop}
 
 
-def titles_overlap(a, b, threshold=0.40):
+def titles_overlap(a, b, threshold=0.60):
+    """True when two headlines share a real phrase, not one common word."""
     ka, kb = key_words(a), key_words(b)
     if not ka or not kb:
         return False
-    return len(ka & kb) / min(len(ka), len(kb)) >= threshold
+    shared = len(ka & kb)
+    if shared < 2:
+        return False
+    return shared / min(len(ka), len(kb)) >= threshold
 
 
 def load_covered():
@@ -524,7 +533,10 @@ def mark_previously_covered(articles):
     for a in articles:
         aw = key_words(a["title"])
         for cw in cov_words:
-            if aw and cw and len(aw & cw) / min(len(aw), len(cw)) >= 0.50:
+            if not aw or not cw:
+                continue
+            shared = len(aw & cw)
+            if shared >= 2 and shared / min(len(aw), len(cw)) >= 0.60:
                 a["prev_covered"] = True
                 marked += 1
                 break
@@ -580,56 +592,10 @@ def extract_weekly_digest_context(markdown):
                 trend_lines.append(line)
 
     return {
-        "headlines": headlines[:6],
-        "quick_hits": quick_hits[:6],
+        "headlines": headlines[:30],
+        "quick_hits": quick_hits[:30],
         "trend_watch": trend_lines[:3],
     }
-
-
-def fallback_weekly_recap(digests, week_label):
-    """Simple weekly recap when Anthropic is unavailable."""
-    lines = [
-        "---",
-        "",
-        f"# theba.sh weekly - {week_label}",
-        "",
-        f"*{len(digests)} daily digests stitched into one weekly recap*",
-        "",
-        "---",
-        "",
-        "## Week in One Screen",
-        "",
-        "This recap was assembled from the daily issues already published during the week. Use it as a fast catch-up, then jump into the linked daily digests for the full signal.",
-        "",
-        "## Daily Signal Log",
-        "",
-    ]
-
-    for digest in digests:
-        lines.append(
-            f"### {digest['nice_date']} - [open digest](https://thebash.dev/{digest['date']})"
-        )
-        for headline in digest["context"]["headlines"][:4]:
-            lines.append(f"- {headline}")
-        if digest["context"]["trend_watch"]:
-            lines.append(f"- Trend watch: {digest['context']['trend_watch'][0]}")
-        lines.append("")
-
-    lines.extend([
-        "## What to Watch Next",
-        "",
-        "- The labs are still shipping faster than the media cycle can digest them.",
-        "- Tooling and distribution continue to matter more than benchmark theater.",
-        "- The next weekly recap should call out what moved from demo to production.",
-        "",
-        "---",
-        "",
-        "*theba.sh weekly - built for builders*",
-        "",
-        "---",
-    ])
-
-    return "\n".join(lines)
 
 
 # ── Scoring ────────────────────────────────────────────────────────────────────
@@ -668,7 +634,10 @@ def score_articles(articles, hn_stories, gh_repos=None, hf_papers=None):
         cross_boost  = (a["cross_sources"] - 1) * 5
         kw_boost     = keyword_boost(a["title"], a["desc"])
         prev_penalty = -6 if a["prev_covered"] else 0
-        a["score"]   = a["weight"] + hn_boost + cross_boost + kw_boost + prev_penalty
+        noise_penalty = -20 if re.search(
+            r"daily discussion|self-promotion|open thread", a["title"], re.I
+        ) else 0
+        a["score"]   = a["weight"] + hn_boost + cross_boost + kw_boost + prev_penalty + noise_penalty
 
     articles.sort(key=lambda x: x["score"], reverse=True)
 
@@ -760,39 +729,18 @@ def score_articles(articles, hn_stories, gh_repos=None, hf_papers=None):
     return articles
 
 
-# ── Generate with Claude ───────────────────────────────────────────────────────
-
-def digest_quality_stats(content):
-    """Estimate whether the generated digest is materially complete."""
-    top_stories = len(re.findall(r"^### ", content, flags=re.MULTILINE))
-    # Count bold-started entries across all categorized sections
-    categorized_items = 0
-    in_section = False
-
-    for raw in content.splitlines():
-        line = raw.strip()
-        if line.startswith("## "):
-            lower = line.lower()
-            # Any section that isn't the big story or trend watch contains list items
-            in_section = not any(x in lower for x in ["big story", "top stories", "trend watch", "crontab"])
-            continue
-        if line.startswith("---"):
-            in_section = False
-            continue
-        if in_section and (line.startswith("**") or line.startswith("- **")):
-            categorized_items += 1
-
-    return {
-        "top_stories": top_stories,
-        "categorized_items": categorized_items,
-    }
-
+# ── Digest formatting ──────────────────────────────────────────────────────────
 
 def format_nice_date(target_date):
     y, m, d = target_date.split("-")
     months = ["January","February","March","April","May","June",
               "July","August","September","October","November","December"]
     return f"{months[int(m)-1]} {int(d)}, {y}"
+
+
+def mentions(text, tokens):
+    """Match whole words so 'bill' does not fire inside 'billion'."""
+    return any(re.search(rf"\b{re.escape(token)}s?\b", text) for token in tokens)
 
 
 def article_classification(article):
@@ -803,579 +751,476 @@ def article_classification(article):
         return "research"
     if article["source"] == "GitHub Trending" or "github.com" in link:
         return "tool"
-    if any(token in text for token in ["policy", "regulation", "bill", "court", "copyright", "antitrust"]):
+    if mentions(text, ["policy", "regulation", "bill", "court", "copyright", "antitrust"]):
         return "policy"
-    if any(token in text for token in ["raises", "raised", "funding", "valuation", "acquire", "acquisition"]):
+    if mentions(text, ["funding", "valuation", "acquire", "acquisition", "ipo"]) or re.search(
+        r"\braise[sd]?\b.{0,30}(\$|million|billion)", text
+    ):
         return "funding"
-    if any(token in text for token in ["lawsuit", "backlash", "criticism", "controversy", "ban", "risk"]):
+    if mentions(text, ["lawsuit", "backlash", "criticism", "controversy", "ban", "risk"]):
         return "controversy"
-    if any(token in text for token in ["release", "launch", "api", "sdk", "model", "agent", "tool", "open source"]):
+    if mentions(text, ["release", "launch", "api", "sdk", "model", "agent", "tool", "open source"]):
         return "tool"
     if article["tier"] == "primary":
         return "breakthrough"
     return "dev_insight"
 
 
-def clean_summary(text):
-    compact = re.sub(r"\s+", " ", (text or "")).strip(" -")
-    return compact or "No summary was available from the source feed."
-
-
-def summarize_for_bullet(article):
-    summary = clean_summary(article["desc"])
-    if len(summary) <= 180:
-        return summary
-    cutoff = summary[:177].rsplit(" ", 1)[0].strip()
-    return f"{cutoff}..."
+def clean_summary(text, limit=420):
+    """Return a feed description, trimmed, or an empty string when the feed had none."""
+    compact = strip_html(text or "").strip(" -")
+    if not compact:
+        return ""
+    if len(compact) <= limit:
+        return compact
+    cutoff = compact[:limit].rsplit(" ", 1)[0].strip()
+    return f"{cutoff}…"
 
 
 def source_signal(article):
     signals = []
-    if article["hn_points"] > 0:
+    if article.get("hn_points", 0) > 0:
         signals.append(f"HN {article['hn_points']}pts/{article['hn_comments']}cmts")
-    if article["cross_sources"] > 1:
+    if article.get("cross_sources", 1) > 1:
         signals.append(f"{article['cross_sources']} outlets")
-    if article["age_str"]:
+    if article.get("age_str"):
         signals.append(article["age_str"])
-    if article["prev_covered"]:
-        signals.append("update")
-    if article.get("paywalled"):
-        signals.append("paywalled")
+    if article.get("prev_covered"):
+        signals.append("seen earlier this week")
     return " · ".join(signals)
 
 
-def fallback_dev_take(article):
-    classification = article_classification(article)
-    if classification == "tool":
-        return "If this is real, developers will feel it first in APIs, tooling, and shipping velocity."
-    if classification == "research":
-        return "Worth tracking if it survives contact with real workloads, not just benchmark screenshots."
-    if classification == "policy":
-        return "Builders should treat this as product surface area, not background noise."
-    if classification == "funding":
-        return "Money matters less than distribution, but capital still changes who gets to scale fast."
-    if classification == "controversy":
-        return "The important question is whether this changes deployment constraints, not just the discourse."
-    if article["tier"] == "primary":
-        return "When the labs ship something concrete, downstream builders need to re-evaluate the stack quickly."
-    return "The signal here is operational: what changes for teams actually building with AI this week."
+# ── Compose digest and weekly recap ────────────────────────────────────────────
+
+TOPIC_LABELS = {
+    "breakthrough": "breakthroughs",
+    "tool": "tools",
+    "funding": "funding",
+    "controversy": "controversy",
+    "dev_insight": "builder notes",
+    "research": "research",
+    "policy": "policy",
+}
+
+TOPIC_ORDER = [
+    "breakthrough",
+    "tool",
+    "research",
+    "funding",
+    "policy",
+    "controversy",
+    "dev_insight",
+]
+
+TOPIC_HEADINGS = {
+    "breakthrough": "Launches and lab news",
+    "tool": "Tools and open source",
+    "research": "Research",
+    "funding": "Funding and deals",
+    "policy": "Policy",
+    "controversy": "Controversy",
+    "dev_insight": "Builder notes",
+}
 
 
-def fallback_daily_digest(articles, target_date, reason=None):
-    """Produce a publishable digest even when the model pass is unavailable."""
+def story_headline(article):
+    headline = (article.get("title") or "").strip()
+    if article.get("paywalled") and "[PAYWALL]" not in headline:
+        headline += " [PAYWALL]"
+    return headline
+
+
+def render_story(article):
+    """One ranked story: headline, feed summary, and the source link."""
+    meta_bits = [article["source"]]
+    signal = source_signal(article)
+    if signal:
+        meta_bits.append(signal)
+    lines = [
+        f"### {story_headline(article)}",
+        "",
+        f"*[{article_classification(article)}]* {' · '.join(meta_bits)}",
+        "",
+    ]
+    blurb = clean_summary(article.get("desc", ""))
+    if blurb:
+        lines.extend([blurb, ""])
+    alt = article.get("alt_sources") or []
+    if alt:
+        lines.extend(["Also covered by: " + " · ".join(alt), ""])
+    lines.extend([
+        f"**Source:** [{article['source']}]({article['link']})",
+        f"[Read more →]({article['link']})",
+        "",
+    ])
+    return lines
+
+
+def render_linked_item(article):
+    blurb = clean_summary(article.get("desc", ""), limit=180)
+    title = re.sub(r"\s*\[PAYWALL\]\s*", " ", article.get("title") or "")
+    title = re.sub(r"\s+", " ", title).strip()
+    line = f"- **[{title}]({article['link']})**"
+    if blurb:
+        line += f" — {blurb}"
+    if article.get("paywalled"):
+        line += " [PAYWALL]"
+    return line
+
+
+def compose_daily_digest(articles, target_date):
+    """Publishable daily digest built only from ranked source items."""
     nice_date = format_nice_date(target_date)
-    unique_sources = len(set(a["source"] for a in articles))
+    unique_sources = len({a["source"] for a in articles})
     used_links = set()
 
     def pick(stories, limit, predicate=None):
         chosen = []
         for article in stories:
-            if article["link"] in used_links:
+            link = article.get("link")
+            if not link or link in used_links:
                 continue
             if predicate and not predicate(article):
                 continue
             chosen.append(article)
-            used_links.add(article["link"])
+            used_links.add(link)
             if len(chosen) >= limit:
                 break
         return chosen
 
-    top_stories = pick(
+    lead_pool = [
+        article for article in articles
+        if article["source"] not in {"GitHub Trending", "HuggingFace Papers"}
+        and article["tier"] != "research"
+    ]
+    top_stories = pick(lead_pool, 8)
+    if len(top_stories) < 5:
+        top_stories.extend(pick(articles, 5 - len(top_stories)))
+
+    research_entries = pick(
         articles,
         6,
-        lambda a: a["source"] not in {"GitHub Trending", "HuggingFace Papers"} and a["tier"] != "research",
+        lambda article: article["tier"] == "research" or article_classification(article) == "research",
     )
-    if len(top_stories) < 5:
-        top_stories.extend(pick(articles, 6 - len(top_stories)))
-
-    research_entries = pick(articles, 4, lambda a: a["tier"] == "research")
-    tool_entries = pick(
+    repo_entries = pick(
         articles,
-        4,
-        lambda a: a["source"] == "GitHub Trending" or "github.com" in a["link"].lower(),
+        6,
+        lambda article: (
+            article["source"] == "GitHub Trending" or "github.com" in article["link"].lower()
+        ),
     )
-    policy_entries = pick(articles, 4, lambda a: a["tier"] == "policy")
-    funding_entries = pick(articles, 4, lambda a: article_classification(a) == "funding")
-    quick_hits = pick(articles, 12)
-
-    tier_counts = {}
-    for article in articles[:20]:
-        tier_counts[article["tier"]] = tier_counts.get(article["tier"], 0) + 1
-    tier_summary = ", ".join(
-        f"{tier}={count}" for tier, count in sorted(tier_counts.items())
+    policy_entries = pick(
+        articles,
+        6,
+        lambda article: article["tier"] == "policy" or article_classification(article) == "policy",
     )
-
-    fallback_note = "automated fallback edition assembled from ranked source feeds"
-    if reason:
-        fallback_note += f" ({reason})"
+    funding_entries = pick(
+        articles,
+        6,
+        lambda article: article_classification(article) == "funding",
+    )
+    quick_hits = pick(articles, 40)
 
     lines = [
         "---",
         "",
-        f"# theba.sh - {nice_date}",
+        f"# theba.sh — {nice_date}",
         "",
-        f"*{unique_sources} sources · ranked by impact · {fallback_note}*",
+        (
+            f"*{unique_sources} sources · {len(articles)} stories · ranked by impact · "
+            "headlines and source summaries*"
+        ),
         "",
         "---",
-        "",
-        "## stdout // the big story",
         "",
     ]
 
-    for article in top_stories:
-        classification = article_classification(article)
-        signal = source_signal(article)
-        headline = article["title"]
-        if article.get("paywalled"):
-            headline += " [PAYWALL]"
-        lines.extend([
-            f"### {headline}",
-            f"*[{classification}]* - {clean_summary(article['desc'])}",
-            "",
-            f"- Why it matters: {summarize_for_bullet(article)}",
-            f"- Source signal: {signal or 'ranked from source authority and recency'}",
-            f"- Builder move: Read the primary link and decide whether this changes your stack, evals, or roadmap.",
-            "",
-            f"**Dev Take:** {fallback_dev_take(article)}",
-            "",
-            f"**Source:** [{article['source']}]({article['link']})",
-            f"[Read more ->]({article['link']})",
-            "",
-            "---",
-            "",
-        ])
+    if top_stories:
+        lines.extend(["## stdout // the big story", ""])
+        lines.extend(render_story(top_stories[0]))
+        if len(top_stories) > 1:
+            lines.extend(["---", "", "## stdout // top stories", ""])
+            for article in top_stories[1:]:
+                lines.extend(render_story(article))
 
-    lines.extend([
-        "## stderr // quick hits",
-        "",
-    ])
-    for article in quick_hits:
-        classification = article_classification(article)
-        lines.append(
-            f"- **{article['title']}** *[{classification}]* — "
-            f"[{article['source']}]({article['link']})"
+    def section(heading, entries):
+        if not entries:
+            return
+        lines.extend(["---", "", heading, ""])
+        for article in entries:
+            lines.append(render_linked_item(article))
+        lines.append("")
+
+    section("## man pages // deep cuts", research_entries)
+    section("## pkg ls // repos & open source", repo_entries)
+    section("## /etc/rules.d // compliance watch", policy_entries)
+    section("## tail -f // cap table", funding_entries)
+
+    if quick_hits:
+        grouped = {}
+        for article in quick_hits:
+            grouped.setdefault(article["source"], []).append(article)
+        order = sorted(
+            grouped,
+            key=lambda source: max(item["score"] for item in grouped[source]),
+            reverse=True,
         )
+        lines.extend(["---", "", "## stderr // quick hits", ""])
+        for source in order:
+            lines.extend([f"**{source}**", ""])
+            for article in grouped[source]:
+                lines.append(render_linked_item(article))
+            lines.append("")
+
+    topic_counts = {}
+    source_counts = {}
+    multi = 0
+    seen_earlier = 0
+    for article in articles:
+        topic = TOPIC_LABELS.get(article_classification(article), "builder notes")
+        topic_counts[topic] = topic_counts.get(topic, 0) + 1
+        source_counts[article["source"]] = source_counts.get(article["source"], 0) + 1
+        if article.get("cross_sources", 1) > 1:
+            multi += 1
+        if article.get("prev_covered"):
+            seen_earlier += 1
+
+    topic_line = ", ".join(
+        f"{name} {count}"
+        for name, count in sorted(topic_counts.items(), key=lambda item: (-item[1], item[0]))
+    )
+    busiest = sorted(source_counts.items(), key=lambda item: (-item[1], item[0]))[:6]
+    source_line = ", ".join(f"{name} ({count})" for name, count in busiest)
+    notes = []
+    if multi:
+        noun = "story was" if multi == 1 else "stories were"
+        notes.append(f"{multi} {noun} confirmed by more than one outlet")
+    if seen_earlier:
+        notes.append(f"{seen_earlier} overlap with something already covered in the last week")
 
     lines.extend([
-        "",
-        "---",
-        "",
-        "## man pages // deep cuts",
-        "",
-    ])
-    if research_entries:
-        for article in research_entries:
-            lines.extend([
-                f"**{article['title']}** — [{article['source']}]({article['link']})",
-                "",
-            ])
-    else:
-        lines.extend([
-            "No research items cleared the ranking threshold in this run.",
-            "",
-        ])
-
-    lines.extend([
-        "---",
-        "",
-        "## pkg ls // repos & open source",
-        "",
-    ])
-    if tool_entries:
-        for article in tool_entries:
-            lines.append(
-                f"**{article['title']}** — [{article['source']}]({article['link']})"
-            )
-    else:
-        lines.extend([
-            "No repo or tooling stories stood out enough to list separately in this run.",
-            "",
-        ])
-
-    if policy_entries:
-        lines.extend([
-            "",
-            "---",
-            "",
-            "## /etc/rules.d // compliance watch",
-            "",
-        ])
-        for article in policy_entries:
-            lines.append(
-                f"**{article['title']}** — [{article['source']}]({article['link']})"
-            )
-
-    if funding_entries:
-        lines.extend([
-            "",
-            "---",
-            "",
-            "## tail -f // cap table",
-            "",
-        ])
-        for article in funding_entries:
-            lines.append(
-                f"**{article['title']}** — [{article['source']}]({article['link']})"
-            )
-
-    lines.extend([
-        "",
         "---",
         "",
         "## crontab -l // trend watch",
         "",
-        f"The highest-ranked stories today skew toward {tier_summary or 'a mixed board'}, which is a good reminder that AI news quality improves when we rank by source strength and community confirmation instead of raw volume.",
+        f"{len(articles)} stories from {len(source_counts)} outlets made the board after deduplication.",
         "",
-        "Community signal still matters: stories carrying Hacker News traction, multi-outlet confirmation, or repeated mention across feeds tend to be the ones builders actually talk about after the headline cycle passes.",
+        f"Topic mix: {topic_line}.",
         "",
-        "The next thing to watch is which of these stories turns into working software, real usage, or concrete deployment changes. Demos are cheap; durable product shifts are the real signal.",
+        f"Busiest outlets: {source_line}.",
         "",
+    ])
+    if notes:
+        lines.extend(["; ".join(notes) + ".", ""])
+    lines.extend([
         "---",
         "",
         f"*theba.sh · {nice_date} · {unique_sources} outlets monitored · built for builders*",
         "",
         "---",
     ])
-
     return "\n".join(lines)
 
-def generate_summary(articles, target_date):
-    if not ANTHROPIC_API_KEY:
-        print("  [warn] ANTHROPIC_API_KEY not set - using fallback daily digest")
-        return fallback_daily_digest(articles, target_date, "Anthropic key unavailable")
 
-    try:
-        import anthropic
-    except ImportError:
-        print("  [warn] anthropic package unavailable - using fallback daily digest")
-        return fallback_daily_digest(articles, target_date, "anthropic package missing")
+def clean_headline(title, limit=160):
+    title = html.unescape(title or "")
+    title = re.sub(r"\s*\[PAYWALL\]\s*", " ", title)
+    title = re.sub(r"\s+", " ", title).strip()
+    if len(title) <= limit:
+        return title
+    cutoff = title[:limit].rsplit(" ", 1)[0].strip(" :,-")
+    return f"{cutoff}…"
 
-    client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
-    nice_date = format_nice_date(target_date)
 
-    def fmt(a):
-        signals = []
-        if a["hn_points"] > 0:
-            signals.append(f"[HN] HN {a['hn_points']}pts/{a['hn_comments']}cmts")
-        if a["cross_sources"] > 1:
-            signals.append(f"x{a['cross_sources']} sources")
-        if a["age_str"]:
-            signals.append(a["age_str"])
-        if a["prev_covered"]:
-            signals.append("[!] PREVIOUSLY COVERED")
-        if a.get("paywalled"):
-            signals.append("[PAYWALL]")
-        sig = f"  [{', '.join(signals)}]" if signals else ""
-        alt = ""
-        if a.get("alt_sources"):
-            alt = "\nAlso covered by: " + " · ".join(a["alt_sources"])
-        return (
-            f"[SCORE:{a['score']} | {a['tier'].upper()} | {a['source']}]{sig}\n"
-            f"Title: {a['title']}\n"
-            f"URL: {a['link']}\n"
-            f"Summary: {a['desc']}{alt}"
-        )
+def looks_like_repo(title):
+    return bool(re.match(r"^[\w.\-]+/[\w.\-]+:", title or ""))
 
-    articles_text = "\n\n".join(fmt(a) for a in articles[:95])
-    n_sources     = len(set(a["source"] for a in articles))
-    n_prev        = sum(1 for a in articles if a["prev_covered"])
-    tier_counts   = {}
-    for a in articles:
-        tier_counts[a["tier"]] = tier_counts.get(a["tier"], 0) + 1
-    tier_summary = ", ".join(
-        f"{tier.upper()}={count}" for tier, count in sorted(tier_counts.items())
-    )
 
-    prompt = f"""You are the editor of theba.sh — a comprehensive AI & tech digest for hackers, developers, and engineers. Your goal is THOROUGHNESS: cover everything notable that happened today. Your voice is direct, technically sharp, and developer-friendly. No hype, no fluff — but don't cut corners on breadth.
+def quick_hit_title(line):
+    match = re.search(r"\*\*(.+?)\*\*", line or "")
+    return clean_headline(match.group(1) if match else "")
 
-Today is {nice_date}. You have {len(articles)} scored articles from {n_sources} sources across labs (Anthropic, OpenAI, Google, Meta, Mistral, NVIDIA, Cohere, Stability), journalism (Reuters, TechCrunch, Bloomberg, Axios, Guardian), analysis (Import AI, Latent Space, Semianalysis, Mollick, Zvi, Ben's Bites), research (arXiv, HuggingFace Papers, Google Research, Microsoft Research, Allen AI, BAIR), developer community (GitHub Trending, Reddit r/MachineLearning, r/LocalLLaMA, Lobste.rs, HN), and policy (Stanford HAI, Brookings). {n_prev} are flagged [!] PREVIOUSLY COVERED.
-Tier mix available right now: {tier_summary}.
 
-SCORING SIGNALS ON EACH ARTICLE:
-- SCORE = tier weight + HN engagement + cross-source + keyword boost − previously-covered penalty
-- Tier weights: PRIMARY=10, ANALYSIS=8, RESEARCH=5, COMMUNITY=4, POLICY=4, INDUSTRY=3
-- [HN] HN Xpts = trending on Hacker News right now
-- x2/x3 sources = same story confirmed by multiple outlets
-- [!] PREVIOUSLY COVERED = this topic appeared in a recent issue
+def classify_title(title):
+    return article_classification({
+        "title": title,
+        "desc": "",
+        "tier": "",
+        "source": "",
+        "link": "",
+    })
 
-RULES:
-1. **Freshness first** — only include [!] PREVIOUSLY COVERED stories if there is a genuinely new development. If including one, start with "**Update:**".
-2. **Order strictly by impact** — score is your primary signal; editorial judgment as tiebreaker.
-3. **No duplicates** — articles have already been deduplicated. If you still see near-identical stories, pick the best one and skip the other. Cite all sources on the winner using "Also covered by:" info.
-4. **Be thorough** — aim for 50-80+ total items across all sections. Better to include a story as a one-liner in the right category than to skip it entirely.
-5. **No noise** — skip listicles, job posts, puff pieces. But don't confuse brevity with noise — a one-sentence item about a real event is signal.
-6. Use the actual source URLs in every link.
-7. **Paywalled sources** — if flagged [PAYWALL]: append ` [PAYWALL]` to headline, write longer summary.
 
-TONE:
-- Sharp, slightly contrarian, builder-focused
-- No corporate language, no hype
-- Write like a smart engineer talking to other engineers
-- Be direct and opinionated
+def digest_link(digest, label=None):
+    text = label or digest["nice_date"].split(",")[0]
+    return f"[{text}]({SITE_URL}/{digest['date']})"
 
-FORMAT:
 
----
-
-# theba.sh — {nice_date}
-
-*{n_sources} sources · ranked by impact · signal over noise*
-
----
-
-## stdout // the big story
-
-[The #1 story of the day gets DEEP treatment — 2-4 paragraphs. Include: what happened, why it matters, specific numbers/benchmarks/quotes, controversy or counterarguments if any, what builders should do about it. Cite all sources. This should feel like a mini-essay, not a blurb.]
-
-**Source:** [Publication](URL) · Also: [Source2](URL), [Source3](URL)
-
----
-
-## stdout // top stories
-
-[4-6 more entries, each with this structure:]
-
-### Headline
-2-3 sentence summary with concrete specifics. What happened and why it matters.
-**Source:** [Publication](URL)
-[Read more →](URL)
-
----
-
-## $_ // launch pad
-
-[5-8 new tools, products, or launches that builders can actually use TODAY. Each entry = one dense sentence + availability/pricing info. Format:
-**Tool name** — what it does in one sentence. [Source](URL) · free / free tier / $X/mo / open source]
-
----
-
-## cat /var/log // the feed
-
-[8-15 one-sentence items about major company moves, product launches, partnerships, executive changes. One sentence each, dense with facts. Format:
-**Company** did X. [Source](URL)]
-
----
-
-## stderr // quick hits
-
-[10-20 additional notable items that don't fit other categories. One sentence each. Format:
-**Topic** — one-sentence hook. [Source](URL)]
-
----
-
-## man pages // deep cuts
-
-[5-10 notable research items. Prefer variety: arXiv, HuggingFace, Google Research, Microsoft Research, university labs, conference papers, industry research blogs. Do NOT fill exclusively with arXiv. Format:
-**Paper/project title** — one sentence on what's novel and why it matters. [Source](URL)]
-
----
-
-## pkg ls // repos & open source
-
-[3-6 trending repos, new libraries, or open-source releases. One sentence each. Format:
-**Repo name** — what it does. [Source](URL) · stars if available]
-
----
-
-## /etc/rules.d // compliance watch
-
-[3-6 policy, safety, governance, or legal items. One sentence each. Format:
-**Topic** — what changed. [Source](URL)]
-
----
-
-## tail -f // cap table
-
-[List all funding rounds, acquisitions, and valuations mentioned today. Format:
-**Company** — $amount for what (investors if notable). [Source](URL)]
-
----
-
-## crontab -l // trend watch
-
-[2-3 paragraphs of synthesis. What's the signal vs noise? What patterns are emerging? What should builders actually pay attention to? Be direct, opinionated, slightly contrarian. End with a bold prediction or hot take.]
-
----
-
-*theba.sh · {nice_date} · {n_sources} outlets monitored · built for builders*
-
----
-
-ARTICLES (ranked by score — use this order as primary signal):
-
-{articles_text}"""
-
-    print("Generating digest with Claude…")
-    try:
-        msg = client.messages.create(
-            model="claude-sonnet-4-6",
-            max_tokens=16000,
-            messages=[{"role": "user", "content": prompt}],
-        )
-        content = msg.content[0].text
-    except Exception as e:
-        print(f"  [warn] Claude digest generation failed: {e}")
-        return fallback_daily_digest(articles, target_date, "model request failed")
-
-    stats = digest_quality_stats(content)
-    if stats["top_stories"] < 3 or stats["categorized_items"] < 10:
-        print(f"  [warn] Claude digest was too thin ({stats}) - using fallback daily digest")
-        return fallback_daily_digest(articles, target_date, "model output below quality threshold")
-
-    return content
-
-
-# ── Multi-format output ───────────────────────────────────────────────────────
-
-def generate_twitter_thread(articles, target_date, client):
-    """Generate a Twitter/X thread from top stories."""
-    top = articles[:7]
-    articles_text = "\n".join(
-        f"- [{a['source']}] {a['title']}: {a['desc'][:150]}" for a in top
-    )
-    prompt = f"""You are writing a Twitter/X thread for "theba.sh" — an AI news account for developers.
-
-Date: {target_date}
-Top stories:
-{articles_text}
-
-Write a 5-tweet thread. Rules:
-- Tweet 1: Hook headline. Bold claim or question. Use "🧵" at end.
-- Tweet 2: "Here's what's actually happening:" + top story summary
-- Tweets 3-4: One story each, concrete and punchy
-- Tweet 5: Hot take / prediction / "what to watch"
-
-TONE: sharp, builder-focused, no corporate language. Max 280 chars per tweet.
-FORMAT: Number each tweet (1/, 2/, etc). Separate tweets with ---."""
-
-    msg = client.messages.create(
-        model="claude-sonnet-4-6",
-        max_tokens=1500,
-        messages=[{"role": "user", "content": prompt}],
-    )
-    return msg.content[0].text
-
-
-def generate_newsletter_block(articles, target_date, client):
-    """Generate a newsletter-format block from top stories."""
-    top = articles[:10]
-    articles_text = "\n".join(
-        f"- [{a['source']}] {a['title']}: {a['desc'][:200]}" for a in top
-    )
-    prompt = f"""You are writing the newsletter edition of "theba.sh" for {target_date}.
-
-Stories:
-{articles_text}
-
-Write a newsletter block for email. Format:
-
-# theba.sh — [date]
-
-[2-sentence intro: what's the big theme today?]
-
-## Headlines
-
-[For each of the top 5-7 stories:]
-### [Headline]
-[2-sentence summary]
-- [bullet 1]
-- [bullet 2]
-- [bullet 3]
-**🔧 Dev Take:** "[opinionated one-liner]"
-
-## Quick Hits
-[5-7 one-line bullets for smaller stories]
-
----
-*theba.sh — built for builders*
-
-TONE: sharp, direct, no hype. Builder-focused."""
-
-    msg = client.messages.create(
-        model="claude-sonnet-4-6",
-        max_tokens=3000,
-        messages=[{"role": "user", "content": prompt}],
-    )
-    return msg.content[0].text
-
-
-def generate_weekly_recap(digests, week_start, week_end, client=None):
-    """Generate a weekly recap from saved daily digest markdown."""
-    week_label = f"{week_start.strftime('%b %d')} - {week_end.strftime('%b %d, %Y')}"
-    if not client:
-        return fallback_weekly_recap(digests, week_label)
-
-    digest_text = []
+def cluster_weekly_items(digests):
+    """Merge headlines that repeat across the week's daily issues."""
+    clusters = []
     for digest in digests:
+        weekday = digest["nice_date"].split(",")[0]
         context = digest["context"]
-        digest_text.append(
-            "\n".join([
-                f"DATE: {digest['nice_date']}",
-                f"DIGEST URL: https://thebash.dev/{digest['date']}",
-                "HEADLINES:",
-                *(f"- {h}" for h in context["headlines"]),
-                "QUICK HITS:",
-                *(context["quick_hits"] or ["- none captured"]),
-                "TREND WATCH:",
-                *(context["trend_watch"] or ["- none captured"]),
-            ])
-        )
+        candidates = [("headline", clean_headline(title)) for title in context["headlines"]]
+        candidates += [("hit", quick_hit_title(line)) for line in context["quick_hits"]]
+        for kind, title in candidates:
+            if not title:
+                continue
+            match = None
+            for cluster in clusters:
+                if titles_overlap(cluster["title"], title, threshold=0.5):
+                    match = cluster
+                    break
+            if match is None:
+                clusters.append({
+                    "title": title,
+                    "kind": kind,
+                    "dates": [digest["date"]],
+                    "labels": [weekday],
+                    "topic": classify_title(title),
+                })
+                continue
+            if digest["date"] not in match["dates"]:
+                match["dates"].append(digest["date"])
+                match["labels"].append(weekday)
+            if kind == "headline" and match["kind"] != "headline":
+                match["title"] = title
+                match["kind"] = "headline"
+                match["topic"] = classify_title(title)
+    return clusters
 
-    prompt = f"""You are writing the theba.sh weekly, the end-of-week version of theba.sh for builders.
 
-Date range: {week_label}
-Daily digest count: {len(digests)}
-
-Write a weekly recap in markdown. Be direct, technical, and useful for builders.
-
-FORMAT:
-
----
-
-# theba.sh weekly - {week_label}
-
-*{len(digests)} daily digests - one weekly signal pass*
-
----
-
-## Week in One Screen
-
-[2 short paragraphs on what actually changed this week]
-
-## Biggest Shifts
-
-[3-5 items. Each item should be:]
-### Headline
-2-3 sentences on why it mattered this week.
-- One concrete takeaway
-- One thing builders should watch next
-**Source trail:** [Mon digest](https://thebash.dev/2026-03-23) and similar links to the relevant daily digests
-
-## Builder Board
-
-[5-7 bullets covering tools, repos, releases, or tactics worth attention next week]
-
-## What to Watch Next Week
-
-[1 paragraph with a clear prediction or operator take]
-
----
-
-*theba.sh weekly - built for builders*
-
----
-
-DAILY DIGEST INPUTS:
-
-{chr(10).join(digest_text)}
-"""
-
-    msg = client.messages.create(
-        model="claude-sonnet-4-6",
-        max_tokens=3500,
-        messages=[{"role": "user", "content": prompt}],
+def compose_weekly_recap(digests, week_start, week_end):
+    """Weekly index of the saved daily issues. No model call."""
+    week_label = f"{week_start.strftime('%b %d')} - {week_end.strftime('%b %d, %Y')}"
+    by_date = {digest["date"]: digest for digest in digests}
+    clusters = cluster_weekly_items(digests)
+    raw_count = sum(
+        len(digest["context"]["headlines"]) + len(digest["context"]["quick_hits"])
+        for digest in digests
     )
-    return msg.content[0].text
+    repeated = [cluster for cluster in clusters if len(cluster["dates"]) >= 2]
+    repeated.sort(key=lambda cluster: (
+        1 if looks_like_repo(cluster["title"]) else 0,
+        0 if cluster["kind"] == "headline" else 1,
+        -len(cluster["dates"]),
+        cluster["title"].lower(),
+    ))
+
+    shifts = list(repeated[:6])
+    if len(shifts) < 3:
+        for cluster in clusters:
+            if cluster in shifts or cluster["kind"] != "headline":
+                continue
+            shifts.append(cluster)
+            if len(shifts) >= 5:
+                break
+    shift_ids = {id(cluster) for cluster in shifts}
+
+    lines = [
+        "---",
+        "",
+        f"# theba.sh weekly - {week_label}",
+        "",
+        f"*{len(digests)} daily digests · {len(clusters)} distinct stories after dedupe*",
+        "",
+        "---",
+        "",
+        "## Week in One Screen",
+        "",
+        (
+            f"This recap indexes {week_start.strftime('%b %d')} through "
+            f"{week_end.strftime('%b %d, %Y')}. {len(digests)} daily issues contributed "
+            f"{raw_count} headlines and quick hits. After deduplication, {len(clusters)} "
+            "distinct stories remain, grouped by topic below. The writeups live on the "
+            "linked daily issues; this page is the map."
+        ),
+        "",
+        "## Biggest Shifts",
+        "",
+    ]
+
+    if shifts:
+        for cluster in shifts:
+            trail = ", ".join(
+                digest_link(by_date[day], label)
+                for day, label in zip(cluster["dates"], cluster["labels"])
+                if day in by_date
+            )
+            day_count = len(cluster["dates"])
+            span = "one daily issue" if day_count == 1 else f"{day_count} daily issues"
+            lines.extend([
+                f"### {cluster['title']}",
+                "",
+                f"Grouped from {span}.",
+                "",
+                f"**Source trail:** {trail}",
+                "",
+            ])
+    else:
+        lines.extend([
+            "No headlines were available to promote. The daily log below still links every issue from this week.",
+            "",
+        ])
+
+    lines.extend(["## By Topic", ""])
+    any_topic = False
+    for topic in TOPIC_ORDER:
+        members = [
+            cluster for cluster in clusters
+            if cluster["topic"] == topic and id(cluster) not in shift_ids
+        ]
+        if not members:
+            continue
+        any_topic = True
+        lines.extend([f"**{TOPIC_HEADINGS[topic]}**", ""])
+        for cluster in members[:8]:
+            digest = by_date.get(cluster["dates"][0])
+            link = digest_link(digest, cluster["labels"][0]) if digest else cluster["labels"][0]
+            extra = ""
+            if len(cluster["dates"]) > 1:
+                extra = f" · also {', '.join(cluster['labels'][1:])}"
+            lines.append(f"- **{cluster['title']}** — {link}{extra}")
+        lines.append("")
+    if not any_topic:
+        lines.extend(["Every distinct headline is already in Biggest Shifts.", ""])
+
+    lines.extend(["## Daily Signal Log", ""])
+    for digest in digests:
+        lines.extend([f"### {digest['nice_date']}", ""])
+        headlines = [clean_headline(title) for title in digest["context"]["headlines"][:5]]
+        headlines = [title for title in headlines if title]
+        if headlines:
+            lines.extend(f"- {title}" for title in headlines)
+        else:
+            lines.append("- No section headlines were captured for this issue.")
+        lines.extend([
+            "",
+            f"[Open the daily issue]({SITE_URL}/{digest['date']})",
+            "",
+        ])
+
+    lines.extend(["## What carried through the week", ""])
+    if repeated:
+        lines.extend(["These stories showed up on more than one day:", ""])
+        for cluster in repeated[:8]:
+            lines.append(f"- **{cluster['title']}** — {', '.join(cluster['labels'])}")
+        lines.append("")
+    else:
+        lines.extend([
+            "No headline repeated closely enough to merge across days. Use the daily log as the full index.",
+            "",
+        ])
+
+    lines.extend([
+        "---",
+        "",
+        "*theba.sh weekly - built for builders*",
+        "",
+        "---",
+    ])
+    return "\n".join(lines)
 
 
 def save_weekly_recap(content, target, source_dates):
@@ -1414,7 +1259,7 @@ def save_weekly_recap(content, target, source_dates):
     return path
 
 
-def build_weekly_recap_for_date(target_date, client=None):
+def build_weekly_recap_for_date(target_date):
     """Build a weekly recap from the current ISO week's saved daily digests."""
     start, end = week_window(target_date)
     digests = []
@@ -1435,8 +1280,8 @@ def build_weekly_recap_for_date(target_date, client=None):
         print("Not enough daily digests available yet for a weekly recap.")
         return None
 
-    print(f"Generating weekly recap from {len(digests)} daily digests...")
-    content = generate_weekly_recap(digests, start, end, client)
+    print(f"Composing weekly recap from {len(digests)} daily digests...")
+    content = compose_weekly_recap(digests, start, end)
     save_weekly_recap(content, target_date, [d["date"] for d in digests])
     return week_id(target_date)
 
@@ -1608,10 +1453,10 @@ def generate_rss_feed():
         items_xml.append(
             f"    <item>\n"
             f"      <title>theba.sh — {nice_date}</title>\n"
-            f"      <link>https://thebash.dev/{d}</link>\n"
+            f"      <link>{SITE_URL}/{d}</link>\n"
             f"      <description>{desc}</description>\n"
             f"      <pubDate>{pub_date}</pubDate>\n"
-            f"      <guid>https://thebash.dev/{d}</guid>\n"
+            f"      <guid>{SITE_URL}/{d}</guid>\n"
             f"    </item>"
         )
 
@@ -1620,7 +1465,7 @@ def generate_rss_feed():
         '<rss version="2.0">\n'
         '  <channel>\n'
         '    <title>theba.sh</title>\n'
-        '    <link>https://thebash.dev</link>\n'
+        f'    <link>{SITE_URL}</link>\n'
         '    <description>High-signal AI &amp; tech news for developers</description>\n'
         + "\n".join(items_xml) + "\n"
         '  </channel>\n'
@@ -1643,9 +1488,9 @@ def generate_sitemap():
         index = json.load(f)
 
     dates = index.get("dates", [])
-    urls = ['  <url>\n    <loc>https://thebash.dev</loc>\n  </url>']
+    urls = [f'  <url>\n    <loc>{SITE_URL}</loc>\n  </url>']
     for d in dates:
-        urls.append(f'  <url>\n    <loc>https://thebash.dev/{d}</loc>\n  </url>')
+        urls.append(f'  <url>\n    <loc>{SITE_URL}/{d}</loc>\n  </url>')
 
     if os.path.exists(WEEKLY_INDEX_PATH):
         with open(WEEKLY_INDEX_PATH, encoding="utf-8") as f:
@@ -1653,7 +1498,7 @@ def generate_sitemap():
         for week in weekly_index.get("weeks", []):
             ident = week.get("id")
             if ident:
-                urls.append(f'  <url>\n    <loc>https://thebash.dev/week/{ident}</loc>\n  </url>')
+                urls.append(f'  <url>\n    <loc>{SITE_URL}/week/{ident}</loc>\n  </url>')
 
     sitemap = (
         '<?xml version="1.0" encoding="UTF-8"?>\n'
@@ -1670,7 +1515,7 @@ def generate_sitemap():
 
 def generate_robots_txt():
     """Generate a robots.txt pointing to the sitemap."""
-    robots = "User-agent: *\nAllow: /\nSitemap: https://thebash.dev/sitemap.xml\n"
+    robots = f"User-agent: *\nAllow: /\nSitemap: {SITE_URL}/sitemap.xml\n"
     robots_path = os.path.join(REPO_PATH, "robots.txt")
     with open(robots_path, "w", encoding="utf-8") as f:
         f.write(robots)
@@ -1707,20 +1552,12 @@ def main():
         print(f"ERROR: bad date '{target_date}', use YYYY-MM-DD")
         sys.exit(1)
 
-    client = None
-    if ANTHROPIC_API_KEY:
-        try:
-            import anthropic
-            client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
-        except Exception as e:
-            print(f"  [warn] Anthropic client unavailable: {e}")
-
     if weekly_mode:
         print(f"\n{'='*55}")
         print(f"  theba.sh weekly - {target_date}")
         print(f"{'='*55}\n")
 
-        ident = build_weekly_recap_for_date(parsed_target, client)
+        ident = build_weekly_recap_for_date(parsed_target)
         if not ident:
             return
 
@@ -1733,7 +1570,7 @@ def main():
         else:
             print("\nNote: GITHUB_TOKEN not set — skipping push.")
 
-        print(f"\nDone. Weekly recap available at: https://thebash.dev/week/{ident}\n")
+        print(f"\nDone. Weekly recap available at: {SITE_URL}/week/{ident}\n")
         return
 
     print(f"\n{'='*55}")
@@ -1759,22 +1596,16 @@ def main():
     articles = score_articles(articles, hn_stories, gh_repos, hf_papers)
     print(f"Total scored: {len(articles)} articles")
 
-    content = generate_summary(articles, target_date)
+    if len(articles) < MIN_PUBLISH_STORIES:
+        print(
+            f"ERROR: only {len(articles)} stories after ranking. "
+            "Refusing to overwrite the published digest."
+        )
+        sys.exit(1)
 
-    twitter_thread = None
-    newsletter = None
-    try:
-        if client:
-            print("\nGenerating Twitter thread…")
-            twitter_thread = generate_twitter_thread(articles, target_date, client)
-            print("Generating newsletter block…")
-            newsletter = generate_newsletter_block(articles, target_date, client)
-        else:
-            print("  [warn] Extra formats skipped: ANTHROPIC_API_KEY not available")
-    except Exception as e:
-        print(f"  [warn] Extra formats failed: {e}")
-
-    save_news(content, target_date, twitter_thread, newsletter)
+    print("\nComposing digest from source headlines…")
+    content = compose_daily_digest(articles, target_date)
+    save_news(content, target_date)
 
     print("\nGenerating RSS feed, sitemap, and robots.txt…")
     generate_rss_feed()
@@ -1789,7 +1620,7 @@ def main():
     else:
         print("\nNote: GITHUB_TOKEN not set — skipping push.")
 
-    print(f"\nDone. View at: https://thebash.dev\n")
+    print(f"\nDone. View at: {SITE_URL}\n")
 
 
 if __name__ == "__main__":
