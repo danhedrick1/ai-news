@@ -23,7 +23,7 @@ Gemma 4 26B running on a 16GB Mac isn't a benchmark story — it's a deployment 
 - **Concrete takeaway:** If you're paying API costs at scale and haven't re-run your open-weight eval suite against Gemma 4 and the Qwen3.5 line this week, do it Monday.
 - **Watch next:** Whether the Chinese lab open-source delay synchronization (flagged Sunday) represents a one-time response to compute pressure or a sustained coordination pattern — that changes the supply curve for competitive open weights significantly.
 
-**Source trail:** [Monday](https://thebash.dev/2026-03-30), [Saturday](https://thebash.dev/2026-04-04), [Sunday](https://thebash.dev/2026-04-05)
+**Source trail:** [Monday](https://theba.sh/2026-03-30), [Saturday](https://theba.sh/2026-04-04), [Sunday](https://theba.sh/2026-04-05)
 
 ---
 
@@ -34,7 +34,7 @@ Two independent papers this week, covered Thursday through Sunday, point at the 
 - **Concrete takeaway:** Audit any workflow that treats visible reasoning as ground truth for model behavior. The reasoning trace is a hypothesis about what happened, not a log.
 - **Watch next:** Whether major labs adjust interpretability tooling and product framing in response to this — the "reasoning model" category may need a significant rebrand if the research holds up at scale.
 
-**Source trail:** [Friday](https://thebash.dev/2026-04-03), [Saturday](https://thebash.dev/2026-04-04), [Sunday](https://thebash.dev/2026-04-05)
+**Source trail:** [Friday](https://theba.sh/2026-04-03), [Saturday](https://theba.sh/2026-04-04), [Sunday](https://theba.sh/2026-04-05)
 
 ---
 
@@ -45,7 +45,7 @@ The Claude Code npm source map leak ran Monday through Saturday and generated en
 - **Concrete takeaway:** If your agent tooling has Claude Code dependencies or OpenClaw integrations, map your exposure now. The ecosystem consolidation is happening faster than the licensing clarity.
 - **Watch next:** Whether Anthropic uses this moment to formalize a developer program with explicit composability contracts, or tightens the perimeter further — those are very different strategic bets.
 
-**Source trail:** [Monday](https://thebash.dev/2026-03-30), [Tuesday](https://thebash.dev/2026-03-31), [Wednesday](https://thebash.dev/2026-04-02), [Friday](https://thebash.dev/2026-04-03), [Saturday](https://thebash.dev/2026-04-04)
+**Source trail:** [Monday](https://theba.sh/2026-03-30), [Tuesday](https://theba.sh/2026-03-31), [Wednesday](https://theba.sh/2026-04-02), [Friday](https://theba.sh/2026-04-03), [Saturday](https://theba.sh/2026-04-04)
 
 ---
 
@@ -56,7 +56,7 @@ This week's geopolitical inputs weren't background noise — they were direct in
 - **Concrete takeaway:** If your infrastructure cost model has a single energy cost assumption and your cloud region selection was made on latency alone, both need a wider uncertainty band built in before Q3 planning.
 - **Watch next:** Whether the AWS Gulf situation produces an actual disruption event — that would accelerate enterprise multi-region requirements faster than any analyst report.
 
-**Source trail:** [Monday](https://thebash.dev/2026-03-30), [Tuesday](https://thebash.dev/2026-03-31), [Sunday](https://thebash.dev/2026-04-05)
+**Source trail:** [Monday](https://theba.sh/2026-03-30), [Tuesday](https://theba.sh/2026-03-31), [Sunday](https://theba.sh/2026-04-05)
 
 ---
 
@@ -67,7 +67,7 @@ Three distinct attack vectors landed in the same week: slopsquatting (agents ins
 - **Concrete takeaway:** If you're shipping AI-generated code to production without a dependency audit and prompt injection monitoring, you're carrying security debt that is actively being exploited against the same architecture you're running.
 - **Watch next:** Whether "constraint-aware fine-tuning" emerges as a standard pipeline step in response to the surface-heuristics finding — this is the kind of result that tends to generate tooling within one product cycle.
 
-**Source trail:** [Wednesday](https://thebash.dev/2026-04-02), [Thursday](https://thebash.dev/2026-04-03), [Saturday](https://thebash.dev/2026-04-04), [Sunday](https://thebash.dev/2026-04-05)
+**Source trail:** [Wednesday](https://theba.sh/2026-04-02), [Thursday](https://theba.sh/2026-04-03), [Saturday](https://theba.sh/2026-04-04), [Sunday](https://theba.sh/2026-04-05)
 
 ---
 

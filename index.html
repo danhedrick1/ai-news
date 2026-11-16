@@ -16,15 +16,15 @@
   <meta property="og:title" content="theba.sh — AI & Dev News" />
   <meta property="og:description" content="High-signal AI and dev news for developers and researchers. Updated every 6 hours." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://thebash.dev" />
-  <meta property="og:image" content="https://thebash.dev/og-image.svg" />
+  <meta property="og:url" content="https://theba.sh" />
+  <meta property="og:image" content="https://theba.sh/og-image.svg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="theba.sh — AI & Dev News" />
   <meta name="twitter:description" content="High-signal AI and dev news for developers and researchers." />
-  <meta name="twitter:image" content="https://thebash.dev/og-image.svg" />
-  <link rel="canonical" href="https://thebash.dev" />
+  <meta name="twitter:image" content="https://theba.sh/og-image.svg" />
+  <link rel="canonical" href="https://theba.sh" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="alternate" type="application/rss+xml" title="theba.sh RSS" href="/feed.xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -39,7 +39,7 @@
       "@context": "https://schema.org",
       "@type": "WebSite",
       "name": "theba.sh",
-      "url": "https://thebash.dev",
+      "url": "https://theba.sh",
       "description": "High-signal AI and developer news for builders."
     }
   </script>
@@ -1311,14 +1311,14 @@
       title: 'Own the prompt line for one issue.',
       body: 'One sponsor per digest. Best fit: developer tools, infra, AI platforms, recruiting, and technical events.',
       ctaLabel: 'Sponsor theba.sh',
-      href: 'mailto:hello@thebash.dev?subject=Sponsor%20theba.sh'
+      href: 'mailto:hello@theba.sh?subject=Sponsor%20theba.sh'
     },
     jobs: {
       kicker: 'jobs board',
       title: 'A small hiring rail for teams building with AI.',
       body: 'Keep this intentionally narrow: strong builder roles, clear compensation, and no generic keyword spam.',
       ctaLabel: 'Post a role',
-      href: 'mailto:hello@thebash.dev?subject=Post%20a%20job%20on%20theba.sh',
+      href: 'mailto:hello@theba.sh?subject=Post%20a%20job%20on%20theba.sh',
       items: [
         { title: 'Founding AI Engineer', meta: 'Your team here · remote or hybrid' },
         { title: 'Developer Relations Lead', meta: 'Launch week slot available' }
@@ -1466,7 +1466,7 @@
   }
 
   function updateDigestMetadata(dateStr, container) {
-    const origin = window.location.origin || 'https://thebash.dev';
+    const origin = window.location.origin || 'https://theba.sh';
     const pageUrl = `${origin}/${dateStr}`;
     const ogImageUrl = `${origin}/news/og-images/${dateStr}.png`;
     const firstStory = cleanHeadingText(container.querySelector('h3')?.textContent || '');
@@ -1530,7 +1530,7 @@
   }
 
   function updateWeeklyMetadata(weekEntry, container) {
-    const origin = window.location.origin || 'https://thebash.dev';
+    const origin = window.location.origin || 'https://theba.sh';
     const pageUrl = `${origin}/week/${weekEntry.id}`;
     const firstStory = cleanHeadingText(container.querySelector('h3')?.textContent || '');
     const title = `${weekEntry.label} | theba.sh weekly`;
@@ -1993,7 +1993,7 @@
       }
 
       // Add share buttons
-      const origin = window.location.origin || 'https://thebash.dev';
+      const origin = window.location.origin || 'https://theba.sh';
       const digestUrl = `${origin}/${dateStr}`;
       const formattedDate = formatDate(dateStr);
       const firstStory = contentEl.querySelector('h3')?.textContent || 'today\'s digest';

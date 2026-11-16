@@ -23,7 +23,7 @@ Claude Code turned out to be the product that actually moved enterprise spend. F
 - **Concrete takeaway:** If you're building enterprise tooling and you haven't audited your Claude API surface against your OpenAI fallback, do it this week. The switching cost assumptions from 2025 are stale.
 - **Watch next:** Whether Anthropic's Managed Agents infrastructure can hold SLA-level reliability at scale, or whether the current enterprise perception outpaces actual delivery capacity.
 
-**Source trail:** [Mon digest](https://thebash.dev/2026-04-06), [Sat digest](https://thebash.dev/2026-04-11), [Sun digest](https://thebash.dev/2026-04-12)
+**Source trail:** [Mon digest](https://theba.sh/2026-04-06), [Sat digest](https://theba.sh/2026-04-11), [Sun digest](https://theba.sh/2026-04-12)
 
 ---
 
@@ -34,7 +34,7 @@ Two papers landed this week that should be flagged at every team running RL-tune
 - **Concrete takeaway:** If your production system depends on reasoning traces being interpretable or auditable — compliance, legal, medical — and you're running an RL-tuned model, you need an independent trace-consistency check in your eval pipeline, not just benchmark scores.
 - **Watch next:** Whether any major lab publishes a post-mortem attributing a product regression to reasoning collapse. That's when this goes from research concern to engineering priority.
 
-**Source trail:** [Fri digest](https://thebash.dev/2026-04-10), [Sun digest](https://thebash.dev/2026-04-12)
+**Source trail:** [Fri digest](https://theba.sh/2026-04-10), [Sun digest](https://theba.sh/2026-04-12)
 
 ---
 
@@ -45,7 +45,7 @@ REAM, Cactus, Squeez, expert-choice routing (Wed), and the TurboQuant + TriAtten
 - **Concrete takeaway:** If you're making infrastructure cost projections for H2 2026, build in a 30-40% inference cost reduction scenario. The community optimization rate has been consistently underestimated.
 - **Watch next:** Whether TurboQuant + TriAttention gets upstreamed to llama.cpp main and how quickly it propagates into hosted inference pricing from Groq, Together, and Fireworks.
 
-**Source trail:** [Wed digest](https://thebash.dev/2026-04-08), [Fri digest](https://thebash.dev/2026-04-10)
+**Source trail:** [Wed digest](https://theba.sh/2026-04-08), [Fri digest](https://theba.sh/2026-04-10)
 
 ---
 
@@ -56,7 +56,7 @@ MCP (Anthropic, 97M downloads) owns tool access. Google's A2A is establishing it
 - **Concrete takeaway:** Standardize on MCP for tool-access plumbing now. Treat A2A as the coordination layer if you're building multi-agent systems. Don't wait for a single winner — these appear to be solving different layers.
 - **Watch next:** Whether ACP gains traction outside IBM's immediate ecosystem, and whether ClawBench scores become a purchasing criterion for enterprise agent buyers the way MMLU was for foundation models.
 
-**Source trail:** [Sat digest](https://thebash.dev/2026-04-11), [Sun digest](https://thebash.dev/2026-04-12), [Thu digest](https://thebash.dev/2026-04-09)
+**Source trail:** [Sat digest](https://theba.sh/2026-04-11), [Sun digest](https://theba.sh/2026-04-12), [Thu digest](https://theba.sh/2026-04-09)
 
 ---
 
@@ -67,7 +67,7 @@ Monday opened with Iran explicitly naming Stargate data centers as military targ
 - **Concrete takeaway:** Audit your critical inference and training dependencies for single-region Gulf exposure. If you're on AWS and haven't tested Gulf-region failover since February, the outage this week was a free drill you probably missed.
 - **Watch next:** Whether hyperscalers update public capex guidance to reflect Gulf risk, or continue the "bet on containment" posture that looked fragile this week.
 
-**Source trail:** [Mon digest](https://thebash.dev/2026-04-06), [Tue digest](https://thebash.dev/2026-04-07)
+**Source trail:** [Mon digest](https://theba.sh/2026-04-06), [Tue digest](https://theba.sh/2026-04-07)
 
 ---
 

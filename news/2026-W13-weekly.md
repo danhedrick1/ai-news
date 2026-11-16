@@ -21,7 +21,7 @@ Every frontier model scored under 1% on ARC-AGI-3 at launch. This isn't a benchm
 - **Concrete takeaway:** Don't architect for "current best available model." Architect for a model that's better at task-specific reliability than at generalizing to novel problem shapes — because that's what you actually have.
 - **Watch next:** Whether ARC-AGI-3 scores move materially in Q2, and which lab claims the first meaningful result above 5%.
 
-**Source trail:** [Thu digest](https://thebash.dev/2026-03-26)
+**Source trail:** [Thu digest](https://theba.sh/2026-03-26)
 
 ---
 
@@ -30,7 +30,7 @@ Anthropic shipped what Latent Space called its biggest launch ever, and a tier a
 - **Concrete takeaway:** Any product strategy anchored to "the best publicly available model" is a strategy built for last quarter. Build with model routing and abstraction layers that let you swap backends without re-architecting.
 - **Watch next:** Whether Anthropic officially announces Mythos before mid-Q2, and whether the capability jump is as large as the leaks suggest.
 
-**Source trail:** [Fri digest](https://thebash.dev/2026-03-27), [Sat digest](https://thebash.dev/2026-03-28)
+**Source trail:** [Fri digest](https://theba.sh/2026-03-27), [Sat digest](https://theba.sh/2026-03-28)
 
 ---
 
@@ -39,7 +39,7 @@ iOS 27 opens Siri to Claude, Gemini, and other backends — and the architecture
 - **Concrete takeaway:** If your retention strategy depends on context lock-in inside any major platform, start rethinking it now. Memory portability is accelerating (Anthropic import tools, Google's Import Memory and Import Chat History, Apple's open routing) — stickiness from context accumulation is a depreciating asset.
 - **Watch next:** iOS 27 beta API surface — specifically whether Apple exposes query routing logic to developers or keeps it opaque.
 
-**Source trail:** [Thu digest](https://thebash.dev/2026-03-26), [Fri digest](https://thebash.dev/2026-03-27)
+**Source trail:** [Thu digest](https://theba.sh/2026-03-26), [Fri digest](https://theba.sh/2026-03-27)
 
 ---
 
@@ -48,7 +48,7 @@ Three separate signals landed this week: AgentGuard launching as an open-source 
 - **Concrete takeaway:** Red-team your public-facing infrastructure against that specific adversary profile. Ask: what would a skilled attacker with unlimited Claude access find in 48 hours? If you don't know, you need to find out before someone else does.
 - **Watch next:** YC S26 batch — expect a cluster of agent security and policy-enforcement startups. This is a real problem with enterprise budget attached, and the tooling gap is well-defined enough to build against.
 
-**Source trail:** [Tue digest](https://thebash.dev/2026-03-24), [Sat digest](https://thebash.dev/2026-03-28), [Sun digest](https://thebash.dev/2026-03-29)
+**Source trail:** [Tue digest](https://theba.sh/2026-03-24), [Sat digest](https://theba.sh/2026-03-28), [Sun digest](https://theba.sh/2026-03-29)
 
 ---
 
@@ -57,7 +57,7 @@ Agibot hit 10,000 humanoid robots deployed — 5,000 units in the last 90 days. 
 - **Concrete takeaway:** If you're building software for physical AI — warehouse automation, logistics, last-mile deployment tooling — the hardware availability timeline you're planning around is probably 12-18 months too conservative.
 - **Watch next:** Whether any Western robotics manufacturer announces a comparable production milestone in Q2, and how US/EU industrial policy responds to the Agibot numbers.
 
-**Source trail:** [Sat digest](https://thebash.dev/2026-03-28)
+**Source trail:** [Sat digest](https://theba.sh/2026-03-28)
 
 ---
 

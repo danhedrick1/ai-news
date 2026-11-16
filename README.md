@@ -5,16 +5,16 @@ High-signal AI and developer news for builders. The site is a static Vercel depl
 ## What It Does
 
 - Generates a daily digest from ranked RSS, HN, GitHub, and research sources
-- Generates Twitter/X and newsletter-format variants when Anthropic is configured
 - Publishes a weekly recap from the saved daily issues every Sunday in New York time
 - Exposes an inline newsletter signup endpoint for Buttondown or a generic webhook
+
+Digests are assembled in the repo. Headlines, links, and summaries come from the source feeds. Nothing in the generator calls a paid model API.
 
 ## Environment
 
 Copy `.env.example` to `.env` and fill in what you need:
 
-- `ANTHROPIC_API_KEY`: required for daily digest generation and AI-written variants
-- `GITHUB_TOKEN`: optional for local auto-push behavior
+- `GITHUB_TOKEN`: optional for local auto-push behavior and a higher GitHub API rate limit
 - `BUTTONDOWN_API_KEY`: optional, used by `api/newsletter-subscribe.mjs`
 - `NEWSLETTER_WEBHOOK_URL`: optional fallback if you are not using Buttondown
 

@@ -35,22 +35,15 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: pip install anthropic
+        run: pip install -r requirements.txt
 
       - name: Preflight environment
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
           python --version
-          if [ -n "$ANTHROPIC_API_KEY" ]; then
-            echo "Anthropic key detected."
-          else
-            echo "Anthropic key missing. Generator will publish fallback digest output."
-          fi
+          echo "Digest is composed from source feeds. No model API is called."
 
-      - name: Generate theba.sh AI digest
+      - name: Generate theba.sh digest
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TARGET_DATE: ${{ github.event.inputs.target_date }}
         run: |
@@ -64,11 +57,11 @@ jobs:
 
       - name: Generate weekly recap on Sundays in New York
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           if [ "$(TZ=America/New_York date +%u)" = "7" ]; then
-            python generate_news.py --weekly
+            ET_DATE=$(TZ=America/New_York date +%Y-%m-%d)
+            python generate_news.py "$ET_DATE" --weekly
           else
             echo "Skipping weekly recap outside Sunday ET."
           fi
