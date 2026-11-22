@@ -2,13 +2,13 @@
 
 # theba.sh weekly - Nov 16 - Nov 22, 2026
 
-*7 daily digests · 155 distinct stories after dedupe*
+*7 daily digests · 156 distinct stories after dedupe*
 
 ---
 
 ## Week in One Screen
 
-This recap indexes Nov 16 through Nov 22, 2026. 7 daily issues contributed 266 headlines and quick hits. After deduplication, 155 distinct stories remain, grouped by topic below. The writeups live on the linked daily issues; this page is the map.
+This recap indexes Nov 16 through Nov 22, 2026. 7 daily issues contributed 266 headlines and quick hits. After deduplication, 156 distinct stories remain, grouped by topic below. The writeups live on the linked daily issues; this page is the map.
 
 ## Biggest Shifts
 
@@ -163,10 +163,10 @@ Grouped from 3 daily issues.
 ### Sunday, Nov 22
 
 - The Download: a living liver, a billion-dollar battery deal, and AI hype
+- Every .parlup.me Ships with an A2A Agent Card & JSON-RPC Endpoint
 - Google’s Gemini 4 Neon Ran Neck and Neck With Claude Code for Less Than Half the Cost
-- Don't You Got Tired of Copy-Pasting Between AI Coding Agents
-- Launch HN: TeamOut (YC W22) – AI agent for planning company retreats
-- The first agentic AI Black Friday is off to a rocky start
+- Will fragile bipartisanship on AI survive the silly season, or is parliament heading for a holiday meltdown? | Josh Butler
+- What I Learnt About Agentic AI, Beyond the Hype
 
 [Open the daily issue](https://theba.sh/2026-11-22)
 
