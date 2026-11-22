@@ -162,11 +162,11 @@ Grouped from 3 daily issues.
 
 ### Sunday, Nov 22
 
+- Perplexity and Intelligence
+- OpenAI’s chief scientist has thoughts on how to limit AI development
 - The Download: a living liver, a billion-dollar battery deal, and AI hype
-- Every .parlup.me Ships with an A2A Agent Card & JSON-RPC Endpoint
+- A Mac workspace where your files and your AI agents sit side by side
 - Google’s Gemini 4 Neon Ran Neck and Neck With Claude Code for Less Than Half the Cost
-- Will fragile bipartisanship on AI survive the silly season, or is parliament heading for a holiday meltdown? | Josh Butler
-- What I Learnt About Agentic AI, Beyond the Hype
 
 [Open the daily issue](https://theba.sh/2026-11-22)
 
