@@ -1,1821 +1,6 @@
 {
   "stories": [
     {
-      "date": "2026-11-16",
-      "fingerprint": "asia china nvidia reportedly supplied",
-      "title": "\ud83d\ude3a Nvidia reportedly supplied China via Asia"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "kings launch openai partnership trust",
-      "title": "The King\u2019s Trust and OpenAI launch \u00a31m partnership"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "apple health provides questions safe",
-      "title": "Apple provides a safe way to ask an AI questions about your health"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "agentic blender coding evaluating generation scene vibeprevisbench",
-      "title": "VibePrevisBench: Evaluating Agentic Coding for 4D Scene Generation in Blender"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "10000 changes code finetune gpus lightningaipytorchlightning model pretrain size zero",
-      "title": "Lightning-AI/pytorch-lightning: Pretrain, finetune ANY AI model of ANY size on 1 or 10,000+ GPUs with zero code changes."
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "decoding faster mmflash models speculative visionlanguage",
-      "title": "MMFlash: Faster Speculative Decoding for Vision-Language Models"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "agents determination hillclimbing pxrd structure verifiable",
-      "title": "Verifiable pXRD: Hill-climbing pXRD structure determination with LLM agents"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "apple podcasts section today video",
-      "title": "Apple TV App to Get Video Podcasts Section Today"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "knowledge reasoning tracing",
-      "title": "Tracing Knowledge and Reasoning in LLM"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "benchmarking frontier gdpxlsx models professional workbooks",
-      "title": "GDP.xlsx: Benchmarking Frontier Models on Professional Workbooks"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "agents dynamic generative optimization queryrewriting ragfgo",
-      "title": "RAG-FGO: Dynamic Optimization of Query-Rewriting Agents for Generative RAG"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "medication population prediction priors retrieval structured tabular",
-      "title": "Tabular Population Priors as Structured Retrieval for EHR Medication Set Prediction"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "anymore chemicaldetecting doing epas isnt plane",
-      "title": "The EPA\u2019s Chemical-Detecting Plane Isn\u2019t Doing Its Job Anymore"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "agent give google rankings real selfhosted server",
-      "title": "Give your AI agent real Google rankings with a self-hosted MCP server"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "memory mirix20 multiagent system",
-      "title": "MIRIX-2.0: Multi-Agent Memory System"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "building device factory language mobile models specialized",
-      "title": "Mobile AI Factory: Building Specialized Language Models for Your Mobile Device"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "agree benchmark choices drift edits generative human image metrics perception quality simple underwater",
-      "title": "Do Underwater Image Quality Metrics Agree with Human Perception? A Benchmark with Human Choices, Simple Edits and Genera"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "cameroon camfranglais camspokennli crossvariety english evaluation pidgin pilot resource transfer",
-      "title": "CamSpokenNLI: A Pilot Resource for Cross-Variety Transfer Evaluation in Cameroon Pidgin English and Camfranglais"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "encoders know meaning multilingual selfsupervised sentence speech",
-      "title": "What Do Multilingual Self-Supervised Speech Encoders Know About Sentence Meaning?"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "advancing formats microscaling models quantization",
-      "title": "Advancing Quantization for R&R Models with Microscaling Formats"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "alignment follow learning principles reflectreasoning",
-      "title": "Alignment with Reflect-Reasoning: Learning How To Follow Principles"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "adaptation crystal diffusion generative inference models sampling time tree",
-      "title": "Diffusion Tree Sampling for Inference Time Adaptation of Crystal Generative Models"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "apple arrive black deals early friday hitting lows record series watch",
-      "title": "Early Apple Watch Black Friday Deals Arrive With Series 12 Hitting New Record Lows"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "agents continual demands ecommerce evolving gcast governed selftraining under",
-      "title": "G-CAST: Governed Continual Self-Training for E-Commerce Agents under Evolving Demands"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "block diffusion every language masked models once posttraining variancereduced",
-      "title": "See Every Block Once: Variance-Reduced Post-Training for Masked Diffusion Language Models"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "agent luthorsql model onepass slower system texttosql",
-      "title": "LuthorSQL: A One-Pass Text-to-SQL Model as System 1 for a Slower LLM Agent"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "appendix biased reviews towards",
-      "title": "AI Reviews Are Biased Towards the Appendix"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "adapter directional lora loraweaver representation routing space",
-      "title": "LoRAWeaver: Directional Adapter Routing in LoRA Representation Space"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "depth opaque operationalization serial",
-      "title": "An Operationalization of Opaque Serial Depth"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "agent behavior collusive down effects framing internal interventions longhorizon mountain push state",
-      "title": "A Push Down the Mountain: Framing Effects and Internal State Interventions on Collusive Behavior in a Long-Horizon LLM A"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "aivoyager civic contest govern humanai publicinterest reasoning rules shape system",
-      "title": "AI-Voyager: A Public-Interest System for Human-AI Civic Reasoning to Contest and Shape the Rules That Govern AI"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "atlas cost does exact finite information less payoff representation",
-      "title": "When Does Less Information Pay? An Exact Finite Atlas of Representation, Payoff, and Cost"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "behavioral cluster clusters deciding evolve lifecycle llmguided management",
-      "title": "LLM-Guided Cluster Lifecycle Management: Deciding When and How to Evolve Behavioral Clusters"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "benchmark causal discovery industrial processes synthetic targetcentric",
-      "title": "A Synthetic Benchmark for Target-Centric Causal Discovery in Industrial Processes"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "agent browser extension never safe trusts",
-      "title": "Your AI Agent Trusts Your Browser Extension. That Was Never a Safe Bet."
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "beyond dynamics models read representations static textaligned videolanguage vjepalm",
-      "title": "V-JEPA-LM: Video-Language Models That Read Dynamics Beyond Static, Text-Aligned Representations"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "adoption agents autonomous evidencegoverned selfgenerated updates",
-      "title": "Evidence-Governed Adoption of Self-Generated Updates in Autonomous AI Agents"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "creating input optimisation steering vectors",
-      "title": "Creating Steering Vectors via Input Optimisation"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "activation nanshan steering typhoon",
-      "title": "Activation Steering the Nan-Shan in Typhoon"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "astrocyte astrocytic biocomputing computation contributions network neural",
-      "title": "Astrocyte Biocomputing: Astrocytic Contributions to Neural Network Computation"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "distances efficient euclidean learning pairspecific search weighted wetw",
-      "title": "WETW: Learning Pair-Specific Weighted Euclidean Distances for Efficient DTW Search"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "classification convergence descent gradient largestep rates selfstabilization unifying",
-      "title": "Classification with Large-Step Gradient Descent: Unifying Self-Stabilization and Convergence Rates"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "availabilityaware chemical composition electric feedback furnace historical learning prediction temperature",
-      "title": "Availability-Aware Historical Feedback Learning for Electric Arc Furnace Temperature and Chemical Composition Prediction"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "adversarial improved mdps optimization policy regret varianceaware",
-      "title": "Improved Regret via Variance-Aware Policy Optimization in Adversarial MDPs"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "benefit ensembling mixtureofexperts routers",
-      "title": "Do Mixture-of-Experts Routers Benefit from Ensembling?"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "architectures energyefficient ergo graph hybrid network neural processinginmemory training",
-      "title": "ERGo: Energy-Efficient Hybrid Graph Neural Network Training on Processing-In-Memory Architectures"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "distribution fronts matching pareto preference scalarization steering surface",
-      "title": "SURFACE: Preference Distribution Matching on Pareto Fronts via Scalarization Steering"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "dynamical dynamics gaussian identifying latent neural process recognitionparametrised systems",
-      "title": "Identifying Latent Neural Dynamics with Recognition-Parametrised Gaussian Process Dynamical Systems"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "anchored balancing decider direction executor gainlearning largescale load perdimension pfexec potential relay",
-      "title": "PF-Exec: Large-Scale UAV Relay Load Balancing with an Anchored Potential Direction Decider and a Per-Dimension Gain-Lear"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "adversarially batched learning online",
-      "title": "Adversarially Batched Online Learning"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "automation content customer engagement guide marketing media planning practical restaurant social",
-      "title": "Restaurant Social Media Marketing: A Practical Guide to Content Planning, Automation, and Customer Engagement"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "cost crunch employer health projected worse",
-      "title": "Employer health cost crunch is worse than projected"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "budget came georgia nearby nudist perks resort retired some surprising",
-      "title": "We retired on a budget to Georgia. A nearby nudist resort came with some surprising perks."
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "agents bank barr feds fuel future runs warns",
-      "title": "Fed\u2019s Barr Warns AI Agents May Fuel Future Bank Runs"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "court italian laundering oversight revolut under weaknesses",
-      "title": "Revolut Under Italian Court Oversight on Laundering Weaknesses"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "capital challenge dreamteam raises salesforce startup",
-      "title": "AI Startup Dreamteam Raises Capital to Challenge Salesforce, SAP"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "builder clients honnte humain parler rponse veulent",
-      "title": "\u00ab Mes clients veulent parler \u00e0 un humain \u00bb : r\u00e9ponse honn\u00eate d'un builder"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "desktop installed never people python shipping",
-      "title": "Shipping a Python desktop app to people who have never installed Python"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "based context enhancement memory understanding",
-      "title": "Understanding Context Memory and GPU Based Enhancement"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "agents open public wallet",
-      "title": "Your AI agent's public URL is an open wallet"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "cache rate stop tests trusting",
-      "title": "Stop Trusting Your Cache Hit Rate. 7 Tests Show Why"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "codeberg github migrating",
-      "title": "Migrating from GitHub to Codeberg"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "memory other paint programs",
-      "title": "Paint in the memory of other programs"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "element origin picker ublock universal websitedriven",
-      "title": "Universal XSS in uBlock Origin from website-driven element picker"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "chainreaction constant shock",
-      "title": "The chain-reaction era: Constant shock and awe"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "appears bubble person questions ready sane whether works",
-      "title": "\"No sane person questions whether AI works\" \u2014 but an AI bubble appears ready to pop."
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "2026 backyard best bird birding feeders smart",
-      "title": "The Best Smart Bird Feeders for Backyard Birding (2026)"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "2026 3in1 anker apple best chargers satechi travel",
-      "title": "Best Apple 3-in-1 Travel Chargers (2026): Anker, ESR, Satechi"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "chatgpt goes happens heres purchase things wrong",
-      "title": "ChatGPT Can Now Buy Things for You. Here's What Happens If a Purchase Goes Wrong."
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "17nm camera feature iphone rumored sensor",
-      "title": "iPhone 20 Pro Rumored to Feature New 17nm Camera Sensor"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "albanese engagement indopacific iran meeting tightrope treads trump ukraine upcoming wanting wars",
-      "title": "Albanese treads tightrope in upcoming Trump meeting, wanting Indo-Pacific engagement and end to Iran and Ukraine wars"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "amid complacency exposed government polycrisis threats",
-      "title": "UK exposed to polycrisis of threats amid government \u2018complacency\u2019"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "brother capitalist care company doerr help john late named primary stat venture",
-      "title": "STAT+: Venture capitalist John Doerr says AI company, named for his late brother, could help fix primary care"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "gaming grandthropic industries tested welcome",
-      "title": "Welcome to 'Grandthropic', the day the gaming and AI industries get tested"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "because caltech class everyones grades homework longer math professor went",
-      "title": "I went to a math class at Caltech. The professor no longer grades homework because everyone's using AI."
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "annual apollo because count exec firm growth head lower mainly plans",
-      "title": "Apollo exec says firm plans to lower annual head count growth, mainly because of AI"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "5step career coachs executive layoff navigating pivot plan",
-      "title": "An executive coach's 5-step plan for navigating a layoff or career pivot"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "coders learn skill socializing",
-      "title": "Coders have to learn a new skill: Socializing"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "cabinet half house left ones remain trumps white women",
-      "title": "Half of the women in Trump's Cabinet have left the White House. Here are the ones that remain."
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "afeyan creating flagships moderna next sees",
-      "title": "Flagship\u2019s Afeyan Sees UK Bet Creating Next Moderna"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "amid fallout lower nvidia open stocks tech",
-      "title": "US tech stocks set to open lower amid Nvidia fallout"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "fame investor leaders nvidia success tech tesla undermine warns",
-      "title": "\u2018Success and fame\u2019 undermine tech leaders, warns Nvidia and Tesla investor"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "global midterms push renews rules trump weaken",
-      "title": "EU renews push for global AI rules after midterms weaken Trump"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "afford hardball play publishers tech",
-      "title": "Publishers can afford to play hardball with Big Tech"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "agents compute coordination ensembling llms multiagent samples testtime thinking untangling",
-      "title": "More Agents, More Samples, or More Thinking? Untangling Coordination, Ensembling, and Test-Time Compute in Multi-Agent L"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "back benchmarks dont learning selfdisagreement talk through",
-      "title": "Benchmarks Don't Talk Back: Learning Through Self-Disagreement"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "agents environments measuring persistent realistic rule unfinishedbench violations work",
-      "title": "Unfinished-Bench: Measuring Rule Violations by Persistent Agents in Realistic Work Environments"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "aggregation capabilities crowd decisionmaking fusion language limits linguistic models openweight outputlevel small",
-      "title": "Small Open-Weight Language Models for Crowd Decision-Making: Capabilities and Limits of Output-Level Fusion and Linguist"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "agents carryon context keep learning longhorizon",
-      "title": "CarryOn: Learning What to Keep in Context for Long-Horizon LLM Agents"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "agents errors filtering forget memory querycritical resolver should under",
-      "title": "When Should LLM Agents Forget? Memory Filtering Under Query-Critical Resolver Errors"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "audit detectors does hallucination hold llms ondevice practitionerfacing quantized ranking small",
-      "title": "Does the Ranking Hold? A Practitioner-Facing Audit of Hallucination Detectors on Small, Quantized, On-Device LLMs"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "llms poetry resurrection",
-      "title": "Poetry 'resurrection' from LLMs"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "annealing consolidation dataefficient learning model review through",
-      "title": "Model Annealing: Data-Efficient Learning through Review and Consolidation"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "agent every passed still test wrong",
-      "title": "Every test passed and the agent was still wrong"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "apps companies compare developers evaluate five should social",
-      "title": "Five Companies to Evaluate for AI Social Apps: What Should Developers Compare?"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "anthropic models nvidias rich rival tests valuation whether",
-      "title": "Anthropic IPO Tests Whether AI Models Can Rival Nvidia\u2019s Rich Valuation"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "biggest fades frenzy investors ipos lose money year",
-      "title": "Biggest IPOs this year lose investors money as AI frenzy fades"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "back european fund plural raises startups tech",
-      "title": "Plural raises \u20ac1bn fund to back European tech start-ups"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "companies contract line palantir replace",
-      "title": "UK companies line up to replace Palantir in NHS contract"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "announcing hegelclj",
-      "title": "Announcing Hegel-clj"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "democrats good look trump want",
-      "title": "Why Democrats may want to make Trump look good"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "2026 amazon aura best digital frames photo skylight",
-      "title": "Best Digital Photo Frames (2026): Aura, Skylight, Amazon"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "apple chip core switched",
-      "title": "New Apple TV 4K's A19 Chip Has One Core Switched Off"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "became built business columbia corporate getting graduated laid lawyer",
-      "title": "I graduated from Columbia Law and became a corporate lawyer. After getting laid off, I built a $19M hot dog business."
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "buyout call share should take tech workers",
-      "title": "Should you take a buyout? 9 Big Tech workers share how they made the call."
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "advisors anthropic bill employees financial manage richer share soon",
-      "title": "Anthropic employees could soon be a lot richer. 4 financial advisors share how they can manage the tax bill."
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "hike jpms looks michele missed silly",
-      "title": "JPM\u2019s Michele: \u2018Looks a Bit Silly\u2019 Fed Missed Oct. Hike"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "beat boss chess fintechs game revolut wants world",
-      "title": "World Chess Boss Wants to Beat Revolut at Fintech\u2019s Own Game"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "centres data fund pure saudi singapore stake telecom wealth",
-      "title": "Singapore Wealth Fund, Saudi Telecom Bid for UK\u2019s Pure Data Centres Stake"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "alarm anthropic recursive selfimprovement triggered",
-      "title": "Anthropic Says Its Recursive Self-Improvement Alarm Has Been Triggered"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "anthropic boost fall hits huangs models open openai",
-      "title": "Huang\u2019s fall hits \u2018open\u2019 models in boost to Anthropic and OpenAI"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "back better manufacturing",
-      "title": "US manufacturing is back and better"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "announces division lvmhs media openai partnership strategic",
-      "title": "LVMH\u2019s Media Division announces strategic partnership with OpenAI"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "features help holiday maps prep travel",
-      "title": "New Ask Maps features to help with holiday travel and prep"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "development during import subcontractors subterfuge",
-      "title": "Import AI 481: AI sub-contractors; a wet lab for AI; and subterfuge during development"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "across building enterprise work",
-      "title": "Building AI that can work across the enterprise"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "access advanced chips moves remote restrict",
-      "title": "US Moves to Restrict Remote Access to Advanced AI Chips"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "exit face huangs hugging jensen keep nvidia open",
-      "title": "Can Nvidia Keep Hugging Face Open After Jensen Huang's Exit?"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "acquisition continualarc lifetime measuring skill working",
-      "title": "Continual-ARC: Measuring Skill Acquisition over a Working Lifetime"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "agents benchmark heterogeneous multimodal reproducible webarenapro",
-      "title": "WebArena-Pro: A Heterogeneous, Multimodal, Reproducible Benchmark for Web Agents"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "cognitive download immortality promises searching tech testing",
-      "title": "The Download: testing tech promises and searching for cognitive immortality"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "becomes cheap code engineering nadella satya software",
-      "title": "Software engineering after code becomes cheap with Satya Nadella"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "breaking budget check cost multimodel reality running token without xinference",
-      "title": "Token Cost Reality Check: Running Xinference for Multi-Model RAG Without Breaking the Budget"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "diffusion distillation distribution edmd endpoint fewstep matching",
-      "title": "eDMD: Endpoint Distribution Matching for Few-Step Diffusion Distillation"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "agent clean earns moves nothing preview right sign without",
-      "title": "Nothing Moves Without a Clean Preview: How My AI Agent Earns the Right to Sign"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "libraries markdown native pipelines python without",
-      "title": "PDF to Markdown for LLM pipelines in .NET \u2013 without Python and without native libraries"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "catches exit returncode trace validator",
-      "title": "A trace validator that catches \"ok: exit 1\" but not \"ok: returncode 1\""
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "dynamic dysense emulation energy imagery satellite spatiotemporal synthesis",
-      "title": "DySENSE: Dynamic Spatiotemporal ENergy Synthesis and Emulation with Satellite Imagery"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "boosting cappy language large models multitask outperforming scorer small",
-      "title": "Cappy: Outperforming and boosting large multi-task language models with a small scorer"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "encoding graph graphs language large like models talk",
-      "title": "Talk like a graph: Encoding graphs for large language models"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "grades nobody",
-      "title": "Nobody grades the \"no\""
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "finetuning jazz music partner pretrained realtime sampling steering time transformer",
-      "title": "Steering a pretrained music transformer at sampling time into a real-time jazz partner (no fine-tuning) [P]"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "average diesel first gallon months prices time under",
-      "title": "Average diesel prices are under $6 per gallon for the first time in months"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "create google itineraries maps trip",
-      "title": "Google Maps can now create trip itineraries for you"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "baidu drag drop persists posts sales sixth straight",
-      "title": "Baidu Posts Sixth Straight Sales Drop After AI Drag Persists"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "controls improve italy laundering money ordered revolut",
-      "title": "Revolut Ordered to Improve Money Laundering Controls in Italy"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "bureaucracy business drone exist facing levels maker ukrainian western wouldnt",
-      "title": "A Ukrainian drone maker says that if it had to do business facing Western levels of bureaucracy, it wouldn't exist"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "billion buffett donating letter short surprisingly thanksgiving warren",
-      "title": "Warren Buffett says he's donating $5.5 billion in surprisingly short Thanksgiving letter"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "career engineer path product role skills",
-      "title": "What Is a Product Engineer? Role, Skills, Pay and Career Path"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "character director fixed locking pose retraining without",
-      "title": "Character Pose Director: Locking a Fixed Character to Any Pose Without Retraining"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "apis applications failed fallback handling keep limits matter models multiple prevent properly rate requests retries running smoothly working",
-      "title": "When working with multiple LLM APIs, rate limits matter. Handling TPM, RPM, retries, and fallback models properly can pr"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "against contract failing lostresponse marks public published scored server",
-      "title": "We scored our own MCP server against a public lost-response contract and published the failing marks"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "becoming edge important industrial realtime systems",
-      "title": "Why Edge AI Is Becoming Important for Real-Time Industrial IoT Systems"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "doing week",
-      "title": "What are you doing this week?"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "squircles",
-      "title": "Squircles"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "2027 aistats discussion paper",
-      "title": "AISTATS 2027 paper discussion [D]"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "2026 audio best models",
-      "title": "Best Audio Models - Nov 2026"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "becoming beginning begins",
-      "title": "The beginning of the becoming of the beginning begins"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "qwen where",
-      "title": "Where is QWEN 4 27b ?"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "flash introducing",
-      "title": "Introducing Hy4 flash"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "index qwen stop worrying",
-      "title": "Stop worrying about Qwen 4's AA index"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "abliterated download exists flash lora models next",
-      "title": "Why download abliterated Flash Next models when LoRA exists?"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "better glm53flash qwen38fn ranking",
-      "title": "New AA ranking Qwen3.8-FN better than GLM-5.3-Flash?"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "breaks embrace figures finally hope huangs jensen maga scandal tech trumps",
-      "title": "MAGA figures hope Jensen Huang's spy scandal finally breaks Trump's embrace of Big Tech"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "bessent china chip earnings goose nvidia questions sales suspect",
-      "title": "Bessent questions did Nvidia \"goose\" earnings with suspect China chip sales"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "actually audible audiobooks easier like trying youll",
-      "title": "Audible is trying to make it easier to find audiobooks you\u2019ll actually like"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "down isnt nvidia scandal slowing",
-      "title": "The Nvidia scandal isn\u2019t slowing down"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "anthropic deals delaying moynihan some",
-      "title": "Anthropic IPO Is Delaying Some Deals, Moynihan Says"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "america bank consumer moynihan pipeline strength",
-      "title": "Bank of America CEO Moynihan on IPO Pipeline, AI, Consumer Strength"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "apec attend baidu catl shenzhen summit unitree",
-      "title": "CATL, Baidu, Unitree to Attend APEC CEO Summit in Shenzhen"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "aiming copilot microsoft work",
-      "title": "Why Microsoft is aiming to make Copilot the \u2018OS for work\u2019"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "adobes black cloud creative first friday sale takes year",
-      "title": "Adobe's Black Friday Sale Takes 57% Off Creative Cloud Pro for Your First Year"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "apples home homeview issues owners smart some",
-      "title": "Apple's New HomeView Smart Home Hub Has Some Issues, Say Owners"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "10season apple horses milestone renewal slow",
-      "title": "'Slow Horses' to Hit 10-Season Milestone With Apple TV Renewal"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "200000 apple health people seeks study",
-      "title": "Apple Seeks 200,000 People for AI Health Study"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "cheese delicious dish gartens grownup puts side thanksgiving traditional tried twist",
-      "title": "I tried Ina Garten's 'grown-up' mac and cheese. It puts a delicious twist on a traditional Thanksgiving side dish."
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "ackman bill explanation grizzled haters lighting looked said skin",
-      "title": "'Bad lighting, dry skin': Bill Ackman has an explanation for haters who said he looked 'grizzled'"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "cybercab gold lawn ornament paying shiny subscription teslas turns",
-      "title": "Not paying Tesla's $299 Cybercab subscription turns it into a shiny gold lawn ornament"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "balanced buys costco dietitian dinners during help quickly these throw together week",
-      "title": "I'm a dietitian and mom of 2. These 11 Costco buys help me quickly throw together balanced dinners during the week."
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "perfect selloff",
-      "title": "The perfect sell-off"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "fail happened heres microsoft outage servers",
-      "title": "Microsoft outage saw 80% of servers fail \u2013 here\u2019s what happened"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "camera coming iphone leaker main pros sensor",
-      "title": "New camera sensor coming to the iPhone 20 Pro\u2019s main camera, says leaker"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "based iphone rumored",
-      "title": "'iPhone 20 Pro' Rumored to Be Based on iPhone Air"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "decoding faster mmflash models paper speculative visionlanguage",
-      "title": "[Paper & Models] MMFlash: Faster Speculative Decoding for Vision-Language Models"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "decline founder huang jensen showman visionary",
-      "title": "Jensen Huang and the decline of the visionary showman founder CEO"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "billions cost dollars duffy ground nationwide stop",
-      "title": "Nationwide Ground Stop Cost \u2018Billions of Dollars,\u2019 Duffy Says"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "altman board cant ceos fired member openai still trust",
-      "title": "The OpenAI board member who fired Sam Altman says we still can\u2019t trust AI CEOs"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "china huangs jensen nvidia preceded scandal views",
-      "title": "Jensen Huang\u2019s China Views Preceded the Nvidia Scandal"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "etzioni speed startup strategy",
-      "title": "Etzioni on AI: Startup speed is not a strategy"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "apple beta coming confirms today",
-      "title": "Apple Confirms iOS 27.3 Beta 2 Coming Today"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "apple arrive black deals every friday model watch",
-      "title": "Apple Watch SE 3 Black Friday Deals Arrive With $50 Off Every Model"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "gone huang jensen",
-      "title": "Jensen Huang Is Gone. Now What?"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "advancing agents computeruse healthcare teams",
-      "title": "Advancing computer-use agents for healthcare teams"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "care chatgpt forward healthcare move ways",
-      "title": "More ways to move care forward with ChatGPT for Healthcare"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "embed investigate openai researchers safety subversion",
-      "title": "OpenAI will embed safety researchers to investigate AI subversion"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "chatgpt classifier combat csam image openai releases warnings",
-      "title": "OpenAI releases a new image classifier and ChatGPT warnings to combat CSAM"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "access broadening scientists",
-      "title": "Broadening access to AI for scientists"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "abuse against child fight online sexual strengthening support tools",
-      "title": "Strengthening the fight against online child sexual abuse with new tools and support"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "chatgpt frontier science scientists",
-      "title": "Science at the Frontier: How scientists use ChatGPT"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "assessments embedded first phase",
-      "title": "Our first phase of embedded assessments"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "building fencing predicting trustworthy",
-      "title": "Building trustworthy AI by fencing it in, not predicting it"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "adds face feature iphone unlock",
-      "title": "iOS 27.3 adds new face unlock feature for iPhone Duo"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "devices hits lands llamacpp mobile models qwen4max",
-      "title": "Qwen4-Max Lands in API, llama.cpp Hits 1.0.0, and 80B Models Run on Mobile Devices"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "controls errors format output parsed parsing plausible semantic silent smallmodel wrong",
-      "title": "Parsed, Plausible, Wrong: Output Format Controls Silent Errors in Small-Model Semantic Parsing"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "evaluation meminstream memorizing memory merely recognizing rethinking streaming video",
-      "title": "MemInStream: Memorizing or Merely Recognizing? Rethinking Streaming Video Memory Evaluation"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "deepseek faster inference providers switching",
-      "title": "How to get up to 2.3 faster GLM and DeepSeek inference by switching providers"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "dataset even evenvlm finetuning language multimodal text visionlanguage",
-      "title": "EvenVLM: A Text and Multimodal Dataset for the Even Language with Vision-Language Fine-Tuning"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "control diffusion general humanoid motion onesteer onestep steerable tracking unlocking wholebody",
-      "title": "OneSteer: Unlocking Steerable General Humanoid Motion Tracking via One-Step Diffusion Whole-Body Control"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "agents behavioral coding interpreting through trajectories",
-      "title": "Interpreting Coding Agents Through Their Behavioral Trajectories"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "agent browser chrome coding eyes give hands",
-      "title": "How to Give Your AI Coding Agent Eyes and Hands in Your Chrome Browser"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "apps hybrid pgvector postgresql search",
-      "title": "PostgreSQL pgvector Hybrid Search for Web Apps"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "alloy engine learning multimaterial physics robot",
-      "title": "Alloy: A Multi-Material Physics Engine for Robot Learning"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "deflect duffy groundstop responsibility trump",
-      "title": "Trump, Duffy Deflect Responsibility for FAA Groundstop"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "agents built clean code principles skills",
-      "title": "Clean Code in the Age of AI Agents: 5 Principles and 2 Skills I Built"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "agents beyond building computational intelligence layer next",
-      "title": "Beyond AI Agents: Building the Next Layer of Computational Intelligence"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "ambitions closing depend final googles percent robot",
-      "title": "Google\u2019s Robot Ambitions Now Depend on Closing the Final 4 Percent"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "copyright wont",
-      "title": "you won't win at copyright"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "easy face forces hugging join models openrouter openweight",
-      "title": "Hugging Face and OpenRouter join forces to make open-weight models easy to run"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "bull growth intact nvidia remains story",
-      "title": "Nvidia Bull: AI Growth Story Remains Intact"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "anthropic governance humanity nils pratley really recognises risks",
-      "title": "Anthropic recognises the risks to humanity \u2013 but is its governance really up to the job? | Nils Pratley"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "deliverable finished growth http request signup single",
-      "title": "A finished growth deliverable from a single HTTP request (no signup)"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "assistente como construmos finance financeiro open whatsapp",
-      "title": "Como constru\u00edmos um assistente financeiro no WhatsApp com IA e Open Finance"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "w2rt6byl5nf1opmcacom",
-      "title": "What is w2rt6byl5nf1opmc-a[.]com?"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "computer coolio criminal friend janet reno talking",
-      "title": "Janet Reno was talking about my friend Coolio (computer criminal)"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "database imap mailbox part quality",
-      "title": "Quality IMAP, Part 1: Your Mailbox Is A Database"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "boom growth help higher substantially sustain warsh",
-      "title": "Warsh says AI boom could help sustain \u2018substantially higher\u2019 US growth"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "serious spaces",
-      "title": "Serious spaces? [D]"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "already apple approach check decoding each guessed layerhot layers loaded slow token weights while",
-      "title": "Layer-hot decoding: an approach to check a guessed token while each layer's weights are already loaded on an Apple M4. I"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "assault boost gives national scotus",
-      "title": "SCOTUS gives DEI a boost after national assault"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "before congress exclusive house requires signoff staffers testify white",
-      "title": "Exclusive: White House requires signoff before staffers testify to Congress"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "another attorney congressional democrat investigtions targets",
-      "title": "U.S. attorney targets another Democrat over congressional investigtions"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "face getting iphone limited version",
-      "title": "The iPhone Duo Is Getting a Limited Version of Face ID"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "affiliate amazon bringing directly instagram links posts reels",
-      "title": "Instagram Is Bringing Amazon Affiliate Links Directly to Reels and Posts"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "back drill",
-      "title": "AO3 Is Back. This Is Not a Drill"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "abuse child deepfakes openai overwhelming stop tiplines wants",
-      "title": "OpenAI wants to stop deepfakes from overwhelming child abuse tiplines"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "july microsoft outage since triggered undetected worldwide",
-      "title": "Microsoft Bug Undetected Since July Triggered Worldwide Outage"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "assistant rolling traders tradeweb treasury",
-      "title": "Tradeweb Is Rolling Out AI Assistant for US Treasury Traders"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "bring harman jane meeting putinxi results substantive trump unlikely",
-      "title": "Putin-Xi Meeting Unlikely to Bring Substantive Results for Trump, Says Jane Harman"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "collegeeducated finds immigration lowers skilled study workers",
-      "title": "Skilled Immigration Lowers Pay for College-Educated US Workers, Study Finds"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "bottleneck critical hadrian shipbuilding targets",
-      "title": "Hadrian Targets Critical Bottleneck in US Shipbuilding"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "adds fallout nvidia race tension uschina",
-      "title": "Nvidia Fallout Adds New Tension to US-China AI Race"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "climate fallible models reports science study unbacked weak",
-      "title": "AI models \u2018weak and fallible\u2019 on climate science, UN-backed study reports"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "apple beautiful download featuring iphone pokmon releases wallpapers",
-      "title": "Apple releases beautiful new iPhone wallpapers featuring Pok\u00e9mon, download here"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "cards cash eight field holds magsafe mofts monday supports trackable wallet",
-      "title": "MagSafe Monday: MOFT\u2019s Trackable Field Wallet holds eight cards, cash, and supports Find My"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "1584 2674 first macos rolling sequoia tahoe",
-      "title": "First macOS Sequoia 15.8.4 and macOS Tahoe 26.7.4 RCs rolling out"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "beta everything",
-      "title": "Everything new in iOS 27.3 beta 2"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "beta data health questions siri",
-      "title": "You can now ask Siri AI questions about your health data, with iOS 27.3 beta 2"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "activities available beta live macos native safari tabs vertical",
-      "title": "macOS 27.3 beta 2 now available with vertical tabs in Safari, native Live Activities, more"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "apples calendar design gives updates",
-      "title": "iOS 27.3 gives Apple\u2019s Calendar app new design updates"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "applecom available spanish users",
-      "title": "Apple\u2024com now available in Spanish for US users"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "110m carlos choi former guestrin noeri raise researchers startup yejin",
-      "title": "Former UW AI researchers Yejin Choi and Carlos Guestrin raise $110M for AI startup Noeri"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "amazon bond coveted ending pattinson picks play robert role speculation years",
-      "title": "Amazon picks its Bond: Robert Pattinson to play 007, ending years of speculation over coveted role"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "comeback depps ebenezer johnny numbers office prove start strong",
-      "title": "The 'Ebenezer' box office numbers prove Johnny Depp's comeback is off to a strong start"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "becoming didnt finally lawyer life realized spent toward want whole working",
-      "title": "I spent my whole life working toward becoming a lawyer. When I finally made it, I realized I didn't want that life."
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "altmanstyle comeback huangs isnt jensen push rerun",
-      "title": "The push for Jensen Huang's comeback isn't a Sam Altman-style rerun"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "america bank banks chase major online other outages suffer",
-      "title": "Chase, Bank of America, and other major banks suffer online outages"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "brand company fashion grew handbag heres learned like partners sportswear started",
-      "title": "I started a handbag company at 22 and grew it into a fashion sportswear brand with partners like MLB. Here's what I've l"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "actor best bond every james played ranked worst",
-      "title": "Every actor who has played James Bond, ranked from worst to best"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "alone cruise first solo surprised taking time travel ways",
-      "title": "I travel alone all the time, but taking my first cruise solo surprised me in 6 ways"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "90000 breaking down japan salary tokyo",
-      "title": "Breaking down my $90,000 salary in Tokyo, Japan"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "apple australia canada come french news puzzles",
-      "title": "Apple News+ Puzzles Come to UK, Australia, and French Canada"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "apple card celebrates gift iphone pokmon special wallpapers",
-      "title": "Apple Celebrates Pok\u00e9mon With iPhone Wallpapers and Special Gift Card"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "adds feature page safari siri",
-      "title": "iOS 27.3 Adds 'Ask About Page' Siri AI Feature to Safari"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "200000 apple apps iphone optimized",
-      "title": "Apple Says More Than 200,000 Apps Now Optimized for iPhone Duo"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "available beta developers gate golden macos",
-      "title": "macOS Golden Gate 27.3 Beta 2 Now Available for Developers"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "adds beta daily icloud limits siri upgrades",
-      "title": "iOS 27.3 Beta Adds Daily Siri AI Limits and iCloud+ Upgrades"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "apple launches spanish version website",
-      "title": "Apple Launches Spanish Version of Its U.S. Website"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "americas balance china chip delicate",
-      "title": "The delicate balance in America\u2019s AI chip war with China"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "china safety west wrong",
-      "title": "What the west gets wrong about AI safety in China"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "apple brings podcasts vertical video",
-      "title": "iOS 27.3 brings vertical video and video podcasts to Apple TV app"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "caused faas ground know nationwide stop",
-      "title": "What we know about what caused the FAA's nationwide ground stop"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "centers data electricity michigan",
-      "title": "Just 400 US Data Centers Use More Electricity Than Michigan"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "apple complex daily interactions limits siri testing usage",
-      "title": "Apple is testing daily usage limits for more complex Siri AI interactions"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "earnings nvidia watch",
-      "title": "What to Watch for in Nvidia Earnings"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "centers data denmarks emissions hyperscale oregon power ranked rival study",
-      "title": "Study: 403 U.S. hyperscale data centers rival Denmark\u2019s emissions; Oregon ranked No. 2 in power use"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "blames herds microsoft months outlook thundering unnoticed went wrong",
-      "title": "What went wrong with Outlook: Microsoft blames \u2018thundering herds\u2019 and a bug unnoticed for months"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "airpods best black deals early friday include",
-      "title": "Best Early AirPods Black Friday Deals Include AirPods Pro 3 for $179"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "amid fallout nvidia slide stocks tech",
-      "title": "US tech stocks slide amid Nvidia fallout"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "agent california incidents openai rogue state sues",
-      "title": "California state AG sues OpenAI over rogue agent incidents"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "andreas black blattmann building dustin forest intelligence labs podell visual",
-      "title": "Building Visual Intelligence \u2014 Andreas Blattmann & Dustin Podell, Black Forest Labs"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "airlines delayed flights outage resolves system united widespread",
-      "title": "United Airlines resolves \"widespread system outage\" that delayed flights"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "apple beta china expands intelligence ipads macs testing",
-      "title": "Apple expands Apple Intelligence beta testing in China to iPads and Macs"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "before deliver earlier iphone month orders",
-      "title": "New iPhone Duo orders now deliver a month earlier than before"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "agents coding efficient experience learning tokeneconomizer",
-      "title": "TokenEconomizer: Learning from Experience to Make AI Coding Agents More Efficient"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "agent cant coding still video watch",
-      "title": "A coding agent can't watch a video. It can still make one."
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "billion deepseekv41flash gaming parameters xolotl",
-      "title": "Xolotl \u2013 DeepSeek-V4.1-Flash at 552 billion parameters, on one gaming PC"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "failure heres library memory postgres reader silent",
-      "title": "A Reader Found a Silent Failure in My Postgres Memory Library. Here's the Fix"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "brick brickflow connectivityguided reconstruction",
-      "title": "BrickFlow: Connectivity-Guided Brick Reconstruction"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "activations distilled diversity generators image probing restoring video",
-      "title": "Restoring Diversity in Distilled Image and Video Generators by Probing Activations"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "dissecting game ideation questioning research through twoplayer",
-      "title": "Re-Search: Dissecting LLM Ideation Through a Two-Player Questioning Game"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "apple apples chief continues leadership overhaul wallet",
-      "title": "Apple\u2019s leadership overhaul continues with new Apple Pay and Wallet chief"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "anthropic faces indexes join longer spacex stock wait",
-      "title": "Anthropic Faces a Longer Wait Than SpaceX to Join Stock Indexes"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "agent call second stopped turns",
-      "title": "Your agent made one call and stopped: the second call that turns it into a job"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "couldnt drowned hand selfdriving then usdc",
-      "title": "I made a drowned self-driving car for 5 USDC and then couldn't hand it in"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "cleanup image links originals pattern private signed storage thumbnails",
-      "title": "AI Image App Storage Pattern: Originals, Thumbnails, Private Signed Links, and Cleanup"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "berlin code moved nine nonprofit repositories soil",
-      "title": "Code on EU soil: why nine repositories moved to a Berlin non-profit"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "dual flow imagemeasurement interpolation inverse joint problems",
-      "title": "Dual Flow: Joint Image-Measurement Interpolation for Inverse Problems"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "billions fewer international stake students",
-      "title": "Fewer international students, billions at stake"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "against apps control full giving macos warns",
-      "title": "macOS 27.3 Warns Against Giving AI Apps Full Mac Control"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "billion extends nvidia reap sellers short slide stock",
-      "title": "Nvidia Short Sellers Reap $24 Billion as Stock Extends Slide"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "brokerage buying kalshi offer stock trading",
-      "title": "Kalshi to Offer Stock Trading After Buying Brokerage"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "aging burden captures caring hidden parents sister sketch snls",
-      "title": "SNL's 'Sister' sketch captures the hidden burden of caring for aging parents"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "coder csails fails metr paradox programming pruning weightspace",
-      "title": "Why 'You Are a 10x Coder' Fails: The METR -19% Paradox, MIT CSAIL's Weight-Space Programming, and the - Pruning Law"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "narration publishing rise",
-      "title": "The Rise of AI Narration in Publishing"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "2532 didnt exist measured package slopsquatting suggestions",
-      "title": "Slopsquatting, measured: 3.83% of 2,532 AI package suggestions didn't exist"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "changed developer rust",
-      "title": "How Rust Changed Me As A Developer"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "leaving rust swift",
-      "title": "On Leaving Swift for Rust"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "enabling frontend nightly parallel",
-      "title": "Enabling the parallel frontend on nightly"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "drops intel percent shareholders stock",
-      "title": "Shareholders sue Intel, its CEO, and CFO after stock drops 28.6 percent in one day"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "bank nothing outage",
-      "title": "The Bank Outage May Have Nothing to Do With Your Bank"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "against convinced exit huangs jensen leaders plot tech",
-      "title": "Tech leaders are convinced that Jensen Huang\u2019s exit was a plot against him"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "altman everyone wants",
-      "title": "Sam Altman says he wants everyone \u2018to have a lot of RAM\u2019"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "centers data democrats isnt nuclear stopping worried",
-      "title": "Big Nuclear isn\u2019t worried about the Democrats stopping data centers"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "apple grammy land nominations schmigadoon widows",
-      "title": "\u2018Schmigadoon!\u2019 and \u2018Widow\u2019s Bay\u2019 land Apple TV two Grammy nominations"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "apple next plans products release these year",
-      "title": "Apple Plans to Release These 18 New Products Next Year"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "amazon apple discount returns",
-      "title": "New Apple TV 4K Discount Returns at Amazon"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "capabilities chinas cyber firms latest limit models",
-      "title": "China\u2019s Top AI Firms Limit Cyber Capabilities in Latest Models"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "brothers case charges cleared crypto million",
-      "title": "MIT Brothers Cleared of Charges in $25 Million Crypto Case"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "center data discount hsbc loan million sold troubled",
-      "title": "HSBC Sold $300 Million Troubled Data Center Loan at Discount"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "albanese before chain leaders meeting pact quad signs summit supply trumps",
-      "title": "Albanese signs on to Trump\u2019s AI supply chain pact before leaders\u2019 meeting at Quad summit"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "berkshire bought buffetts chairman during final hathaway sold stocks these warren weeks",
-      "title": "Berkshire Hathaway bought and sold these stocks during Warren Buffett's final weeks as chairman"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "banking chase havoc online software wreaks",
-      "title": "Chase software bug wreaks havoc on online banking"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "altman openais plan worried",
-      "title": "Sam Altman says he's not worried about OpenAI's IPO plan"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "chart only songs stayed weeks",
-      "title": "Only 49 songs have stayed at No. 1 on the chart for 10 weeks or more \u2014 here they all are"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "gloomy nasdaq pivotal sinks start trade week",
-      "title": "Nasdaq 100 sinks 2.7% in gloomy start to pivotal week for AI trade"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "california control incidents loss openai sued",
-      "title": "OpenAI sued by California over 80 \u2018loss of control\u2019 incidents"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "2026 best black deals early espresso friday machine",
-      "title": "Best Early Black Friday Espresso Machine Deals (2026)"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "california face hack hugging openai rogue sues",
-      "title": "California sues OpenAI over rogue AI hack of Hugging Face"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "companies line palantir replace",
-      "title": "UK companies line up to replace Palantir in NHS"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "apps days iphone many optimized twice",
-      "title": "iPhone Duo now has twice as many optimized apps as it did 10 days ago"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "duos face handson iphone unlock",
-      "title": "Hands-On With the iPhone Duo's New Face Unlock"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "apple podcasts video",
-      "title": "Apple TV App Gets Video Podcasts in iOS 27.3"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "archive communitysupported docu document index management paperlessngxpaperlessngx scan supercharged system",
-      "title": "paperless-ngx/paperless-ngx: A community-supported supercharged document management system: scan, index and archive all "
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "aipowered photoprismphotoprism photos",
-      "title": "photoprism/photoprism: AI-Powered Photos App \ud83c\udf08\ud83d\udc8e\u2728"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "agent batch coordination inferenceenvironment makespan reducing through workloads",
-      "title": "Reducing Batch Makespan for LLM Agent Workloads through Inference-Environment Coordination"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "catch deception openai outsiders wants",
-      "title": "OpenAI Wants Outsiders to Catch AI Deception. Will They?"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "agents autonomous awspowered building driving predictive selflearning vehicle voice",
-      "title": "Building an AWS-Powered Autonomous Vehicle: Self-Learning AI, Voice Agents, and Predictive Driving"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "agent company launch planning retreats teamout",
-      "title": "Launch HN: TeamOut (YC W22) \u2013 AI agent for planning company retreats"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "generative geometry irisz model models past scaling specialist",
-      "title": "Iris-Z: Scaling One Generative Model Past Specialist Geometry Models"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "autobnn bayesian compositional forecasting networks neural probabilistic series time",
-      "title": "AutoBNN: Probabilistic time series forecasting with compositional bayesian neural networks"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "agent antibot budget days every hits platforms sales three wall zero",
-      "title": "Three days, $0 budget, zero sales: an AI agent hits every platform's anti-bot wall"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "build coding multimodel multiplying subscriptions without workflow",
-      "title": "Build a Multi-Model Coding Workflow Without Multiplying Subscriptions"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "business digital essential growth professional services",
-      "title": "Why Professional IT Services Are Essential for Business Growth in the Digital Age"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "afterhours clinic cost enquiries missed options",
-      "title": "What do missed after-hours enquiries cost a clinic, and what are your options?"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "aiwritten guide maintainers pull requests reviewing",
-      "title": "A maintainer's guide to reviewing AI-written pull requests"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "blocked built failure first ours ourselves pointed pushes verifier",
-      "title": "We built a verifier that blocked 5 red pushes. The first failure it found when pointed at ourselves was ours."
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "apps automate cyberdesk desktop launch legacy windows",
-      "title": "Launch HN: Cyberdesk (YC S25) \u2013 Automate Windows legacy desktop apps"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "audit front nextjs postbuild scripts site static",
-      "title": "Why I Put 18 Post-Build Audit Scripts in Front of a Static Next.js Site"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "access discoverable making opening remote server tool without",
-      "title": "Making a Remote MCP Server Discoverable Without Opening Tool Access"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "2026 chinese models pricing spread",
-      "title": "Chinese LLM API pricing in 2026: 114 models and an 85x spread"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "improving mode",
-      "title": "Improving the Wii U's Wii Mode"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "aiml become engineerd fresher fundamentals infosys interview should strengthen struggled",
-      "title": "Struggled in my Infosys interview as a fresher. How should I strengthen my fundamentals to become an AI/ML Engineer?[D]"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "anyones discussion iclr moderator playing role",
-      "title": "Is anyone's AC playing the role of \"discussion moderator\" for ICLR? [D]"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "anyone disillusioned else experts team",
-      "title": "Ask HN: Anyone else disillusioned with \"AI experts\" in their team?"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "exponential progress rate",
-      "title": "Ask HN: Is the rate of progress in AI exponential?"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "aides europeans meet peace plan trump ukrainians",
-      "title": "Top Trump aides to meet with Europeans, Ukrainians on peace plan"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "fight house inherits jordan punishing rebels",
-      "title": "Jordan inherits House GOP fight over punishing rebels"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "2026 best movies november right stream",
-      "title": "The 8 Best Movies to Stream Right Now (November 2026)"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "apecs expectations pedrosa shenzhen summit",
-      "title": "APEC's Pedrosa on Shenzhen Summit Expectations"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "china chip crashes fears highflier makers model",
-      "title": "China AI Highflier Crashes 85% as Chip Fears Hit Model Makers"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "bond boom center data pimco slows spreads tighten",
-      "title": "Pimco Says AI Bond Spreads May Tighten as Data Center Boom Slows"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "asia center chip curbs data hotbed trump visits",
-      "title": "Asia Data Center Hotbed Hit by US Chip Curbs as Trump Visits"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "boosts confidence loan million payment soars tripadvisor",
-      "title": "Tripadvisor Loan Soars as $600 Million Payment Boosts Confidence"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "anthropics eyes take",
-      "title": "Big Take: All Eyes on Anthropic\u2019s IPO"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "best face features iphone upcoming update",
-      "title": "iPhone Duo gets one of Face ID\u2019s best features with upcoming iOS 27.3 update"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "apple arthur chairman company files former levinson million sell stock",
-      "title": "Former Apple chairman Arthur Levinson files to sell $31.8 million in company stock"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "allyear chair comfort ergonomic gives holidays lowest office price sihoos",
-      "title": "Sihoo\u2019s ergonomic office chair gives all-year comfort at lowest price for holidays"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "complaint customer emails free hyrox klook scrolling spend through time training",
-      "title": "I'm the CEO of Klook. I spend my free time scrolling through customer complaint emails \u2014 and Hyrox training."
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "arrive before holidays iphone orders",
-      "title": "iPhone Duo Orders Will Now Arrive Before the Holidays"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "apple betas china intelligence ipad",
-      "title": "iPad and Mac Get Apple Intelligence in China in 27.3 Betas"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "earnings forecast loom nvidia volatility",
-      "title": "More Volatility Forecast for AI as Nvidia Earnings Loom"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "apple beta brings siri testers tvos",
-      "title": "tvOS 27.3 beta 2 brings Siri AI to Apple TV beta testers"
-    },
-    {
-      "date": "2026-11-16",
-      "fingerprint": "2026 9to5mac apple daily glasses november rumors",
-      "title": "9to5Mac Daily: November 16, 2026 \u2013 Apple glasses rumors, more"
-    },
-    {
       "date": "2026-11-17",
       "fingerprint": "benchmarking healthcare inclusionmed inclusive",
       "title": "InclusionMed: Benchmarking AI for Inclusive Healthcare"
@@ -10854,6 +9039,291 @@
       "date": "2026-11-23",
       "fingerprint": "biggest bombshells cnbc huang jensen trumps victory",
       "title": "The biggest bombshells from Trump's Jensen Huang victory lap on CNBC"
+    },
+    {
+      "date": "2026-11-23",
+      "fingerprint": "agents anthropic approve changes claude code launches letting review ship",
+      "title": "Anthropic launches Claude Ship, letting AI agents review, fix, and approve code changes"
+    },
+    {
+      "date": "2026-11-23",
+      "fingerprint": "cisco introduce openai shirudo",
+      "title": "OpenAI and Cisco introduce Shirudo"
+    },
+    {
+      "date": "2026-11-23",
+      "fingerprint": "10000 changes code finetune gpus lightningaipytorchlightning model pretrain size zero",
+      "title": "Lightning-AI/pytorch-lightning: Pretrain, finetune ANY AI model of ANY size on 1 or 10,000+ GPUs with zero code changes."
+    },
+    {
+      "date": "2026-11-23",
+      "fingerprint": "archive communitysupported docu document index management paperlessngxpaperlessngx scan supercharged system",
+      "title": "paperless-ngx/paperless-ngx: A community-supported supercharged document management system: scan, index and archive all "
+    },
+    {
+      "date": "2026-11-23",
+      "fingerprint": "aipowered photoprismphotoprism photos",
+      "title": "photoprism/photoprism: AI-Powered Photos App \ud83c\udf08\ud83d\udc8e\u2728"
+    },
+    {
+      "date": "2026-11-23",
+      "fingerprint": "15mn huangs nvidia return shares trump",
+      "title": "Trump made up to $15mn on Nvidia shares after Huang\u2019s return"
+    },
+    {
+      "date": "2026-11-23",
+      "fingerprint": "fields invisible models predict radio read seeing trace visionlanguage",
+      "title": "Seeing the Invisible: How Vision-Language Models Read, Predict and Trace Radio Fields"
+    },
+    {
+      "date": "2026-11-23",
+      "fingerprint": "alignment events multimodal physical points rethinking trajectories",
+      "title": "From Points to Trajectories: Rethinking Multimodal Alignment for Physical Events"
+    },
+    {
+      "date": "2026-11-23",
+      "fingerprint": "agents best enterprise evaluate observability platforms tools trustworthy",
+      "title": "Best AI Observability Tools for Trustworthy AI: How to Evaluate Platforms for Enterprise AI Agents"
+    },
+    {
+      "date": "2026-11-23",
+      "fingerprint": "agent company launch planning retreats teamout",
+      "title": "Launch HN: TeamOut (YC W22) \u2013 AI agent for planning company retreats"
+    },
+    {
+      "date": "2026-11-23",
+      "fingerprint": "agent feedbackfree reshapes selfevolution skills study systematic",
+      "title": "How Feedback-Free Self-Evolution Reshapes Agent Skills: A Systematic Study"
+    },
+    {
+      "date": "2026-11-23",
+      "fingerprint": "autobnn bayesian compositional forecasting networks neural probabilistic series time",
+      "title": "AutoBNN: Probabilistic time series forecasting with compositional bayesian neural networks"
+    },
+    {
+      "date": "2026-11-23",
+      "fingerprint": "boosting cappy language large models multitask outperforming scorer small",
+      "title": "Cappy: Outperforming and boosting large multi-task language models with a small scorer"
+    },
+    {
+      "date": "2026-11-23",
+      "fingerprint": "encoding graph graphs language large like models talk",
+      "title": "Talk like a graph: Encoding graphs for large language models"
+    },
+    {
+      "date": "2026-11-23",
+      "fingerprint": "cloud cost does finetune gpus much",
+      "title": "How much does it cost to fine-tune an LLM on cloud GPUs?"
+    },
+    {
+      "date": "2026-11-23",
+      "fingerprint": "agents built conversations emotional layer looking stateful support teams test",
+      "title": "I built a stateful emotional layer for AI support agents \u2014 looking for 3 teams to test it on their own conversations"
+    },
+    {
+      "date": "2026-11-23",
+      "fingerprint": "crawlers fake gptbot logs really server spot",
+      "title": "Is that really GPTBot? How to spot fake AI crawlers in your server logs"
+    },
+    {
+      "date": "2026-11-23",
+      "fingerprint": "checklist claim disclosure launch proof twoledger",
+      "title": "AI Ad Disclosure Is Not Claim Proof: A Two-Ledger Launch Checklist"
+    },
+    {
+      "date": "2026-11-23",
+      "fingerprint": "apps automate cyberdesk desktop launch legacy windows",
+      "title": "Launch HN: Cyberdesk (YC S25) \u2013 Automate Windows legacy desktop apps"
+    },
+    {
+      "date": "2026-11-23",
+      "fingerprint": "capabilities installing networks neural programming weightcode weightspace",
+      "title": "WeightCode: Installing New Capabilities into Neural Networks via Weight-Space Programming"
+    },
+    {
+      "date": "2026-11-23",
+      "fingerprint": "generative plan4d plannable worlds",
+      "title": "Plan4D: Generative Plannable 4D Worlds"
+    },
+    {
+      "date": "2026-11-23",
+      "fingerprint": "access coming drive google search soon wallet",
+      "title": "Google Search Gets Wallet Access, With Drive Coming Soon"
+    },
+    {
+      "date": "2026-11-23",
+      "fingerprint": "employees exec former hire launch moves nabs openai portal salesforce seattle startup tech",
+      "title": "Tech Moves: AWS nabs Salesforce exec; former OpenAI employees launch Seattle startup; Portal hire"
+    },
+    {
+      "date": "2026-11-23",
+      "fingerprint": "confront culture directfeedback dylan engineer fields figma forced harassers lawsuit sexual",
+      "title": "Figma engineer says in a lawsuit that CEO Dylan Field\u2019s direct-feedback culture forced her to confront sexual harassers"
+    },
+    {
+      "date": "2026-11-23",
+      "fingerprint": "boom fastest five fueling growth sees singapore years",
+      "title": "Singapore Sees AI Boom Fueling Fastest Growth in Five Years"
+    },
+    {
+      "date": "2026-11-23",
+      "fingerprint": "approve couldnt ones pick posts review skip still which",
+      "title": "Our AI couldn't approve posts. It could still pick which ones skip review"
+    },
+    {
+      "date": "2026-11-23",
+      "fingerprint": "businesses control designing flow llms purchase requests rules small",
+      "title": "Rules or LLMs for Purchase Requests? Designing a Control Flow for Small Businesses"
+    },
+    {
+      "date": "2026-11-23",
+      "fingerprint": "back boss bring inside lobbied ousted room tech trump",
+      "title": "Inside the \u2018war room\u2019 that lobbied Trump to bring back ousted tech boss"
+    },
+    {
+      "date": "2026-11-23",
+      "fingerprint": "data representation",
+      "title": "Lua for data representation"
+    },
+    {
+      "date": "2026-11-23",
+      "fingerprint": "release roto v0140",
+      "title": "Release: Roto v0.14.0"
+    },
+    {
+      "date": "2026-11-23",
+      "fingerprint": "2025 algebra dependent types",
+      "title": "the algebra of dependent types (2025)"
+    },
+    {
+      "date": "2026-11-23",
+      "fingerprint": "anyone disillusioned else experts team",
+      "title": "Ask HN: Anyone else disillusioned with \"AI experts\" in their team?"
+    },
+    {
+      "date": "2026-11-23",
+      "fingerprint": "exponential progress rate",
+      "title": "Ask HN: Is the rate of progress in AI exponential?"
+    },
+    {
+      "date": "2026-11-23",
+      "fingerprint": "16year expected high scoop thanksgiving travel",
+      "title": "Scoop: Thanksgiving air travel expected to hit 16-year high"
+    },
+    {
+      "date": "2026-11-23",
+      "fingerprint": "elite huang impunity jensen welcome",
+      "title": "Welcome to elite impunity, Jensen Huang"
+    },
+    {
+      "date": "2026-11-23",
+      "fingerprint": "brings chat chatgpts gpt62 openai",
+      "title": "OpenAI Brings GPT-6.2 Sol to ChatGPT's Chat Tab"
+    },
+    {
+      "date": "2026-11-23",
+      "fingerprint": "delivery dorm games inventions realworld robots students video",
+      "title": "From dorm delivery robots to real\u2011world video games, UW students show off inventions"
+    },
+    {
+      "date": "2026-11-23",
+      "fingerprint": "accessories iphone musthave these",
+      "title": "These are my two must-have iPhone Duo accessories"
+    },
+    {
+      "date": "2026-11-23",
+      "fingerprint": "apple heres photos upgraded ways whats",
+      "title": "iOS 27.2 upgraded Apple Photos in two ways, here\u2019s what\u2019s new"
+    },
+    {
+      "date": "2026-11-23",
+      "fingerprint": "coming house huangs jensen nvidia rejoices second takes victory white",
+      "title": "Nvidia rejoices at Jensen Huang\u2019s second coming as White House takes victory lap"
+    },
+    {
+      "date": "2026-11-23",
+      "fingerprint": "efficiently engineer feds office openais saudi used vibecoding",
+      "title": "Saudi engineer used OpenAI\u2019s vibe-coding app to more efficiently bug its office, feds say"
+    },
+    {
+      "date": "2026-11-23",
+      "fingerprint": "blacklist center commerce customer megaspeed nvidia scandal",
+      "title": "Commerce to blacklist Megaspeed, Nvidia customer at center of spy scandal"
+    },
+    {
+      "date": "2026-11-23",
+      "fingerprint": "2026 costumes miss national pageant universe wildest",
+      "title": "The wildest national costumes from the 2026 Miss Universe pageant"
+    },
+    {
+      "date": "2026-11-23",
+      "fingerprint": "huangs japan rebound resuscitates return stocks trade",
+      "title": "Japan Stocks Rebound as Huang\u2019s Return Resuscitates AI Trade"
+    },
+    {
+      "date": "2026-11-23",
+      "fingerprint": "alibabaowned ambitions blacklists company setback",
+      "title": "US Blacklists Alibaba-Owned Company in Setback to AI Ambitions"
+    },
+    {
+      "date": "2026-11-23",
+      "fingerprint": "blacklist faces megaspeed nvidia ouster sources",
+      "title": "Megaspeed Faces US Blacklist After Nvidia CEO Ouster, Sources Say"
+    },
+    {
+      "date": "2026-11-23",
+      "fingerprint": "huangs return role trumps",
+      "title": "Trump\u2019s Role in Huang\u2019s Return"
+    },
+    {
+      "date": "2026-11-23",
+      "fingerprint": "captured hidden likely openai secrets staffer",
+      "title": "OpenAI Staffer Likely Captured Secrets on Hidden Bug, US Says"
+    },
+    {
+      "date": "2026-11-23",
+      "fingerprint": "jensens reversal second stunning",
+      "title": "Stunning Reversal: Jensen's Second Act"
+    },
+    {
+      "date": "2026-11-23",
+      "fingerprint": "canada gains ideas nvidia rallies tech unlock",
+      "title": "RBC Has Ideas For Canada to Unlock Tech GDP Gains as NVIDIA Rallies"
+    },
+    {
+      "date": "2026-11-23",
+      "fingerprint": "dozens engineer meeting openai possessed prosecutors recordings",
+      "title": "OpenAI engineer possessed dozens of meeting recordings, say US prosecutors"
+    },
+    {
+      "date": "2026-11-23",
+      "fingerprint": "comeback engineered huang jensen risky trump",
+      "title": "Trump engineered a risky comeback for Jensen Huang"
+    },
+    {
+      "date": "2026-11-23",
+      "fingerprint": "2026 9to5mac agentic apple daily november product rumors spring",
+      "title": "9to5Mac Daily: November 23, 2026 \u2013 Apple agentic AI, spring product rumors"
+    },
+    {
+      "date": "2026-11-23",
+      "fingerprint": "address agent give mail real send street",
+      "title": "How to Give Your AI Agent a Real Street Address (and Send Mail via MCP)"
+    },
+    {
+      "date": "2026-11-23",
+      "fingerprint": "approach evaluating intelligence models perplexity shared",
+      "title": "Perplexity and Intelligence: A Shared Approach to Evaluating AI Models"
+    },
+    {
+      "date": "2026-11-23",
+      "fingerprint": "black friday gone latest macbook price record sale sees update",
+      "title": "MacBook Neo Sees Record Low $599 Price in Latest Black Friday Sale ($100 Off) [Update: Gone]"
+    },
+    {
+      "date": "2026-11-23",
+      "fingerprint": "apple better even features four",
+      "title": "Apple Pay just got even better with four new features and more"
     }
   ]
 }
