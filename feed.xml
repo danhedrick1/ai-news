@@ -11,17 +11,17 @@
 
 # theba.sh — November 25, 2026
 
-*28 sources · 228 stories · ranked by impact · headlines and source summaries*
+*28 sources · 227 stories · ranked by impact · headlines and source summaries*
 
 ---
 
 ## stdout // the big story
 
-### 😺 Jensen Huang is back as Nvidia CEO
+### Claude Helped Rebuild Its Own API, Cutting CPU Usage by 70%
 
-*[dev_insight]* The Neuron · 3 outlets · seen earlier this week
+*[tool]* The Neuron
 
-Also covered by: [The Verge AI](https://www.theverge.com/tech/1041571/jensen-huang-all-hands-nvidia-apology) · [FT Technology](https://www.ft.com/content/b68742ac-f7b9-4aca-b4d9-48245e749b60?syn-25a6b1a6=1)
+Anthropic used Claude agents to migrate its Messages API from Python to Rust. The experiment shows how AI could make software modernization more achievable and why engineers still need reliable ways to verify AI-generated code.
 
 **Source:** [The Neuron](https://ww</description>
       <pubDate>Wed, 25 Nov 2026 12:00:00 +0000</pubDate>
